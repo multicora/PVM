@@ -1,0 +1,69 @@
+'use strict';
+
+// External
+const Hapi = require('hapi');
+const _ = require('lodash');
+const Promise = require('promise');
+
+// Internal
+const config = require('./config.js')
+
+module.exports = function () {
+  startServer();
+
+  function startServer() {
+    const server = new Hapi.Server();
+    server.connection({
+      port: config.server.port,
+      routes: {
+        // TODO: Need to be investigated
+        cors: {
+          origin: ['*'],
+          credentials : true
+        }
+      }
+    });
+
+    registerStaticFilesServer(server).then(
+      _.bind(registerRouting, null, server)
+    ).then(
+      _.bind(run, null, server)
+    ).then(
+      _.bind(showSuccessMessage, null, server),
+      function (err) {
+        throw err;
+      }
+    );
+  }
+
+  function registerStaticFilesServer(server) {
+    return new Promise(
+      function (resolve, reject) {
+        const plugin = require('inert');
+        server.register(plugin, function (err) {
+          err ? reject() : resolve();
+        });
+      }
+    );
+  }
+
+  function registerRouting(server) {
+    const routing = require('./routing');
+    routing.init(server);
+  }
+
+  function showSuccessMessage(server) {
+    server.log('info', 'Server running at: ' + server.info.uri);
+    console.log('Server running at: ' + server.info.uri);
+  }
+
+  function run(server) {
+    return new Promise(
+      function (resolve, reject) {
+        server.start((err) => {
+          err ? reject() : resolve();
+        });
+      }
+    );
+  }
+};
