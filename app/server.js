@@ -29,6 +29,8 @@ module.exports = function () {
     ).then(
       _.bind(run, null, server)
     ).then(
+      _.bind(registerAuth, null, server)
+    ).then(
       _.bind(showSuccessMessage, null, server),
       function (err) {
         throw err;
@@ -65,5 +67,35 @@ module.exports = function () {
         });
       }
     );
+  }
+
+  function registerAuth(server) {
+    return new Promise(function (resolve, reject) {
+       const AuthHeader = require('hapi-auth-header');
+
+      server.register(AuthHeader, (err) => {
+        if (err) {
+          reject();
+        } else {
+           server.auth.strategy('simple', 'auth-header', {
+            accessTokenName: 'X-CART-Token',
+            validateFunc: function (tokens, callback) {
+              var request = this;
+              var headerName = 'X-CART-Token';
+
+               DAL.users.getUserByToken(tokens[headerName], function (err, user) {
+                if (user) {
+                  callback(null, true, user);
+                } else {
+                  callback(null, false, null);
+                }
+              });
+            }
+          });
+
+          resolve();
+        }
+      });
+    });
   }
 };
