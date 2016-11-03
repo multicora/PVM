@@ -54,6 +54,19 @@ module.exports = function () {
     routing.init(server);
   }
 
+  function registerACL(server) {
+    return new Promise(function (resolve, reject) {
+      require('./acl.js')(server, function(err) {
+        if (err) {
+          console.log(err);
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
   function showSuccessMessage(server) {
     server.log('info', 'Server running at: ' + server.info.uri);
     console.log('Server running at: ' + server.info.uri);
