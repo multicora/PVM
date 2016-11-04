@@ -4,7 +4,7 @@ var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'pvmDB'
+  database: db.dbName
 });
 connection.connect(function(err){
   if(!err) {

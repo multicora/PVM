@@ -8,7 +8,7 @@ const DB = {
 module.exports = {
   db: {
     type: DB.TYPES.MySQL,
-    dbName: 'pvm'
+    dbName: 'pvmDB'
   },
   server: {
     port: 8081
