@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'project',
+    modulePrefix: 'pvm',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
