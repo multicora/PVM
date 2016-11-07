@@ -54,19 +54,6 @@ module.exports = function () {
     routing.init(server);
   }
 
-  function registerACL(server) {
-    return new Promise(function (resolve, reject) {
-      require('./acl.js')(server, function(err) {
-        if (err) {
-          console.log(err);
-          reject();
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
   function showSuccessMessage(server) {
     server.log('info', 'Server running at: ' + server.info.uri);
     console.log('Server running at: ' + server.info.uri);
@@ -84,28 +71,18 @@ module.exports = function () {
 
   function registerAuth(server) {
     return new Promise(function (resolve, reject) {
-       const AuthHeader = require('hapi-auth-header');
+      const AuthHeader = require('hapi-auth-header');
 
       server.register(AuthHeader, (err) => {
         if (err) {
           reject();
         } else {
-           server.auth.strategy('simple', 'auth-header', {
+          server.auth.strategy('simple', 'auth-header', {
             accessTokenName: 'X-CART-Token',
             validateFunc: function (tokens, callback) {
-              var request = this;
               var headerName = 'X-CART-Token';
-
-               DAL.users.getUserByToken(tokens[headerName], function (err, user) {
-                if (user) {
-                  callback(null, true, user);
-                } else {
-                  callback(null, false, null);
-                }
-              });
             }
           });
-
           resolve();
         }
       });
