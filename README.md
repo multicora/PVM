@@ -1,10 +1,10 @@
 "# PVM"
 
 To start frontend:
-  webpack-dev-server --progress
+  ember server
 
 To start backend:
-  nodemon app/index
+  nodemon backend/index
 
 To generate frontend build:
   webpack
