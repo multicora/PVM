@@ -307,7 +307,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+7b3f5b32"});
+  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+f9d503a1"});
 }
 
 /* jshint ignore:end */

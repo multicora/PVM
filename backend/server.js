@@ -4,7 +4,7 @@
 const Hapi = require('hapi');
 const _ = require('lodash');
 const Promise = require('promise');
-
+const mysql = require('mysql');
 // Internal
 const config = require('./config.js')
 
@@ -23,13 +23,14 @@ module.exports = function () {
         }
       }
     });
-
-    registerStaticFilesServer(server).then(
+    registerACL(server).then(
+      registerStaticFilesServer(server)
+    ).then(
       _.bind(registerRouting, null, server)
     ).then(
       _.bind(run, null, server)
-    ).then(
-      _.bind(registerAuth, null, server)
+    // ).then(
+    //   _.bind(registerAuth, null, server)
     ).then(
       _.bind(showSuccessMessage, null, server),
       function (err) {
@@ -49,9 +50,26 @@ module.exports = function () {
     );
   }
 
+  function connectToDB() {
+    const connect = require('./dataConnection.js');
+    connect.dbConnect(mysql);
+  }
+
   function registerRouting(server) {
     const routing = require('./routing');
     routing.init(server);
+  }
+
+  function registerACL(server) {
+    return new Promise(function (resolve, reject) {
+      require('./acl.js')(server, function(err) {
+        if (err) {
+          reject();
+          } else {
+            resolve();
+          }
+      });
+    });
   }
 
   function showSuccessMessage(server) {
@@ -69,23 +87,31 @@ module.exports = function () {
     );
   }
 
-  function registerAuth(server) {
-    return new Promise(function (resolve, reject) {
-      const AuthHeader = require('hapi-auth-header');
+  // function registerAuth(server) {
+  //   return new Promise(function (resolve, reject) {
+  //     const AuthHeader = require('hapi-auth-header');
 
-      server.register(AuthHeader, (err) => {
-        if (err) {
-          reject();
-        } else {
-          server.auth.strategy('simple', 'auth-header', {
-            accessTokenName: 'X-CART-Token',
-            validateFunc: function (tokens, callback) {
-              var headerName = 'X-CART-Token';
-            }
-          });
-          resolve();
-        }
-      });
-    });
-  }
+  //     server.register(AuthHeader, (err) => {
+  //       if (err) {
+  //         reject();
+  //       } else {
+  //         server.auth.strategy('simple', 'auth-header', {
+  //           accessTokenName: 'X-CART-Token',
+  //           validateFunc: function (tokens, callback) {
+  //             var headerName = 'X-CART-Token';
+
+  //             DAL.users.getUserByToken(tokens[headerName], function (err, user) {
+  //               if (user) {
+  //                 callback(null, true, user);
+  //               } else {
+  //                 callback(null, false, null);
+  //               }
+  //             });
+  //           }
+  //         });
+  //         resolve();
+  //       }
+  //     });
+  //   });
+  // }
 };
