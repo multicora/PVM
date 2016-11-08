@@ -1,25 +1,25 @@
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: ''
+const mysql = require('mysql');
+const config = require('./config.js')
+
+const connection = mysql.createConnection({
+  host: config.db.host,
+  user: config.db.user,
+  password: config.db.password
 });
 
 module.exports = function() {
-  connection.connect(function(err){
-    if(!err) {
-        console.log("Database is connected ... ");    
-    } else {
-        console.log("Error connecting database ...");    
-    }
-  });
+  return new Promise(
+    function(resolve, reject) {
 
-  connection.query('SELECT * FROM pvmDB', function(err, rows, fields) {
-    if (!err)
-      console.log('The solution is: ', rows);
-    else
-      console.log('Error while performing Query.');
-  });
+      connection.connect(function(err){
+        err ? reject() : resolve();    
+      });
+
+      connection.query('SELECT * FROM pvmDB', function(err, rows, fields) {
+        err ? reject() : resolve();
+      });
+    }
+  );
 
   connection.end();
 };
