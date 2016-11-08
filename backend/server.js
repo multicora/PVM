@@ -8,6 +8,11 @@ const connectDB = require('./dataConnection.js');
 // Internal
 const config = require('./config.js')
 
+function logError(error) {
+  console.log(' ======================= uncaughtException:');
+  console.log(error.stack);
+}
+
 module.exports = function () {
   startServer();
 
@@ -27,16 +32,16 @@ module.exports = function () {
       registerStaticFilesServer(server)
     ).then(
       _.bind(registerRouting, null, server)
-    ).then(
-      _.bind(run, null, server)
     // ).then(
     //   _.bind(registerAuth, null, server)
     ).then(
       connectDB
     ).then(
+      _.bind(run, null, server)
+    ).then(
       _.bind(showSuccessMessage, null, server),
       function (err) {
-        throw err;
+        logError(err);
       }
     );
   }
