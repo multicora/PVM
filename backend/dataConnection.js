@@ -4,7 +4,8 @@ const config = require('./config.js')
 const connection = mysql.createConnection({
   host: config.db.host,
   user: config.db.user,
-  password: config.db.password
+  password: config.db.password,
+  dbName: config.db.dbName
 });
 
 module.exports = function() {
