@@ -63,11 +63,7 @@ module.exports = function () {
   function registerACL(server) {
     return new Promise(function (resolve, reject) {
       require('./acl.js')(server, function(err) {
-        if (err) {
-          reject();
-          } else {
-            resolve();
-          }
+        err ? reject() : resolve();
       });
     });
   }
