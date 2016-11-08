@@ -32,7 +32,7 @@ module.exports = function () {
     // ).then(
     //   _.bind(registerAuth, null, server)
     ).then(
-      connectDB()
+      connectDB
     ).then(
       _.bind(showSuccessMessage, null, server),
       function (err) {
