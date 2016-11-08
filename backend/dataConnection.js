@@ -1,11 +1,11 @@
-var dbConnect = function(mysql) {
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: db.dbName
-  });
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: ''
+});
 
+module.exports = function() {
   connection.connect(function(err){
     if(!err) {
         console.log("Database is connected ... ");    
@@ -22,4 +22,4 @@ var dbConnect = function(mysql) {
   });
 
   connection.end();
-}
+};

@@ -4,7 +4,7 @@
 const Hapi = require('hapi');
 const _ = require('lodash');
 const Promise = require('promise');
-const mysql = require('mysql');
+const connectDB = require('./dataConnection.js');
 // Internal
 const config = require('./config.js')
 
@@ -32,6 +32,8 @@ module.exports = function () {
     // ).then(
     //   _.bind(registerAuth, null, server)
     ).then(
+      connectDB()
+    ).then(
       _.bind(showSuccessMessage, null, server),
       function (err) {
         throw err;
@@ -48,11 +50,6 @@ module.exports = function () {
         });
       }
     );
-  }
-
-  function connectToDB() {
-    const connect = require('./dataConnection.js');
-    connect.dbConnect(mysql);
   }
 
   function registerRouting(server) {
