@@ -1,9 +1,9 @@
 <div class="popupContainer">
-  <div class="popup {{if isShowen "showen"}}">
+  <div class="popup {{if isShowen "showen"}}" ondrop={{action "drop"}} ondragover="return false">
     <form class="uploadForm">
       <div class="uploadIconContainer">  
         <label for="upload-video" class="uploadIcon">
-          <input type="file" id="upload-video" accept="video/*">
+          <input type="file" id="upload-video" onchange={{action "upload"}} accept="image/*">
         </label>
       </div>
       <p class="popupTitle">Select files to upload</p>

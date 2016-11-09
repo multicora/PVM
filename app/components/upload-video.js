@@ -5,6 +5,14 @@ export default Ember.Component.extend({
   actions: {
     hidePopup() {
       this.toggleProperty('isShowen');
+    },
+    upload(event) {
+      let file = event.target.files[0];
+    },
+    drop(event) {
+      event.preventDefault();
+      let file = event.dataTransfer.files[0];
+      console.log(file);
     }
   }
 });

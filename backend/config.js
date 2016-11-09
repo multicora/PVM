@@ -22,4 +22,7 @@ module.exports = {
     privateKey: 'm4g8g81p',
     enterpriseID: '5924343'
   }
+  google: {
+    APIkey: 'AIzaSyBrdvFI8tYGlK1nkjUTWkF6BLUPvm7i4IY' 
+  }
 }
