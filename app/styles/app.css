@@ -1,4 +1,17 @@
-.popupContainer {
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/Roboto/roboto-regular-webfont.woff2') format('woff2'),
+       url('/assets/Roboto/roboto-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.popup {
+  display: none;
   border-radius: 2px;
   border-width: 1px;
   box-sizing: border-box;
@@ -9,18 +22,22 @@
   height: 371px;
 }
 
-.popupContainer .popupTitle,
-.popupContainer .popupSubTitle {
+.showen {
+  display: block;
+}
+
+.popup .popupTitle,
+.popup .popupSubTitle {
   color: #161616;
   font-weight: 600;
   text-align: center;
 }
 
-.popupContainer .popupTitle {
+.popup .popupTitle {
   font-size: 20px;
 }
 
-.popupContainer .popupSubTitle {
+.popup .popupSubTitle {
   font-size: 15px;
 }
 
@@ -31,7 +48,14 @@
   width: 100%;
 }
 
+#upload-video {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
 .uploadIcon {
+  display: inline-block;
   width: 150px;
   height: 150px;
   margin-top: 30px;
@@ -51,7 +75,7 @@
   background-image: url('/assets/uploadHover.svg');
 }
 
-.cancel {
+.closeButton {
   width: 88px;
   height: 36px;
   font-size: 18px;
@@ -60,19 +84,20 @@
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
-.cancel {
+.closeButton {
   transition: 1s;
   background-color: #fff; 
 }
 
-.cancel:hover {
+.closeButton:hover {
   transition: 1s;
   background-color: #f0f0f0;
 }
 
-.cancel:focus {
+.closeButton:focus {
   transition: 1s;
   background-color: #b3b3b3;
   outline: none;

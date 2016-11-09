@@ -1,0 +1,16 @@
+<div class="popupContainer">
+  <div class="popup {{if isShowen "showen"}}">
+    <form class="uploadForm">
+      <div class="uploadIconContainer">  
+        <label for="upload-video" class="uploadIcon">
+          <input type="file" id="upload-video" accept="video/*">
+        </label>
+      </div>
+      <p class="popupTitle">Select files to upload</p>
+      <p class="popupSubTitle">Or drag and drop video files</p>
+      <div class="buttonContainer">
+        <button type="button" class="closeButton" {{action 'hidePopup'}}>close</button>
+      </div>
+    </form>
+  </div>
+</div>
