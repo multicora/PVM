@@ -11,7 +11,7 @@
 
 .popupContainer .popupTitle,
 .popupContainer .popupSubTitle {
-  color: rgba(0, 0, 0, 0.87);
+  color: #161616;
   font-weight: 600;
   text-align: center;
 }
@@ -34,35 +34,45 @@
 .uploadIcon {
   width: 150px;
   height: 150px;
-  margin-top: 20px;
+  margin-top: 30px;
   background-size: cover;
-  background-image: url('/assets/upload.svg');
   cursor: pointer;
+  background-color: #fff;
+  border: none;
 }
 
-.cansel {
+.uploadIcon {
+  transition: 1s;
+  background-image: url('/assets/upload.svg');
+}
+
+.uploadIcon:hover {
+  transition: 1s;
+  background-image: url('/assets/uploadHover.svg');
+}
+
+.cancel {
   width: 88px;
   height: 36px;
   font-size: 18px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.87);
+  color: #161616;
   border: none;
-  /*background-color: #fff; */
   border-radius: 2px;
   cursor: pointer;
 }
 
-.cansel {
+.cancel {
   transition: 1s;
   background-color: #fff; 
 }
 
-.cansel:hover {
+.cancel:hover {
   transition: 1s;
   background-color: #f0f0f0;
 }
 
-.cansel:focus {
+.cancel:focus {
   transition: 1s;
   background-color: #b3b3b3;
   outline: none;
