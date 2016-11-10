@@ -1,5 +1,6 @@
 var path = require("path");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
   entry: "./app/publicDev/index.pug",
@@ -31,6 +32,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './app/publicDev/index.pug'
+    }),
+    new LiveReloadPlugin({
+      port: 8081
     })
   ]
 };
