@@ -11,7 +11,7 @@ module.exports = {
     dbName: 'pvmDB',
     host: 'localhost',
     user: 'root',
-    password: ''
+    password: 'romafantom12'
   },
   server: {
     port: 8081
@@ -24,7 +24,7 @@ module.exports = {
     publicKeyId: 'm4g8g81p',
     privateKey: 'm4g8g81p',
     enterpriseID: '5924343'
-  }
+  },
   google: {
     APIkey: 'AIzaSyBrdvFI8tYGlK1nkjUTWkF6BLUPvm7i4IY' 
   }

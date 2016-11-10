@@ -22,6 +22,24 @@ define('pvm/app', ['exports', 'ember', 'pvm/resolver', 'ember-load-initializers'
 
   exports['default'] = App;
 });
+define('pvm/components/upload-video', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Component.extend({
+    isShowen: true,
+    actions: {
+      hidePopup: function hidePopup() {
+        this.toggleProperty('isShowen');
+      },
+      upload: function upload(event) {
+        var file = event.target.files[0];
+      },
+      drop: function drop(event) {
+        event.preventDefault();
+        var file = event.dataTransfer.files[0];
+        console.log(file);
+      }
+    }
+  });
+});
 define('pvm/helpers/app-version', ['exports', 'ember', 'pvm/config/environment'], function (exports, _ember, _pvmConfigEnvironment) {
   exports.appVersion = appVersion;
   var version = _pvmConfigEnvironment['default'].APP.version;
@@ -210,6 +228,12 @@ define("pvm/instance-initializers/ember-data", ["exports", "ember-data/-private/
     initialize: _emberDataPrivateInstanceInitializersInitializeStoreService["default"]
   };
 });
+define('pvm/models/upload-video', ['exports', 'ember-data'], function (exports, _emberData) {
+  exports['default'] = _emberData['default'].Model.extend({
+    video: _emberData['default'].attr(),
+    userId: _emberData['default'].attr('string')
+  });
+});
 define('pvm/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
   exports['default'] = _emberResolver['default'];
 });
@@ -223,6 +247,23 @@ define('pvm/router', ['exports', 'ember', 'pvm/config/environment'], function (e
   Router.map(function () {});
 
   exports['default'] = Router;
+});
+define('pvm/routes/application', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Route.extend({
+    actions: {
+      confirm: function confirm(data) {
+        var _this = this;
+
+        $.ajax({
+          data: data,
+          method: 'POST',
+          url: '/save_video'
+        }).then(function (digitalInventory) {
+          _this.store.pushPayload(digitalInventory);
+        });
+      }
+    }
+  });
 });
 define('pvm/services/ajax', ['exports', 'ember-ajax/services/ajax'], function (exports, _emberAjaxServicesAjax) {
   Object.defineProperty(exports, 'default', {
@@ -245,7 +286,7 @@ define("pvm/templates/application", ["exports"], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 22
+            "column": 16
           }
         },
         "moduleName": "pvm/templates/application.hbs"
@@ -256,16 +297,132 @@ define("pvm/templates/application", ["exports"], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["content", "upload-video", ["loc", [null, [1, 0], [1, 16]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("pvm/templates/components/upload-video", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 16,
+            "column": 6
+          }
+        },
+        "moduleName": "pvm/templates/components/upload-video.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
         var el1 = dom.createElement("div");
-        var el2 = dom.createTextNode("Hello world");
+        dom.setAttribute(el1, "class", "popupContainer");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "ondragover", "return false");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("form");
+        dom.setAttribute(el3, "class", "uploadForm");
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("div");
+        dom.setAttribute(el4, "class", "uploadIconContainer");
+        var el5 = dom.createTextNode("  \n        ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("label");
+        dom.setAttribute(el5, "for", "upload-video");
+        dom.setAttribute(el5, "class", "uploadIcon");
+        var el6 = dom.createTextNode("\n          ");
+        dom.appendChild(el5, el6);
+        var el6 = dom.createElement("input");
+        dom.setAttribute(el6, "type", "file");
+        dom.setAttribute(el6, "id", "upload-video");
+        dom.setAttribute(el6, "accept", "image/*");
+        dom.appendChild(el5, el6);
+        var el6 = dom.createTextNode("\n        ");
+        dom.appendChild(el5, el6);
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("\n      ");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("p");
+        dom.setAttribute(el4, "class", "popupTitle");
+        var el5 = dom.createTextNode("Select files to upload");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("p");
+        dom.setAttribute(el4, "class", "popupSubTitle");
+        var el5 = dom.createTextNode("Or drag and drop video files");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("div");
+        dom.setAttribute(el4, "class", "buttonContainer");
+        var el5 = dom.createTextNode("\n        ");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createElement("button");
+        dom.setAttribute(el5, "type", "button");
+        dom.setAttribute(el5, "class", "closeButton");
+        var el6 = dom.createTextNode("close");
+        dom.appendChild(el5, el6);
+        dom.appendChild(el4, el5);
+        var el5 = dom.createTextNode("\n      ");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         return el0;
       },
-      buildRenderNodes: function buildRenderNodes() {
-        return [];
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [0, 1]);
+        var element1 = dom.childAt(element0, [1]);
+        var element2 = dom.childAt(element1, [1, 1, 1]);
+        var element3 = dom.childAt(element1, [7, 1]);
+        var morphs = new Array(4);
+        morphs[0] = dom.createAttrMorph(element0, 'class');
+        morphs[1] = dom.createAttrMorph(element0, 'ondrop');
+        morphs[2] = dom.createAttrMorph(element2, 'onchange');
+        morphs[3] = dom.createElementMorph(element3);
+        return morphs;
       },
-      statements: [],
+      statements: [["attribute", "class", ["concat", ["popup ", ["subexpr", "if", [["get", "isShowen", ["loc", [null, [2, 25], [2, 33]]], 0, 0, 0, 0], "showen"], [], ["loc", [null, [2, 20], [2, 44]]], 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "ondrop", ["subexpr", "action", ["drop"], [], ["loc", [null, [null, null], [2, 70]]], 0, 0], 0, 0, 0, 0], ["attribute", "onchange", ["subexpr", "action", ["upload"], [], ["loc", [null, [null, null], [6, 75]]], 0, 0], 0, 0, 0, 0], ["element", "action", ["hidePopup"], [], ["loc", [null, [12, 50], [12, 72]]], 0, 0]],
       locals: [],
       templates: []
     };
@@ -307,7 +464,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+53e897a7"});
+  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+335bc01c"});
 }
 
 /* jshint ignore:end */
