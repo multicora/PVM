@@ -29,21 +29,21 @@ define('pvm/app', ['exports', 'ember', 'pvm/resolver', 'ember-load-initializers'
 });
 define('pvm/components/upload-video', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Component.extend({
-    // isShowen: true,
-    // actions: {
-    //   hidePopup() {
-    //     this.toggleProperty('isShowen');
-    //   },
-    //   upload(event) {
-    //     let file = event.target.files[0];
-    //     this.Store.update('video-update', file);
-    //   },
-    //   drop(event) {
-    //     event.preventDefault();
-    //     let file = event.dataTransfer.files[0];
-    //     console.log(file);
-    //   }
-    // }
+    isShowen: true,
+    actions: {
+      hidePopup: function hidePopup() {
+        this.toggleProperty('isShowen');
+      },
+      upload: function upload(event) {
+        var file = event.target.files[0];
+        this.Store.update('video-update', file);
+      },
+      drop: function drop(event) {
+        event.preventDefault();
+        var file = event.dataTransfer.files[0];
+        console.log(file);
+      }
+    }
   });
 });
 define('pvm/controllers/upload-video', ['exports', 'ember'], function (exports, _ember) {
@@ -476,7 +476,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+335bc01c"});
+  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+054c068c"});
 }
 
 /* jshint ignore:end */

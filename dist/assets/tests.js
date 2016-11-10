@@ -410,27 +410,6 @@ define('pvm/tests/unit/routes/application-test.jshint', ['exports'], function (e
     assert.ok(true, 'unit/routes/application-test.js should pass jshint.');
   });
 });
-define('pvm/tests/unit/routes/upload-video-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
-
-  (0, _emberQunit.moduleFor)('route:upload-video', 'Unit | Route | upload video', {
-    // Specify the other units that are required for this test.
-    // needs: ['controller:foo']
-  });
-
-  (0, _emberQunit.test)('it exists', function (assert) {
-    var route = this.subject();
-    assert.ok(route);
-  });
-});
-define('pvm/tests/unit/routes/upload-video-test.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | unit/routes/upload-video-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'unit/routes/upload-video-test.js should pass jshint.');
-  });
-});
 /* jshint ignore:start */
 
 require('pvm/tests/test-helper');
