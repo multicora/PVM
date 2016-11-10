@@ -17,4 +17,18 @@ module.exports.init = function (server) {
       }
     }
   });
+
+  server.route({
+    method: 'POST',
+    path: '/upload_video',
+    config: {
+      state: {
+        parse: true,
+        failAction: 'log'
+      },
+      handler:  function (request, reply) {
+        console.log('send');
+      }
+    }
+  });
 };

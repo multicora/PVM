@@ -1,5 +1,14 @@
 'use strict';
 
+define('pvm/tests/adapters/upload-video.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | adapters/upload-video.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'adapters/upload-video.js should pass jshint.');
+  });
+});
 define('pvm/tests/app.jshint', ['exports'], function (exports) {
   'use strict';
 
@@ -15,7 +24,16 @@ define('pvm/tests/components/upload-video.jshint', ['exports'], function (export
   QUnit.module('JSHint | components/upload-video.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/upload-video.js should pass jshint.\ncomponents/upload-video.js: line 10, col 11, \'file\' is defined but never used.\n\n1 error');
+    assert.ok(true, 'components/upload-video.js should pass jshint.');
+  });
+});
+define('pvm/tests/controllers/upload-video.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | controllers/upload-video.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'controllers/upload-video.js should pass jshint.');
   });
 });
 define('pvm/tests/helpers/destroy-app', ['exports', 'ember'], function (exports, _ember) {
@@ -289,7 +307,7 @@ define('pvm/tests/routes/application.jshint', ['exports'], function (exports) {
   QUnit.module('JSHint | routes/application.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/application.js should pass jshint.\nroutes/application.js: line 6, col 7, \'$\' is not defined.\n\n1 error');
+    assert.ok(true, 'routes/application.js should pass jshint.');
   });
 });
 define('pvm/tests/test-helper', ['exports', 'pvm/tests/helpers/resolver', 'ember-qunit'], function (exports, _pvmTestsHelpersResolver, _emberQunit) {
@@ -303,6 +321,50 @@ define('pvm/tests/test-helper.jshint', ['exports'], function (exports) {
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'test-helper.js should pass jshint.');
+  });
+});
+define('pvm/tests/unit/adapters/upload-video-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('adapter:upload-video', 'Unit | Adapter | upload video', {
+    // Specify the other units that are required for this test.
+    // needs: ['serializer:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var adapter = this.subject();
+    assert.ok(adapter);
+  });
+});
+define('pvm/tests/unit/adapters/upload-video-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/adapters/upload-video-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/adapters/upload-video-test.js should pass jshint.');
+  });
+});
+define('pvm/tests/unit/controllers/upload-video-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('controller:upload-video', 'Unit | Controller | upload video', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('pvm/tests/unit/controllers/upload-video-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/controllers/upload-video-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/upload-video-test.js should pass jshint.');
   });
 });
 define('pvm/tests/unit/models/upload-video-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
@@ -346,6 +408,27 @@ define('pvm/tests/unit/routes/application-test.jshint', ['exports'], function (e
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/application-test.js should pass jshint.');
+  });
+});
+define('pvm/tests/unit/routes/upload-video-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:upload-video', 'Unit | Route | upload video', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('pvm/tests/unit/routes/upload-video-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/upload-video-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/upload-video-test.js should pass jshint.');
   });
 });
 /* jshint ignore:start */

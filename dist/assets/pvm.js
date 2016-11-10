@@ -6,6 +6,11 @@
 
 /* jshint ignore:end */
 
+define('pvm/adapters/upload-video', ['exports', 'ember-data'], function (exports, _emberData) {
+  exports['default'] = _emberData['default'].RESTAdapter.extend({
+    hosts: 'http://localhost:8081'
+  });
+});
 define('pvm/app', ['exports', 'ember', 'pvm/resolver', 'ember-load-initializers', 'pvm/config/environment'], function (exports, _ember, _pvmResolver, _emberLoadInitializers, _pvmConfigEnvironment) {
 
   var App = undefined;
@@ -24,13 +29,33 @@ define('pvm/app', ['exports', 'ember', 'pvm/resolver', 'ember-load-initializers'
 });
 define('pvm/components/upload-video', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Component.extend({
+    // isShowen: true,
+    // actions: {
+    //   hidePopup() {
+    //     this.toggleProperty('isShowen');
+    //   },
+    //   upload(event) {
+    //     let file = event.target.files[0];
+    //     this.Store.update('video-update', file);
+    //   },
+    //   drop(event) {
+    //     event.preventDefault();
+    //     let file = event.dataTransfer.files[0];
+    //     console.log(file);
+    //   }
+    // }
+  });
+});
+define('pvm/controllers/upload-video', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Controller.extend({
     isShowen: true,
     actions: {
       hidePopup: function hidePopup() {
-        this.toggleProperty('isShowen');
+        this.set('isShowen', false);
       },
       upload: function upload(event) {
         var file = event.target.files[0];
+        this.Store.update('video-update', file);
       },
       drop: function drop(event) {
         event.preventDefault();
@@ -230,8 +255,7 @@ define("pvm/instance-initializers/ember-data", ["exports", "ember-data/-private/
 });
 define('pvm/models/upload-video', ['exports', 'ember-data'], function (exports, _emberData) {
   exports['default'] = _emberData['default'].Model.extend({
-    video: _emberData['default'].attr(),
-    userId: _emberData['default'].attr('string')
+    video: _emberData['default'].attr()
   });
 });
 define('pvm/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
@@ -244,26 +268,14 @@ define('pvm/router', ['exports', 'ember', 'pvm/config/environment'], function (e
     rootURL: _pvmConfigEnvironment['default'].rootURL
   });
 
-  Router.map(function () {});
+  Router.map(function () {
+    this.route('upload-video');
+  });
 
   exports['default'] = Router;
 });
 define('pvm/routes/application', ['exports', 'ember'], function (exports, _ember) {
-  exports['default'] = _ember['default'].Route.extend({
-    actions: {
-      confirm: function confirm(data) {
-        var _this = this;
-
-        $.ajax({
-          data: data,
-          method: 'POST',
-          url: '/save_video'
-        }).then(function (digitalInventory) {
-          _this.store.pushPayload(digitalInventory);
-        });
-      }
-    }
-  });
+  exports['default'] = _ember['default'].Route.extend({});
 });
 define('pvm/services/ajax', ['exports', 'ember-ajax/services/ajax'], function (exports, _emberAjaxServicesAjax) {
   Object.defineProperty(exports, 'default', {
