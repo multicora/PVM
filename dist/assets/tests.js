@@ -289,7 +289,7 @@ define('pvm/tests/routes/watch.jshint', ['exports'], function (exports) {
   QUnit.module('JSHint | routes/watch.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/watch.js should pass jshint.\nroutes/watch.js: line 10, col 9, \'id\' is defined but never used.\n\n1 error');
+    assert.ok(true, 'routes/watch.js should pass jshint.');
   });
 });
 define('pvm/tests/test-helper', ['exports', 'pvm/tests/helpers/resolver', 'ember-qunit'], function (exports, _pvmTestsHelpersResolver, _emberQunit) {

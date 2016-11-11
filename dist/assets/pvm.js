@@ -492,12 +492,14 @@ define('pvm/routes/watch', ['exports', 'ember'], function (exports, _ember) {
 
   var videos = [{
     id: '12312312312323',
-    name: 'Say hello to #GoogleAllo',
-    link: 'https://www.youtube.com/watch?v=VXEkoXgb4bI'
+    name: 'Roberto Goni',
+    message: 'Hello, my name is.....',
+    link: 'https://www.youtube.com/embed/VXEkoXgb4bI'
   }];
 
   exports['default'] = _ember['default'].Route.extend({
-    model: function model(id) {
+    model: function model() {
+      // model(id) {
       // return this.this.store.findRecord('video', id);
       return videos;
     }
@@ -596,6 +598,114 @@ define("pvm/templates/components/video-data", ["exports"], function (exports) {
 });
 define("pvm/templates/watch", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 13,
+              "column": 2
+            },
+            "end": {
+              "line": 29,
+              "column": 2
+            }
+          },
+          "moduleName": "pvm/templates/watch.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("    ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "video");
+          var el2 = dom.createTextNode("\n      ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "videoHeader");
+          var el3 = dom.createTextNode("\n        ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("div");
+          dom.setAttribute(el3, "class", "photo");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n        ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("div");
+          dom.setAttribute(el3, "class", "text");
+          var el4 = dom.createTextNode("\n          ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("p");
+          dom.setAttribute(el4, "class", "userName");
+          var el5 = dom.createComment("");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n          ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("p");
+          dom.setAttribute(el4, "class", "userMessage");
+          var el5 = dom.createComment("");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n        ");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n      ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n      ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("iframe");
+          dom.setAttribute(el2, "width", "640");
+          dom.setAttribute(el2, "height", "400");
+          dom.setAttribute(el2, "src", "https://www.youtube.com/embed/VXEkoXgb4bI");
+          dom.setAttribute(el2, "frameborder", "0");
+          dom.setAttribute(el2, "allowfullscreen", "");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n      ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "videoFooter");
+          var el3 = dom.createTextNode("\n        ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("button");
+          dom.setAttribute(el3, "class", "reply mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect");
+          var el4 = dom.createTextNode("\n          ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("img");
+          dom.setAttribute(el4, "src", "/assets/replyButton.png");
+          dom.setAttribute(el4, "alt", "");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n        ");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n      ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element0 = dom.childAt(fragment, [1, 1, 3]);
+          var morphs = new Array(2);
+          morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(element0, [3]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "videos.name", ["loc", [null, [18, 30], [18, 45]]], 0, 0, 0, 0], ["content", "videos.message", ["loc", [null, [19, 33], [19, 51]]], 0, 0, 0, 0]],
+        locals: ["videos"],
+        templates: []
+      };
+    })();
     return {
       meta: {
         "revision": "Ember@2.9.1",
@@ -606,7 +716,7 @@ define("pvm/templates/watch", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 29,
+            "line": 31,
             "column": 6
           }
         },
@@ -671,76 +781,11 @@ define("pvm/templates/watch", ["exports"], function (exports) {
         var el3 = dom.createTextNode("\n  ");
         dom.appendChild(el2, el3);
         dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n  ");
+        var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "video");
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "videoHeader");
-        var el4 = dom.createTextNode("\n      ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("div");
-        dom.setAttribute(el4, "class", "photo");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n      ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("div");
-        dom.setAttribute(el4, "class", "text");
-        var el5 = dom.createTextNode("\n        ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("p");
-        dom.setAttribute(el5, "class", "userName");
-        var el6 = dom.createTextNode("Roberto Goni");
-        dom.appendChild(el5, el6);
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n        ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("p");
-        dom.setAttribute(el5, "class", "userMessage");
-        var el6 = dom.createTextNode("Hello, my name is.....");
-        dom.appendChild(el5, el6);
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n      ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n    ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("iframe");
-        dom.setAttribute(el3, "width", "640");
-        dom.setAttribute(el3, "height", "400");
-        dom.setAttribute(el3, "src", "https://www.youtube.com/embed/VXEkoXgb4bI");
-        dom.setAttribute(el3, "frameborder", "0");
-        dom.setAttribute(el3, "allowfullscreen", "");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "videoFooter");
-        var el4 = dom.createTextNode("\n      ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("button");
-        dom.setAttribute(el4, "class", "reply mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect");
-        var el5 = dom.createTextNode("\n        ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("img");
-        dom.setAttribute(el5, "src", "/assets/replyButton.png");
-        dom.setAttribute(el5, "alt", "");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n      ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n    ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n  ");
-        dom.appendChild(el2, el3);
+        var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n  ");
+        var el2 = dom.createTextNode("  ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
         dom.setAttribute(el2, "class", "line");
@@ -750,12 +795,14 @@ define("pvm/templates/watch", ["exports"], function (exports) {
         dom.appendChild(el0, el1);
         return el0;
       },
-      buildRenderNodes: function buildRenderNodes() {
-        return [];
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]), 3, 3);
+        return morphs;
       },
-      statements: [],
+      statements: [["block", "each", [["get", "model", ["loc", [null, [13, 10], [13, 15]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [13, 2], [29, 11]]]]],
       locals: [],
-      templates: []
+      templates: [child0]
     };
   })());
 });

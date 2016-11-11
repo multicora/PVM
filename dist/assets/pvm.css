@@ -9726,8 +9726,7 @@ body {
       position: relative; }
       .watchVideoContainer .video .videoFooter .reply {
         margin: 10px 10px 0 0;
-        float: right;
-        background-color: #fff; }
+        float: right; }
   .watchVideoContainer .line {
     width: 80%;
     margin: 20px auto 0 auto;
