@@ -2,6 +2,7 @@
   "name": "project",
   "dependencies": {
     "ember": "~2.9.0",
-    "ember-cli-shims": "0.1.3"
+    "ember-cli-shims": "0.1.3",
+    "material-design-lite": "~1.0.4"
   }
 }

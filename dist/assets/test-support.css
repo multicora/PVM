@@ -438,12 +438,15 @@
 #ember-testing {
   width: 200%;
   height: 200%;
-  transform: scale(0.5);
-  transform-origin: top left;
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
 }
 
 .full-screen #ember-testing {
   position: absolute;
   width: 100%;
-  transform: scale(1);
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }

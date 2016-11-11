@@ -1,0 +1,101 @@
+@import 'material-design-lite';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.watchVideoContainer {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('/assets/layer.png');
+  background-size: cover;
+
+  header {
+    background-color:  rgba(250, 250, 250, 0.5);
+    box-shadow: 0px 0px 4.05px 0.95px rgba(0, 0, 0, 0.28);
+    width: 100%;
+    height: 63px;
+  }
+
+  .logo{
+    display: inline-block;
+
+    img {
+      width: 32px;
+      height: 31px;
+      line-height: 63px;
+      margin-left: 20px;
+      vertical-align: middle;
+    }
+
+    .logoText {
+      color:  rgba(0, 0, 0, 0.65);
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 63px;
+      vertical-align: middle;
+    }
+  }
+
+  .video {
+    border-radius: 2px;
+    background-color:  rgba(250, 250, 250, 0.5);
+    box-shadow: 4px 7px 13.12px 2.88px rgba(0, 0, 0, 0.35);
+    width: 640px;
+    height: 546px;
+    margin: 20px auto 0 auto;
+    
+    .videoHeader {
+      padding-top: 10px;
+      height: 54px;
+
+      .photo {
+        width: 38px;
+        height: 40px;
+        border-radius: 20px;
+        background-image: url('/assets/user.png');
+        margin-left: 10px;
+        display: inline-block;
+      }
+
+      .text {
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      .userName,
+      .userMessage {
+        color:  rgba(0, 0, 0, 0.65);
+        font-weight: 600;
+        margin-bottom: 0;
+      }
+
+      .userName {
+        font-size: 18px;
+      }
+
+      .userMessage {
+        font-size: 15px
+      }
+    }
+
+    .videoFooter {
+      height: 84px;
+      position: relative;
+
+      .reply {
+        margin: 10px 10px 0 0;
+        float: right;
+        background-color: #fff;
+      }
+    }
+
+  }
+
+  .line {
+    width: 80%;
+    margin: 20px auto 0 auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.54);
+  }
+}

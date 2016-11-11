@@ -1,6 +1,6 @@
 /* jshint ignore:start */
 
-window.EmberENV = {"FEATURES":{},"EXTEND_PROTOTYPES":{"Date":false}};
+window.EmberENV = {"FEATURES":{}};
 var runningTests = false;
 
 
@@ -64207,6 +64207,3925 @@ requireModule("ember");
   generateModule('rsvp', { 'default': Ember.RSVP });
 })();
 
+;/*jshint node:true*/
+(function() {
+  'use strict';
+  window._materialLiteRegistrations = [];
+  window.componentHandler = {
+    register: function(config) {
+      window._materialLiteRegistrations.push(config);
+    }
+  };
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Button MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialButton = function MaterialButton(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialButton'] = MaterialButton;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialButton.prototype.Constant_ = {
+    // None for now.
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialButton.prototype.CssClasses_ = {
+    RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    RIPPLE_CONTAINER: 'mdl-button__ripple-container',
+    RIPPLE: 'mdl-ripple'
+  };
+
+  /**
+   * Handle blur of element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialButton.prototype.blurHandler_ = function(event) {
+    if (event) {
+      this.element_.blur();
+    }
+  };
+
+  // Public methods.
+
+  /**
+   * Disable button.
+   *
+   * @public
+   */
+  MaterialButton.prototype.disable = function() {
+    this.element_.disabled = true;
+  };
+  MaterialButton.prototype['disable'] = MaterialButton.prototype.disable;
+
+  /**
+   * Enable button.
+   *
+   * @public
+   */
+  MaterialButton.prototype.enable = function() {
+    this.element_.disabled = false;
+  };
+  MaterialButton.prototype['enable'] = MaterialButton.prototype.enable;
+
+  /**
+   * Initialize element.
+   */
+  MaterialButton.prototype.init = function() {
+    if (this.element_) {
+      if (this.element_.classList.contains(this.CssClasses_.RIPPLE_EFFECT)) {
+        var rippleContainer = document.createElement('span');
+        rippleContainer.classList.add(this.CssClasses_.RIPPLE_CONTAINER);
+        this.rippleElement_ = document.createElement('span');
+        this.rippleElement_.classList.add(this.CssClasses_.RIPPLE);
+        rippleContainer.appendChild(this.rippleElement_);
+        this.boundRippleBlurHandler = this.blurHandler_.bind(this);
+        this.rippleElement_.addEventListener('mouseup', this.boundRippleBlurHandler);
+        this.element_.appendChild(rippleContainer);
+      }
+      this.boundButtonBlurHandler = this.blurHandler_.bind(this);
+      this.element_.addEventListener('mouseup', this.boundButtonBlurHandler);
+      this.element_.addEventListener('mouseleave', this.boundButtonBlurHandler);
+    }
+  };
+
+  /**
+   * Downgrade the element.
+   *
+   * @private
+   */
+  MaterialButton.prototype.mdlDowngrade_ = function() {
+    if (this.rippleElement_) {
+      this.rippleElement_.removeEventListener('mouseup', this.boundRippleBlurHandler);
+    }
+    this.element_.removeEventListener('mouseup', this.boundButtonBlurHandler);
+    this.element_.removeEventListener('mouseleave', this.boundButtonBlurHandler);
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialButton.prototype.mdlDowngrade =
+      MaterialButton.prototype.mdlDowngrade_;
+
+  MaterialButton.prototype['mdlDowngrade'] =
+      MaterialButton.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialButton,
+    classAsString: 'MaterialButton',
+    cssClass: 'mdl-js-button',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Checkbox MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialCheckbox = function MaterialCheckbox(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialCheckbox'] = MaterialCheckbox;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialCheckbox.prototype.Constant_ = {
+    TINY_TIMEOUT: 0.001
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialCheckbox.prototype.CssClasses_ = {
+    INPUT: 'mdl-checkbox__input',
+    BOX_OUTLINE: 'mdl-checkbox__box-outline',
+    FOCUS_HELPER: 'mdl-checkbox__focus-helper',
+    TICK_OUTLINE: 'mdl-checkbox__tick-outline',
+    RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    RIPPLE_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events',
+    RIPPLE_CONTAINER: 'mdl-checkbox__ripple-container',
+    RIPPLE_CENTER: 'mdl-ripple--center',
+    RIPPLE: 'mdl-ripple',
+    IS_FOCUSED: 'is-focused',
+    IS_DISABLED: 'is-disabled',
+    IS_CHECKED: 'is-checked',
+    IS_UPGRADED: 'is-upgraded'
+  };
+
+  /**
+   * Handle change of state.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialCheckbox.prototype.onChange_ = function(event) {
+    this.updateClasses_();
+  };
+
+  /**
+   * Handle focus of element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialCheckbox.prototype.onFocus_ = function(event) {
+    this.element_.classList.add(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle lost focus of element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialCheckbox.prototype.onBlur_ = function(event) {
+    this.element_.classList.remove(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle mouseup.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialCheckbox.prototype.onMouseUp_ = function(event) {
+    this.blur_();
+  };
+
+  /**
+   * Handle class updates.
+   *
+   * @private
+   */
+  MaterialCheckbox.prototype.updateClasses_ = function() {
+    this.checkDisabled();
+    this.checkToggleState();
+  };
+
+  /**
+   * Add blur.
+   *
+   * @private
+   */
+  MaterialCheckbox.prototype.blur_ = function() {
+    // TODO: figure out why there's a focus event being fired after our blur,
+    // so that we can avoid this hack.
+    window.setTimeout(function() {
+      this.inputElement_.blur();
+    }.bind(this), /** @type {number} */ (this.Constant_.TINY_TIMEOUT));
+  };
+
+  // Public methods.
+
+  /**
+   * Check the inputs toggle state and update display.
+   *
+   * @public
+   */
+  MaterialCheckbox.prototype.checkToggleState = function() {
+    if (this.inputElement_.checked) {
+      this.element_.classList.add(this.CssClasses_.IS_CHECKED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_CHECKED);
+    }
+  };
+  MaterialCheckbox.prototype['checkToggleState'] =
+      MaterialCheckbox.prototype.checkToggleState;
+
+  /**
+   * Check the inputs disabled state and update display.
+   *
+   * @public
+   */
+  MaterialCheckbox.prototype.checkDisabled = function() {
+    if (this.inputElement_.disabled) {
+      this.element_.classList.add(this.CssClasses_.IS_DISABLED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_DISABLED);
+    }
+  };
+  MaterialCheckbox.prototype['checkDisabled'] =
+      MaterialCheckbox.prototype.checkDisabled;
+
+  /**
+   * Disable checkbox.
+   *
+   * @public
+   */
+  MaterialCheckbox.prototype.disable = function() {
+    this.inputElement_.disabled = true;
+    this.updateClasses_();
+  };
+  MaterialCheckbox.prototype['disable'] = MaterialCheckbox.prototype.disable;
+
+  /**
+   * Enable checkbox.
+   *
+   * @public
+   */
+  MaterialCheckbox.prototype.enable = function() {
+    this.inputElement_.disabled = false;
+    this.updateClasses_();
+  };
+  MaterialCheckbox.prototype['enable'] = MaterialCheckbox.prototype.enable;
+
+  /**
+   * Check checkbox.
+   *
+   * @public
+   */
+  MaterialCheckbox.prototype.check = function() {
+    this.inputElement_.checked = true;
+    this.updateClasses_();
+  };
+  MaterialCheckbox.prototype['check'] = MaterialCheckbox.prototype.check;
+
+  /**
+   * Uncheck checkbox.
+   *
+   * @public
+   */
+  MaterialCheckbox.prototype.uncheck = function() {
+    this.inputElement_.checked = false;
+    this.updateClasses_();
+  };
+  MaterialCheckbox.prototype['uncheck'] = MaterialCheckbox.prototype.uncheck;
+
+  /**
+   * Initialize element.
+   */
+  MaterialCheckbox.prototype.init = function() {
+    if (this.element_) {
+      this.inputElement_ = this.element_.querySelector('.' +
+          this.CssClasses_.INPUT);
+
+      var boxOutline = document.createElement('span');
+      boxOutline.classList.add(this.CssClasses_.BOX_OUTLINE);
+
+      var tickContainer = document.createElement('span');
+      tickContainer.classList.add(this.CssClasses_.FOCUS_HELPER);
+
+      var tickOutline = document.createElement('span');
+      tickOutline.classList.add(this.CssClasses_.TICK_OUTLINE);
+
+      boxOutline.appendChild(tickOutline);
+
+      this.element_.appendChild(tickContainer);
+      this.element_.appendChild(boxOutline);
+
+      if (this.element_.classList.contains(this.CssClasses_.RIPPLE_EFFECT)) {
+        this.element_.classList.add(this.CssClasses_.RIPPLE_IGNORE_EVENTS);
+        this.rippleContainerElement_ = document.createElement('span');
+        this.rippleContainerElement_.classList.add(this.CssClasses_.RIPPLE_CONTAINER);
+        this.rippleContainerElement_.classList.add(this.CssClasses_.RIPPLE_EFFECT);
+        this.rippleContainerElement_.classList.add(this.CssClasses_.RIPPLE_CENTER);
+        this.boundRippleMouseUp = this.onMouseUp_.bind(this);
+        this.rippleContainerElement_.addEventListener('mouseup', this.boundRippleMouseUp);
+
+        var ripple = document.createElement('span');
+        ripple.classList.add(this.CssClasses_.RIPPLE);
+
+        this.rippleContainerElement_.appendChild(ripple);
+        this.element_.appendChild(this.rippleContainerElement_);
+      }
+      this.boundInputOnChange = this.onChange_.bind(this);
+      this.boundInputOnFocus = this.onFocus_.bind(this);
+      this.boundInputOnBlur = this.onBlur_.bind(this);
+      this.boundElementMouseUp = this.onMouseUp_.bind(this);
+      this.inputElement_.addEventListener('change', this.boundInputOnChange);
+      this.inputElement_.addEventListener('focus', this.boundInputOnFocus);
+      this.inputElement_.addEventListener('blur', this.boundInputOnBlur);
+      this.element_.addEventListener('mouseup', this.boundElementMouseUp);
+
+      this.updateClasses_();
+      this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
+    }
+  };
+
+  /**
+   * Downgrade the component.
+   *
+   * @private
+   */
+  MaterialCheckbox.prototype.mdlDowngrade_ = function() {
+    if (this.rippleContainerElement_) {
+      this.rippleContainerElement_.removeEventListener('mouseup', this.boundRippleMouseUp);
+    }
+    this.inputElement_.removeEventListener('change', this.boundInputOnChange);
+    this.inputElement_.removeEventListener('focus', this.boundInputOnFocus);
+    this.inputElement_.removeEventListener('blur', this.boundInputOnBlur);
+    this.element_.removeEventListener('mouseup', this.boundElementMouseUp);
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialCheckbox.prototype.mdlDowngrade =
+      MaterialCheckbox.prototype.mdlDowngrade_;
+
+  MaterialCheckbox.prototype['mdlDowngrade'] =
+      MaterialCheckbox.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialCheckbox,
+    classAsString: 'MaterialCheckbox',
+    cssClass: 'mdl-js-checkbox',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Data Table Card MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialDataTable = function MaterialDataTable(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+
+  window['MaterialDataTable'] = MaterialDataTable;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialDataTable.prototype.Constant_ = {
+    // None at the moment.
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialDataTable.prototype.CssClasses_ = {
+    DATA_TABLE: 'mdl-data-table',
+    SELECTABLE: 'mdl-data-table--selectable',
+    SELECT_ELEMENT: 'mdl-data-table__select',
+    IS_SELECTED: 'is-selected',
+    IS_UPGRADED: 'is-upgraded'
+  };
+
+  /**
+   * Generates and returns a function that toggles the selection state of a
+   * single row (or multiple rows).
+   *
+   * @param {Element} checkbox Checkbox that toggles the selection state.
+   * @param {HTMLElement} row Row to toggle when checkbox changes.
+   * @param {(Array<Object>|NodeList)=} opt_rows Rows to toggle when checkbox changes.
+   * @private
+   */
+  MaterialDataTable.prototype.selectRow_ = function(checkbox, row, opt_rows) {
+    if (row) {
+      return function() {
+        if (checkbox.checked) {
+          row.classList.add(this.CssClasses_.IS_SELECTED);
+        } else {
+          row.classList.remove(this.CssClasses_.IS_SELECTED);
+        }
+      }.bind(this);
+    }
+
+    if (opt_rows) {
+      return function() {
+        var i;
+        var el;
+        if (checkbox.checked) {
+          for (i = 0; i < opt_rows.length; i++) {
+            el = opt_rows[i].querySelector('td').querySelector('.mdl-checkbox');
+            el['MaterialCheckbox'].check();
+            opt_rows[i].classList.add(this.CssClasses_.IS_SELECTED);
+          }
+        } else {
+          for (i = 0; i < opt_rows.length; i++) {
+            el = opt_rows[i].querySelector('td').querySelector('.mdl-checkbox');
+            el['MaterialCheckbox'].uncheck();
+            opt_rows[i].classList.remove(this.CssClasses_.IS_SELECTED);
+          }
+        }
+      }.bind(this);
+    }
+  };
+
+  /**
+   * Creates a checkbox for a single or or multiple rows and hooks up the
+   * event handling.
+   *
+   * @param {HTMLElement} row Row to toggle when checkbox changes.
+   * @param {(Array<Object>|NodeList)=} opt_rows Rows to toggle when checkbox changes.
+   * @private
+   */
+  MaterialDataTable.prototype.createCheckbox_ = function(row, opt_rows) {
+    var label = document.createElement('label');
+    var labelClasses = [
+      'mdl-checkbox',
+      'mdl-js-checkbox',
+      'mdl-js-ripple-effect',
+      this.CssClasses_.SELECT_ELEMENT
+    ];
+    label.className = labelClasses.join(' ');
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.classList.add('mdl-checkbox__input');
+    checkbox.addEventListener('change',
+        this.selectRow_(checkbox, row, opt_rows));
+
+    label.appendChild(checkbox);
+    componentHandler.upgradeElement(label, 'MaterialCheckbox');
+    return label;
+  };
+
+  /**
+   * Initialize element.
+   */
+  MaterialDataTable.prototype.init = function() {
+    if (this.element_) {
+      var firstHeader = this.element_.querySelector('th');
+      var rows = this.element_.querySelector('tbody').querySelectorAll('tr');
+
+      if (this.element_.classList.contains(this.CssClasses_.SELECTABLE)) {
+        var th = document.createElement('th');
+        var headerCheckbox = this.createCheckbox_(null, rows);
+        th.appendChild(headerCheckbox);
+        firstHeader.parentElement.insertBefore(th, firstHeader);
+
+        for (var i = 0; i < rows.length; i++) {
+          var firstCell = rows[i].querySelector('td');
+          if (firstCell) {
+            var td = document.createElement('td');
+            var rowCheckbox = this.createCheckbox_(rows[i]);
+            td.appendChild(rowCheckbox);
+            rows[i].insertBefore(td, firstCell);
+          }
+        }
+      }
+
+      this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
+    }
+  };
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialDataTable,
+    classAsString: 'MaterialDataTable',
+    cssClass: 'mdl-js-data-table'
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for icon toggle MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialIconToggle = function MaterialIconToggle(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialIconToggle'] = MaterialIconToggle;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialIconToggle.prototype.Constant_ = {
+    TINY_TIMEOUT: 0.001
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialIconToggle.prototype.CssClasses_ = {
+    INPUT: 'mdl-icon-toggle__input',
+    JS_RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    RIPPLE_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events',
+    RIPPLE_CONTAINER: 'mdl-icon-toggle__ripple-container',
+    RIPPLE_CENTER: 'mdl-ripple--center',
+    RIPPLE: 'mdl-ripple',
+    IS_FOCUSED: 'is-focused',
+    IS_DISABLED: 'is-disabled',
+    IS_CHECKED: 'is-checked'
+  };
+
+  /**
+   * Handle change of state.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialIconToggle.prototype.onChange_ = function(event) {
+    this.updateClasses_();
+  };
+
+  /**
+   * Handle focus of element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialIconToggle.prototype.onFocus_ = function(event) {
+    this.element_.classList.add(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle lost focus of element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialIconToggle.prototype.onBlur_ = function(event) {
+    this.element_.classList.remove(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle mouseup.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialIconToggle.prototype.onMouseUp_ = function(event) {
+    this.blur_();
+  };
+
+  /**
+   * Handle class updates.
+   *
+   * @private
+   */
+  MaterialIconToggle.prototype.updateClasses_ = function() {
+    this.checkDisabled();
+    this.checkToggleState();
+  };
+
+  /**
+   * Add blur.
+   *
+   * @private
+   */
+  MaterialIconToggle.prototype.blur_ = function() {
+    // TODO: figure out why there's a focus event being fired after our blur,
+    // so that we can avoid this hack.
+    window.setTimeout(function() {
+      this.inputElement_.blur();
+    }.bind(this), /** @type {number} */ (this.Constant_.TINY_TIMEOUT));
+  };
+
+  // Public methods.
+
+  /**
+   * Check the inputs toggle state and update display.
+   *
+   * @public
+   */
+  MaterialIconToggle.prototype.checkToggleState = function() {
+    if (this.inputElement_.checked) {
+      this.element_.classList.add(this.CssClasses_.IS_CHECKED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_CHECKED);
+    }
+  };
+  MaterialIconToggle.prototype['checkToggleState'] =
+      MaterialIconToggle.prototype.checkToggleState;
+
+  /**
+   * Check the inputs disabled state and update display.
+   *
+   * @public
+   */
+  MaterialIconToggle.prototype.checkDisabled = function() {
+    if (this.inputElement_.disabled) {
+      this.element_.classList.add(this.CssClasses_.IS_DISABLED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_DISABLED);
+    }
+  };
+  MaterialIconToggle.prototype['checkDisabled'] =
+      MaterialIconToggle.prototype.checkDisabled;
+
+  /**
+   * Disable icon toggle.
+   *
+   * @public
+   */
+  MaterialIconToggle.prototype.disable = function() {
+    this.inputElement_.disabled = true;
+    this.updateClasses_();
+  };
+  MaterialIconToggle.prototype['disable'] =
+      MaterialIconToggle.prototype.disable;
+
+  /**
+   * Enable icon toggle.
+   *
+   * @public
+   */
+  MaterialIconToggle.prototype.enable = function() {
+    this.inputElement_.disabled = false;
+    this.updateClasses_();
+  };
+  MaterialIconToggle.prototype['enable'] = MaterialIconToggle.prototype.enable;
+
+  /**
+   * Check icon toggle.
+   *
+   * @public
+   */
+  MaterialIconToggle.prototype.check = function() {
+    this.inputElement_.checked = true;
+    this.updateClasses_();
+  };
+  MaterialIconToggle.prototype['check'] = MaterialIconToggle.prototype.check;
+
+  /**
+   * Uncheck icon toggle.
+   *
+   * @public
+   */
+  MaterialIconToggle.prototype.uncheck = function() {
+    this.inputElement_.checked = false;
+    this.updateClasses_();
+  };
+  MaterialIconToggle.prototype['uncheck'] =
+      MaterialIconToggle.prototype.uncheck;
+
+  /**
+   * Initialize element.
+   */
+  MaterialIconToggle.prototype.init = function() {
+
+    if (this.element_) {
+      this.inputElement_ =
+          this.element_.querySelector('.' + this.CssClasses_.INPUT);
+
+      if (this.element_.classList.contains(this.CssClasses_.JS_RIPPLE_EFFECT)) {
+        this.element_.classList.add(this.CssClasses_.RIPPLE_IGNORE_EVENTS);
+        this.rippleContainerElement_ = document.createElement('span');
+        this.rippleContainerElement_.classList.add(this.CssClasses_.RIPPLE_CONTAINER);
+        this.rippleContainerElement_.classList.add(this.CssClasses_.JS_RIPPLE_EFFECT);
+        this.rippleContainerElement_.classList.add(this.CssClasses_.RIPPLE_CENTER);
+        this.boundRippleMouseUp = this.onMouseUp_.bind(this);
+        this.rippleContainerElement_.addEventListener('mouseup', this.boundRippleMouseUp);
+
+        var ripple = document.createElement('span');
+        ripple.classList.add(this.CssClasses_.RIPPLE);
+
+        this.rippleContainerElement_.appendChild(ripple);
+        this.element_.appendChild(this.rippleContainerElement_);
+      }
+
+      this.boundInputOnChange = this.onChange_.bind(this);
+      this.boundInputOnFocus = this.onFocus_.bind(this);
+      this.boundInputOnBlur = this.onBlur_.bind(this);
+      this.boundElementOnMouseUp = this.onMouseUp_.bind(this);
+      this.inputElement_.addEventListener('change', this.boundInputOnChange);
+      this.inputElement_.addEventListener('focus', this.boundInputOnFocus);
+      this.inputElement_.addEventListener('blur', this.boundInputOnBlur);
+      this.element_.addEventListener('mouseup', this.boundElementOnMouseUp);
+
+      this.updateClasses_();
+      this.element_.classList.add('is-upgraded');
+    }
+  };
+
+  /**
+   * Downgrade the component
+   *
+   * @private
+   */
+  MaterialIconToggle.prototype.mdlDowngrade_ = function() {
+    if (this.rippleContainerElement_) {
+      this.rippleContainerElement_.removeEventListener('mouseup', this.boundRippleMouseUp);
+    }
+    this.inputElement_.removeEventListener('change', this.boundInputOnChange);
+    this.inputElement_.removeEventListener('focus', this.boundInputOnFocus);
+    this.inputElement_.removeEventListener('blur', this.boundInputOnBlur);
+    this.element_.removeEventListener('mouseup', this.boundElementOnMouseUp);
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialIconToggle.prototype.mdlDowngrade =
+      MaterialIconToggle.prototype.mdlDowngrade_;
+
+  MaterialIconToggle.prototype['mdlDowngrade'] =
+      MaterialIconToggle.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialIconToggle,
+    classAsString: 'MaterialIconToggle',
+    cssClass: 'mdl-js-icon-toggle',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Layout MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialLayout = function MaterialLayout(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialLayout'] = MaterialLayout;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialLayout.prototype.Constant_ = {
+    MAX_WIDTH: '(max-width: 1024px)',
+    TAB_SCROLL_PIXELS: 100,
+
+    MENU_ICON: 'menu',
+    CHEVRON_LEFT: 'chevron_left',
+    CHEVRON_RIGHT: 'chevron_right'
+  };
+
+  /**
+   * Modes.
+   *
+   * @enum {number}
+   * @private
+   */
+  MaterialLayout.prototype.Mode_ = {
+    STANDARD: 0,
+    SEAMED: 1,
+    WATERFALL: 2,
+    SCROLL: 3
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialLayout.prototype.CssClasses_ = {
+    CONTAINER: 'mdl-layout__container',
+    HEADER: 'mdl-layout__header',
+    DRAWER: 'mdl-layout__drawer',
+    CONTENT: 'mdl-layout__content',
+    DRAWER_BTN: 'mdl-layout__drawer-button',
+
+    ICON: 'material-icons',
+
+    JS_RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    RIPPLE_CONTAINER: 'mdl-layout__tab-ripple-container',
+    RIPPLE: 'mdl-ripple',
+    RIPPLE_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events',
+
+    HEADER_SEAMED: 'mdl-layout__header--seamed',
+    HEADER_WATERFALL: 'mdl-layout__header--waterfall',
+    HEADER_SCROLL: 'mdl-layout__header--scroll',
+
+    FIXED_HEADER: 'mdl-layout--fixed-header',
+    OBFUSCATOR: 'mdl-layout__obfuscator',
+
+    TAB_BAR: 'mdl-layout__tab-bar',
+    TAB_CONTAINER: 'mdl-layout__tab-bar-container',
+    TAB: 'mdl-layout__tab',
+    TAB_BAR_BUTTON: 'mdl-layout__tab-bar-button',
+    TAB_BAR_LEFT_BUTTON: 'mdl-layout__tab-bar-left-button',
+    TAB_BAR_RIGHT_BUTTON: 'mdl-layout__tab-bar-right-button',
+    PANEL: 'mdl-layout__tab-panel',
+
+    HAS_DRAWER: 'has-drawer',
+    HAS_TABS: 'has-tabs',
+    HAS_SCROLLING_HEADER: 'has-scrolling-header',
+    CASTING_SHADOW: 'is-casting-shadow',
+    IS_COMPACT: 'is-compact',
+    IS_SMALL_SCREEN: 'is-small-screen',
+    IS_DRAWER_OPEN: 'is-visible',
+    IS_ACTIVE: 'is-active',
+    IS_UPGRADED: 'is-upgraded',
+    IS_ANIMATING: 'is-animating',
+
+    ON_LARGE_SCREEN: 'mdl-layout--large-screen-only',
+    ON_SMALL_SCREEN: 'mdl-layout--small-screen-only'
+
+  };
+
+  /**
+   * Handles scrolling on the content.
+   *
+   * @private
+   */
+  MaterialLayout.prototype.contentScrollHandler_ = function() {
+    if (this.header_.classList.contains(this.CssClasses_.IS_ANIMATING)) {
+      return;
+    }
+
+    if (this.content_.scrollTop > 0 &&
+        !this.header_.classList.contains(this.CssClasses_.IS_COMPACT)) {
+      this.header_.classList.add(this.CssClasses_.CASTING_SHADOW);
+      this.header_.classList.add(this.CssClasses_.IS_COMPACT);
+      this.header_.classList.add(this.CssClasses_.IS_ANIMATING);
+    } else if (this.content_.scrollTop <= 0 &&
+        this.header_.classList.contains(this.CssClasses_.IS_COMPACT)) {
+      this.header_.classList.remove(this.CssClasses_.CASTING_SHADOW);
+      this.header_.classList.remove(this.CssClasses_.IS_COMPACT);
+      this.header_.classList.add(this.CssClasses_.IS_ANIMATING);
+    }
+  };
+
+  /**
+   * Handles changes in screen size.
+   *
+   * @private
+   */
+  MaterialLayout.prototype.screenSizeHandler_ = function() {
+    if (this.screenSizeMediaQuery_.matches) {
+      this.element_.classList.add(this.CssClasses_.IS_SMALL_SCREEN);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_SMALL_SCREEN);
+      // Collapse drawer (if any) when moving to a large screen size.
+      if (this.drawer_) {
+        this.drawer_.classList.remove(this.CssClasses_.IS_DRAWER_OPEN);
+        this.obfuscator_.classList.remove(this.CssClasses_.IS_DRAWER_OPEN);
+      }
+    }
+  };
+
+  /**
+   * Handles toggling of the drawer.
+   *
+   * @private
+   */
+  MaterialLayout.prototype.drawerToggleHandler_ = function() {
+    this.drawer_.classList.toggle(this.CssClasses_.IS_DRAWER_OPEN);
+    this.obfuscator_.classList.toggle(this.CssClasses_.IS_DRAWER_OPEN);
+  };
+
+  /**
+   * Handles (un)setting the `is-animating` class
+   *
+   * @private
+   */
+  MaterialLayout.prototype.headerTransitionEndHandler_ = function() {
+    this.header_.classList.remove(this.CssClasses_.IS_ANIMATING);
+  };
+
+  /**
+   * Handles expanding the header on click
+   *
+   * @private
+   */
+  MaterialLayout.prototype.headerClickHandler_ = function() {
+    if (this.header_.classList.contains(this.CssClasses_.IS_COMPACT)) {
+      this.header_.classList.remove(this.CssClasses_.IS_COMPACT);
+      this.header_.classList.add(this.CssClasses_.IS_ANIMATING);
+    }
+  };
+
+  /**
+   * Reset tab state, dropping active classes
+   *
+   * @private
+   */
+  MaterialLayout.prototype.resetTabState_ = function(tabBar) {
+    for (var k = 0; k < tabBar.length; k++) {
+      tabBar[k].classList.remove(this.CssClasses_.IS_ACTIVE);
+    }
+  };
+
+  /**
+   * Reset panel state, droping active classes
+   *
+   * @private
+   */
+  MaterialLayout.prototype.resetPanelState_ = function(panels) {
+    for (var j = 0; j < panels.length; j++) {
+      panels[j].classList.remove(this.CssClasses_.IS_ACTIVE);
+    }
+  };
+
+  /**
+   * Initialize element.
+   */
+  MaterialLayout.prototype.init = function() {
+    if (this.element_) {
+      var container = document.createElement('div');
+      container.classList.add(this.CssClasses_.CONTAINER);
+      this.element_.parentElement.insertBefore(container, this.element_);
+      this.element_.parentElement.removeChild(this.element_);
+      container.appendChild(this.element_);
+
+      var directChildren = this.element_.childNodes;
+      var numChildren = directChildren.length;
+      for (var c = 0; c < numChildren; c++) {
+        var child = directChildren[c];
+        if (child.classList &&
+            child.classList.contains(this.CssClasses_.HEADER)) {
+          this.header_ = child;
+        }
+
+        if (child.classList &&
+            child.classList.contains(this.CssClasses_.DRAWER)) {
+          this.drawer_ = child;
+        }
+
+        if (child.classList &&
+            child.classList.contains(this.CssClasses_.CONTENT)) {
+          this.content_ = child;
+        }
+      }
+
+      if (this.header_) {
+        this.tabBar_ = this.header_.querySelector('.' + this.CssClasses_.TAB_BAR);
+      }
+
+      var mode = this.Mode_.STANDARD;
+
+      if (this.header_) {
+        if (this.header_.classList.contains(this.CssClasses_.HEADER_SEAMED)) {
+          mode = this.Mode_.SEAMED;
+        } else if (this.header_.classList.contains(
+            this.CssClasses_.HEADER_WATERFALL)) {
+          mode = this.Mode_.WATERFALL;
+          this.header_.addEventListener('transitionend',
+            this.headerTransitionEndHandler_.bind(this));
+          this.header_.addEventListener('click',
+            this.headerClickHandler_.bind(this));
+        } else if (this.header_.classList.contains(
+            this.CssClasses_.HEADER_SCROLL)) {
+          mode = this.Mode_.SCROLL;
+          container.classList.add(this.CssClasses_.HAS_SCROLLING_HEADER);
+        }
+
+        if (mode === this.Mode_.STANDARD) {
+          this.header_.classList.add(this.CssClasses_.CASTING_SHADOW);
+          if (this.tabBar_) {
+            this.tabBar_.classList.add(this.CssClasses_.CASTING_SHADOW);
+          }
+        } else if (mode === this.Mode_.SEAMED || mode === this.Mode_.SCROLL) {
+          this.header_.classList.remove(this.CssClasses_.CASTING_SHADOW);
+          if (this.tabBar_) {
+            this.tabBar_.classList.remove(this.CssClasses_.CASTING_SHADOW);
+          }
+        } else if (mode === this.Mode_.WATERFALL) {
+          // Add and remove shadows depending on scroll position.
+          // Also add/remove auxiliary class for styling of the compact version of
+          // the header.
+          this.content_.addEventListener('scroll',
+              this.contentScrollHandler_.bind(this));
+          this.contentScrollHandler_();
+        }
+      }
+
+      // Add drawer toggling button to our layout, if we have an openable drawer.
+      if (this.drawer_) {
+        var drawerButton = this.element_.querySelector('.' +
+          this.CssClasses_.DRAWER_BTN);
+        if (!drawerButton) {
+          drawerButton = document.createElement('div');
+          drawerButton.classList.add(this.CssClasses_.DRAWER_BTN);
+
+          var drawerButtonIcon = document.createElement('i');
+          drawerButtonIcon.classList.add(this.CssClasses_.ICON);
+          drawerButtonIcon.textContent = this.Constant_.MENU_ICON;
+          drawerButton.appendChild(drawerButtonIcon);
+        }
+
+        if (this.drawer_.classList.contains(this.CssClasses_.ON_LARGE_SCREEN)) {
+          //If drawer has ON_LARGE_SCREEN class then add it to the drawer toggle button as well.
+          drawerButton.classList.add(this.CssClasses_.ON_LARGE_SCREEN);
+        } else if (this.drawer_.classList.contains(this.CssClasses_.ON_SMALL_SCREEN)) {
+          //If drawer has ON_SMALL_SCREEN class then add it to the drawer toggle button as well.
+          drawerButton.classList.add(this.CssClasses_.ON_SMALL_SCREEN);
+        }
+
+        drawerButton.addEventListener('click',
+            this.drawerToggleHandler_.bind(this));
+
+        // Add a class if the layout has a drawer, for altering the left padding.
+        // Adds the HAS_DRAWER to the elements since this.header_ may or may
+        // not be present.
+        this.element_.classList.add(this.CssClasses_.HAS_DRAWER);
+
+        // If we have a fixed header, add the button to the header rather than
+        // the layout.
+        if (this.element_.classList.contains(this.CssClasses_.FIXED_HEADER)) {
+          this.header_.insertBefore(drawerButton, this.header_.firstChild);
+        } else {
+          this.element_.insertBefore(drawerButton, this.content_);
+        }
+
+        var obfuscator = document.createElement('div');
+        obfuscator.classList.add(this.CssClasses_.OBFUSCATOR);
+        this.element_.appendChild(obfuscator);
+        obfuscator.addEventListener('click',
+            this.drawerToggleHandler_.bind(this));
+        this.obfuscator_ = obfuscator;
+      }
+
+      // Keep an eye on screen size, and add/remove auxiliary class for styling
+      // of small screens.
+      this.screenSizeMediaQuery_ = window.matchMedia(
+          /** @type {string} */ (this.Constant_.MAX_WIDTH));
+      this.screenSizeMediaQuery_.addListener(this.screenSizeHandler_.bind(this));
+      this.screenSizeHandler_();
+
+      // Initialize tabs, if any.
+      if (this.header_ && this.tabBar_) {
+        this.element_.classList.add(this.CssClasses_.HAS_TABS);
+
+        var tabContainer = document.createElement('div');
+        tabContainer.classList.add(this.CssClasses_.TAB_CONTAINER);
+        this.header_.insertBefore(tabContainer, this.tabBar_);
+        this.header_.removeChild(this.tabBar_);
+
+        var leftButton = document.createElement('div');
+        leftButton.classList.add(this.CssClasses_.TAB_BAR_BUTTON);
+        leftButton.classList.add(this.CssClasses_.TAB_BAR_LEFT_BUTTON);
+        var leftButtonIcon = document.createElement('i');
+        leftButtonIcon.classList.add(this.CssClasses_.ICON);
+        leftButtonIcon.textContent = this.Constant_.CHEVRON_LEFT;
+        leftButton.appendChild(leftButtonIcon);
+        leftButton.addEventListener('click', function() {
+          this.tabBar_.scrollLeft -= this.Constant_.TAB_SCROLL_PIXELS;
+        }.bind(this));
+
+        var rightButton = document.createElement('div');
+        rightButton.classList.add(this.CssClasses_.TAB_BAR_BUTTON);
+        rightButton.classList.add(this.CssClasses_.TAB_BAR_RIGHT_BUTTON);
+        var rightButtonIcon = document.createElement('i');
+        rightButtonIcon.classList.add(this.CssClasses_.ICON);
+        rightButtonIcon.textContent = this.Constant_.CHEVRON_RIGHT;
+        rightButton.appendChild(rightButtonIcon);
+        rightButton.addEventListener('click', function() {
+          this.tabBar_.scrollLeft += this.Constant_.TAB_SCROLL_PIXELS;
+        }.bind(this));
+
+        tabContainer.appendChild(leftButton);
+        tabContainer.appendChild(this.tabBar_);
+        tabContainer.appendChild(rightButton);
+
+        // Add and remove buttons depending on scroll position.
+        var tabScrollHandler = function() {
+          if (this.tabBar_.scrollLeft > 0) {
+            leftButton.classList.add(this.CssClasses_.IS_ACTIVE);
+          } else {
+            leftButton.classList.remove(this.CssClasses_.IS_ACTIVE);
+          }
+
+          if (this.tabBar_.scrollLeft <
+              this.tabBar_.scrollWidth - this.tabBar_.offsetWidth) {
+            rightButton.classList.add(this.CssClasses_.IS_ACTIVE);
+          } else {
+            rightButton.classList.remove(this.CssClasses_.IS_ACTIVE);
+          }
+        }.bind(this);
+
+        this.tabBar_.addEventListener('scroll', tabScrollHandler);
+        tabScrollHandler();
+
+        if (this.tabBar_.classList.contains(this.CssClasses_.JS_RIPPLE_EFFECT)) {
+          this.tabBar_.classList.add(this.CssClasses_.RIPPLE_IGNORE_EVENTS);
+        }
+
+        // Select element tabs, document panels
+        var tabs = this.tabBar_.querySelectorAll('.' + this.CssClasses_.TAB);
+        var panels = this.content_.querySelectorAll('.' + this.CssClasses_.PANEL);
+
+        // Create new tabs for each tab element
+        for (var i = 0; i < tabs.length; i++) {
+          new MaterialLayoutTab(tabs[i], tabs, panels, this);
+        }
+      }
+
+      this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
+    }
+  };
+
+  /**
+   * Constructor for an individual tab.
+   *
+   * @constructor
+   * @param {HTMLElement} tab The HTML element for the tab.
+   * @param {!Array<HTMLElement>} tabs Array with HTML elements for all tabs.
+   * @param {!Array<HTMLElement>} panels Array with HTML elements for all panels.
+   * @param {MaterialLayout} layout The MaterialLayout object that owns the tab.
+   */
+  function MaterialLayoutTab(tab, tabs, panels, layout) {
+    if (layout.tabBar_.classList.contains(
+        layout.CssClasses_.JS_RIPPLE_EFFECT)) {
+      var rippleContainer = document.createElement('span');
+      rippleContainer.classList.add(layout.CssClasses_.RIPPLE_CONTAINER);
+      rippleContainer.classList.add(layout.CssClasses_.JS_RIPPLE_EFFECT);
+      var ripple = document.createElement('span');
+      ripple.classList.add(layout.CssClasses_.RIPPLE);
+      rippleContainer.appendChild(ripple);
+      tab.appendChild(rippleContainer);
+    }
+
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      var href = tab.href.split('#')[1];
+      var panel = layout.content_.querySelector('#' + href);
+      layout.resetTabState_(tabs);
+      layout.resetPanelState_(panels);
+      tab.classList.add(layout.CssClasses_.IS_ACTIVE);
+      panel.classList.add(layout.CssClasses_.IS_ACTIVE);
+    });
+  }
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialLayout,
+    classAsString: 'MaterialLayout',
+    cssClass: 'mdl-js-layout'
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for dropdown MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialMenu = function MaterialMenu(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialMenu'] = MaterialMenu;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialMenu.prototype.Constant_ = {
+    // Total duration of the menu animation.
+    TRANSITION_DURATION_SECONDS: 0.3,
+    // The fraction of the total duration we want to use for menu item animations.
+    TRANSITION_DURATION_FRACTION: 0.8,
+    // How long the menu stays open after choosing an option (so the user can see
+    // the ripple).
+    CLOSE_TIMEOUT: 150
+  };
+
+  /**
+   * Keycodes, for code readability.
+   *
+   * @enum {number}
+   * @private
+   */
+  MaterialMenu.prototype.Keycodes_ = {
+    ENTER: 13,
+    ESCAPE: 27,
+    SPACE: 32,
+    UP_ARROW: 38,
+    DOWN_ARROW: 40
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialMenu.prototype.CssClasses_ = {
+    CONTAINER: 'mdl-menu__container',
+    OUTLINE: 'mdl-menu__outline',
+    ITEM: 'mdl-menu__item',
+    ITEM_RIPPLE_CONTAINER: 'mdl-menu__item-ripple-container',
+    RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    RIPPLE_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events',
+    RIPPLE: 'mdl-ripple',
+    // Statuses
+    IS_UPGRADED: 'is-upgraded',
+    IS_VISIBLE: 'is-visible',
+    IS_ANIMATING: 'is-animating',
+    // Alignment options
+    BOTTOM_LEFT: 'mdl-menu--bottom-left',  // This is the default.
+    BOTTOM_RIGHT: 'mdl-menu--bottom-right',
+    TOP_LEFT: 'mdl-menu--top-left',
+    TOP_RIGHT: 'mdl-menu--top-right',
+    UNALIGNED: 'mdl-menu--unaligned'
+  };
+
+  /**
+   * Initialize element.
+   */
+  MaterialMenu.prototype.init = function() {
+    if (this.element_) {
+      // Create container for the menu.
+      var container = document.createElement('div');
+      container.classList.add(this.CssClasses_.CONTAINER);
+      this.element_.parentElement.insertBefore(container, this.element_);
+      this.element_.parentElement.removeChild(this.element_);
+      container.appendChild(this.element_);
+      this.container_ = container;
+
+      // Create outline for the menu (shadow and background).
+      var outline = document.createElement('div');
+      outline.classList.add(this.CssClasses_.OUTLINE);
+      this.outline_ = outline;
+      container.insertBefore(outline, this.element_);
+
+      // Find the "for" element and bind events to it.
+      var forElId = this.element_.getAttribute('for');
+      var forEl = null;
+      if (forElId) {
+        forEl = document.getElementById(forElId);
+        if (forEl) {
+          this.forElement_ = forEl;
+          forEl.addEventListener('click', this.handleForClick_.bind(this));
+          forEl.addEventListener('keydown',
+              this.handleForKeyboardEvent_.bind(this));
+        }
+      }
+
+      var items = this.element_.querySelectorAll('.' + this.CssClasses_.ITEM);
+      this.boundItemKeydown_ = this.handleItemKeyboardEvent_.bind(this);
+      this.boundItemClick_ = this.handleItemClick_.bind(this);
+      for (var i = 0; i < items.length; i++) {
+        // Add a listener to each menu item.
+        items[i].addEventListener('click', this.boundItemClick_);
+        // Add a tab index to each menu item.
+        items[i].tabIndex = '-1';
+        // Add a keyboard listener to each menu item.
+        items[i].addEventListener('keydown', this.boundItemKeydown_);
+      }
+
+      // Add ripple classes to each item, if the user has enabled ripples.
+      if (this.element_.classList.contains(this.CssClasses_.RIPPLE_EFFECT)) {
+        this.element_.classList.add(this.CssClasses_.RIPPLE_IGNORE_EVENTS);
+
+        for (i = 0; i < items.length; i++) {
+          var item = items[i];
+
+          var rippleContainer = document.createElement('span');
+          rippleContainer.classList.add(this.CssClasses_.ITEM_RIPPLE_CONTAINER);
+
+          var ripple = document.createElement('span');
+          ripple.classList.add(this.CssClasses_.RIPPLE);
+          rippleContainer.appendChild(ripple);
+
+          item.appendChild(rippleContainer);
+          item.classList.add(this.CssClasses_.RIPPLE_EFFECT);
+        }
+      }
+
+      // Copy alignment classes to the container, so the outline can use them.
+      if (this.element_.classList.contains(this.CssClasses_.BOTTOM_LEFT)) {
+        this.outline_.classList.add(this.CssClasses_.BOTTOM_LEFT);
+      }
+      if (this.element_.classList.contains(this.CssClasses_.BOTTOM_RIGHT)) {
+        this.outline_.classList.add(this.CssClasses_.BOTTOM_RIGHT);
+      }
+      if (this.element_.classList.contains(this.CssClasses_.TOP_LEFT)) {
+        this.outline_.classList.add(this.CssClasses_.TOP_LEFT);
+      }
+      if (this.element_.classList.contains(this.CssClasses_.TOP_RIGHT)) {
+        this.outline_.classList.add(this.CssClasses_.TOP_RIGHT);
+      }
+      if (this.element_.classList.contains(this.CssClasses_.UNALIGNED)) {
+        this.outline_.classList.add(this.CssClasses_.UNALIGNED);
+      }
+
+      container.classList.add(this.CssClasses_.IS_UPGRADED);
+    }
+  };
+
+  /**
+   * Handles a click on the "for" element, by positioning the menu and then
+   * toggling it.
+   *
+   * @param {Event} evt The event that fired.
+   * @private
+   */
+  MaterialMenu.prototype.handleForClick_ = function(evt) {
+    if (this.element_ && this.forElement_) {
+      var rect = this.forElement_.getBoundingClientRect();
+      var forRect = this.forElement_.parentElement.getBoundingClientRect();
+
+      if (this.element_.classList.contains(this.CssClasses_.UNALIGNED)) {
+        // Do not position the menu automatically. Requires the developer to
+        // manually specify position.
+      } else if (this.element_.classList.contains(
+          this.CssClasses_.BOTTOM_RIGHT)) {
+        // Position below the "for" element, aligned to its right.
+        this.container_.style.right = (forRect.right - rect.right) + 'px';
+        this.container_.style.top =
+            this.forElement_.offsetTop + this.forElement_.offsetHeight + 'px';
+      } else if (this.element_.classList.contains(this.CssClasses_.TOP_LEFT)) {
+        // Position above the "for" element, aligned to its left.
+        this.container_.style.left = this.forElement_.offsetLeft + 'px';
+        this.container_.style.bottom = (forRect.bottom - rect.top) + 'px';
+      } else if (this.element_.classList.contains(this.CssClasses_.TOP_RIGHT)) {
+        // Position above the "for" element, aligned to its right.
+        this.container_.style.right = (forRect.right - rect.right) + 'px';
+        this.container_.style.bottom = (forRect.bottom - rect.top) + 'px';
+      } else {
+        // Default: position below the "for" element, aligned to its left.
+        this.container_.style.left = this.forElement_.offsetLeft + 'px';
+        this.container_.style.top =
+            this.forElement_.offsetTop + this.forElement_.offsetHeight + 'px';
+      }
+    }
+
+    this.toggle(evt);
+  };
+
+  /**
+   * Handles a keyboard event on the "for" element.
+   *
+   * @param {Event} evt The event that fired.
+   * @private
+   */
+  MaterialMenu.prototype.handleForKeyboardEvent_ = function(evt) {
+    if (this.element_ && this.container_ && this.forElement_) {
+      var items = this.element_.querySelectorAll('.' + this.CssClasses_.ITEM +
+        ':not([disabled])');
+
+      if (items && items.length > 0 &&
+          this.container_.classList.contains(this.CssClasses_.IS_VISIBLE)) {
+        if (evt.keyCode === this.Keycodes_.UP_ARROW) {
+          evt.preventDefault();
+          items[items.length - 1].focus();
+        } else if (evt.keyCode === this.Keycodes_.DOWN_ARROW) {
+          evt.preventDefault();
+          items[0].focus();
+        }
+      }
+    }
+  };
+
+  /**
+   * Handles a keyboard event on an item.
+   *
+   * @param {Event} evt The event that fired.
+   * @private
+   */
+  MaterialMenu.prototype.handleItemKeyboardEvent_ = function(evt) {
+    if (this.element_ && this.container_) {
+      var items = this.element_.querySelectorAll('.' + this.CssClasses_.ITEM +
+        ':not([disabled])');
+
+      if (items && items.length > 0 &&
+          this.container_.classList.contains(this.CssClasses_.IS_VISIBLE)) {
+        var currentIndex = Array.prototype.slice.call(items).indexOf(evt.target);
+
+        if (evt.keyCode === this.Keycodes_.UP_ARROW) {
+          evt.preventDefault();
+          if (currentIndex > 0) {
+            items[currentIndex - 1].focus();
+          } else {
+            items[items.length - 1].focus();
+          }
+        } else if (evt.keyCode === this.Keycodes_.DOWN_ARROW) {
+          evt.preventDefault();
+          if (items.length > currentIndex + 1) {
+            items[currentIndex + 1].focus();
+          } else {
+            items[0].focus();
+          }
+        } else if (evt.keyCode === this.Keycodes_.SPACE ||
+              evt.keyCode === this.Keycodes_.ENTER) {
+          evt.preventDefault();
+          // Send mousedown and mouseup to trigger ripple.
+          var e = new MouseEvent('mousedown');
+          evt.target.dispatchEvent(e);
+          e = new MouseEvent('mouseup');
+          evt.target.dispatchEvent(e);
+          // Send click.
+          evt.target.click();
+        } else if (evt.keyCode === this.Keycodes_.ESCAPE) {
+          evt.preventDefault();
+          this.hide();
+        }
+      }
+    }
+  };
+
+  /**
+   * Handles a click event on an item.
+   *
+   * @param {Event} evt The event that fired.
+   * @private
+   */
+  MaterialMenu.prototype.handleItemClick_ = function(evt) {
+    if (evt.target.hasAttribute('disabled')) {
+      evt.stopPropagation();
+    } else {
+      // Wait some time before closing menu, so the user can see the ripple.
+      this.closing_ = true;
+      window.setTimeout(function(evt) {
+        this.hide();
+        this.closing_ = false;
+      }.bind(this), /** @type {number} */ (this.Constant_.CLOSE_TIMEOUT));
+    }
+  };
+
+  /**
+   * Calculates the initial clip (for opening the menu) or final clip (for closing
+   * it), and applies it. This allows us to animate from or to the correct point,
+   * that is, the point it's aligned to in the "for" element.
+   *
+   * @param {number} height Height of the clip rectangle
+   * @param {number} width Width of the clip rectangle
+   * @private
+   */
+  MaterialMenu.prototype.applyClip_ = function(height, width) {
+    if (this.element_.classList.contains(this.CssClasses_.UNALIGNED)) {
+      // Do not clip.
+      this.element_.style.clip = '';
+    } else if (this.element_.classList.contains(this.CssClasses_.BOTTOM_RIGHT)) {
+      // Clip to the top right corner of the menu.
+      this.element_.style.clip =
+          'rect(0 ' + width + 'px ' + '0 ' + width + 'px)';
+    } else if (this.element_.classList.contains(this.CssClasses_.TOP_LEFT)) {
+      // Clip to the bottom left corner of the menu.
+      this.element_.style.clip =
+          'rect(' + height + 'px 0 ' + height + 'px 0)';
+    } else if (this.element_.classList.contains(this.CssClasses_.TOP_RIGHT)) {
+      // Clip to the bottom right corner of the menu.
+      this.element_.style.clip = 'rect(' + height + 'px ' + width + 'px ' +
+          height + 'px ' + width + 'px)';
+    } else {
+      // Default: do not clip (same as clipping to the top left corner).
+      this.element_.style.clip = '';
+    }
+  };
+
+  /**
+   * Adds an event listener to clean up after the animation ends.
+   *
+   * @private
+   */
+  MaterialMenu.prototype.addAnimationEndListener_ = function() {
+    var cleanup = function() {
+      this.element_.removeEventListener('transitionend', cleanup);
+      this.element_.removeEventListener('webkitTransitionEnd', cleanup);
+      this.element_.classList.remove(this.CssClasses_.IS_ANIMATING);
+    }.bind(this);
+
+    // Remove animation class once the transition is done.
+    this.element_.addEventListener('transitionend', cleanup);
+    this.element_.addEventListener('webkitTransitionEnd', cleanup);
+  };
+
+  /**
+   * Displays the menu.
+   *
+   * @public
+   */
+  MaterialMenu.prototype.show = function(evt) {
+    if (this.element_ && this.container_ && this.outline_) {
+      // Measure the inner element.
+      var height = this.element_.getBoundingClientRect().height;
+      var width = this.element_.getBoundingClientRect().width;
+
+      // Apply the inner element's size to the container and outline.
+      this.container_.style.width = width + 'px';
+      this.container_.style.height = height + 'px';
+      this.outline_.style.width = width + 'px';
+      this.outline_.style.height = height + 'px';
+
+      var transitionDuration = this.Constant_.TRANSITION_DURATION_SECONDS *
+          this.Constant_.TRANSITION_DURATION_FRACTION;
+
+      // Calculate transition delays for individual menu items, so that they fade
+      // in one at a time.
+      var items = this.element_.querySelectorAll('.' + this.CssClasses_.ITEM);
+      for (var i = 0; i < items.length; i++) {
+        var itemDelay = null;
+        if (this.element_.classList.contains(this.CssClasses_.TOP_LEFT) ||
+            this.element_.classList.contains(this.CssClasses_.TOP_RIGHT)) {
+          itemDelay = ((height - items[i].offsetTop - items[i].offsetHeight) /
+              height * transitionDuration) + 's';
+        } else {
+          itemDelay = (items[i].offsetTop / height * transitionDuration) + 's';
+        }
+        items[i].style.transitionDelay = itemDelay;
+      }
+
+      // Apply the initial clip to the text before we start animating.
+      this.applyClip_(height, width);
+
+      // Wait for the next frame, turn on animation, and apply the final clip.
+      // Also make it visible. This triggers the transitions.
+      window.requestAnimationFrame(function() {
+        this.element_.classList.add(this.CssClasses_.IS_ANIMATING);
+        this.element_.style.clip = 'rect(0 ' + width + 'px ' + height + 'px 0)';
+        this.container_.classList.add(this.CssClasses_.IS_VISIBLE);
+      }.bind(this));
+
+      // Clean up after the animation is complete.
+      this.addAnimationEndListener_();
+
+      // Add a click listener to the document, to close the menu.
+      var callback = function(e) {
+        // Check to see if the document is processing the same event that
+        // displayed the menu in the first place. If so, do nothing.
+        // Also check to see if the menu is in the process of closing itself, and
+        // do nothing in that case.
+        // Also check if the clicked element is a menu item
+        // if so, do nothing.
+        if (e !== evt && !this.closing_ && e.target.parentNode !== this.element_) {
+          document.removeEventListener('click', callback);
+          this.hide();
+        }
+      }.bind(this);
+      document.addEventListener('click', callback);
+    }
+  };
+  MaterialMenu.prototype['show'] = MaterialMenu.prototype.show;
+
+  /**
+   * Hides the menu.
+   *
+   * @public
+   */
+  MaterialMenu.prototype.hide = function() {
+    if (this.element_ && this.container_ && this.outline_) {
+      var items = this.element_.querySelectorAll('.' + this.CssClasses_.ITEM);
+
+      // Remove all transition delays; menu items fade out concurrently.
+      for (var i = 0; i < items.length; i++) {
+        items[i].style.transitionDelay = null;
+      }
+
+      // Measure the inner element.
+      var rect = this.element_.getBoundingClientRect();
+      var height = rect.height;
+      var width = rect.width;
+
+      // Turn on animation, and apply the final clip. Also make invisible.
+      // This triggers the transitions.
+      this.element_.classList.add(this.CssClasses_.IS_ANIMATING);
+      this.applyClip_(height, width);
+      this.container_.classList.remove(this.CssClasses_.IS_VISIBLE);
+
+      // Clean up after the animation is complete.
+      this.addAnimationEndListener_();
+    }
+  };
+  MaterialMenu.prototype['hide'] = MaterialMenu.prototype.hide;
+
+  /**
+   * Displays or hides the menu, depending on current state.
+   *
+   * @public
+   */
+  MaterialMenu.prototype.toggle = function(evt) {
+    if (this.container_.classList.contains(this.CssClasses_.IS_VISIBLE)) {
+      this.hide();
+    } else {
+      this.show(evt);
+    }
+  };
+  MaterialMenu.prototype['toggle'] = MaterialMenu.prototype.toggle;
+
+  /**
+   * Downgrade the component.
+   *
+   * @private
+   */
+  MaterialMenu.prototype.mdlDowngrade_ = function() {
+    var items = this.element_.querySelectorAll('.' + this.CssClasses_.ITEM);
+
+    for (var i = 0; i < items.length; i++) {
+      items[i].removeEventListener('click', this.boundItemClick_);
+      items[i].removeEventListener('keydown', this.boundItemKeydown_);
+    }
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialMenu.prototype.mdlDowngrade =
+      MaterialMenu.prototype.mdlDowngrade_;
+
+  MaterialMenu.prototype['mdlDowngrade'] =
+      MaterialMenu.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialMenu,
+    classAsString: 'MaterialMenu',
+    cssClass: 'mdl-js-menu',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Progress MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialProgress = function MaterialProgress(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialProgress'] = MaterialProgress;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialProgress.prototype.Constant_ = {
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialProgress.prototype.CssClasses_ = {
+    INDETERMINATE_CLASS: 'mdl-progress__indeterminate'
+  };
+
+  /**
+   * Set the current progress of the progressbar.
+   *
+   * @param {number} p Percentage of the progress (0-100)
+   * @public
+   */
+  MaterialProgress.prototype.setProgress = function(p) {
+    if (this.element_.classList.contains(this.CssClasses_.INDETERMINATE_CLASS)) {
+      return;
+    }
+
+    this.progressbar_.style.width = p + '%';
+  };
+  MaterialProgress.prototype['setProgress'] =
+      MaterialProgress.prototype.setProgress;
+
+  /**
+   * Set the current progress of the buffer.
+   *
+   * @param {number} p Percentage of the buffer (0-100)
+   * @public
+   */
+  MaterialProgress.prototype.setBuffer = function(p) {
+    this.bufferbar_.style.width = p + '%';
+    this.auxbar_.style.width = (100 - p) + '%';
+  };
+  MaterialProgress.prototype['setBuffer'] =
+      MaterialProgress.prototype.setBuffer;
+
+  /**
+   * Initialize element.
+   */
+  MaterialProgress.prototype.init = function() {
+    if (this.element_) {
+      var el = document.createElement('div');
+      el.className = 'progressbar bar bar1';
+      this.element_.appendChild(el);
+      this.progressbar_ = el;
+
+      el = document.createElement('div');
+      el.className = 'bufferbar bar bar2';
+      this.element_.appendChild(el);
+      this.bufferbar_ = el;
+
+      el = document.createElement('div');
+      el.className = 'auxbar bar bar3';
+      this.element_.appendChild(el);
+      this.auxbar_ = el;
+
+      this.progressbar_.style.width = '0%';
+      this.bufferbar_.style.width = '100%';
+      this.auxbar_.style.width = '0%';
+
+      this.element_.classList.add('is-upgraded');
+    }
+  };
+
+  /**
+   * Downgrade the component
+   *
+   * @private
+   */
+  MaterialProgress.prototype.mdlDowngrade_ = function() {
+    while (this.element_.firstChild) {
+      this.element_.removeChild(this.element_.firstChild);
+    }
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialProgress.prototype.mdlDowngrade =
+      MaterialProgress.prototype.mdlDowngrade_;
+
+  MaterialProgress.prototype['mdlDowngrade'] =
+      MaterialProgress.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialProgress,
+    classAsString: 'MaterialProgress',
+    cssClass: 'mdl-js-progress',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Radio MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialRadio = function MaterialRadio(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialRadio'] = MaterialRadio;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialRadio.prototype.Constant_ = {
+    TINY_TIMEOUT: 0.001
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialRadio.prototype.CssClasses_ = {
+    IS_FOCUSED: 'is-focused',
+    IS_DISABLED: 'is-disabled',
+    IS_CHECKED: 'is-checked',
+    IS_UPGRADED: 'is-upgraded',
+    JS_RADIO: 'mdl-js-radio',
+    RADIO_BTN: 'mdl-radio__button',
+    RADIO_OUTER_CIRCLE: 'mdl-radio__outer-circle',
+    RADIO_INNER_CIRCLE: 'mdl-radio__inner-circle',
+    RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    RIPPLE_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events',
+    RIPPLE_CONTAINER: 'mdl-radio__ripple-container',
+    RIPPLE_CENTER: 'mdl-ripple--center',
+    RIPPLE: 'mdl-ripple'
+  };
+
+  /**
+   * Handle change of state.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialRadio.prototype.onChange_ = function(event) {
+    // Since other radio buttons don't get change events, we need to look for
+    // them to update their classes.
+    var radios = document.getElementsByClassName(this.CssClasses_.JS_RADIO);
+    for (var i = 0; i < radios.length; i++) {
+      var button = radios[i].querySelector('.' + this.CssClasses_.RADIO_BTN);
+      // Different name == different group, so no point updating those.
+      if (button.getAttribute('name') === this.btnElement_.getAttribute('name')) {
+        radios[i]['MaterialRadio'].updateClasses_();
+      }
+    }
+  };
+
+  /**
+   * Handle focus.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialRadio.prototype.onFocus_ = function(event) {
+    this.element_.classList.add(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle lost focus.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialRadio.prototype.onBlur_ = function(event) {
+    this.element_.classList.remove(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle mouseup.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialRadio.prototype.onMouseup_ = function(event) {
+    this.blur_();
+  };
+
+  /**
+   * Update classes.
+   *
+   * @private
+   */
+  MaterialRadio.prototype.updateClasses_ = function() {
+    this.checkDisabled();
+    this.checkToggleState();
+  };
+
+  /**
+   * Add blur.
+   *
+   * @private
+   */
+  MaterialRadio.prototype.blur_ = function() {
+
+    // TODO: figure out why there's a focus event being fired after our blur,
+    // so that we can avoid this hack.
+    window.setTimeout(function() {
+      this.btnElement_.blur();
+    }.bind(this), /** @type {number} */ (this.Constant_.TINY_TIMEOUT));
+  };
+
+  // Public methods.
+
+  /**
+   * Check the components disabled state.
+   *
+   * @public
+   */
+  MaterialRadio.prototype.checkDisabled = function() {
+    if (this.btnElement_.disabled) {
+      this.element_.classList.add(this.CssClasses_.IS_DISABLED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_DISABLED);
+    }
+  };
+  MaterialRadio.prototype['checkDisabled'] =
+      MaterialRadio.prototype.checkDisabled;
+
+  /**
+   * Check the components toggled state.
+   *
+   * @public
+   */
+  MaterialRadio.prototype.checkToggleState = function() {
+    if (this.btnElement_.checked) {
+      this.element_.classList.add(this.CssClasses_.IS_CHECKED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_CHECKED);
+    }
+  };
+  MaterialRadio.prototype['checkToggleState'] =
+      MaterialRadio.prototype.checkToggleState;
+
+  /**
+   * Disable radio.
+   *
+   * @public
+   */
+  MaterialRadio.prototype.disable = function() {
+    this.btnElement_.disabled = true;
+    this.updateClasses_();
+  };
+  MaterialRadio.prototype['disable'] = MaterialRadio.prototype.disable;
+
+  /**
+   * Enable radio.
+   *
+   * @public
+   */
+  MaterialRadio.prototype.enable = function() {
+    this.btnElement_.disabled = false;
+    this.updateClasses_();
+  };
+  MaterialRadio.prototype['enable'] = MaterialRadio.prototype.enable;
+
+  /**
+   * Check radio.
+   *
+   * @public
+   */
+  MaterialRadio.prototype.check = function() {
+    this.btnElement_.checked = true;
+    this.updateClasses_();
+  };
+  MaterialRadio.prototype['check'] = MaterialRadio.prototype.check;
+
+  /**
+   * Uncheck radio.
+   *
+   * @public
+   */
+  MaterialRadio.prototype.uncheck = function() {
+    this.btnElement_.checked = false;
+    this.updateClasses_();
+  };
+  MaterialRadio.prototype['uncheck'] = MaterialRadio.prototype.uncheck;
+
+  /**
+   * Initialize element.
+   */
+  MaterialRadio.prototype.init = function() {
+    if (this.element_) {
+      this.btnElement_ = this.element_.querySelector('.' +
+          this.CssClasses_.RADIO_BTN);
+
+      this.boundChangeHandler_ = this.onChange_.bind(this);
+      this.boundFocusHandler_ = this.onChange_.bind(this);
+      this.boundBlurHandler_ = this.onBlur_.bind(this);
+      this.boundMouseUpHandler_ = this.onMouseup_.bind(this);
+
+      var outerCircle = document.createElement('span');
+      outerCircle.classList.add(this.CssClasses_.RADIO_OUTER_CIRCLE);
+
+      var innerCircle = document.createElement('span');
+      innerCircle.classList.add(this.CssClasses_.RADIO_INNER_CIRCLE);
+
+      this.element_.appendChild(outerCircle);
+      this.element_.appendChild(innerCircle);
+
+      var rippleContainer;
+      if (this.element_.classList.contains(
+          this.CssClasses_.RIPPLE_EFFECT)) {
+        this.element_.classList.add(
+            this.CssClasses_.RIPPLE_IGNORE_EVENTS);
+        rippleContainer = document.createElement('span');
+        rippleContainer.classList.add(
+            this.CssClasses_.RIPPLE_CONTAINER);
+        rippleContainer.classList.add(this.CssClasses_.RIPPLE_EFFECT);
+        rippleContainer.classList.add(this.CssClasses_.RIPPLE_CENTER);
+        rippleContainer.addEventListener('mouseup', this.boundMouseUpHandler_);
+
+        var ripple = document.createElement('span');
+        ripple.classList.add(this.CssClasses_.RIPPLE);
+
+        rippleContainer.appendChild(ripple);
+        this.element_.appendChild(rippleContainer);
+      }
+
+      this.btnElement_.addEventListener('change', this.boundChangeHandler_);
+      this.btnElement_.addEventListener('focus', this.boundFocusHandler_);
+      this.btnElement_.addEventListener('blur', this.boundBlurHandler_);
+      this.element_.addEventListener('mouseup', this.boundMouseUpHandler_);
+
+      this.updateClasses_();
+      this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
+    }
+  };
+
+  /**
+   * Downgrade the element.
+   *
+   * @private
+   */
+  MaterialRadio.prototype.mdlDowngrade_ = function() {
+    var rippleContainer = this.element_.querySelector('.' +
+      this.CssClasses_.RIPPLE_CONTAINER);
+    this.btnElement_.removeEventListener('change', this.boundChangeHandler_);
+    this.btnElement_.removeEventListener('focus', this.boundFocusHandler_);
+    this.btnElement_.removeEventListener('blur', this.boundBlurHandler_);
+    this.element_.removeEventListener('mouseup', this.boundMouseUpHandler_);
+    if (rippleContainer) {
+      rippleContainer.removeEventListener('mouseup', this.boundMouseUpHandler_);
+      this.element_.removeChild(rippleContainer);
+    }
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialRadio.prototype.mdlDowngrade = MaterialRadio.prototype.mdlDowngrade_;
+
+  MaterialRadio.prototype['mdlDowngrade'] =
+      MaterialRadio.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialRadio,
+    classAsString: 'MaterialRadio',
+    cssClass: 'mdl-js-radio',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Ripple MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialRipple = function MaterialRipple(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialRipple'] = MaterialRipple;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialRipple.prototype.Constant_ = {
+    INITIAL_SCALE: 'scale(0.0001, 0.0001)',
+    INITIAL_SIZE: '1px',
+    INITIAL_OPACITY: '0.4',
+    FINAL_OPACITY: '0',
+    FINAL_SCALE: ''
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialRipple.prototype.CssClasses_ = {
+    RIPPLE_CENTER: 'mdl-ripple--center',
+    RIPPLE_EFFECT_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events',
+    RIPPLE: 'mdl-ripple',
+    IS_ANIMATING: 'is-animating',
+    IS_VISIBLE: 'is-visible'
+  };
+
+  /**
+   * Handle mouse / finger down on element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialRipple.prototype.downHandler_ = function(event) {
+    if (!this.rippleElement_.style.width && !this.rippleElement_.style.height) {
+      var rect = this.element_.getBoundingClientRect();
+      this.boundHeight = rect.height;
+      this.boundWidth = rect.width;
+      this.rippleSize_ = Math.sqrt(rect.width * rect.width +
+          rect.height * rect.height) * 2 + 2;
+      this.rippleElement_.style.width = this.rippleSize_ + 'px';
+      this.rippleElement_.style.height = this.rippleSize_ + 'px';
+    }
+
+    this.rippleElement_.classList.add(this.CssClasses_.IS_VISIBLE);
+
+    if (event.type === 'mousedown' && this.ignoringMouseDown_) {
+      this.ignoringMouseDown_ = false;
+    } else {
+      if (event.type === 'touchstart') {
+        this.ignoringMouseDown_ = true;
+      }
+      var frameCount = this.getFrameCount();
+      if (frameCount > 0) {
+        return;
+      }
+      this.setFrameCount(1);
+      var bound = event.currentTarget.getBoundingClientRect();
+      var x;
+      var y;
+      // Check if we are handling a keyboard click.
+      if (event.clientX === 0 && event.clientY === 0) {
+        x = Math.round(bound.width / 2);
+        y = Math.round(bound.height / 2);
+      } else {
+        var clientX = event.clientX ? event.clientX : event.touches[0].clientX;
+        var clientY = event.clientY ? event.clientY : event.touches[0].clientY;
+        x = Math.round(clientX - bound.left);
+        y = Math.round(clientY - bound.top);
+      }
+      this.setRippleXY(x, y);
+      this.setRippleStyles(true);
+      window.requestAnimationFrame(this.animFrameHandler.bind(this));
+    }
+  };
+
+  /**
+   * Handle mouse / finger up on element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialRipple.prototype.upHandler_ = function(event) {
+    // Don't fire for the artificial "mouseup" generated by a double-click.
+    if (event && event.detail !== 2) {
+      this.rippleElement_.classList.remove(this.CssClasses_.IS_VISIBLE);
+    }
+    // Allow a repaint to occur before removing this class, so the animation
+    // shows for tap events, which seem to trigger a mouseup too soon after
+    // mousedown.
+    window.setTimeout(function() {
+      this.rippleElement_.classList.remove(this.CssClasses_.IS_VISIBLE);
+    }.bind(this), 0);
+  };
+
+  /**
+   * Initialize element.
+   */
+  MaterialRipple.prototype.init = function() {
+    if (this.element_) {
+      var recentering =
+          this.element_.classList.contains(this.CssClasses_.RIPPLE_CENTER);
+      if (!this.element_.classList.contains(
+          this.CssClasses_.RIPPLE_EFFECT_IGNORE_EVENTS)) {
+        this.rippleElement_ = this.element_.querySelector('.' +
+            this.CssClasses_.RIPPLE);
+        this.frameCount_ = 0;
+        this.rippleSize_ = 0;
+        this.x_ = 0;
+        this.y_ = 0;
+
+        // Touch start produces a compat mouse down event, which would cause a
+        // second ripples. To avoid that, we use this property to ignore the first
+        // mouse down after a touch start.
+        this.ignoringMouseDown_ = false;
+
+        this.boundDownHandler = this.downHandler_.bind(this);
+        this.element_.addEventListener('mousedown',
+          this.boundDownHandler);
+        this.element_.addEventListener('touchstart',
+            this.boundDownHandler);
+
+        this.boundUpHandler = this.upHandler_.bind(this);
+        this.element_.addEventListener('mouseup', this.boundUpHandler);
+        this.element_.addEventListener('mouseleave', this.boundUpHandler);
+        this.element_.addEventListener('touchend', this.boundUpHandler);
+        this.element_.addEventListener('blur', this.boundUpHandler);
+
+        /**
+         * Getter for frameCount_.
+         * @return {number} the frame count.
+         */
+        this.getFrameCount = function() {
+          return this.frameCount_;
+        };
+
+        /**
+         * Setter for frameCount_.
+         * @param {number} fC the frame count.
+         */
+        this.setFrameCount = function(fC) {
+          this.frameCount_ = fC;
+        };
+
+        /**
+         * Getter for rippleElement_.
+         * @return {Element} the ripple element.
+         */
+        this.getRippleElement = function() {
+          return this.rippleElement_;
+        };
+
+        /**
+         * Sets the ripple X and Y coordinates.
+         * @param  {number} newX the new X coordinate
+         * @param  {number} newY the new Y coordinate
+         */
+        this.setRippleXY = function(newX, newY) {
+          this.x_ = newX;
+          this.y_ = newY;
+        };
+
+        /**
+         * Sets the ripple styles.
+         * @param  {boolean} start whether or not this is the start frame.
+         */
+        this.setRippleStyles = function(start) {
+          if (this.rippleElement_ !== null) {
+            var transformString;
+            var scale;
+            var size;
+            var offset = 'translate(' + this.x_ + 'px, ' + this.y_ + 'px)';
+
+            if (start) {
+              scale = this.Constant_.INITIAL_SCALE;
+              size = this.Constant_.INITIAL_SIZE;
+            } else {
+              scale = this.Constant_.FINAL_SCALE;
+              size = this.rippleSize_ + 'px';
+              if (recentering) {
+                offset = 'translate(' + this.boundWidth / 2 + 'px, ' +
+                  this.boundHeight / 2 + 'px)';
+              }
+            }
+
+            transformString = 'translate(-50%, -50%) ' + offset + scale;
+
+            this.rippleElement_.style.webkitTransform = transformString;
+            this.rippleElement_.style.msTransform = transformString;
+            this.rippleElement_.style.transform = transformString;
+
+            if (start) {
+              this.rippleElement_.classList.remove(this.CssClasses_.IS_ANIMATING);
+            } else {
+              this.rippleElement_.classList.add(this.CssClasses_.IS_ANIMATING);
+            }
+          }
+        };
+
+        /**
+         * Handles an animation frame.
+         */
+        this.animFrameHandler = function() {
+          if (this.frameCount_-- > 0) {
+            window.requestAnimationFrame(this.animFrameHandler.bind(this));
+          } else {
+            this.setRippleStyles(false);
+          }
+        };
+      }
+    }
+  };
+
+  /**
+   * Downgrade the component
+   *
+   * @private
+   */
+  MaterialRipple.prototype.mdlDowngrade_ = function() {
+    this.element_.removeEventListener('mousedown',
+    this.boundDownHandler);
+    this.element_.removeEventListener('touchstart',
+        this.boundDownHandler);
+
+    this.element_.removeEventListener('mouseup', this.boundUpHandler);
+    this.element_.removeEventListener('mouseleave', this.boundUpHandler);
+    this.element_.removeEventListener('touchend', this.boundUpHandler);
+    this.element_.removeEventListener('blur', this.boundUpHandler);
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialRipple.prototype.mdlDowngrade =
+      MaterialRipple.prototype.mdlDowngrade_;
+
+  MaterialRipple.prototype['mdlDowngrade'] =
+      MaterialRipple.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialRipple,
+    classAsString: 'MaterialRipple',
+    cssClass: 'mdl-js-ripple-effect',
+    widget: false
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Slider MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialSlider = function MaterialSlider(element) {
+    this.element_ = element;
+    // Browser feature detection.
+    this.isIE_ = window.navigator.msPointerEnabled;
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialSlider'] = MaterialSlider;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialSlider.prototype.Constant_ = {
+    // None for now.
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialSlider.prototype.CssClasses_ = {
+    IE_CONTAINER: 'mdl-slider__ie-container',
+    SLIDER_CONTAINER: 'mdl-slider__container',
+    BACKGROUND_FLEX: 'mdl-slider__background-flex',
+    BACKGROUND_LOWER: 'mdl-slider__background-lower',
+    BACKGROUND_UPPER: 'mdl-slider__background-upper',
+    IS_LOWEST_VALUE: 'is-lowest-value',
+    IS_UPGRADED: 'is-upgraded'
+  };
+
+  /**
+   * Handle input on element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialSlider.prototype.onInput_ = function(event) {
+    this.updateValueStyles_();
+  };
+
+  /**
+   * Handle change on element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialSlider.prototype.onChange_ = function(event) {
+    this.updateValueStyles_();
+  };
+
+  /**
+   * Handle mouseup on element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialSlider.prototype.onMouseUp_ = function(event) {
+    event.target.blur();
+  };
+
+  /**
+   * Handle mousedown on container element.
+   * This handler is purpose is to not require the use to click
+   * exactly on the 2px slider element, as FireFox seems to be very
+   * strict about this.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   * @suppress {missingProperties}
+   */
+  MaterialSlider.prototype.onContainerMouseDown_ = function(event) {
+    // If this click is not on the parent element (but rather some child)
+    // ignore. It may still bubble up.
+    if (event.target !== this.element_.parentElement) {
+      return;
+    }
+
+    // Discard the original event and create a new event that
+    // is on the slider element.
+    event.preventDefault();
+    var newEvent = new MouseEvent('mousedown', {
+      target: event.target,
+      buttons: event.buttons,
+      clientX: event.clientX,
+      clientY: this.element_.getBoundingClientRect().y
+    });
+    this.element_.dispatchEvent(newEvent);
+  };
+
+  /**
+   * Handle updating of values.
+   *
+   * @private
+   */
+  MaterialSlider.prototype.updateValueStyles_ = function() {
+    // Calculate and apply percentages to div structure behind slider.
+    var fraction = (this.element_.value - this.element_.min) /
+        (this.element_.max - this.element_.min);
+
+    if (fraction === 0) {
+      this.element_.classList.add(this.CssClasses_.IS_LOWEST_VALUE);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_LOWEST_VALUE);
+    }
+
+    if (!this.isIE_) {
+      this.backgroundLower_.style.flex = fraction;
+      this.backgroundLower_.style.webkitFlex = fraction;
+      this.backgroundUpper_.style.flex = 1 - fraction;
+      this.backgroundUpper_.style.webkitFlex = 1 - fraction;
+    }
+  };
+
+  // Public methods.
+
+  /**
+   * Disable slider.
+   *
+   * @public
+   */
+  MaterialSlider.prototype.disable = function() {
+    this.element_.disabled = true;
+  };
+  MaterialSlider.prototype['disable'] = MaterialSlider.prototype.disable;
+
+  /**
+   * Enable slider.
+   *
+   * @public
+   */
+  MaterialSlider.prototype.enable = function() {
+
+    this.element_.disabled = false;
+  };
+  MaterialSlider.prototype['enable'] = MaterialSlider.prototype.enable;
+
+  /**
+   * Update slider value.
+   *
+   * @param {number} value The value to which to set the control (optional).
+   * @public
+   */
+  MaterialSlider.prototype.change = function(value) {
+
+    if (typeof value !== 'undefined') {
+      this.element_.value = value;
+    }
+    this.updateValueStyles_();
+  };
+  MaterialSlider.prototype['change'] = MaterialSlider.prototype.change;
+
+  /**
+   * Initialize element.
+   */
+  MaterialSlider.prototype.init = function() {
+
+    if (this.element_) {
+      if (this.isIE_) {
+        // Since we need to specify a very large height in IE due to
+        // implementation limitations, we add a parent here that trims it down to
+        // a reasonable size.
+        var containerIE = document.createElement('div');
+        containerIE.classList.add(this.CssClasses_.IE_CONTAINER);
+        this.element_.parentElement.insertBefore(containerIE, this.element_);
+        this.element_.parentElement.removeChild(this.element_);
+        containerIE.appendChild(this.element_);
+      } else {
+        // For non-IE browsers, we need a div structure that sits behind the
+        // slider and allows us to style the left and right sides of it with
+        // different colors.
+        var container = document.createElement('div');
+        container.classList.add(this.CssClasses_.SLIDER_CONTAINER);
+        this.element_.parentElement.insertBefore(container, this.element_);
+        this.element_.parentElement.removeChild(this.element_);
+        container.appendChild(this.element_);
+        var backgroundFlex = document.createElement('div');
+        backgroundFlex.classList.add(this.CssClasses_.BACKGROUND_FLEX);
+        container.appendChild(backgroundFlex);
+        this.backgroundLower_ = document.createElement('div');
+        this.backgroundLower_.classList.add(this.CssClasses_.BACKGROUND_LOWER);
+        backgroundFlex.appendChild(this.backgroundLower_);
+        this.backgroundUpper_ = document.createElement('div');
+        this.backgroundUpper_.classList.add(this.CssClasses_.BACKGROUND_UPPER);
+        backgroundFlex.appendChild(this.backgroundUpper_);
+      }
+
+      this.boundInputHandler = this.onInput_.bind(this);
+      this.boundChangeHandler = this.onChange_.bind(this);
+      this.boundMouseUpHandler = this.onMouseUp_.bind(this);
+      this.boundContainerMouseDownHandler = this.onContainerMouseDown_.bind(this);
+      this.element_.addEventListener('input', this.boundInputHandler);
+      this.element_.addEventListener('change', this.boundChangeHandler);
+      this.element_.addEventListener('mouseup', this.boundMouseUpHandler);
+      this.element_.parentElement.addEventListener('mousedown', this.boundContainerMouseDownHandler);
+
+      this.updateValueStyles_();
+      this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
+    }
+  };
+
+  /**
+   * Downgrade the component
+   *
+   * @private
+   */
+  MaterialSlider.prototype.mdlDowngrade_ = function() {
+    this.element_.removeEventListener('input', this.boundInputHandler);
+    this.element_.removeEventListener('change', this.boundChangeHandler);
+    this.element_.removeEventListener('mouseup', this.boundMouseUpHandler);
+    this.element_.parentElement.removeEventListener('mousedown', this.boundContainerMouseDownHandler);
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialSlider.prototype.mdlDowngrade =
+      MaterialSlider.prototype.mdlDowngrade_;
+
+  MaterialSlider.prototype['mdlDowngrade'] =
+      MaterialSlider.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialSlider,
+    classAsString: 'MaterialSlider',
+    cssClass: 'mdl-js-slider',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Spinner MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @param {HTMLElement} element The element that will be upgraded.
+   * @constructor
+   */
+  var MaterialSpinner = function MaterialSpinner(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialSpinner'] = MaterialSpinner;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialSpinner.prototype.Constant_ = {
+    MDL_SPINNER_LAYER_COUNT: 4
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialSpinner.prototype.CssClasses_ = {
+    MDL_SPINNER_LAYER: 'mdl-spinner__layer',
+    MDL_SPINNER_CIRCLE_CLIPPER: 'mdl-spinner__circle-clipper',
+    MDL_SPINNER_CIRCLE: 'mdl-spinner__circle',
+    MDL_SPINNER_GAP_PATCH: 'mdl-spinner__gap-patch',
+    MDL_SPINNER_LEFT: 'mdl-spinner__left',
+    MDL_SPINNER_RIGHT: 'mdl-spinner__right'
+  };
+
+  /**
+   * Auxiliary method to create a spinner layer.
+   *
+   * @param {number} index Index of the layer to be created.
+   * @public
+   */
+  MaterialSpinner.prototype.createLayer = function(index) {
+    var layer = document.createElement('div');
+    layer.classList.add(this.CssClasses_.MDL_SPINNER_LAYER);
+    layer.classList.add(this.CssClasses_.MDL_SPINNER_LAYER + '-' + index);
+
+    var leftClipper = document.createElement('div');
+    leftClipper.classList.add(this.CssClasses_.MDL_SPINNER_CIRCLE_CLIPPER);
+    leftClipper.classList.add(this.CssClasses_.MDL_SPINNER_LEFT);
+
+    var gapPatch = document.createElement('div');
+    gapPatch.classList.add(this.CssClasses_.MDL_SPINNER_GAP_PATCH);
+
+    var rightClipper = document.createElement('div');
+    rightClipper.classList.add(this.CssClasses_.MDL_SPINNER_CIRCLE_CLIPPER);
+    rightClipper.classList.add(this.CssClasses_.MDL_SPINNER_RIGHT);
+
+    var circleOwners = [leftClipper, gapPatch, rightClipper];
+
+    for (var i = 0; i < circleOwners.length; i++) {
+      var circle = document.createElement('div');
+      circle.classList.add(this.CssClasses_.MDL_SPINNER_CIRCLE);
+      circleOwners[i].appendChild(circle);
+    }
+
+    layer.appendChild(leftClipper);
+    layer.appendChild(gapPatch);
+    layer.appendChild(rightClipper);
+
+    this.element_.appendChild(layer);
+  };
+  MaterialSpinner.prototype['createLayer'] =
+      MaterialSpinner.prototype.createLayer;
+
+  /**
+   * Stops the spinner animation.
+   * Public method for users who need to stop the spinner for any reason.
+   *
+   * @public
+   */
+  MaterialSpinner.prototype.stop = function() {
+    this.element_.classList.remove('is-active');
+  };
+  MaterialSpinner.prototype['stop'] = MaterialSpinner.prototype.stop;
+
+  /**
+   * Starts the spinner animation.
+   * Public method for users who need to manually start the spinner for any reason
+   * (instead of just adding the 'is-active' class to their markup).
+   *
+   * @public
+   */
+  MaterialSpinner.prototype.start = function() {
+    this.element_.classList.add('is-active');
+  };
+  MaterialSpinner.prototype['start'] = MaterialSpinner.prototype.start;
+
+  /**
+   * Initialize element.
+   */
+  MaterialSpinner.prototype.init = function() {
+    if (this.element_) {
+      for (var i = 1; i <= this.Constant_.MDL_SPINNER_LAYER_COUNT; i++) {
+        this.createLayer(i);
+      }
+
+      this.element_.classList.add('is-upgraded');
+    }
+  };
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialSpinner,
+    classAsString: 'MaterialSpinner',
+    cssClass: 'mdl-js-spinner',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Checkbox MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialSwitch = function MaterialSwitch(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialSwitch'] = MaterialSwitch;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialSwitch.prototype.Constant_ = {
+    TINY_TIMEOUT: 0.001
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialSwitch.prototype.CssClasses_ = {
+    INPUT: 'mdl-switch__input',
+    TRACK: 'mdl-switch__track',
+    THUMB: 'mdl-switch__thumb',
+    FOCUS_HELPER: 'mdl-switch__focus-helper',
+    RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    RIPPLE_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events',
+    RIPPLE_CONTAINER: 'mdl-switch__ripple-container',
+    RIPPLE_CENTER: 'mdl-ripple--center',
+    RIPPLE: 'mdl-ripple',
+    IS_FOCUSED: 'is-focused',
+    IS_DISABLED: 'is-disabled',
+    IS_CHECKED: 'is-checked'
+  };
+
+  /**
+   * Handle change of state.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialSwitch.prototype.onChange_ = function(event) {
+    this.updateClasses_();
+  };
+
+  /**
+   * Handle focus of element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialSwitch.prototype.onFocus_ = function(event) {
+    this.element_.classList.add(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle lost focus of element.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialSwitch.prototype.onBlur_ = function(event) {
+    this.element_.classList.remove(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle mouseup.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialSwitch.prototype.onMouseUp_ = function(event) {
+    this.blur_();
+  };
+
+  /**
+   * Handle class updates.
+   *
+   * @private
+   */
+  MaterialSwitch.prototype.updateClasses_ = function() {
+    this.checkDisabled();
+    this.checkToggleState();
+  };
+
+  /**
+   * Add blur.
+   *
+   * @private
+   */
+  MaterialSwitch.prototype.blur_ = function() {
+    // TODO: figure out why there's a focus event being fired after our blur,
+    // so that we can avoid this hack.
+    window.setTimeout(function() {
+      this.inputElement_.blur();
+    }.bind(this), /** @type {number} */ (this.Constant_.TINY_TIMEOUT));
+  };
+
+  // Public methods.
+
+  /**
+   * Check the components disabled state.
+   *
+   * @public
+   */
+  MaterialSwitch.prototype.checkDisabled = function() {
+    if (this.inputElement_.disabled) {
+      this.element_.classList.add(this.CssClasses_.IS_DISABLED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_DISABLED);
+    }
+  };
+  MaterialSwitch.prototype['checkDisabled'] =
+      MaterialSwitch.prototype.checkDisabled;
+
+  /**
+   * Check the components toggled state.
+   *
+   * @public
+   */
+  MaterialSwitch.prototype.checkToggleState = function() {
+    if (this.inputElement_.checked) {
+      this.element_.classList.add(this.CssClasses_.IS_CHECKED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_CHECKED);
+    }
+  };
+  MaterialSwitch.prototype['checkToggleState'] =
+      MaterialSwitch.prototype.checkToggleState;
+
+  /**
+   * Disable switch.
+   *
+   * @public
+   */
+  MaterialSwitch.prototype.disable = function() {
+    this.inputElement_.disabled = true;
+    this.updateClasses_();
+  };
+  MaterialSwitch.prototype['disable'] = MaterialSwitch.prototype.disable;
+
+  /**
+   * Enable switch.
+   *
+   * @public
+   */
+  MaterialSwitch.prototype.enable = function() {
+    this.inputElement_.disabled = false;
+    this.updateClasses_();
+  };
+  MaterialSwitch.prototype['enable'] = MaterialSwitch.prototype.enable;
+
+  /**
+   * Activate switch.
+   *
+   * @public
+   */
+  MaterialSwitch.prototype.on = function() {
+    this.inputElement_.checked = true;
+    this.updateClasses_();
+  };
+  MaterialSwitch.prototype['on'] = MaterialSwitch.prototype.on;
+
+  /**
+   * Deactivate switch.
+   *
+   * @public
+   */
+  MaterialSwitch.prototype.off = function() {
+    this.inputElement_.checked = false;
+    this.updateClasses_();
+  };
+  MaterialSwitch.prototype['off'] = MaterialSwitch.prototype.off;
+
+  /**
+   * Initialize element.
+   */
+  MaterialSwitch.prototype.init = function() {
+    if (this.element_) {
+      this.inputElement_ = this.element_.querySelector('.' +
+          this.CssClasses_.INPUT);
+
+      var track = document.createElement('div');
+      track.classList.add(this.CssClasses_.TRACK);
+
+      var thumb = document.createElement('div');
+      thumb.classList.add(this.CssClasses_.THUMB);
+
+      var focusHelper = document.createElement('span');
+      focusHelper.classList.add(this.CssClasses_.FOCUS_HELPER);
+
+      thumb.appendChild(focusHelper);
+
+      this.element_.appendChild(track);
+      this.element_.appendChild(thumb);
+
+      this.boundMouseUpHandler = this.onMouseUp_.bind(this);
+
+      if (this.element_.classList.contains(
+          this.CssClasses_.RIPPLE_EFFECT)) {
+        this.element_.classList.add(
+            this.CssClasses_.RIPPLE_IGNORE_EVENTS);
+        this.rippleContainerElement_ = document.createElement('span');
+        this.rippleContainerElement_.classList.add(
+            this.CssClasses_.RIPPLE_CONTAINER);
+        this.rippleContainerElement_.classList.add(this.CssClasses_.RIPPLE_EFFECT);
+        this.rippleContainerElement_.classList.add(this.CssClasses_.RIPPLE_CENTER);
+        this.rippleContainerElement_.addEventListener('mouseup', this.boundMouseUpHandler);
+
+        var ripple = document.createElement('span');
+        ripple.classList.add(this.CssClasses_.RIPPLE);
+
+        this.rippleContainerElement_.appendChild(ripple);
+        this.element_.appendChild(this.rippleContainerElement_);
+      }
+
+      this.boundChangeHandler = this.onChange_.bind(this);
+      this.boundFocusHandler = this.onFocus_.bind(this);
+      this.boundBlurHandler = this.onBlur_.bind(this);
+
+      this.inputElement_.addEventListener('change', this.boundChangeHandler);
+      this.inputElement_.addEventListener('focus', this.boundFocusHandler);
+      this.inputElement_.addEventListener('blur', this.boundBlurHandler);
+      this.element_.addEventListener('mouseup', this.boundMouseUpHandler);
+
+      this.updateClasses_();
+      this.element_.classList.add('is-upgraded');
+    }
+  };
+
+  /**
+   * Downgrade the component.
+   *
+   * @private
+   */
+  MaterialSwitch.prototype.mdlDowngrade_ = function() {
+    if (this.rippleContainerElement_) {
+      this.rippleContainerElement_.removeEventListener('mouseup', this.boundMouseUpHandler);
+    }
+    this.inputElement_.removeEventListener('change', this.boundChangeHandler);
+    this.inputElement_.removeEventListener('focus', this.boundFocusHandler);
+    this.inputElement_.removeEventListener('blur', this.boundBlurHandler);
+    this.element_.removeEventListener('mouseup', this.boundMouseUpHandler);
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialSwitch.prototype.mdlDowngrade =
+      MaterialSwitch.prototype.mdlDowngrade_;
+
+  MaterialSwitch.prototype['mdlDowngrade'] =
+      MaterialSwitch.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialSwitch,
+    classAsString: 'MaterialSwitch',
+    cssClass: 'mdl-js-switch',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Tabs MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialTabs = function MaterialTabs(element) {
+    // Stores the HTML element.
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialTabs'] = MaterialTabs;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialTabs.prototype.Constant_ = {
+    // None at the moment.
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialTabs.prototype.CssClasses_ = {
+    TAB_CLASS: 'mdl-tabs__tab',
+    PANEL_CLASS: 'mdl-tabs__panel',
+    ACTIVE_CLASS: 'is-active',
+    UPGRADED_CLASS: 'is-upgraded',
+
+    MDL_JS_RIPPLE_EFFECT: 'mdl-js-ripple-effect',
+    MDL_RIPPLE_CONTAINER: 'mdl-tabs__ripple-container',
+    MDL_RIPPLE: 'mdl-ripple',
+    MDL_JS_RIPPLE_EFFECT_IGNORE_EVENTS: 'mdl-js-ripple-effect--ignore-events'
+  };
+
+  /**
+   * Handle clicks to a tabs component
+   *
+   * @private
+   */
+  MaterialTabs.prototype.initTabs_ = function() {
+    if (this.element_.classList.contains(this.CssClasses_.MDL_JS_RIPPLE_EFFECT)) {
+      this.element_.classList.add(
+        this.CssClasses_.MDL_JS_RIPPLE_EFFECT_IGNORE_EVENTS);
+    }
+
+    // Select element tabs, document panels
+    this.tabs_ = this.element_.querySelectorAll('.' + this.CssClasses_.TAB_CLASS);
+    this.panels_ =
+        this.element_.querySelectorAll('.' + this.CssClasses_.PANEL_CLASS);
+
+    // Create new tabs for each tab element
+    for (var i = 0; i < this.tabs_.length; i++) {
+      new MaterialTab(this.tabs_[i], this);
+    }
+
+    this.element_.classList.add(this.CssClasses_.UPGRADED_CLASS);
+  };
+
+  /**
+   * Reset tab state, dropping active classes
+   *
+   * @private
+   */
+  MaterialTabs.prototype.resetTabState_ = function() {
+    for (var k = 0; k < this.tabs_.length; k++) {
+      this.tabs_[k].classList.remove(this.CssClasses_.ACTIVE_CLASS);
+    }
+  };
+
+  /**
+   * Reset panel state, droping active classes
+   *
+   * @private
+   */
+  MaterialTabs.prototype.resetPanelState_ = function() {
+    for (var j = 0; j < this.panels_.length; j++) {
+      this.panels_[j].classList.remove(this.CssClasses_.ACTIVE_CLASS);
+    }
+  };
+
+  /**
+   * Initialize element.
+   */
+  MaterialTabs.prototype.init = function() {
+    if (this.element_) {
+      this.initTabs_();
+    }
+  };
+
+  /**
+   * Constructor for an individual tab.
+   *
+   * @constructor
+   * @param {HTMLElement} tab The HTML element for the tab.
+   * @param {MaterialTabs} ctx The MaterialTabs object that owns the tab.
+   */
+  function MaterialTab(tab, ctx) {
+    if (tab) {
+      if (ctx.element_.classList.contains(ctx.CssClasses_.MDL_JS_RIPPLE_EFFECT)) {
+        var rippleContainer = document.createElement('span');
+        rippleContainer.classList.add(ctx.CssClasses_.MDL_RIPPLE_CONTAINER);
+        rippleContainer.classList.add(ctx.CssClasses_.MDL_JS_RIPPLE_EFFECT);
+        var ripple = document.createElement('span');
+        ripple.classList.add(ctx.CssClasses_.MDL_RIPPLE);
+        rippleContainer.appendChild(ripple);
+        tab.appendChild(rippleContainer);
+      }
+
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        var href = tab.href.split('#')[1];
+        var panel = ctx.element_.querySelector('#' + href);
+        ctx.resetTabState_();
+        ctx.resetPanelState_();
+        tab.classList.add(ctx.CssClasses_.ACTIVE_CLASS);
+        panel.classList.add(ctx.CssClasses_.ACTIVE_CLASS);
+      });
+
+    }
+  }
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialTabs,
+    classAsString: 'MaterialTabs',
+    cssClass: 'mdl-js-tabs'
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Textfield MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialTextfield = function MaterialTextfield(element) {
+    this.element_ = element;
+    this.maxRows = this.Constant_.NO_MAX_ROWS;
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialTextfield'] = MaterialTextfield;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialTextfield.prototype.Constant_ = {
+    NO_MAX_ROWS: -1,
+    MAX_ROWS_ATTRIBUTE: 'maxrows'
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialTextfield.prototype.CssClasses_ = {
+    LABEL: 'mdl-textfield__label',
+    INPUT: 'mdl-textfield__input',
+    IS_DIRTY: 'is-dirty',
+    IS_FOCUSED: 'is-focused',
+    IS_DISABLED: 'is-disabled',
+    IS_INVALID: 'is-invalid',
+    IS_UPGRADED: 'is-upgraded'
+  };
+
+  /**
+   * Handle input being entered.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialTextfield.prototype.onKeyDown_ = function(event) {
+    var currentRowCount = event.target.value.split('\n').length;
+    if (event.keyCode === 13) {
+      if (currentRowCount >= this.maxRows) {
+        event.preventDefault();
+      }
+    }
+  };
+
+  /**
+   * Handle focus.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialTextfield.prototype.onFocus_ = function(event) {
+    this.element_.classList.add(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle lost focus.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialTextfield.prototype.onBlur_ = function(event) {
+    this.element_.classList.remove(this.CssClasses_.IS_FOCUSED);
+  };
+
+  /**
+   * Handle class updates.
+   *
+   * @private
+   */
+  MaterialTextfield.prototype.updateClasses_ = function() {
+    this.checkDisabled();
+    this.checkValidity();
+    this.checkDirty();
+  };
+
+  // Public methods.
+
+  /**
+   * Check the disabled state and update field accordingly.
+   *
+   * @public
+   */
+  MaterialTextfield.prototype.checkDisabled = function() {
+    if (this.input_.disabled) {
+      this.element_.classList.add(this.CssClasses_.IS_DISABLED);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_DISABLED);
+    }
+  };
+  MaterialTextfield.prototype['checkDisabled'] =
+      MaterialTextfield.prototype.checkDisabled;
+
+  /**
+   * Check the validity state and update field accordingly.
+   *
+   * @public
+   */
+  MaterialTextfield.prototype.checkValidity = function() {
+    if (this.input_.validity) {
+      if (this.input_.validity.valid) {
+        this.element_.classList.remove(this.CssClasses_.IS_INVALID);
+      } else {
+        this.element_.classList.add(this.CssClasses_.IS_INVALID);
+      }
+    }
+  };
+  MaterialTextfield.prototype['checkValidity'] =
+      MaterialTextfield.prototype.checkValidity;
+
+  /**
+   * Check the dirty state and update field accordingly.
+   *
+   * @public
+   */
+  MaterialTextfield.prototype.checkDirty = function() {
+    if (this.input_.value && this.input_.value.length > 0) {
+      this.element_.classList.add(this.CssClasses_.IS_DIRTY);
+    } else {
+      this.element_.classList.remove(this.CssClasses_.IS_DIRTY);
+    }
+  };
+  MaterialTextfield.prototype['checkDirty'] =
+      MaterialTextfield.prototype.checkDirty;
+
+  /**
+   * Disable text field.
+   *
+   * @public
+   */
+  MaterialTextfield.prototype.disable = function() {
+    this.input_.disabled = true;
+    this.updateClasses_();
+  };
+  MaterialTextfield.prototype['disable'] = MaterialTextfield.prototype.disable;
+
+  /**
+   * Enable text field.
+   *
+   * @public
+   */
+  MaterialTextfield.prototype.enable = function() {
+    this.input_.disabled = false;
+    this.updateClasses_();
+  };
+  MaterialTextfield.prototype['enable'] = MaterialTextfield.prototype.enable;
+
+  /**
+   * Update text field value.
+   *
+   * @param {string} value The value to which to set the control (optional).
+   * @public
+   */
+  MaterialTextfield.prototype.change = function(value) {
+
+    this.input_.value = value || '';
+    this.updateClasses_();
+  };
+  MaterialTextfield.prototype['change'] = MaterialTextfield.prototype.change;
+
+  /**
+   * Initialize element.
+   */
+  MaterialTextfield.prototype.init = function() {
+
+    if (this.element_) {
+      this.label_ = this.element_.querySelector('.' + this.CssClasses_.LABEL);
+      this.input_ = this.element_.querySelector('.' + this.CssClasses_.INPUT);
+
+      if (this.input_) {
+        if (this.input_.hasAttribute(
+              /** @type {string} */ (this.Constant_.MAX_ROWS_ATTRIBUTE))) {
+          this.maxRows = parseInt(this.input_.getAttribute(
+              /** @type {string} */ (this.Constant_.MAX_ROWS_ATTRIBUTE)), 10);
+          if (isNaN(this.maxRows)) {
+            this.maxRows = this.Constant_.NO_MAX_ROWS;
+          }
+        }
+
+        this.boundUpdateClassesHandler = this.updateClasses_.bind(this);
+        this.boundFocusHandler = this.onFocus_.bind(this);
+        this.boundBlurHandler = this.onBlur_.bind(this);
+        this.input_.addEventListener('input', this.boundUpdateClassesHandler);
+        this.input_.addEventListener('focus', this.boundFocusHandler);
+        this.input_.addEventListener('blur', this.boundBlurHandler);
+
+        if (this.maxRows !== this.Constant_.NO_MAX_ROWS) {
+          // TODO: This should handle pasting multi line text.
+          // Currently doesn't.
+          this.boundKeyDownHandler = this.onKeyDown_.bind(this);
+          this.input_.addEventListener('keydown', this.boundKeyDownHandler);
+        }
+        var invalid = this.element_.classList
+          .contains(this.CssClasses_.IS_INVALID);
+        this.updateClasses_();
+        this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
+        if (invalid) {
+          this.element_.classList.add(this.CssClasses_.IS_INVALID);
+        }
+      }
+    }
+  };
+
+  /**
+   * Downgrade the component
+   *
+   * @private
+   */
+  MaterialTextfield.prototype.mdlDowngrade_ = function() {
+    this.input_.removeEventListener('input', this.boundUpdateClassesHandler);
+    this.input_.removeEventListener('focus', this.boundFocusHandler);
+    this.input_.removeEventListener('blur', this.boundBlurHandler);
+    if (this.boundKeyDownHandler) {
+      this.input_.removeEventListener('keydown', this.boundKeyDownHandler);
+    }
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialTextfield.prototype.mdlDowngrade =
+      MaterialTextfield.prototype.mdlDowngrade_;
+
+  MaterialTextfield.prototype['mdlDowngrade'] =
+      MaterialTextfield.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialTextfield,
+    classAsString: 'MaterialTextfield',
+    cssClass: 'mdl-js-textfield',
+    widget: true
+  });
+})();
+
+;/**
+ * @license
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function() {
+  'use strict';
+
+  /**
+   * Class constructor for Tooltip MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
+  var MaterialTooltip = function MaterialTooltip(element) {
+    this.element_ = element;
+
+    // Initialize instance.
+    this.init();
+  };
+  window['MaterialTooltip'] = MaterialTooltip;
+
+  /**
+   * Store constants in one place so they can be updated easily.
+   *
+   * @enum {string | number}
+   * @private
+   */
+  MaterialTooltip.prototype.Constant_ = {
+    // None for now.
+  };
+
+  /**
+   * Store strings for class names defined by this component that are used in
+   * JavaScript. This allows us to simply change it in one place should we
+   * decide to modify at a later date.
+   *
+   * @enum {string}
+   * @private
+   */
+  MaterialTooltip.prototype.CssClasses_ = {
+    IS_ACTIVE: 'is-active'
+  };
+
+  /**
+   * Handle mouseenter for tooltip.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialTooltip.prototype.handleMouseEnter_ = function(event) {
+    event.stopPropagation();
+    var props = event.target.getBoundingClientRect();
+    var left = props.left + (props.width / 2);
+    var marginLeft = -1 * (this.element_.offsetWidth / 2);
+
+    if (left + marginLeft < 0) {
+      this.element_.style.left = 0;
+      this.element_.style.marginLeft = 0;
+    } else {
+      this.element_.style.left = left + 'px';
+      this.element_.style.marginLeft = marginLeft + 'px';
+    }
+
+    this.element_.style.top = props.top + props.height + 10 + 'px';
+    this.element_.classList.add(this.CssClasses_.IS_ACTIVE);
+    window.addEventListener('scroll', this.boundMouseLeaveHandler, false);
+    window.addEventListener('touchmove', this.boundMouseLeaveHandler, false);
+  };
+
+  /**
+   * Handle mouseleave for tooltip.
+   *
+   * @param {Event} event The event that fired.
+   * @private
+   */
+  MaterialTooltip.prototype.handleMouseLeave_ = function(event) {
+    event.stopPropagation();
+    this.element_.classList.remove(this.CssClasses_.IS_ACTIVE);
+    window.removeEventListener('scroll', this.boundMouseLeaveHandler);
+    window.removeEventListener('touchmove', this.boundMouseLeaveHandler, false);
+  };
+
+  /**
+   * Initialize element.
+   */
+  MaterialTooltip.prototype.init = function() {
+
+    if (this.element_) {
+      var forElId = this.element_.getAttribute('for');
+
+      if (forElId) {
+        this.forElement_ = document.getElementById(forElId);
+      }
+
+      if (this.forElement_) {
+        // Tabindex needs to be set for `blur` events to be emitted
+        if (!this.forElement_.hasAttribute('tabindex')) {
+          this.forElement_.setAttribute('tabindex', '0');
+        }
+
+        this.boundMouseEnterHandler = this.handleMouseEnter_.bind(this);
+        this.boundMouseLeaveHandler = this.handleMouseLeave_.bind(this);
+        this.forElement_.addEventListener('mouseenter', this.boundMouseEnterHandler,
+            false);
+        this.forElement_.addEventListener('click', this.boundMouseEnterHandler,
+            false);
+        this.forElement_.addEventListener('blur', this.boundMouseLeaveHandler);
+        this.forElement_.addEventListener('touchstart', this.boundMouseEnterHandler,
+            false);
+        this.forElement_.addEventListener('mouseleave', this.boundMouseLeaveHandler);
+      }
+    }
+  };
+
+  /**
+   * Downgrade the component
+   *
+   * @private
+   */
+  MaterialTooltip.prototype.mdlDowngrade_ = function() {
+    if (this.forElement_) {
+      this.forElement_.removeEventListener('mouseenter', this.boundMouseEnterHandler, false);
+      this.forElement_.removeEventListener('click', this.boundMouseEnterHandler, false);
+      this.forElement_.removeEventListener('touchstart', this.boundMouseEnterHandler, false);
+      this.forElement_.removeEventListener('mouseleave', this.boundMouseLeaveHandler);
+    }
+  };
+
+  /**
+   * Public alias for the downgrade method.
+   *
+   * @public
+   */
+  MaterialTooltip.prototype.mdlDowngrade =
+      MaterialTooltip.prototype.mdlDowngrade_;
+
+  MaterialTooltip.prototype['mdlDowngrade'] =
+      MaterialTooltip.prototype.mdlDowngrade;
+
+  // The component registers itself. It can assume componentHandler is available
+  // in the global scope.
+  componentHandler.register({
+    constructor: MaterialTooltip,
+    classAsString: 'MaterialTooltip',
+    cssClass: 'mdl-tooltip'
+  });
+})();
+
 ;/* globals define */
 define('ember/load-initializers', ['exports', 'ember-load-initializers', 'ember'], function(exports, loadInitializers, Ember) {
   Ember['default'].deprecate(
@@ -65726,6 +69645,111 @@ define('ember-cli-app-version/initializer-factory', ['exports', 'ember'], functi
       }
     };
   }
+});
+define('ember-composability/mixins/child-component-support', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var assert = _ember['default'].assert;
+  var computed = _ember['default'].computed;
+  var Mixin = _ember['default'].Mixin;
+
+  exports['default'] = Mixin.create({
+
+    init: function init() {
+      this._super.apply(this, arguments);
+      assert('Must define _parentComponentTypes', this.get('_parentComponentTypes'));
+      this._registerWithParent();
+    },
+
+    willDestroyElement: function willDestroyElement() {
+      this._unregisterWithParent();
+      this._super.apply(this, arguments);
+    },
+
+    composableParent: computed(function () {
+      return this._componentToRegisterTo();
+    }),
+
+    _componentToRegisterTo: function _componentToRegisterTo() {
+      var c = null;
+      var parentTypes = this.get('_parentComponentTypes');
+      for (var i = 0; i < parentTypes.length && !c; i++) {
+        c = this.nearestOfType(parentTypes[i]);
+      }
+      return c;
+    },
+
+    shouldRegisterToParent: function shouldRegisterToParent() /*parentComponent*/{
+      return true;
+    },
+
+    _registerWithParent: function _registerWithParent() {
+      var parentComponent = this._componentToRegisterTo();
+      if (parentComponent) {
+        if (this.shouldRegisterToParent(parentComponent)) {
+          parentComponent.registerChildComponent(this);
+        }
+        this.set('composableParent', parentComponent);
+      }
+    },
+
+    _unregisterWithParent: function _unregisterWithParent() {
+      var parentComponent = this._componentToRegisterTo();
+      if (parentComponent) {
+        parentComponent.unregisterChildComponent(this);
+      }
+    }
+  });
+});
+define('ember-composability/mixins/parent-component-support', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var A = _ember['default'].A;
+  var computed = _ember['default'].computed;
+  var Mixin = _ember['default'].Mixin;
+  var OrderedSet = _ember['default'].OrderedSet;
+  var debounce = _ember['default'].run.debounce;
+
+  exports['default'] = Mixin.create({
+    _childComponents: null,
+    composableChildrenDebounceTime: 0,
+
+    init: function init() {
+      this._super.apply(this, arguments);
+      this.set('_childComponents', new OrderedSet());
+    },
+
+    composableChildren: computed(function () {
+      return this.getComposableChildren();
+    }).readOnly(),
+
+    getComposableChildren: function getComposableChildren() {
+      var comps = this.get('_childComponents');
+      return new A(comps && comps.size ? this.get('_childComponents').list : []);
+    },
+
+    _fireComposableChildrenChanged: function _fireComposableChildrenChanged() {
+      this.propertyDidChange('composableChildren');
+    },
+
+    _notifyComposableChildrenChanged: function _notifyComposableChildrenChanged() {
+      if (this.get('composableChildrenDebounceTime')) {
+        debounce(this, this._fireComposableChildrenChanged, this.get('composableChildrenDebounceTime'));
+      } else {
+        this._fireComposableChildrenChanged();
+      }
+    },
+
+    registerChildComponent: function registerChildComponent(childComponent) {
+      this.get('_childComponents').add(childComponent);
+      this._notifyComposableChildrenChanged();
+    },
+
+    unregisterChildComponent: function unregisterChildComponent(childComponent) {
+      this.get('_childComponents')['delete'](childComponent);
+      this._notifyComposableChildrenChanged();
+    }
+  });
 });
 define("ember-data/-private/adapters", ["exports", "ember-data/adapters/json-api", "ember-data/adapters/rest"], function (exports, _emberDataAdaptersJsonApi, _emberDataAdaptersRest) {
   /**
@@ -83485,6 +87509,3561 @@ define('ember-load-initializers/index', ['exports', 'ember'], function (exports,
       }
     });
   };
+});
+define('ember-material-lite/components/-base-child-component', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+  var computed = _ember['default'].computed;
+
+  exports['default'] = Component.extend({
+    childComponentClassName: null,
+    classNameBindings: ['_childComponentClassString'],
+    _childComponentClassStringDelimeter: '--',
+    _childComponentClassString: computed('composableParent', 'childComponentClassName', function () {
+      var cccn = this.get('childComponentClassName');
+      if (!cccn) {
+        return '';
+      } else {
+        var parentComponent = this.get('composableParent');
+        return '' + parentComponent.get('_primaryClassNameString') + this.get('_childComponentClassStringDelimeter') + this.get('childComponentClassName');
+      }
+    })
+  });
+});
+define('ember-material-lite/components/-base-input-component', ['exports', 'ember', 'ember-material-lite/components/-base-toplevel-component'], function (exports, _ember, _emberMaterialLiteComponentsBaseToplevelComponent) {
+  'use strict';
+
+  var computed = _ember['default'].computed;
+  var isPresent = _ember['default'].isPresent;
+  var observer = _ember['default'].observer;
+  var run = _ember['default'].run;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend({
+    primaryClassName: 'textfield',
+    type: 'text',
+    disabled: false,
+    isLabelFloating: true,
+    errorMessage: null,
+    classNameBindings: ['isLabelFloating:mdl-textfield--floating-label'],
+    // This should never change, so we deliberately
+    //   declare no dependent property keys
+    _inputId: computed(function () {
+      return this.get('elementId') + '-input';
+    }),
+    beforeMdlInit: function beforeMdlInit() {},
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      this.beforeMdlInit();
+      var mdlTextfield = new window.MaterialTextfield(this.get('element'));
+      this.set('_mdlComponent', mdlTextfield);
+    },
+    _checkValidity: observer('errorMessage', function () {
+      run.scheduleOnce('afterRender', this, this._setValidity);
+    }),
+    _setValidity: function _setValidity() {
+      if (this.isDestroyed) {
+        return;
+      }
+
+      var mdlComponent = this.get('_mdlComponent');
+      var errorMessage = this.get('errorMessage');
+
+      if (isPresent(errorMessage)) {
+        mdlComponent.input_.setCustomValidity(errorMessage.toString());
+      } else {
+        mdlComponent.input_.setCustomValidity('');
+      }
+    }
+  });
+});
+define('ember-material-lite/components/-base-toggle-component', ['exports', 'ember', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/mixins/ripple-support', 'ember-material-lite/mixins/click-action-support', 'ember-material-lite/templates/components/mdl-checkbox', 'ember-new-computed'], function (exports, _ember, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteMixinsRippleSupport, _emberMaterialLiteMixinsClickActionSupport, _emberMaterialLiteTemplatesComponentsMdlCheckbox, _emberNewComputed) {
+  'use strict';
+
+  var deprecate = _ember['default'].deprecate;
+  var computed = _ember['default'].computed;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberMaterialLiteMixinsRippleSupport['default'], _emberMaterialLiteMixinsClickActionSupport['default'], {
+    tagName: 'label',
+    layout: _emberMaterialLiteTemplatesComponentsMdlCheckbox['default'],
+    value: false,
+    label: (0, _emberNewComputed['default'])('text', {
+      get: function get() {
+        deprecate('The \'label\' property has been deprecated. Please use \'text\' instead', false);
+        return this.get('text');
+      },
+      set: function set(key, val) {
+        deprecate('The \'label\' property has been deprecated. Please use \'text\' instead', false);
+        this.set('text');
+        return val;
+      }
+    }),
+    text: '',
+    attributeBindings: ['_inputId:for'],
+    _inputId: computed('elementId', function () {
+      return this.get('elementId') + '-input';
+    })
+  });
+});
+define('ember-material-lite/components/-base-toplevel-component', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var computed = _ember['default'].computed;
+  var Component = _ember['default'].Component;
+
+  exports['default'] = Component.extend({
+    primaryClassName: null,
+    _jsClass: true,
+    classNameBindings: ['_primaryClassNameString', '_jsClassNameString'],
+
+    _primaryClassNameString: computed('primaryClassName', function () {
+      return 'mdl-' + this.get('primaryClassName');
+    }),
+
+    _jsClassNameString: computed('primaryClassName', '_jsClass', function () {
+      if (this.get('_jsClass')) {
+        return 'mdl-js-' + this.get('primaryClassName');
+      } else {
+        return '';
+      }
+    })
+  });
+});
+define('ember-material-lite/components/mdl-button', ['exports', 'ember', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/mixins/ripple-support', 'ember-material-lite/mixins/click-action-support', 'ember-material-lite/templates/components/mdl-button'], function (exports, _ember, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteMixinsRippleSupport, _emberMaterialLiteMixinsClickActionSupport, _emberMaterialLiteTemplatesComponentsMdlButton) {
+  'use strict';
+
+  var computed = _ember['default'].computed;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberMaterialLiteMixinsRippleSupport['default'], _emberMaterialLiteMixinsClickActionSupport['default'], {
+    primaryClassName: 'button',
+    tagName: 'button',
+    icon: null,
+    isColored: true,
+    isRaised: false,
+    isFloating: false,
+    isMiniFab: false,
+    isAccent: false,
+    _mdlComponent: null,
+    'for': null,
+    _isIconMode: computed('icon', 'isFloating', function () {
+      return !this.get('isFloating') && this.get('icon');
+    }),
+    attributeBindings: ['disabled', 'for', 'type:buttonType'],
+    buttonType: 'button',
+    classNameBindings: ['isMiniFab:mdl-button--mini-fab', 'isAccent:mdl-button--accent', 'isRaised:mdl-button--raised', '_isIconMode:mdl-button--icon', 'isColored:mdl-button--colored', 'isFloating:mdl-button--fab'],
+    layout: _emberMaterialLiteTemplatesComponentsMdlButton['default'],
+
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlbtn = new window.MaterialButton(this.get('element'));
+      this.set('_mdlComponent', mdlbtn);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-card-actions', ['exports', 'ember', 'ember-material-lite/templates/components/mdl-card-actions'], function (exports, _ember, _emberMaterialLiteTemplatesComponentsMdlCardActions) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+
+  exports['default'] = Component.extend({
+    classNames: ['mdl-card__actions mdl-card--border'],
+    layout: _emberMaterialLiteTemplatesComponentsMdlCardActions['default']
+  });
+});
+define('ember-material-lite/components/mdl-card-buttons', ['exports', 'ember', 'ember-material-lite/templates/components/mdl-card-buttons'], function (exports, _ember, _emberMaterialLiteTemplatesComponentsMdlCardButtons) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+
+  exports['default'] = Component.extend({
+    classNames: ['mdl-card__menu'],
+    layout: _emberMaterialLiteTemplatesComponentsMdlCardButtons['default']
+  });
+});
+define('ember-material-lite/components/mdl-card', ['exports', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/mixins/shadow-support', 'ember-material-lite/templates/components/mdl-card'], function (exports, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteMixinsShadowSupport, _emberMaterialLiteTemplatesComponentsMdlCard) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberMaterialLiteMixinsShadowSupport['default'], {
+    primaryClassName: 'card',
+    _jsClass: false,
+    layout: _emberMaterialLiteTemplatesComponentsMdlCard['default']
+  });
+});
+define('ember-material-lite/components/mdl-checkbox', ['exports', 'ember-material-lite/components/-base-toggle-component', 'ember-material-lite/templates/components/mdl-checkbox'], function (exports, _emberMaterialLiteComponentsBaseToggleComponent, _emberMaterialLiteTemplatesComponentsMdlCheckbox) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToggleComponent['default'].extend({
+    primaryClassName: 'checkbox',
+    layout: _emberMaterialLiteTemplatesComponentsMdlCheckbox['default'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlcheckbox = new window.MaterialCheckbox(this.get('element'));
+      this.set('_mdlComponent', mdlcheckbox);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-footer-dropdown-section', ['exports', 'ember', 'ember-material-lite/templates/components/mdl-footer-dropdown-section', 'ember-material-lite/components/mdl-mini-footer', 'ember-material-lite/components/mdl-mega-footer', 'ember-composability/mixins/child-component-support'], function (exports, _ember, _emberMaterialLiteTemplatesComponentsMdlFooterDropdownSection, _emberMaterialLiteComponentsMdlMiniFooter, _emberMaterialLiteComponentsMdlMegaFooter, _emberComposabilityMixinsChildComponentSupport) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+  var A = _ember['default'].A;
+
+  exports['default'] = Component.extend(_emberComposabilityMixinsChildComponentSupport['default'], {
+    _parentComponentTypes: A([_emberMaterialLiteComponentsMdlMegaFooter['default'], _emberMaterialLiteComponentsMdlMiniFooter['default']]),
+    layout: _emberMaterialLiteTemplatesComponentsMdlFooterDropdownSection['default'],
+    childComponentClassName: 'drop-down-section'
+  });
+});
+define('ember-material-lite/components/mdl-footer-linklist', ['exports', 'ember', 'ember-material-lite/components/mdl-mini-footer', 'ember-material-lite/components/mdl-mega-footer', 'ember-material-lite/components/-base-child-component', 'ember-composability/mixins/child-component-support', 'ember-material-lite/templates/components/mdl-footer-linklist'], function (exports, _ember, _emberMaterialLiteComponentsMdlMiniFooter, _emberMaterialLiteComponentsMdlMegaFooter, _emberMaterialLiteComponentsBaseChildComponent, _emberComposabilityMixinsChildComponentSupport, _emberMaterialLiteTemplatesComponentsMdlFooterLinklist) {
+  'use strict';
+
+  var A = _ember['default'].A;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseChildComponent['default'].extend(_emberComposabilityMixinsChildComponentSupport['default'], {
+    _parentComponentTypes: A([_emberMaterialLiteComponentsMdlMegaFooter['default'], _emberMaterialLiteComponentsMdlMiniFooter['default']]),
+    layout: _emberMaterialLiteTemplatesComponentsMdlFooterLinklist['default'],
+    tagName: 'ul',
+    childComponentClassName: 'link-list'
+  });
+});
+define('ember-material-lite/components/mdl-footer-section', ['exports', 'ember', 'ember-material-lite/components/mdl-mini-footer', 'ember-material-lite/components/mdl-mega-footer', 'ember-composability/mixins/child-component-support', 'ember-material-lite/components/-base-child-component', 'ember-material-lite/templates/components/mdl-footer-section'], function (exports, _ember, _emberMaterialLiteComponentsMdlMiniFooter, _emberMaterialLiteComponentsMdlMegaFooter, _emberComposabilityMixinsChildComponentSupport, _emberMaterialLiteComponentsBaseChildComponent, _emberMaterialLiteTemplatesComponentsMdlFooterSection) {
+  'use strict';
+
+  var computed = _ember['default'].computed;
+  var A = _ember['default'].A;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseChildComponent['default'].extend(_emberComposabilityMixinsChildComponentSupport['default'], {
+    _parentComponentTypes: A([_emberMaterialLiteComponentsMdlMegaFooter['default'], _emberMaterialLiteComponentsMdlMiniFooter['default']]),
+    layout: _emberMaterialLiteTemplatesComponentsMdlFooterSection['default'],
+    align: 'middle',
+    childComponentClassName: computed('align', function () {
+      return this.get('align') + '-section';
+    })
+  });
+});
+define('ember-material-lite/components/mdl-icon-toggle', ['exports', 'ember-material-lite/components/-base-toggle-component', 'ember-material-lite/templates/components/mdl-icon-toggle'], function (exports, _emberMaterialLiteComponentsBaseToggleComponent, _emberMaterialLiteTemplatesComponentsMdlIconToggle) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToggleComponent['default'].extend({
+    primaryClassName: 'icon-toggle',
+    layout: _emberMaterialLiteTemplatesComponentsMdlIconToggle['default'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlicontoggle = new window.MaterialIconToggle(this.get('element'));
+      this.set('_mdlComponent', mdlicontoggle);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-icon', ['exports', 'ember', 'ember-material-lite/mixins/badge-support', 'ember-material-lite/templates/components/mdl-icon'], function (exports, _ember, _emberMaterialLiteMixinsBadgeSupport, _emberMaterialLiteTemplatesComponentsMdlIcon) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+
+  exports['default'] = Component.extend(_emberMaterialLiteMixinsBadgeSupport['default'], {
+    classNames: ['icon', 'material-icons'],
+    layout: _emberMaterialLiteTemplatesComponentsMdlIcon['default']
+  });
+});
+define('ember-material-lite/components/mdl-mega-footer', ['exports', 'ember-composability/mixins/parent-component-support', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/templates/components/mdl-mega-footer'], function (exports, _emberComposabilityMixinsParentComponentSupport, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteTemplatesComponentsMdlMegaFooter) {
+  // import Ember from 'ember';
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberComposabilityMixinsParentComponentSupport['default'], {
+    primaryClassName: 'mega-footer',
+    _jsClass: false,
+    tagName: 'footer',
+    layout: _emberMaterialLiteTemplatesComponentsMdlMegaFooter['default']
+  });
+});
+define('ember-material-lite/components/mdl-menu-item', ['exports', 'ember', 'ember-composability/mixins/child-component-support', 'ember-material-lite/components/-base-child-component', 'ember-material-lite/components/mdl-menu', 'ember-material-lite/templates/components/mdl-menu-item'], function (exports, _ember, _emberComposabilityMixinsChildComponentSupport, _emberMaterialLiteComponentsBaseChildComponent, _emberMaterialLiteComponentsMdlMenu, _emberMaterialLiteTemplatesComponentsMdlMenuItem) {
+  'use strict';
+
+  var A = _ember['default'].A;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseChildComponent['default'].extend(_emberComposabilityMixinsChildComponentSupport['default'], {
+    layout: _emberMaterialLiteTemplatesComponentsMdlMenuItem['default'],
+    tagName: 'li',
+    _parentComponentTypes: A([_emberMaterialLiteComponentsMdlMenu['default']]),
+    _childComponentClassStringDelimeter: '__',
+    childComponentClassName: 'item',
+    click: function click() {
+      this.sendAction('action', this);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-menu', ['exports', 'ember', 'ember-composability/mixins/parent-component-support', 'ember-material-lite/templates/components/mdl-menu', 'ember-new-computed'], function (exports, _ember, _emberComposabilityMixinsParentComponentSupport, _emberMaterialLiteTemplatesComponentsMdlMenu, _emberNewComputed) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+
+  exports['default'] = Component.extend(_emberComposabilityMixinsParentComponentSupport['default'], {
+    layout: _emberMaterialLiteTemplatesComponentsMdlMenu['default'],
+    _primaryClassNameString: 'mdl-menu',
+    icon: 'more_vert',
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlmenu = new window.MaterialMenu(this.$('ul')[0]);
+      this.set('_mdlComponent', mdlmenu);
+    },
+    _buttonId: (0, _emberNewComputed['default'])('elementId', {
+      get: function get() {
+        return this.get('elementId') + '-button';
+      }
+    }),
+    align: 'top-left',
+    _alignClass: (0, _emberNewComputed['default'])('align', {
+      get: function get() {
+        return 'mdl-menu--' + this.get('align');
+      }
+    })
+  });
+});
+define('ember-material-lite/components/mdl-mini-footer', ['exports', 'ember-composability/mixins/parent-component-support', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/templates/components/mdl-mini-footer'], function (exports, _emberComposabilityMixinsParentComponentSupport, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteTemplatesComponentsMdlMiniFooter) {
+  // import Ember from 'ember';
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberComposabilityMixinsParentComponentSupport['default'], {
+    tagName: 'footer',
+    primaryClassName: 'mini-footer',
+    layout: _emberMaterialLiteTemplatesComponentsMdlMiniFooter['default']
+  });
+});
+define('ember-material-lite/components/mdl-nav-item', ['exports', 'ember', 'ember-composability/mixins/child-component-support', 'ember-material-lite/mixins/click-action-support', 'ember-material-lite/components/mdl-nav'], function (exports, _ember, _emberComposabilityMixinsChildComponentSupport, _emberMaterialLiteMixinsClickActionSupport, _emberMaterialLiteComponentsMdlNav) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+  var A = _ember['default'].A;
+
+  exports['default'] = Component.extend(_emberComposabilityMixinsChildComponentSupport['default'], _emberMaterialLiteMixinsClickActionSupport['default'], {
+    _parentComponentTypes: A([_emberMaterialLiteComponentsMdlNav['default']]),
+    inDrawer: true,
+    inHeader: true
+  });
+});
+define('ember-material-lite/components/mdl-nav', ['exports', 'ember', 'ember-composability/mixins/parent-component-support', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/templates/components/mdl-nav'], function (exports, _ember, _emberComposabilityMixinsParentComponentSupport, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteTemplatesComponentsMdlNav) {
+  'use strict';
+
+  var A = _ember['default'].A;
+  var computed = _ember['default'].computed;
+  var oneWay = _ember['default'].computed.oneWay;
+  var next = _ember['default'].run.next;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberComposabilityMixinsParentComponentSupport['default'], {
+    primaryClassName: 'layout',
+    composableChildrenDebounceTime: 1,
+    classNameBindings: ['fixedHeader:mdl-layout--fixed-header:mdl-layout--overlay-drawer-button', 'fixedDrawer:mdl-layout--fixed-drawer'],
+    layout: _emberMaterialLiteTemplatesComponentsMdlNav['default'],
+    title: null,
+    mobileTitle: oneWay('title'),
+    fixedHeader: false,
+    fixedDrawer: false,
+    transparent: false,
+    waterfallMenu: false,
+    scrollHeader: false,
+    includeHeader: true,
+    includeHeaderLinks: true,
+    includeDrawer: true,
+    includeDrawerTitle: true,
+    _mdlComponent: null,
+    closeDrawerOnItemClick: false,
+
+    _drawerNavItems: computed('composableChildren.[]', 'composableChildren.@each.inDrawer', function () {
+      return A(this.get('composableChildren').filter(function (x) {
+        return x.inDrawer;
+      }));
+    }),
+
+    _headerNavItems: computed('composableChildren.[]', 'composableChildren.@each.inHeader', function () {
+      return A(this.get('composableChildren').filter(function (x) {
+        return x.inHeader;
+      }));
+    }),
+
+    _headerClassString: computed('waterfallMenu', function () {
+      var classes = ['mdl-layout__header'];
+      if (this.get('waterfallMenu')) {
+        classes.push('mdl-layout__header--waterfall');
+      }
+      if (this.get('scrollHeader')) {
+        classes.push('mdl-layout__header--scroll');
+      }
+      if (this.get('transparent')) {
+        classes.push('mdl-layout__header--transparent');
+      }
+      return classes.join(' ');
+    }),
+
+    didInsertElement: function didInsertElement() {
+      var _this = this;
+
+      this._super.apply(this, arguments);
+      var mdlnav = new window.MaterialLayout(this.get('element'));
+      this.set('_mdlComponent', mdlnav);
+
+      this.$('nav.mdl-navigation').on('click', function (jqEvt) {
+        if (_this.get('closeDrawerOnItemClick') && jqEvt.target.className.indexOf('mdl-navigation__link') >= 0 && _this.$(jqEvt.target).closest('nav.mdl-navigation').closest('.mdl-layout__drawer').hasClass('is-visible')) {
+          console.log('closing');
+          next(function () {
+            var _mdlComponent = _this.get('_mdlComponent');
+            _mdlComponent.drawer_.classList.remove(_mdlComponent.CssClasses_.IS_DRAWER_OPEN);
+            _mdlComponent.obfuscator_.classList.remove(_mdlComponent.CssClasses_.IS_DRAWER_OPEN);
+            // this.get('_mdlComponent').drawerToggleHandler_();
+          });
+        }
+      });
+    },
+
+    willDestroyElement: function willDestroyElement() {
+      this._super.apply(this, arguments);
+      this.$('nav.mdl-navigation').off('click');
+    }
+  });
+});
+define('ember-material-lite/components/mdl-progress', ['exports', 'ember', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/templates/components/mdl-progress', 'ember-new-computed'], function (exports, _ember, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteTemplatesComponentsMdlProgress, _emberNewComputed) {
+  'use strict';
+
+  var empty = _ember['default'].computed.empty;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend({
+    primaryClassName: 'progress',
+    classNameBindings: ['indeterminate:mdl-progress__indeterminate'],
+    _progress: null,
+    _buffer: null,
+    _mdlComponent: null,
+
+    indeterminate: empty('progress'),
+    layout: _emberMaterialLiteTemplatesComponentsMdlProgress['default'],
+
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlprogress = new window.MaterialProgress(this.get('element'));
+      this.set('_mdlComponent', mdlprogress);
+      this._updateProgress();
+      this._updateBuffer();
+    },
+
+    _updateProgress: function _updateProgress() {
+      var progress = this.get('progress');
+      if (progress !== null) {
+        this.get('_mdlComponent').setProgress(progress);
+      }
+    },
+    _updateBuffer: function _updateBuffer() {
+      var buffer = this.get('buffer');
+      if (buffer !== null) {
+        this.get('_mdlComponent').setBuffer(buffer);
+      }
+    },
+
+    progress: (0, _emberNewComputed['default'])('_progress', {
+      get: function get() {
+        return this.get('_progress');
+      },
+      set: function set(key, newVal) {
+        if (this.element) {
+          this._updateProgress();
+        }
+        this.set('_progress', newVal);
+        return newVal;
+      }
+    }),
+
+    buffer: (0, _emberNewComputed['default'])('_buffer', {
+      get: function get() {
+        return this.get('_buffer');
+      },
+      set: function set(key, newVal) {
+        if (this.element) {
+          this._updateBuffer();
+        }
+        this.set('_buffer', newVal);
+        return newVal;
+      }
+    })
+  });
+});
+define('ember-material-lite/components/mdl-radio', ['exports', 'ember', 'ember-material-lite/components/-base-toggle-component', 'ember-material-lite/templates/components/mdl-radio'], function (exports, _ember, _emberMaterialLiteComponentsBaseToggleComponent, _emberMaterialLiteTemplatesComponentsMdlRadio) {
+  'use strict';
+
+  var oneWay = _ember['default'].computed.oneWay;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToggleComponent['default'].extend({
+    primaryClassName: 'radio',
+    layout: _emberMaterialLiteTemplatesComponentsMdlRadio['default'],
+    checked: false,
+    name: oneWay('_defaultName'),
+
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlradio = new window.MaterialRadio(this.get('element'));
+      this.element.MaterialRadio = mdlradio;
+      this.set('_mdlComponent', mdlradio);
+    },
+
+    _defaultName: 'default'
+  });
+});
+define('ember-material-lite/components/mdl-slider', ['exports', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/templates/components/mdl-slider'], function (exports, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteTemplatesComponentsMdlSlider) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend({
+    tagName: 'input',
+    type: 'range',
+    min: 0,
+    max: 100,
+    value: 0,
+    attributeBindings: ['type', 'min', 'max', 'value'],
+    primaryClassName: 'slider',
+    layout: _emberMaterialLiteTemplatesComponentsMdlSlider['default'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlslider = new window.MaterialSlider(this.get('element'));
+      this.set('_mdlComponent', mdlslider);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-spinner', ['exports', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/templates/components/mdl-spinner'], function (exports, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteTemplatesComponentsMdlSpinner) {
+  // import Ember from 'ember';
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend({
+    primaryClassName: 'spinner',
+    classNameBindings: ['isActive:is-active', 'isSingleColor:mdl-spinner--single-color'],
+    _mdlComponent: null,
+    isActive: true,
+    isSingleColor: false,
+    layout: _emberMaterialLiteTemplatesComponentsMdlSpinner['default'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlspinner = new window.MaterialSpinner(this.get('element'));
+      this.set('_mdlComponent', mdlspinner);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-switch', ['exports', 'ember-material-lite/components/-base-toggle-component', 'ember-material-lite/templates/components/mdl-switch'], function (exports, _emberMaterialLiteComponentsBaseToggleComponent, _emberMaterialLiteTemplatesComponentsMdlSwitch) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToggleComponent['default'].extend({
+    primaryClassName: 'switch',
+    layout: _emberMaterialLiteTemplatesComponentsMdlSwitch['default'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlswitch = new window.MaterialSwitch(this.get('element'));
+      this.set('_mdlComponent', mdlswitch);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-tab', ['exports', 'ember', 'ember-material-lite/components/mdl-tabs', 'ember-composability/mixins/child-component-support', 'ember-material-lite/templates/components/mdl-tab'], function (exports, _ember, _emberMaterialLiteComponentsMdlTabs, _emberComposabilityMixinsChildComponentSupport, _emberMaterialLiteTemplatesComponentsMdlTab) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+  var computed = _ember['default'].computed;
+  var dasherize = _ember['default'].String.dasherize;
+  var A = _ember['default'].A;
+
+  exports['default'] = Component.extend(_emberComposabilityMixinsChildComponentSupport['default'], {
+    layout: _emberMaterialLiteTemplatesComponentsMdlTab['default'],
+    _parentComponentTypes: new A([_emberMaterialLiteComponentsMdlTabs['default']]),
+    classNames: ['mdl-tabs__panel'],
+    classNameBindings: ['isActive:is-active'],
+    isActive: false,
+    dasherizedTitle: computed('title', function () {
+      return dasherize(this.get('title'));
+    })
+  });
+});
+define('ember-material-lite/components/mdl-table-col', ['exports', 'ember', 'ember-material-lite/components/-base-child-component', 'ember-composability/mixins/child-component-support', 'ember-material-lite/components/mdl-table', 'ember-material-lite/templates/components/mdl-table-col'], function (exports, _ember, _emberMaterialLiteComponentsBaseChildComponent, _emberComposabilityMixinsChildComponentSupport, _emberMaterialLiteComponentsMdlTable, _emberMaterialLiteTemplatesComponentsMdlTableCol) {
+  'use strict';
+
+  var isEmpty = _ember['default'].isEmpty;
+  var A = _ember['default'].A;
+
+  exports['default'] = _emberMaterialLiteComponentsBaseChildComponent['default'].extend(_emberComposabilityMixinsChildComponentSupport['default'], {
+    _parentComponentTypes: new A([_emberMaterialLiteComponentsMdlTable['default']]),
+    tagName: 'td',
+    layout: _emberMaterialLiteTemplatesComponentsMdlTableCol['default'],
+    clssNameBindings: ['isNonNumeric:mdl-data-table__cell--non-numeric'],
+    shouldRegisterToParent: function shouldRegisterToParent(parentComponent) {
+      var childComponents = parentComponent.getComposableChildren();
+      if (isEmpty(childComponents)) {
+        return true;
+      } else {
+        var labels = parentComponent.getComposableChildren().map(function (x) {
+          return x.label;
+        });
+        return labels.indexOf(this.get('label')) < 0;
+      }
+    }
+  });
+});
+define('ember-material-lite/components/mdl-table', ['exports', 'ember-material-lite/components/-base-toplevel-component', 'ember-composability/mixins/parent-component-support', 'ember-material-lite/mixins/shadow-support', 'ember-material-lite/templates/components/mdl-table'], function (exports, _emberMaterialLiteComponentsBaseToplevelComponent, _emberComposabilityMixinsParentComponentSupport, _emberMaterialLiteMixinsShadowSupport, _emberMaterialLiteTemplatesComponentsMdlTable) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberComposabilityMixinsParentComponentSupport['default'], _emberMaterialLiteMixinsShadowSupport['default'], {
+    primaryClassName: 'data-table',
+    tagName: 'table',
+    composableChildrenDebounceTime: 1,
+    layout: _emberMaterialLiteTemplatesComponentsMdlTable['default'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdltable = new window.MaterialDataTable(this.get('element'));
+      this.set('_mdlComponent', mdltable);
+    }
+  });
+});
+define('ember-material-lite/components/mdl-tabs', ['exports', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/mixins/ripple-support', 'ember-composability/mixins/parent-component-support', 'ember-material-lite/templates/components/mdl-tabs'], function (exports, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteMixinsRippleSupport, _emberComposabilityMixinsParentComponentSupport, _emberMaterialLiteTemplatesComponentsMdlTabs) {
+  'use strict';
+
+  var _slicedToArray = (function () {
+    function sliceIterator(arr, i) {
+      var _arr = [];var _n = true;var _d = false;var _e = undefined;try {
+        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+          _arr.push(_s.value);if (i && _arr.length === i) break;
+        }
+      } catch (err) {
+        _d = true;_e = err;
+      } finally {
+        try {
+          if (!_n && _i['return']) _i['return']();
+        } finally {
+          if (_d) throw _e;
+        }
+      }return _arr;
+    }return function (arr, i) {
+      if (Array.isArray(arr)) {
+        return arr;
+      } else if (Symbol.iterator in Object(arr)) {
+        return sliceIterator(arr, i);
+      } else {
+        throw new TypeError('Invalid attempt to destructure non-iterable instance');
+      }
+    };
+  })();
+
+  // import Ember from 'ember';
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend(_emberComposabilityMixinsParentComponentSupport['default'], _emberMaterialLiteMixinsRippleSupport['default'], {
+    parentClassName: 'tabs',
+    layout: _emberMaterialLiteTemplatesComponentsMdlTabs['default'],
+    classNames: ['mdl-tabs', 'mdl-js-tabs'],
+    active: null,
+    _mdlComponent: null,
+    composableChildrenDebounceTime: 1,
+    didInsertElement: function didInsertElement() {
+      var _this = this;
+
+      this._super.apply(this, arguments);
+      var mdltabs = new window.MaterialTabs(this.get('element'));
+      this.set('_mdlComponent', mdltabs);
+
+      var _get$filter = this.get('composableChildren').filter(function (x) {
+        return x.title === _this.get('active');
+      });
+
+      var _get$filter2 = _slicedToArray(_get$filter, 1);
+
+      var activeTab = _get$filter2[0];
+
+      if (activeTab) {
+        activeTab.set('isActive', true);
+      }
+    },
+
+    actions: {
+      tabClicked: function tabClicked(tab) {
+        var _this2 = this;
+
+        var _get$filter3 = this.get('composableChildren').filter(function (x) {
+          return x.title === _this2.get('active');
+        });
+
+        var _get$filter32 = _slicedToArray(_get$filter3, 1);
+
+        var activeTab = _get$filter32[0];
+
+        if (activeTab) {
+          activeTab.set('isActive', false);
+        }
+        this.set('active', tab.get('title'));
+        tab.set('isActive', true);
+      }
+    }
+  });
+});
+define('ember-material-lite/components/mdl-textarea', ['exports', 'ember-material-lite/components/-base-input-component', 'ember-material-lite/templates/components/mdl-textarea'], function (exports, _emberMaterialLiteComponentsBaseInputComponent, _emberMaterialLiteTemplatesComponentsMdlTextarea) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseInputComponent['default'].extend({
+    layout: _emberMaterialLiteTemplatesComponentsMdlTextarea['default']
+  });
+});
+define('ember-material-lite/components/mdl-textfield', ['exports', 'ember-material-lite/components/-base-input-component', 'ember-material-lite/templates/components/mdl-textfield'], function (exports, _emberMaterialLiteComponentsBaseInputComponent, _emberMaterialLiteTemplatesComponentsMdlTextfield) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseInputComponent['default'].extend({
+    pattern: null,
+    isExpandable: false,
+    expandableIcon: null,
+    layout: _emberMaterialLiteTemplatesComponentsMdlTextfield['default'],
+    classNameBindings: ['isExpandable:mdl-textfield--expandable'],
+    beforeMdlInit: function beforeMdlInit() {
+      this.$('label.mdl-button').attr('for', this.get('_inputId'));
+    }
+  });
+});
+define('ember-material-lite/components/mdl-tooltip', ['exports', 'ember-material-lite/components/-base-toplevel-component', 'ember-material-lite/templates/components/mdl-tooltip'], function (exports, _emberMaterialLiteComponentsBaseToplevelComponent, _emberMaterialLiteTemplatesComponentsMdlTooltip) {
+  'use strict';
+
+  exports['default'] = _emberMaterialLiteComponentsBaseToplevelComponent['default'].extend({
+    primaryClassName: 'tooltip',
+    layout: _emberMaterialLiteTemplatesComponentsMdlTooltip['default'],
+    isLarge: false,
+    attributeBindings: ['for'],
+    classNameBindings: ['isLarge:mdl-tooltip--large'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mdlTooltip = new window.MaterialTooltip(this.get('element'));
+      this.set('_mdlComponent', mdlTooltip);
+    }
+  });
+});
+define('ember-material-lite/extensions/tooltip', ['exports'], function (exports) {
+  'use strict';
+
+  window.MaterialTooltip.prototype.init = function () {
+    'use strict';
+
+    if (this.element_) {
+      var forElId = this.element_.getAttribute('for');
+
+      if (forElId) {
+        if (/^[A-Za-z0-9\_\-]+$/.test(forElId)) {
+          forElId = '#' + forElId;
+        }
+        this.forElement_ = document.querySelector(forElId);
+      }
+
+      if (this.forElement_) {
+        this.boundMouseEnterHandler = this.handleMouseEnter_.bind(this);
+        this.boundMouseLeaveHandler = this.handleMouseLeave_.bind(this);
+        this.forElement_.addEventListener('mouseenter', this.boundMouseEnterHandler, false);
+        this.forElement_.addEventListener('click', this.boundMouseEnterHandler, false);
+        this.forElement_.addEventListener('mouseleave', this.boundMouseLeaveHandler);
+      }
+    }
+  };
+});
+define('ember-material-lite/initializers/material-lite-extensions', ['exports', 'ember-material-lite/extensions/tooltip'], function (exports, _emberMaterialLiteExtensionsTooltip) {
+  'use strict';
+
+  exports.initialize = initialize;
+
+  function initialize() /* container, application */{
+    // application.inject('route', 'foo', 'service:foo');
+  }
+
+  exports['default'] = {
+    name: 'material-lite-extensions',
+    initialize: initialize
+  };
+});
+define('ember-material-lite/mixins/badge-support', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var Mixin = _ember['default'].Mixin;
+
+  exports['default'] = Mixin.create({
+    badge: null,
+    hasBadgeBackground: true,
+    attributeBindings: ['badge:data-badge'],
+    classNameBindings: ['badge:mdl-badge', 'hasBadgeBackground::mdl-badge--no-background']
+  });
+});
+define('ember-material-lite/mixins/click-action-support', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var Mixin = _ember['default'].Mixin;
+
+  exports['default'] = Mixin.create({
+    click: function click() {
+      this.sendAction('action', this);
+      this.sendAction('on-click', this);
+    },
+    change: function change() {
+      this.sendAction('on-change', this);
+    }
+  });
+});
+define('ember-material-lite/mixins/registers-buttons', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var A = _ember['default'].A;
+  var Mixin = _ember['default'].Mixin;
+  var empty = _ember['default'].computed.empty;
+
+  exports['default'] = Mixin.create({
+    _registersButtons: true,
+    _buttons: null,
+    _noButtons: empty('_buttons'),
+    init: function init() {
+      this._super.apply(this, arguments);
+      this.set('_buttons', A([]));
+    },
+
+    registerButton: function registerButton(button) {
+      this.get('_buttons').addObject(button);
+    }
+  });
+});
+define('ember-material-lite/mixins/ripple-support', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var Mixin = _ember['default'].Mixin;
+  var computed = _ember['default'].computed;
+  var observer = _ember['default'].observer;
+
+  exports['default'] = Mixin.create({
+    hasRipples: true,
+    _rippleClass: computed('_primaryClassNameString', function () {
+      return this.get('_primaryClassNameString') + '__ripple-container';
+    }),
+    classNameBindings: ['hasRipples:mdl-js-ripple-effect'],
+
+    _mdlComponentObserver: observer('_mdlComponent', function () {
+      if (this.get('hasRipples')) {
+        var mdlripples = new window.MaterialRipple(this.$('.' + this.get('_rippleClass'))[0]);
+        this.set('_mdlRippleComponent', mdlripples);
+      }
+    })
+  });
+});
+define('ember-material-lite/mixins/shadow-support', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var computed = _ember['default'].computed;
+  var Mixin = _ember['default'].Mixin;
+
+  exports['default'] = Mixin.create({
+    classNameBindings: ['_shadowClassString'],
+    shadowDepth: 2,
+    _shadowClassString: computed('shadowDepth', function () {
+      return 'mdl-shadow--' + this.get('shadowDepth') + 'dp';
+    })
+  });
+});
+define("ember-material-lite/templates/components/mdl-button", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 2,
+              "column": 0
+            },
+            "end": {
+              "line": 4,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-button.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [["inline", "mdl-icon", [], ["icon", ["subexpr", "@mut", [["get", "icon", ["loc", [null, [3, 18], [3, 22]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [3, 2], [3, 24]]], 0, 0]],
+        locals: [],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 4,
+            "column": 7
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-button.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+        morphs[2] = dom.createMorphAt(fragment, 3, 3, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0], ["content", "text", ["loc", [null, [1, 9], [1, 17]]], 0, 0, 0, 0], ["block", "if", [["get", "icon", ["loc", [null, [2, 6], [2, 10]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [2, 0], [4, 7]]]]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-card-actions", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-card-actions.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-card-buttons", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-card-buttons.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-card", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 4,
+            "column": 9
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-card.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "mdl-card__title");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("h2");
+        dom.setAttribute(el2, "class", "mdl-card__title-text");
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0, 1]), 0, 0);
+        morphs[1] = dom.createMorphAt(fragment, 2, 2, contextualElement);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["content", "title", ["loc", [null, [2, 35], [2, 44]]], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [4, 0], [4, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-checkbox", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 3,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-checkbox.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("span");
+        dom.setAttribute(el1, "class", "mdl-checkbox__label");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [2]);
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(element0, 0, 0);
+        morphs[2] = dom.createMorphAt(element0, 1, 1);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["inline", "input", [], ["type", "checkbox", "id", ["subexpr", "@mut", [["get", "_inputId", ["loc", [null, [1, 27], [1, 35]]], 0, 0, 0, 0]], [], [], 0, 0], "class", "mdl-checkbox__input", "checked", ["subexpr", "@mut", [["get", "value", ["loc", [null, [1, 72], [1, 77]]], 0, 0, 0, 0]], [], [], 0, 0], "click", "onToggle", "disabled", ["subexpr", "@mut", [["get", "disabled", ["loc", [null, [1, 104], [1, 112]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [1, 0], [1, 114]]], 0, 0], ["content", "text", ["loc", [null, [2, 34], [2, 42]]], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [2, 42], [2, 51]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-footer-dropdown-section", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 5,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-footer-dropdown-section.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [["content", "yield", ["loc", [null, [4, 2], [4, 11]]], 0, 0, 0, 0]],
+        locals: [],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 6,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-footer-dropdown-section.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createTextNode(" ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("input");
+        dom.setAttribute(el1, "type", "checkbox");
+        dom.setAttribute(el1, "checked", "");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("h1");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        if (this.cachedFragment) {
+          dom.repairClonedNode(dom.childAt(fragment, [1]), [], true);
+        }
+        var element0 = dom.childAt(fragment, [1]);
+        var element1 = dom.childAt(fragment, [3]);
+        var morphs = new Array(4);
+        morphs[0] = dom.createAttrMorph(element0, 'class');
+        morphs[1] = dom.createAttrMorph(element1, 'class');
+        morphs[2] = dom.createMorphAt(element1, 0, 0);
+        morphs[3] = dom.createMorphAt(fragment, 5, 5, contextualElement);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["attribute", "class", ["concat", [["get", "composableParent._primaryClassNameString", ["loc", [null, [1, 17], [1, 57]]], 0, 0, 0, 0], "--heading-checkbox"], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "class", ["concat", [["get", "composableParent._primaryClassNameString", ["loc", [null, [2, 13], [2, 53]]], 0, 0, 0, 0], "--heading"], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["content", "title", ["loc", [null, [2, 66], [2, 75]]], 0, 0, 0, 0], ["block", "mdl-footer-linklist", [], [], 0, null, ["loc", [null, [3, 0], [5, 24]]]]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-footer-linklist", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-footer-linklist.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-footer-section", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 3,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-footer-section.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "mdl-logo");
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "title", ["loc", [null, [2, 22], [2, 31]]], 0, 0, 0, 0]],
+        locals: [],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 5,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-footer-section.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["block", "if", [["get", "title", ["loc", [null, [1, 6], [1, 11]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [1, 0], [3, 7]]]], ["content", "yield", ["loc", [null, [4, 0], [4, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-icon-toggle", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 67
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-icon-toggle.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("span");
+        dom.setAttribute(el1, "class", "mdl-icon-toggle__label material-icons");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [2]), 0, 0);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["inline", "input", [], ["type", "checkbox", "id", ["subexpr", "@mut", [["get", "_inputId", ["loc", [null, [1, 27], [1, 35]]], 0, 0, 0, 0]], [], [], 0, 0], "class", "mdl-icon-toggle__input", "checked", ["subexpr", "@mut", [["get", "value", ["loc", [null, [1, 75], [1, 80]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [1, 0], [1, 82]]], 0, 0], ["content", "icon", ["loc", [null, [2, 52], [2, 60]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-icon", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 17
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-icon.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["content", "icon", ["loc", [null, [1, 0], [1, 8]]], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [1, 8], [1, 17]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-mega-footer", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-mega-footer.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-menu-item", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-menu-item.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "text", ["loc", [null, [1, 0], [1, 8]]], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [1, 8], [1, 17]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-menu", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 7,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-menu.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("ul");
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [2]);
+        var morphs = new Array(4);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createAttrMorph(element0, 'class');
+        morphs[2] = dom.createAttrMorph(element0, 'for');
+        morphs[3] = dom.createMorphAt(element0, 1, 1);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["inline", "mdl-button", [], ["icon", ["subexpr", "@mut", [["get", "icon", ["loc", [null, [1, 18], [1, 22]]], 0, 0, 0, 0]], [], [], 0, 0], "id", ["subexpr", "@mut", [["get", "_buttonId", ["loc", [null, [1, 26], [1, 35]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [1, 0], [1, 37]]], 0, 0], ["attribute", "class", ["concat", ["mdl-menu mdl-js-menu mdl-js-ripple-effect ", ["get", "_alignClass", ["loc", [null, [3, 55], [3, 66]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "for", ["get", "_buttonId", ["loc", [null, [3, 76], [3, 85]]], 0, 0, 0, 0], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [4, 0], [4, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-mini-footer", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 4,
+            "column": 6
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-mini-footer.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "mdl-mini-footer--left-section");
+        var el2 = dom.createTextNode("\n	");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "mdl-logo");
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n	");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [0]);
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]), 0, 0);
+        morphs[1] = dom.createMorphAt(element0, 3, 3);
+        return morphs;
+      },
+      statements: [["content", "title", ["loc", [null, [2, 23], [2, 32]]], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [3, 1], [3, 10]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-nav", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      var child0 = (function () {
+        var child0 = (function () {
+          var child0 = (function () {
+            var child0 = (function () {
+              return {
+                meta: {
+                  "revision": "Ember@2.9.1",
+                  "loc": {
+                    "source": null,
+                    "start": {
+                      "line": 10,
+                      "column": 10
+                    },
+                    "end": {
+                      "line": 10,
+                      "column": 90
+                    }
+                  },
+                  "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+                },
+                isEmpty: false,
+                arity: 0,
+                cachedFragment: null,
+                hasRendered: false,
+                buildFragment: function buildFragment(dom) {
+                  var el0 = dom.createDocumentFragment();
+                  var el1 = dom.createComment("");
+                  dom.appendChild(el0, el1);
+                  return el0;
+                },
+                buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+                  var morphs = new Array(1);
+                  morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+                  dom.insertBoundary(fragment, 0);
+                  dom.insertBoundary(fragment, null);
+                  return morphs;
+                },
+                statements: [["content", "navItem.name", ["loc", [null, [10, 10], [10, 90]]], 0, 0, 0, 0]],
+                locals: [],
+                templates: []
+              };
+            })();
+            return {
+              meta: {
+                "revision": "Ember@2.9.1",
+                "loc": {
+                  "source": null,
+                  "start": {
+                    "line": 9,
+                    "column": 8
+                  },
+                  "end": {
+                    "line": 11,
+                    "column": 8
+                  }
+                },
+                "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+              },
+              isEmpty: false,
+              arity: 0,
+              cachedFragment: null,
+              hasRendered: false,
+              buildFragment: function buildFragment(dom) {
+                var el0 = dom.createDocumentFragment();
+                var el1 = dom.createTextNode("          ");
+                dom.appendChild(el0, el1);
+                var el1 = dom.createComment("");
+                dom.appendChild(el0, el1);
+                var el1 = dom.createTextNode("\n");
+                dom.appendChild(el0, el1);
+                return el0;
+              },
+              buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+                var morphs = new Array(1);
+                morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+                return morphs;
+              },
+              statements: [["block", "link-to", [["get", "navItem.route", ["loc", [null, [10, 33], [10, 46]]], 0, 0, 0, 0]], ["class", "mdl-navigation__link", "bubbles", true], 0, null, ["loc", [null, [10, 10], [10, 90]]]]],
+              locals: [],
+              templates: [child0]
+            };
+          })();
+          var child1 = (function () {
+            return {
+              meta: {
+                "revision": "Ember@2.9.1",
+                "loc": {
+                  "source": null,
+                  "start": {
+                    "line": 11,
+                    "column": 8
+                  },
+                  "end": {
+                    "line": 15,
+                    "column": 8
+                  }
+                },
+                "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+              },
+              isEmpty: false,
+              arity: 0,
+              cachedFragment: null,
+              hasRendered: false,
+              buildFragment: function buildFragment(dom) {
+                var el0 = dom.createDocumentFragment();
+                var el1 = dom.createTextNode("          ");
+                dom.appendChild(el0, el1);
+                var el1 = dom.createElement("span");
+                dom.setAttribute(el1, "class", "mdl-navigation__link");
+                var el2 = dom.createTextNode("\n            ");
+                dom.appendChild(el1, el2);
+                var el2 = dom.createComment("");
+                dom.appendChild(el1, el2);
+                var el2 = dom.createTextNode("\n          ");
+                dom.appendChild(el1, el2);
+                dom.appendChild(el0, el1);
+                var el1 = dom.createTextNode("\n");
+                dom.appendChild(el0, el1);
+                return el0;
+              },
+              buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+                var morphs = new Array(1);
+                morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
+                return morphs;
+              },
+              statements: [["content", "navItem.name", ["loc", [null, [13, 12], [13, 28]]], 0, 0, 0, 0]],
+              locals: [],
+              templates: []
+            };
+          })();
+          return {
+            meta: {
+              "revision": "Ember@2.9.1",
+              "loc": {
+                "source": null,
+                "start": {
+                  "line": 8,
+                  "column": 6
+                },
+                "end": {
+                  "line": 16,
+                  "column": 6
+                }
+              },
+              "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+            },
+            isEmpty: false,
+            arity: 1,
+            cachedFragment: null,
+            hasRendered: false,
+            buildFragment: function buildFragment(dom) {
+              var el0 = dom.createDocumentFragment();
+              var el1 = dom.createComment("");
+              dom.appendChild(el0, el1);
+              return el0;
+            },
+            buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+              var morphs = new Array(1);
+              morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+              dom.insertBoundary(fragment, 0);
+              dom.insertBoundary(fragment, null);
+              return morphs;
+            },
+            statements: [["block", "if", [["get", "navItem.route", ["loc", [null, [9, 14], [9, 27]]], 0, 0, 0, 0]], [], 0, 1, ["loc", [null, [9, 8], [15, 15]]]]],
+            locals: ["navItem"],
+            templates: [child0, child1]
+          };
+        })();
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 6,
+                "column": 4
+              },
+              "end": {
+                "line": 18,
+                "column": 4
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("    ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("nav");
+            dom.setAttribute(el1, "class", "mdl-navigation mdl-layout--large-screen-only");
+            var el2 = dom.createTextNode("\n");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createTextNode("    ");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
+            return morphs;
+          },
+          statements: [["block", "each", [["get", "_headerNavItems", ["loc", [null, [8, 14], [8, 29]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [8, 6], [16, 15]]]]],
+          locals: [],
+          templates: [child0]
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 21,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("header");
+          var el2 = dom.createTextNode("\n  ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "mdl-layout__header-row");
+          var el3 = dom.createTextNode("\n    ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("span");
+          dom.setAttribute(el3, "class", "mdl-layout-title");
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n    ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("div");
+          dom.setAttribute(el3, "class", "mdl-layout-spacer");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("  ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element1 = dom.childAt(fragment, [0]);
+          var element2 = dom.childAt(element1, [1]);
+          var morphs = new Array(3);
+          morphs[0] = dom.createAttrMorph(element1, 'class');
+          morphs[1] = dom.createMorphAt(dom.childAt(element2, [1]), 0, 0);
+          morphs[2] = dom.createMorphAt(element2, 5, 5);
+          return morphs;
+        },
+        statements: [["attribute", "class", ["get", "_headerClassString", ["loc", [null, [2, 16], [2, 34]]], 0, 0, 0, 0], 0, 0, 0, 0], ["content", "title", ["loc", [null, [4, 35], [4, 44]]], 0, 0, 0, 0], ["block", "if", [["get", "includeHeaderLinks", ["loc", [null, [6, 10], [6, 28]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [6, 4], [18, 11]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })();
+    var child1 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 24,
+                "column": 2
+              },
+              "end": {
+                "line": 26,
+                "column": 2
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("  ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("span");
+            dom.setAttribute(el1, "class", "mdl-layout-title");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "mobileTitle", ["loc", [null, [25, 33], [25, 48]]], 0, 0, 0, 0]],
+          locals: [],
+          templates: []
+        };
+      })();
+      var child1 = (function () {
+        var child0 = (function () {
+          var child0 = (function () {
+            return {
+              meta: {
+                "revision": "Ember@2.9.1",
+                "loc": {
+                  "source": null,
+                  "start": {
+                    "line": 30,
+                    "column": 8
+                  },
+                  "end": {
+                    "line": 30,
+                    "column": 88
+                  }
+                },
+                "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+              },
+              isEmpty: false,
+              arity: 0,
+              cachedFragment: null,
+              hasRendered: false,
+              buildFragment: function buildFragment(dom) {
+                var el0 = dom.createDocumentFragment();
+                var el1 = dom.createComment("");
+                dom.appendChild(el0, el1);
+                return el0;
+              },
+              buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+                var morphs = new Array(1);
+                morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+                dom.insertBoundary(fragment, 0);
+                dom.insertBoundary(fragment, null);
+                return morphs;
+              },
+              statements: [["content", "navItem.name", ["loc", [null, [30, 8], [30, 88]]], 0, 0, 0, 0]],
+              locals: [],
+              templates: []
+            };
+          })();
+          return {
+            meta: {
+              "revision": "Ember@2.9.1",
+              "loc": {
+                "source": null,
+                "start": {
+                  "line": 29,
+                  "column": 6
+                },
+                "end": {
+                  "line": 31,
+                  "column": 6
+                }
+              },
+              "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+            },
+            isEmpty: false,
+            arity: 0,
+            cachedFragment: null,
+            hasRendered: false,
+            buildFragment: function buildFragment(dom) {
+              var el0 = dom.createDocumentFragment();
+              var el1 = dom.createTextNode("        ");
+              dom.appendChild(el0, el1);
+              var el1 = dom.createComment("");
+              dom.appendChild(el0, el1);
+              var el1 = dom.createTextNode("\n");
+              dom.appendChild(el0, el1);
+              return el0;
+            },
+            buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+              var morphs = new Array(1);
+              morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+              return morphs;
+            },
+            statements: [["block", "link-to", [["get", "navItem.route", ["loc", [null, [30, 31], [30, 44]]], 0, 0, 0, 0]], ["class", "mdl-navigation__link", "bubbles", true], 0, null, ["loc", [null, [30, 8], [30, 88]]]]],
+            locals: [],
+            templates: [child0]
+          };
+        })();
+        var child1 = (function () {
+          return {
+            meta: {
+              "revision": "Ember@2.9.1",
+              "loc": {
+                "source": null,
+                "start": {
+                  "line": 31,
+                  "column": 6
+                },
+                "end": {
+                  "line": 35,
+                  "column": 6
+                }
+              },
+              "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+            },
+            isEmpty: false,
+            arity: 0,
+            cachedFragment: null,
+            hasRendered: false,
+            buildFragment: function buildFragment(dom) {
+              var el0 = dom.createDocumentFragment();
+              var el1 = dom.createTextNode("        ");
+              dom.appendChild(el0, el1);
+              var el1 = dom.createElement("span");
+              dom.setAttribute(el1, "class", "mdl-navigation__link");
+              var el2 = dom.createTextNode("\n          ");
+              dom.appendChild(el1, el2);
+              var el2 = dom.createComment("");
+              dom.appendChild(el1, el2);
+              var el2 = dom.createTextNode("\n        ");
+              dom.appendChild(el1, el2);
+              dom.appendChild(el0, el1);
+              var el1 = dom.createTextNode("\n");
+              dom.appendChild(el0, el1);
+              return el0;
+            },
+            buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+              var morphs = new Array(1);
+              morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
+              return morphs;
+            },
+            statements: [["content", "navItem.name", ["loc", [null, [33, 10], [33, 26]]], 0, 0, 0, 0]],
+            locals: [],
+            templates: []
+          };
+        })();
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 28,
+                "column": 4
+              },
+              "end": {
+                "line": 36,
+                "column": 4
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+          },
+          isEmpty: false,
+          arity: 1,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createComment("");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+            dom.insertBoundary(fragment, 0);
+            dom.insertBoundary(fragment, null);
+            return morphs;
+          },
+          statements: [["block", "if", [["get", "navItem.route", ["loc", [null, [29, 12], [29, 25]]], 0, 0, 0, 0]], [], 0, 1, ["loc", [null, [29, 6], [35, 13]]]]],
+          locals: ["navItem"],
+          templates: [child0, child1]
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 22,
+              "column": 0
+            },
+            "end": {
+              "line": 39,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "mdl-layout__drawer");
+          var el2 = dom.createTextNode("\n");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("  ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("nav");
+          dom.setAttribute(el2, "class", "mdl-navigation");
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("  ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element0 = dom.childAt(fragment, [0]);
+          var morphs = new Array(2);
+          morphs[0] = dom.createMorphAt(element0, 1, 1);
+          morphs[1] = dom.createMorphAt(dom.childAt(element0, [3]), 1, 1);
+          return morphs;
+        },
+        statements: [["block", "if", [["get", "includeDrawerTitle", ["loc", [null, [24, 8], [24, 26]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [24, 2], [26, 9]]]], ["block", "each", [["get", "_drawerNavItems", ["loc", [null, [28, 12], [28, 27]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [28, 4], [36, 13]]]]],
+        locals: [],
+        templates: [child0, child1]
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 44,
+            "column": 7
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-nav.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("main");
+        dom.setAttribute(el1, "class", "mdl-layout__content");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "page-content");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+        morphs[2] = dom.createMorphAt(dom.childAt(fragment, [2, 1]), 1, 1);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["block", "if", [["get", "includeHeader", ["loc", [null, [1, 6], [1, 19]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [1, 0], [21, 7]]]], ["block", "if", [["get", "includeDrawer", ["loc", [null, [22, 6], [22, 19]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [22, 0], [39, 7]]]], ["content", "yield", ["loc", [null, [42, 4], [42, 13]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: [child0, child1]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-progress", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-progress.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-radio", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 3,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-radio.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("input");
+        dom.setAttribute(el1, "type", "radio");
+        dom.setAttribute(el1, "class", "mdl-radio__button");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("span");
+        dom.setAttribute(el1, "class", "mdl-radio__label");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [0]);
+        if (this.cachedFragment) {
+          dom.repairClonedNode(element0, [], true);
+        }
+        var element1 = dom.childAt(fragment, [2]);
+        var morphs = new Array(7);
+        morphs[0] = dom.createAttrMorph(element0, 'id');
+        morphs[1] = dom.createAttrMorph(element0, 'name');
+        morphs[2] = dom.createAttrMorph(element0, 'value');
+        morphs[3] = dom.createAttrMorph(element0, 'disabled');
+        morphs[4] = dom.createAttrMorph(element0, 'checked');
+        morphs[5] = dom.createMorphAt(element1, 0, 0);
+        morphs[6] = dom.createMorphAt(element1, 1, 1);
+        return morphs;
+      },
+      statements: [["attribute", "id", ["get", "_inputId", ["loc", [null, [1, 25], [1, 33]]], 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "name", ["get", "name", ["loc", [null, [1, 69], [1, 73]]], 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "value", ["get", "value", ["loc", [null, [1, 84], [1, 89]]], 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "disabled", ["get", "disabled", ["loc", [null, [1, 103], [1, 111]]], 0, 0, 0, 0], 0, 0, 0, 0], ["attribute", "checked", ["get", "checked", ["loc", [null, [1, 124], [1, 131]]], 0, 0, 0, 0], 0, 0, 0, 0], ["content", "text", ["loc", [null, [2, 31], [2, 39]]], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [2, 39], [2, 48]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-slider", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-slider.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-spinner", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-spinner.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-switch", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 56
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-switch.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("span");
+        dom.setAttribute(el1, "class", "mdl-switch__label");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [2]);
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(element0, 0, 0);
+        morphs[2] = dom.createMorphAt(element0, 1, 1);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["inline", "input", [], ["type", "checkbox", "id", ["subexpr", "@mut", [["get", "_inputId", ["loc", [null, [1, 27], [1, 35]]], 0, 0, 0, 0]], [], [], 0, 0], "class", "mdl-switch__input", "checked", ["subexpr", "@mut", [["get", "value", ["loc", [null, [1, 70], [1, 75]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [1, 0], [1, 77]]], 0, 0], ["content", "text", ["loc", [null, [2, 32], [2, 40]]], 0, 0, 0, 0], ["content", "yield", ["loc", [null, [2, 40], [2, 49]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-tab", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 3,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-tab.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+          dom.insertBoundary(fragment, 0);
+          return morphs;
+        },
+        statements: [["content", "yield", ["loc", [null, [2, 0], [2, 9]]], 0, 0, 0, 0]],
+        locals: [],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 4,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-tab.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["block", "if", [["get", "isActive", ["loc", [null, [1, 6], [1, 14]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [1, 0], [3, 7]]]]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-table-col", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-table-col.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-table", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 4,
+                "column": 2
+              },
+              "end": {
+                "line": 6,
+                "column": 2
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-table.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("			");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("th");
+            dom.setAttribute(el1, "class", "mdl-data-table__cell--non-numeric");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "child.label", ["loc", [null, [5, 49], [5, 64]]], 0, 0, 0, 0]],
+          locals: [],
+          templates: []
+        };
+      })();
+      var child1 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 6,
+                "column": 2
+              },
+              "end": {
+                "line": 8,
+                "column": 2
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-table.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("			");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("th");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "child.label", ["loc", [null, [7, 7], [7, 22]]], 0, 0, 0, 0]],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 3,
+              "column": 1
+            },
+            "end": {
+              "line": 9,
+              "column": 1
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-table.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+          dom.insertBoundary(fragment, 0);
+          dom.insertBoundary(fragment, null);
+          return morphs;
+        },
+        statements: [["block", "if", [["get", "child.isNonNumeric", ["loc", [null, [4, 8], [4, 26]]], 0, 0, 0, 0]], [], 0, 1, ["loc", [null, [4, 2], [8, 9]]]]],
+        locals: ["child"],
+        templates: [child0, child1]
+      };
+    })();
+    var child1 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 13,
+              "column": 1
+            },
+            "end": {
+              "line": 17,
+              "column": 1
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-table.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("	");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("tr");
+          var el2 = dom.createTextNode("\n		");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n	");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
+          return morphs;
+        },
+        statements: [["inline", "yield", [["get", "row", ["loc", [null, [15, 10], [15, 13]]], 0, 0, 0, 0]], [], ["loc", [null, [15, 2], [15, 15]]], 0, 0]],
+        locals: ["row"],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 19,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-table.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("thead");
+        var el2 = dom.createTextNode("\n	");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("tr");
+        var el3 = dom.createTextNode("\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("	");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("tbody");
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0, 1]), 1, 1);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [2]), 1, 1);
+        return morphs;
+      },
+      statements: [["block", "each", [["get", "composableChildren", ["loc", [null, [3, 9], [3, 27]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [3, 1], [9, 10]]]], ["block", "each", [["get", "content", ["loc", [null, [13, 9], [13, 16]]], 0, 0, 0, 0]], [], 1, null, ["loc", [null, [13, 1], [17, 10]]]]],
+      locals: [],
+      templates: [child0, child1]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-tabs", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 4,
+                "column": 4
+              },
+              "end": {
+                "line": 6,
+                "column": 4
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-tabs.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("      ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("a");
+            dom.setAttribute(el1, "class", "mdl-tabs__tab is-active");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var element1 = dom.childAt(fragment, [1]);
+            var morphs = new Array(3);
+            morphs[0] = dom.createAttrMorph(element1, 'href');
+            morphs[1] = dom.createElementMorph(element1);
+            morphs[2] = dom.createMorphAt(element1, 0, 0);
+            return morphs;
+          },
+          statements: [["attribute", "href", ["concat", ["#", ["get", "tab.dasherizedTitle", ["loc", [null, [5, 50], [5, 69]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["element", "action", ["tabClicked", ["get", "tab", ["loc", [null, [5, 95], [5, 98]]], 0, 0, 0, 0]], [], ["loc", [null, [5, 73], [5, 100]]], 0, 0], ["content", "tab.title", ["loc", [null, [5, 101], [5, 114]]], 0, 0, 0, 0]],
+          locals: [],
+          templates: []
+        };
+      })();
+      var child1 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 6,
+                "column": 4
+              },
+              "end": {
+                "line": 8,
+                "column": 4
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-tabs.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("      ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("a");
+            dom.setAttribute(el1, "class", "mdl-tabs__tab");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var element0 = dom.childAt(fragment, [1]);
+            var morphs = new Array(3);
+            morphs[0] = dom.createAttrMorph(element0, 'href');
+            morphs[1] = dom.createElementMorph(element0);
+            morphs[2] = dom.createMorphAt(element0, 0, 0);
+            return morphs;
+          },
+          statements: [["attribute", "href", ["concat", ["#", ["get", "tab.dasherizedTitle", ["loc", [null, [7, 40], [7, 59]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["element", "action", ["tabClicked", ["get", "tab", ["loc", [null, [7, 85], [7, 88]]], 0, 0, 0, 0]], [], ["loc", [null, [7, 63], [7, 90]]], 0, 0], ["content", "tab.title", ["loc", [null, [7, 91], [7, 104]]], 0, 0, 0, 0]],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 3,
+              "column": 2
+            },
+            "end": {
+              "line": 9,
+              "column": 2
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-tabs.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+          dom.insertBoundary(fragment, 0);
+          dom.insertBoundary(fragment, null);
+          return morphs;
+        },
+        statements: [["block", "if", [["subexpr", "eq", [["get", "tab.title", ["loc", [null, [4, 14], [4, 23]]], 0, 0, 0, 0], ["get", "active", ["loc", [null, [4, 24], [4, 30]]], 0, 0, 0, 0]], [], ["loc", [null, [4, 10], [4, 31]]], 0, 0]], [], 0, 1, ["loc", [null, [4, 4], [8, 11]]]]],
+        locals: ["tab"],
+        templates: [child0, child1]
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 12,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-tabs.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "mdl-tabs__tab-bar");
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [2]), 1, 1);
+        morphs[2] = dom.createMorphAt(fragment, 4, 4, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["content", "_active", ["loc", [null, [1, 0], [1, 11]]], 0, 0, 0, 0], ["block", "each", [["get", "composableChildren", ["loc", [null, [3, 10], [3, 28]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [3, 2], [9, 11]]]], ["content", "yield", ["loc", [null, [11, 0], [11, 9]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-textarea", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 4,
+              "column": 0
+            },
+            "end": {
+              "line": 6,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-textarea.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          dom.setAttribute(el1, "class", "mdl-textfield__error");
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "errorMessage", ["loc", [null, [5, 35], [5, 51]]], 0, 0, 0, 0]],
+        locals: [],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 7,
+            "column": 0
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-textarea.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("label");
+        dom.setAttribute(el1, "class", "mdl-textfield__label");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [2]), 0, 0);
+        morphs[2] = dom.createMorphAt(fragment, 4, 4, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["inline", "textarea", [], ["class", "mdl-textfield__input", "id", ["subexpr", "@mut", [["get", "_inputId", ["loc", [null, [1, 43], [1, 51]]], 0, 0, 0, 0]], [], [], 0, 0], "disabled", ["subexpr", "@mut", [["get", "disabled", ["loc", [null, [1, 61], [1, 69]]], 0, 0, 0, 0]], [], [], 0, 0], "value", ["subexpr", "@mut", [["get", "value", ["loc", [null, [1, 76], [1, 81]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [1, 0], [1, 83]]], 0, 0], ["content", "label", ["loc", [null, [3, 36], [3, 45]]], 0, 0, 0, 0], ["block", "if", [["get", "errorMessage", ["loc", [null, [4, 6], [4, 18]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [4, 0], [6, 7]]]]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-textfield", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 6,
+                "column": 4
+              },
+              "end": {
+                "line": 8,
+                "column": 4
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-textfield.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("      ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("span");
+            dom.setAttribute(el1, "class", "mdl-textfield__error");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "errorMessage", ["loc", [null, [7, 41], [7, 57]]], 0, 0, 0, 0]],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 10,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-textfield.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "mdl-textfield__expandable-holder");
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("label");
+          dom.setAttribute(el2, "class", "mdl-textfield__label");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("  ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element0 = dom.childAt(fragment, [3]);
+          var element1 = dom.childAt(element0, [3]);
+          var morphs = new Array(5);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          morphs[1] = dom.createMorphAt(element0, 1, 1);
+          morphs[2] = dom.createAttrMorph(element1, 'for');
+          morphs[3] = dom.createMorphAt(element1, 0, 0);
+          morphs[4] = dom.createMorphAt(element0, 5, 5);
+          return morphs;
+        },
+        statements: [["inline", "mdl-button", [], ["for", ["subexpr", "@mut", [["get", "elementId", ["loc", [null, [2, 19], [2, 28]]], 0, 0, 0, 0]], [], [], 0, 0], "tagName", "label", "icon", ["subexpr", "@mut", [["get", "expandableIcon", ["loc", [null, [2, 50], [2, 64]]], 0, 0, 0, 0]], [], [], 0, 0], "hasRipples", false, "isColored", false], ["loc", [null, [2, 2], [2, 100]]], 0, 0], ["inline", "input", [], ["class", "mdl-textfield__input", "type", ["subexpr", "@mut", [["get", "type", ["loc", [null, [4, 46], [4, 50]]], 0, 0, 0, 0]], [], [], 0, 0], "pattern", ["subexpr", "@mut", [["get", "pattern", ["loc", [null, [4, 59], [4, 66]]], 0, 0, 0, 0]], [], [], 0, 0], "id", ["subexpr", "@mut", [["get", "_inputId", ["loc", [null, [4, 70], [4, 78]]], 0, 0, 0, 0]], [], [], 0, 0], "disabled", ["subexpr", "@mut", [["get", "disabled", ["loc", [null, [4, 88], [4, 96]]], 0, 0, 0, 0]], [], [], 0, 0], "value", ["subexpr", "@mut", [["get", "value", ["loc", [null, [4, 103], [4, 108]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [4, 4], [4, 110]]], 0, 0], ["attribute", "for", ["concat", [["get", "_inputId", ["loc", [null, [5, 47], [5, 55]]], 0, 0, 0, 0]], 0, 0, 0, 0, 0], 0, 0, 0, 0], ["content", "label", ["loc", [null, [5, 59], [5, 68]]], 0, 0, 0, 0], ["block", "if", [["get", "errorMessage", ["loc", [null, [6, 10], [6, 22]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [6, 4], [8, 11]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })();
+    var child1 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@2.9.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 13,
+                "column": 2
+              },
+              "end": {
+                "line": 15,
+                "column": 2
+              }
+            },
+            "moduleName": "modules/ember-material-lite/templates/components/mdl-textfield.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("    ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("span");
+            dom.setAttribute(el1, "class", "mdl-textfield__error");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "errorMessage", ["loc", [null, [14, 39], [14, 55]]], 0, 0, 0, 0]],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@2.9.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 10,
+              "column": 0
+            },
+            "end": {
+              "line": 16,
+              "column": 0
+            }
+          },
+          "moduleName": "modules/ember-material-lite/templates/components/mdl-textfield.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("label");
+          dom.setAttribute(el1, "class", "mdl-textfield__label");
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(3);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          morphs[1] = dom.createMorphAt(dom.childAt(fragment, [3]), 0, 0);
+          morphs[2] = dom.createMorphAt(fragment, 5, 5, contextualElement);
+          dom.insertBoundary(fragment, null);
+          return morphs;
+        },
+        statements: [["inline", "input", [], ["class", "mdl-textfield__input", "type", ["subexpr", "@mut", [["get", "type", ["loc", [null, [11, 44], [11, 48]]], 0, 0, 0, 0]], [], [], 0, 0], "pattern", ["subexpr", "@mut", [["get", "pattern", ["loc", [null, [11, 57], [11, 64]]], 0, 0, 0, 0]], [], [], 0, 0], "id", ["subexpr", "@mut", [["get", "_inputId", ["loc", [null, [11, 68], [11, 76]]], 0, 0, 0, 0]], [], [], 0, 0], "disabled", ["subexpr", "@mut", [["get", "disabled", ["loc", [null, [11, 86], [11, 94]]], 0, 0, 0, 0]], [], [], 0, 0], "value", ["subexpr", "@mut", [["get", "value", ["loc", [null, [11, 101], [11, 106]]], 0, 0, 0, 0]], [], [], 0, 0]], ["loc", [null, [11, 2], [11, 108]]], 0, 0], ["content", "label", ["loc", [null, [12, 38], [12, 47]]], 0, 0, 0, 0], ["block", "if", [["get", "errorMessage", ["loc", [null, [13, 8], [13, 20]]], 0, 0, 0, 0]], [], 0, null, ["loc", [null, [13, 2], [15, 9]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 16,
+            "column": 7
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-textfield.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["block", "if", [["get", "isExpandable", ["loc", [null, [1, 6], [1, 18]]], 0, 0, 0, 0]], [], 0, 1, ["loc", [null, [1, 0], [16, 7]]]]],
+      locals: [],
+      templates: [child0, child1]
+    };
+  })());
+});
+define("ember-material-lite/templates/components/mdl-tooltip", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@2.9.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 17
+          }
+        },
+        "moduleName": "modules/ember-material-lite/templates/components/mdl-tooltip.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+        dom.insertBoundary(fragment, 0);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [["content", "yield", ["loc", [null, [1, 0], [1, 9]]], 0, 0, 0, 0], ["content", "text", ["loc", [null, [1, 9], [1, 17]]], 0, 0, 0, 0]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define('ember-new-computed/index', ['exports', 'ember', 'ember-new-computed/utils/can-use-new-syntax'], function (exports, _ember, _emberNewComputedUtilsCanUseNewSyntax) {
+  'use strict';
+
+  exports['default'] = newComputed;
+
+  var computed = _ember['default'].computed;
+
+  function newComputed() {
+    var polyfillArguments = [];
+    var config = arguments[arguments.length - 1];
+
+    if (typeof config === 'function' || _emberNewComputedUtilsCanUseNewSyntax['default']) {
+      return computed.apply(undefined, arguments);
+    }
+
+    for (var i = 0, l = arguments.length - 1; i < l; i++) {
+      polyfillArguments.push(arguments[i]);
+    }
+
+    var func;
+    if (config.set) {
+      func = function (key, value) {
+        if (arguments.length > 1) {
+          return config.set.call(this, key, value);
+        } else {
+          return config.get.call(this, key);
+        }
+      };
+    } else {
+      func = function (key) {
+        return config.get.call(this, key);
+      };
+    }
+
+    polyfillArguments.push(func);
+
+    return computed.apply(undefined, polyfillArguments);
+  }
+
+  var getKeys = Object.keys || _ember['default'].keys;
+  var computedKeys = getKeys(computed);
+
+  for (var i = 0, l = computedKeys.length; i < l; i++) {
+    newComputed[computedKeys[i]] = computed[computedKeys[i]];
+  }
+});
+define('ember-new-computed/utils/can-use-new-syntax', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var supportsSetterGetter;
+
+  try {
+    _ember['default'].computed({
+      set: function set() {},
+      get: function get() {}
+    });
+    supportsSetterGetter = true;
+  } catch (e) {
+    supportsSetterGetter = false;
+  }
+
+  exports['default'] = supportsSetterGetter;
 });
 define('ember-resolver/container-debug-adapter', ['exports', 'ember', 'ember-resolver/utils/module-registry'], function (exports, _ember, _emberResolverUtilsModuleRegistry) {
   'use strict';
