@@ -7,10 +7,13 @@ let videos = [{
   link: 'https://www.youtube.com/embed/VXEkoXgb4bI'
 }];
 
+let iframeContainer = document.getElementById('video');
+console.log(iframeContainer);
+
 export default Ember.Route.extend({
-  model() {
-  // model(id) {
-    // return this.this.store.findRecord('video', id);
+  model(params) {
+    // return this.store.findRecord('video', params.video_id);
+    console.log(params.video_id);
     return videos;
   }
 });

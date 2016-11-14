@@ -483,7 +483,7 @@ define('pvm/router', ['exports', 'ember', 'pvm/config/environment'], function (e
   });
 
   Router.map(function () {
-    this.route('watch');
+    this.route('watch', { path: 'watch/:video_id' });
   });
 
   exports['default'] = Router;
@@ -497,10 +497,13 @@ define('pvm/routes/watch', ['exports', 'ember'], function (exports, _ember) {
     link: 'https://www.youtube.com/embed/VXEkoXgb4bI'
   }];
 
+  var iframeContainer = document.getElementById('video');
+  console.log(iframeContainer);
+
   exports['default'] = _ember['default'].Route.extend({
-    model: function model() {
-      // model(id) {
-      // return this.this.store.findRecord('video', id);
+    model: function model(params) {
+      // return this.store.findRecord('video', params.video_id);
+      console.log(params.video_id);
       return videos;
     }
   });
@@ -661,6 +664,7 @@ define("pvm/templates/watch", ["exports"], function (exports) {
           var el2 = dom.createTextNode("\n      ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("iframe");
+          dom.setAttribute(el2, "id", "video");
           dom.setAttribute(el2, "width", "640");
           dom.setAttribute(el2, "height", "400");
           dom.setAttribute(el2, "src", "https://www.youtube.com/embed/VXEkoXgb4bI");
@@ -671,18 +675,9 @@ define("pvm/templates/watch", ["exports"], function (exports) {
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("div");
           dom.setAttribute(el2, "class", "videoFooter");
-          var el3 = dom.createTextNode("\n        ");
+          var el3 = dom.createTextNode("\n");
           dom.appendChild(el2, el3);
-          var el3 = dom.createElement("button");
-          dom.setAttribute(el3, "class", "reply mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect");
-          var el4 = dom.createTextNode("\n          ");
-          dom.appendChild(el3, el4);
-          var el4 = dom.createElement("img");
-          dom.setAttribute(el4, "src", "/assets/replyButton.png");
-          dom.setAttribute(el4, "alt", "");
-          dom.appendChild(el3, el4);
-          var el4 = dom.createTextNode("\n        ");
-          dom.appendChild(el3, el4);
+          var el3 = dom.createComment("         <button class=\"reply mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect\">\n          <img src=\"/assets/replyButton.png\" alt=\"\">\n        </button> ");
           dom.appendChild(el2, el3);
           var el3 = dom.createTextNode("\n      ");
           dom.appendChild(el2, el3);
@@ -740,7 +735,7 @@ define("pvm/templates/watch", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n      ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("img");
-        dom.setAttribute(el4, "src", "/assets/logo.png");
+        dom.setAttribute(el4, "src", "/assets/logo.svg");
         dom.setAttribute(el4, "alt", "");
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n      ");
@@ -842,7 +837,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+a8953f7e"});
+  require("pvm/app")["default"].create({"name":"pvm","version":"0.0.1+38a7699c"});
 }
 
 /* jshint ignore:end */

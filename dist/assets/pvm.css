@@ -9681,10 +9681,10 @@ body {
   .watchVideoContainer .logo {
     display: inline-block; }
     .watchVideoContainer .logo img {
-      width: 32px;
-      height: 31px;
+      width: 40px;
+      height: 40px;
       line-height: 63px;
-      margin-left: 20px;
+      margin-left: 15px;
       vertical-align: middle; }
     .watchVideoContainer .logo .logoText {
       color: rgba(0, 0, 0, 0.65);
