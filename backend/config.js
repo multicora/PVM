@@ -8,7 +8,7 @@ const DB = {
 module.exports = {
   db: {
     type: DB.TYPES.MySQL,
-    dbName: 'pvmDB',
+    dbName: 'pvmdb',
     host: 'localhost',
     user: 'root',
     password: ''
