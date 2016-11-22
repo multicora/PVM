@@ -15,26 +15,102 @@ body {
     background-color:  rgba(250, 250, 250, 0.5);
     box-shadow: 0px 0px 4.05px 0.95px rgba(0, 0, 0, 0.28);
     width: 100%;
-    height: 63px;
+    height: 64px;
   }
-
-  .logo{
+  
+  .logoContainer {
     display: inline-block;
+    width: 50%;
+    text-align: left;
+    .logo{
+      display: inline-block;
 
-    img {
-      width: 40px;
-      height: 40px;
-      line-height: 63px;
-      margin-left: 15px;
+      img {
+        width: 40px;
+        height: 40px;
+        line-height: 63px;
+        margin-left: 15px;
+        vertical-align: middle;
+      }
+
+      .logoText {
+        color:  rgba(0, 0, 0, 0.65);
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 63px;
+        vertical-align: middle;
+      }
+    }
+  }
+  
+  .socialContainer {
+    display: inline-block;
+    width: 49%;
+    text-align: right;
+    
+    .social {
+      display: inline-block;
+      line-height: 64px;
       vertical-align: middle;
+      margin-right: 20px;
+
+      a {
+        text-decoration: none;
+        width: 27px;
+        height: 27px;
+        margin-right: 8px;
+
+        img {
+          width: 27px;
+          height: 27px;
+        }
+      }
+
+      a:last-child {
+        margin-right: 0;
+      }
     }
 
-    .logoText {
-      color:  rgba(0, 0, 0, 0.65);
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 63px;
+    .contacts {
+      display: inline-block;
+      line-height: 64px;
       vertical-align: middle;
+      margin-right: 10px;
+
+      .phone,
+      .email {
+        line-height: 32px;
+        vertical-align: middle;
+        text-align: left;
+
+        img {
+          display: inline-block;
+          margin-right: 25px;
+        }
+
+        p {
+          margin: 0;
+          display: inline-block;
+          font-family: 'Roboto', Arial, sans-serif;
+          color:  rgba(0, 0, 0, 0.54);
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+
+      .phone {
+        img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .email {
+        img {
+          width: 20px;
+          height: 16px;
+        }
+      }
     }
   }
 

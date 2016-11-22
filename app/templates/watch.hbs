@@ -1,31 +1,48 @@
 <div class="watchVideoContainer">
-  <header>
-    <div class="logo">
-      <img src="/assets/logo.svg" alt="">
-      <span class="logoText">BIZKONECT</span>
-    </div>
-    <div class="social">
-      <a href="" class="linkedin"></a>
-      <a href="" class="twitter"></a>
-      <a href="" class="facebook"></a>
-    </div>
-  </header>
   {{#each model as |videos|}}
-    <div class="video">
-      <div class="videoHeader">
-        <div class="photo"></div>
-        <div class="text">
-          <p class="userName">{{videos.name}}</p>
-          <p class="userMessage">{{videos.message}}</p>
+    <header>
+      <div class="logoContainer">  
+        <div class="logo">
+          <img src="/assets/logo.svg" alt="logo">
+          <span class="logoText">BIZKONECT</span>
         </div>
       </div>
-      <iframe id="video" width="640" height="400" src="https://www.youtube.com/embed/VXEkoXgb4bI" frameborder="0" allowfullscreen></iframe>
-      <div class="videoFooter">
-<!--         <button class="reply mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
-          <img src="/assets/replyButton.png" alt="">
-        </button> -->
+      <div class="socialContainer">    
+        <div class="social">
+          <a href="" class="linkedin">
+            <img src="/assets/linkedin.png" alt="linkedin">
+          </a>
+          <a href="" class="twitter">
+            <img src="/assets/twitter.png" alt="twitter">
+          </a>
+          <a href="" class="facebook">
+            <img src="assets/facebook.png" alt="facebook">
+          </a>
+        </div>
+        <div class="contacts">
+          <div class="phone">
+            <img src="/assets/phone.png" alt="phone">
+            <p>{{videos.user.phone}}</p>
+          </div>
+          <div class="email">
+            <img src="/assets/email.png" alt="email">
+            <p>{{videos.user.email}}</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </header>
+      <div class="video">
+        <div class="videoHeader">
+          <div class="photo"></div>
+          <div class="text">
+            <p class="userName">{{videos.user.name}}</p>
+            <p class="userMessage">{{videos.user.message}}</p>
+          </div>
+        </div>
+        <iframe id="video" width="640" height="400" src="https://www.youtube.com/embed/VXEkoXgb4bI" frameborder="0" allowfullscreen></iframe>
+        <div class="videoFooter">
+        </div>
+      </div>
+    <div class="line"></div>
   {{/each}}
-  <div class="line"></div>
 </div>
