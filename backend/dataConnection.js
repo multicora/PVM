@@ -13,15 +13,8 @@ module.exports = function() {
     function(resolve, reject) {
 
       connection.connect(function(err){
-        err ? reject(err) : resolve();
+        err ? reject(err) : resolve(connection);
       });
-
-      connection.query('SELECT * FROM pvmDB', function(err, result, fields) {
-        err ? reject(err) : resolve();
-      });
-
     }
   );
-
-  connection.end();
 };
