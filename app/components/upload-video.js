@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  isShowen: true,
+  isShown: true,
   actions: {
     hidePopup() {
-      this.toggleProperty('isShowen');
+      this.toggleProperty('isShown');
     },
     upload(event) {
       let file = event.target.files[0];

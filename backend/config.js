@@ -11,7 +11,7 @@ module.exports = {
     dbName: 'pvmDB',
     host: 'localhost',
     user: 'root',
-    password: 'romafantom12'
+    password: ''
   },
   server: {
     port: 8081
