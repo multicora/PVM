@@ -30,4 +30,30 @@ module.exports = function (server, DAL) {
     }
   });
 
+  server.route({
+    method: 'GET',
+    path: '/videos/{id}',
+    config: {
+      handler: function (request, reply) {
+        videoCtrl.getFile(request.params.id).then(
+          function (buffer) {
+            reply({
+              data: {
+                "type": "video",
+                id: 7,
+                attributes: {
+                  url:buffer.uri.href
+                }
+              }
+            });
+          },
+          function (err) {
+            console.log(err);
+            reply(500, 'Internal error');
+          }
+        );
+      }
+    }
+  });
+
 };

@@ -1,5 +1,5 @@
 <div class="watchVideoContainer">
-  {{#each model as |videos|}}
+  {{!-- {{#each model as |videos|}} --}}
     <header>
       <div class="logoContainer">  
         <div class="logo">
@@ -22,11 +22,11 @@
         <div class="contacts">
           <div class="phone">
             <img src="/assets/phone.png" alt="phone">
-            <p>{{videos.user.phone}}</p>
+            <p>{{model.user.phone}}</p>
           </div>
           <div class="email">
             <img src="/assets/email.png" alt="email">
-            <p>{{videos.user.email}}</p>
+            <p>{{model.user.email}}</p>
           </div>
         </div>
       </div>
@@ -35,12 +35,12 @@
       <div class="videoHeader">
         <div class="photo"></div>
         <div class="text">
-          <p class="userName">{{videos.user.name}}</p>
-          <p class="userMessage">{{videos.user.message}}</p>
+          <p class="userName">{{model.user.name}}</p>
+          <p class="userMessage">{{model.user.message}}</p>
         </div>
       </div>
       <div class="videoContent">
-        <iframe id="video" width="845" height="477" src="https://www.youtube.com/embed/VXEkoXgb4bI" frameborder="0" allowfullscreen></iframe>
+        {{ivy-videojs fluid=true src=model.video.url controls=true}}
       </div>
       <div class="videoFooter">
         <div class="container">        
@@ -56,6 +56,5 @@
       <div class="logo"></div>
       <p class="rights"></p>
     </footer>
-  {{/each}}
-
+  {{!-- {{/each}} --}}
 </div>

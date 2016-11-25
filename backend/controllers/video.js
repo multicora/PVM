@@ -12,10 +12,17 @@ module.exports = function (DAL) {
         const newName = id + separator + name;
 
         return box.upload(newName, buffer).then(
-          function () {
-            return DAL.videos.addVideo(name, newName);
+          function (fileInfo) {
+            return DAL.videos.add(name, newName, fileInfo.id);
           }
         );
+      });
+    },
+    getFile: (id) => {
+      return Box(config.box).then(function (box) {
+        return DAL.videos.get(id).then(function (res) {
+          return box.download(res.external_file_id);
+        });
       });
     }
   };
