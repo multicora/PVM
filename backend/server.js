@@ -6,7 +6,7 @@ const _ = require('lodash');
 const Promise = require('promise');
 const connectDB = require('./dataConnection.js');
 // Internal
-const config = require('./config.js')
+const config = require('./config.js');
 
 function logError(error) {
   console.log(' ======================= uncaughtException:');

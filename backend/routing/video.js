@@ -1,6 +1,6 @@
 'use strict';
 
-let files = require('../services/files.js')();
+const videoCtrl = require('../controllers/video.js');
 
 module.exports = function (server) {
 
@@ -11,15 +11,19 @@ module.exports = function (server) {
       payload: {
         output: 'stream',
         parse: true,
+        maxBytes: 2e+8, // 200Mb
         allow: 'multipart/form-data'
       },
 
-      // state: {
-      //   parse: true,
-      //   failAction: 'log'
-      // },
-      handler:  function (request, reply) {
-        files.saveFile(request, reply);
+      handler: function (request, reply) {
+        videoCtrl.saveFile(request.payload.file.hapi.filename, request.payload.file._data).then(
+          function () {
+            reply();
+          },
+          function (err) {
+            reply(Boom.wrap(err, 500));
+          }
+        );
       }
     }
   });
