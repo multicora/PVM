@@ -4,7 +4,7 @@
       <div class="logoContainer">  
         <div class="logo">
           <img src="/assets/logo.svg" alt="logo">
-          <span class="logoText">BIZKONECT</span>
+          <span class="logoText">CommerceFocused</span>
         </div>
       </div>
       <div class="socialContainer">    
@@ -31,18 +31,31 @@
         </div>
       </div>
     </header>
-      <div class="video">
-        <div class="videoHeader">
-          <div class="photo"></div>
-          <div class="text">
-            <p class="userName">{{videos.user.name}}</p>
-            <p class="userMessage">{{videos.user.message}}</p>
-          </div>
-        </div>
-        <iframe id="video" width="640" height="400" src="https://www.youtube.com/embed/VXEkoXgb4bI" frameborder="0" allowfullscreen></iframe>
-        <div class="videoFooter">
+    <div class="video">
+      <div class="videoHeader">
+        <div class="photo"></div>
+        <div class="text">
+          <p class="userName">{{videos.user.name}}</p>
+          <p class="userMessage">{{videos.user.message}}</p>
         </div>
       </div>
-    <div class="line"></div>
+      <div class="videoContent">
+        <iframe id="video" width="845" height="477" src="https://www.youtube.com/embed/VXEkoXgb4bI" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="videoFooter">
+        <div class="container">        
+          <p class="footerText">Type here to reply or hit the button {{fa-icon "video-camera"}} to reply with the video</p>
+          <button class="send" disabled>send</button>
+        </div>
+        <div class="replyContainer">
+          <button class="reply">{{fa-icon "video-camera"}}</button>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="logo"></div>
+      <p class="rights"></p>
+    </footer>
   {{/each}}
+
 </div>

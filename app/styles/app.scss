@@ -6,59 +6,60 @@ body {
 }
 
 .watchVideoContainer {
-  width: 100%;
   min-height: 100vh;
-  background-image: url('/assets/layer.png');
+  width: 100%;
+  background-color: #f5f5f5;
   background-size: cover;
 
   header {
-    background-color:  rgba(250, 250, 250, 0.5);
-    box-shadow: 0px 0px 4.05px 0.95px rgba(0, 0, 0, 0.28);
     width: 100%;
     height: 64px;
+    background-color:  #fff;
+    box-shadow: 0px 0px 4.05px 0.95px rgba(0, 0, 0, 0.28);
   }
-  
+
   .logoContainer {
     display: inline-block;
     width: 50%;
     text-align: left;
+
     .logo{
       display: inline-block;
 
       img {
+        margin-left: 15px;
         width: 40px;
         height: 40px;
-        line-height: 63px;
-        margin-left: 15px;
         vertical-align: middle;
+        line-height: 63px;
       }
 
       .logoText {
-        color:  rgba(0, 0, 0, 0.65);
-        font-size: 26px;
-        font-weight: 600;
-        line-height: 63px;
+        color:  rgba(0, 0, 0, 0.87);
         vertical-align: middle;
+        font-weight: 300;
+        font-size: 26px;
+        line-height: 63px;
       }
     }
   }
-  
+
   .socialContainer {
     display: inline-block;
     width: 49%;
     text-align: right;
-    
+
     .social {
       display: inline-block;
-      line-height: 64px;
-      vertical-align: middle;
       margin-right: 20px;
+      vertical-align: middle;
+      line-height: 64px;
 
       a {
-        text-decoration: none;
+        margin-right: 8px;
         width: 27px;
         height: 27px;
-        margin-right: 8px;
+        text-decoration: none;
 
         img {
           width: 27px;
@@ -73,15 +74,15 @@ body {
 
     .contacts {
       display: inline-block;
-      line-height: 64px;
-      vertical-align: middle;
       margin-right: 10px;
+      vertical-align: middle;
+      line-height: 64px;
 
       .phone,
       .email {
-        line-height: 32px;
         vertical-align: middle;
         text-align: left;
+        line-height: 32px;
 
         img {
           display: inline-block;
@@ -89,12 +90,12 @@ body {
         }
 
         p {
-          margin: 0;
           display: inline-block;
-          font-family: 'Roboto', Arial, sans-serif;
-          color:  rgba(0, 0, 0, 0.54);
-          font-size: 14px;
+          margin: 0;
+          color:  rgba(0, 0, 0, 0.87);
           font-weight: 600;
+          font-size: 14px;
+          font-family: 'Roboto', Arial, sans-serif;
         }
       }
 
@@ -115,24 +116,23 @@ body {
   }
 
   .video {
-    border-radius: 2px;
-    background-color:  rgba(250, 250, 250, 0.5);
-    box-shadow: 4px 7px 13.12px 2.88px rgba(0, 0, 0, 0.35);
-    width: 640px;
-    height: 546px;
     margin: 20px auto 0 auto;
-    
+    width: 845px;
+    border-radius: 2px;
+    background-color:  #fff;
+    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
+
     .videoHeader {
       padding-top: 10px;
       height: 54px;
 
       .photo {
+        display: inline-block;
+        margin-left: 10px;
         width: 38px;
         height: 40px;
         border-radius: 20px;
         background-image: url('/assets/user.png');
-        margin-left: 10px;
-        display: inline-block;
       }
 
       .text {
@@ -142,35 +142,84 @@ body {
 
       .userName,
       .userMessage {
-        color:  rgba(0, 0, 0, 0.65);
-        font-weight: 600;
         margin-bottom: 0;
+        color:  rgba(0, 0, 0, 0.87);
+        font-weight: 400;
       }
 
       .userName {
-        font-size: 18px;
+        font-size: 20px;
       }
 
       .userMessage {
-        font-size: 15px
+        font-size: 16px
+      }
+
+      .videoContent {
+        width: 100%;
+        height: 477px;
+        box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
       }
     }
 
     .videoFooter {
-      height: 84px;
       position: relative;
+      height: 96px;
+      cursor: text;
+
+      .container {
+        display: inline-block;
+        width: 90%;
+        text-align: left;
+      }
+
+      .footerText {
+        margin: 22px 0 0 71px;
+        color: rgba(0, 0, 0, 0.54);
+        font-weight: 400;
+        font-size: 16px;
+        font-family: Helvetica;
+      }
+
+      .send {
+        margin: 20px 0 0 71px;
+        padding: 0;
+        outline: none;
+        border: none;
+        background: none;
+        color:  rgba(0, 0, 0, 0.24);
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      .replyContainer {
+        display: inline-block;
+        padding-top: 20px;
+        width: 9%;
+        vertical-align: top;
+      }
 
       .reply {
-        margin: 10px 10px 0 0;
-        float: right;
+        top: 20px;
+        display: inline-block;
+        width: 56px;
+        height: 56px;
+        outline: none;
+        border: none;
+        border-radius: 28px;
+        background: none;
+        box-shadow: 2px 4px 11px 0px rgba(0, 0, 0, 0.35);
+        font-size: 20px;
+        cursor: pointer;
       }
     }
 
   }
 
-  .line {
-    width: 80%;
-    margin: 20px auto 0 auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.54);
+  footer {
+    margin-top: 20px;
+    width: 100%;
   }
 }
