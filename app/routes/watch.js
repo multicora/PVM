@@ -2,9 +2,13 @@ import Ember from 'ember';
 
 let videos = [{
   id: '12312312312323',
-  name: 'Roberto Goni',
-  message: 'Hello, my name is.....',
-  link: 'https://www.youtube.com/embed/VXEkoXgb4bI'
+  user: {
+    name: 'Ramon Vela',
+    message: 'Hello Mark, I’ve made this video for you.',
+    phone: '+12137132806‬',
+    email: 'mspmarketingservices@gmail.com'
+  },
+  link: 'https://www.youtube.com/embed/VXEkoXgb4bI',
 }];
 
 let iframeContainer = document.getElementById('video');
