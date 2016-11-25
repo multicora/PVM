@@ -14,22 +14,36 @@ body {
   padding: 0;
 }
 
+.vertical-align-middle:before {
+  content:'';
+  display: inline-block;
+  height: 100%;
+  width: 0;
+  vertical-align: middle;
+}
+
 .popupContainer {
-  width: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: none;
   height: 100%;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.35);
+  width: 100%;
+
+  &.shown {
+    display: block;
+  }
 
   .popup {
-    display: none;
-    border-radius: 2px;
-    border-width: 1px;
-    box-sizing: border-box;
     background-color:  #ffffff;
+    border-radius: 2px;
     box-shadow: 0px 1px 48.6px 5.4px rgba(0, 0, 0, 0.35);
-    margin: 200px auto 0 auto;
-    width: 725px;
     height: 371px;
+    max-width: 725px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
 
     .popupTitle,
     .popupSubTitle {
@@ -45,10 +59,6 @@ body {
     .popupSubTitle {
       font-size: 15px;
     }
-  }
-
-  .shown {
-    display: block;
   }
 
   .uploadIconContainer,
