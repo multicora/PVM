@@ -30,6 +30,7 @@
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
+    "boom": "^4.2.0",
     "box-node-sdk": "^1.1.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^2.4.1",
