@@ -17,4 +17,6 @@ module.exports.init = function (server) {
       }
     }
   });
+
+  require('./routing/video.js')(server);
 };
