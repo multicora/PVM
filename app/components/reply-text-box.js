@@ -2,7 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	isShownTextArea: false,
+	disabledButton: true,
 	click() {
-    this.setProperties({isShownTextArea: 'true'});
+    this.set('disabledButton', false);
+    this.set('isShownTextArea', true);
   }
 });
