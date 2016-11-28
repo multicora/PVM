@@ -319,6 +319,10 @@ body {
         cursor: pointer;
       }
 
+      .send:disabled {
+        cursor: not-allowed;
+      }
+
       .reply-text {
         display: none;
         margin: 10px auto;
