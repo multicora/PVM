@@ -16,3 +16,5 @@
 npm-debug.log*
 testem.log
 /backend/uploads
+/private_key.pem
+/public_key.pem

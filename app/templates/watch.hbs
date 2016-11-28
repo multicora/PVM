@@ -7,7 +7,7 @@
           <span class="logoText">CommerceFocused</span>
         </div>
       </div>
-      <div class="socialContainer">    
+      <div class="socialContainer">
         <div class="social">
           <a href="" class="linkedin">
             <img src="/assets/linkedin.png" alt="linkedin">
@@ -43,9 +43,11 @@
         {{ivy-videojs fluid=true src=model.video.url controls=true}}
       </div>
       <div class="videoFooter">
-        <div class="container">        
+        <div class="container">
           <p class="footerText">Type here to reply or hit the button {{fa-icon "video-camera"}} to reply with the video</p>
-          <button class="send" disabled>send</button>
+          {{#button-component segmentEventName="Watch: click send btn"}}
+            <button class="send">send</button>
+          {{/button-component}}
         </div>
         <div class="replyContainer">
           <button class="reply">{{fa-icon "video-camera"}}</button>
