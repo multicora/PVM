@@ -18,3 +18,4 @@ testem.log
 /backend/uploads
 /private_key.pem
 /public_key.pem
+/backend/userConfig.js
