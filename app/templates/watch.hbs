@@ -1,59 +1,59 @@
 <div class="watchVideoContainer">
-  {{#each model as |videos|}}
-    <header>
-      <div class="logoContainer">  
-        <div class="logo">
-          <img src="/assets/logo.svg" alt="logo">
-          <span class="logoText">CommerceFocused</span>
-        </div>
-      </div>
-      <div class="socialContainer">    
-        <div class="social">
-          <a href="" class="linkedin">
-            <img src="/assets/linkedin.png" alt="linkedin">
-          </a>
-          <a href="" class="twitter">
-            <img src="/assets/twitter.png" alt="twitter">
-          </a>
-          <a href="" class="facebook">
-            <img src="assets/facebook.png" alt="facebook">
-          </a>
-        </div>
-        <div class="contacts">
-          <div class="phone">
-            <img src="/assets/phone.png" alt="phone">
-            <p>{{videos.user.phone}}</p>
-          </div>
-          <div class="email">
-            <img src="/assets/email.png" alt="email">
-            <p>{{videos.user.email}}</p>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="video">
-      <div class="videoHeader">
-        <div class="photo"></div>
-        <div class="text">
-          <p class="userName">{{videos.user.name}}</p>
-          <p class="userMessage">{{videos.user.message}}</p>
-        </div>
-      </div>
-      <div class="videoContent">
-        <iframe id="video" width="845" height="477" src="https://www.youtube.com/embed/VXEkoXgb4bI" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="videoFooter">
-        <div class="container">        
-          <p class="footerText">Type here to reply or hit the button {{fa-icon "video-camera"}} to reply with the video</p>
-          <button class="send" disabled>send</button>
-        </div>
-        {{watch-buttons}}
+  <header>
+    <div class="logoContainer">  
+      <div class="logo">
+        <img src="/assets/logo.png" alt="logo">
+        <span class="logoText">CommerceFocused</span>
       </div>
     </div>
-    <footer>
-      <div class="logo"></div>
-      <p class="rights"></p>
-    </footer>
-  {{/each}}
-
+    <div class="socialContainer">    
+      <div class="social">
+        <a href="" class="linkedin">
+          <img src="/assets/linkedin.png" alt="linkedin">
+        </a>
+        <a href="" class="twitter">
+          <img src="/assets/twitter.png" alt="twitter">
+        </a>
+        <a href="" class="facebook">
+          <img src="assets/facebook.png" alt="facebook">
+        </a>
+      </div>
+      <div class="contacts">
+        <div class="phone">
+          <img src="/assets/phone.png" alt="phone">
+          <p>{{model.user.phone}}</p>
+        </div>
+        <div class="email">
+          <img src="/assets/email.png" alt="email">
+          <p>{{model.user.email}}</p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="video">
+    <div class="videoHeader">
+      <div class="photo"></div>
+      <div class="text">
+        <p class="userName">{{model.user.name}}</p>
+        <p class="userMessage">{{model.user.message}}</p>
+      </div>
+    </div>
+    <div class="videoContent">
+      {{ivy-videojs fluid=true src=model.video.url controls=true}}
+    </div>
+    <div class="videoFooter">
+      <div class="container">
+        <p class="footerText">Type here to reply or hit the button {{fa-icon "video-camera"}} to reply with the video</p>
+        <button class="send" disabled>send</button>
+      </div>
+      {{watch-buttons}}
+    </div>
+  </div>
+  <footer>
+    <div class="logo-container">
+      <span class="powered">Powered by</span>
+      <img class="logo" src="/assets/logo_bizkonect.png" alt="Bizkonect">
+    </div>
+    <div class="rights">2016 All rights reserved</div>
+  </footer>
 </div>

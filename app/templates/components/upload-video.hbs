@@ -1,5 +1,5 @@
-<div class="popupContainer">
-  <div class="popup {{if isShown "shown"}}" ondrop={{action "drop"}} ondragover="return false">
+<div class="popupContainer {{if isShown "shown"}}">
+  <div class="popup" ondrop={{action "drop"}} ondragover="return false">
     <form class="uploadForm">
       <div class="uploadIconContainer">  
         <label for="upload-video" class="uploadIcon">

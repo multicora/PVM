@@ -37,10 +37,10 @@ module.exports = function () {
         _.bind(registerACL, null, server)
         ).then(
           _.bind(registerStaticFilesServer, null, server)
+        // ).then(
+        //   _.bind(registerAuth, null, server)
         ).then(
-          _.bind(registerAuth, null, server)
-        ).then(
-          _.bind(registerRouting, null, server)
+          _.bind(registerRouting, null, server, DAL)
         ).then(
           _.bind(run, null, server)
         ).then(
@@ -54,10 +54,15 @@ module.exports = function () {
   }
 
   function migrationsStart(DAL) {
-    console.log('-| Migrations start');
-    migrations(DAL, function () {
-      console.log('-| Migrations end');
-    });
+    return new Promise(
+      function (resolve, reject) {
+        console.log('-| Migrations start');
+        migrations(DAL, function () {
+          console.log('-| Migrations end');
+          resolve();
+        });
+      }
+    );
   }
 
   function registerStaticFilesServer(server) {
@@ -71,9 +76,9 @@ module.exports = function () {
     );
   }
 
-  function registerRouting(server) {
+  function registerRouting(server, DAL) {
     const routing = require('./routing');
-    routing.init(server);
+    routing.init(server, DAL);
   }
 
   function registerConnection(connection) {
