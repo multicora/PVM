@@ -282,39 +282,32 @@ body {
     }
 
     .videoContent {
-      width: 100%;
       min-height: 400px;
+      width: 100%;
       box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
     }
 
     .videoFooter {
       position: relative;
-      height: 96px;
-      cursor: text;
+      padding-bottom: 10px;
 
       .container {
         display: inline-block;
-        width: 90%;
+        width: 100%;
         text-align: left;
+        cursor: text;
       }
 
-      .footerText {
-        margin: 22px 0 0 71px;
+      .reply-text-placeholder {
+        margin: 22px 0 20px 71px;
         color: rgba(0, 0, 0, 0.54);
         font-weight: 400;
         font-size: 16px;
         font-family: Helvetica;
       }
 
-      .reply-text {
-        width: 100%;
-        height: 96px;
-        border: none;
-        outline: none;
-      }
-
       .send {
-        margin: 20px 0 0 71px;
+        margin-left: 71px;
         padding: 0;
         outline: none;
         border: none;
@@ -324,6 +317,31 @@ body {
         font-weight: 500;
         font-size: 18px;
         cursor: pointer;
+      }
+
+      .reply-text {
+        display: none;
+        margin: 10px auto;
+        padding: 0;
+        min-height: 100px;
+        width: 85%;
+        outline: none;
+        border: none;
+        color: rgba(0, 0, 0, 0.54);
+        font-weight: 400;
+        font-size: 16px;
+        font-family: Helvetica;
+        resize: none;
+      }
+
+      .shown-textarea {
+        .reply-text {
+          display: block;
+        }
+        
+        .reply-text-placeholder {
+          display: none;
+        }
       }
 
       .replyContainer {
@@ -340,7 +358,7 @@ body {
         z-index: 2;
         padding: 10px;
         text-align: center;
-        cursor: default; 
+        cursor: default;
 
         .reply,
         .record {
@@ -355,9 +373,9 @@ body {
         }
 
         .reply {
-          width: 50px;
-          height: 50px;
-          margin-left: 3px; 
+          margin-left: 8px;
+          width: 40px;
+          height: 40px; 
           background-color: #424242;
           color: rgba(255,255,255,0.87);
         }
@@ -381,7 +399,7 @@ body {
         }
 
         .record {
-          margin-top: -55px;
+          margin-top: -50px;
           transition: 0.5s;
         }
 
