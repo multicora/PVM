@@ -23,7 +23,9 @@ module.exports = function (server, DAL) {
             reply();
           },
           function (err) {
-            reply(Boom.wrap(err, 500));
+            console.log('Error:')
+            console.log(new Error(err))
+            reply(Boom.badImplementation(500, err));
           }
         );
       }

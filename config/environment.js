@@ -18,6 +18,10 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+    segment: {
+      WRITE_KEY: 'h7MbFFjaMTEG5eDssyiAOc9OO5UcGjeA',
+      LOG_EVENT_TRACKING: true
     }
   };
 

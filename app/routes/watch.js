@@ -4,11 +4,11 @@ export default Ember.Route.extend({
   model(params) {
     // return this.store.findRecord('video', 7);
     return Ember.RSVP.hash({
-      video: this.store.findRecord('video', 1),
+      video: this.store.findRecord('video', params.video_id),
       user: {
         name: 'Ramon Vela',
         message: 'Hello Mark, I’ve made this video for you.',
-        phone: '+12137132806‬',
+        phone: '+12137132806',
         email: 'mspmarketingservices@gmail.com'
       }
     });
