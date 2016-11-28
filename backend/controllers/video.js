@@ -11,8 +11,10 @@ module.exports = function (DAL) {
         const id = uuid.v1();
         const newName = id + separator + name;
 
+        console.log('Start uploading to Box.com');
         return box.upload(newName, buffer).then(
           function (fileInfo) {
+            console.log('Finish uploading to Box.com');
             return DAL.videos.add(name, newName, fileInfo.id);
           }
         );
