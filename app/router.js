@@ -7,6 +7,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('watch', {path: 'watch/:video_id'});
+  this.route('library');
 });
 
 export default Router;

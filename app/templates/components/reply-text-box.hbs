@@ -1,0 +1,9 @@
+<div class="container {{if isShownTextArea "shown-textarea"}}">
+	<textarea class="reply-text"></textarea>
+	<p class="reply-text-placeholder">
+		Type here to reply or hit the button {{fa-icon "video-camera"}} to reply with the video
+	</p>
+  {{#button-component segmentEventName="Watch: click send btn"}}
+    <button class="send" disabled={{disabledButton}}>send</button>
+  {{/button-component}}
+</div>

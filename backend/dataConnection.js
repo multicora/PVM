@@ -5,7 +5,7 @@ const connection = mysql.createConnection({
   host: config.db.host,
   user: config.db.user,
   password: config.db.password,
-  dbName: config.db.dbName
+  database: config.db.dbName
 });
 
 module.exports = function() {
@@ -13,14 +13,8 @@ module.exports = function() {
     function(resolve, reject) {
 
       connection.connect(function(err){
-        err ? reject(err) : resolve();    
-      });
-
-      connection.query('SELECT * FROM pvmDB', function(err, rows, fields) {
-        err ? reject(err) : resolve();
+        err ? reject(err) : resolve(connection);
       });
     }
   );
-
-  connection.end();
 };
