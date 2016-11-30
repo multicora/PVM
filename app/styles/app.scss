@@ -3,15 +3,21 @@
 @font-face {
   font-weight: normal;
   font-style: normal;
-  font-family: 'Roboto';
-  src: url('/assets/Roboto/roboto-regular-webfont.woff2') format('woff2'),
-       url('/assets/Roboto/roboto-regular-webfont.woff') format('woff');
+  font-family: 'Roboto-Regular';
+  src: url('/assets/Roboto/Roboto-Regular.ttf') format('ttf');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto-Thin';
+  src: url('/assets/Roboto/Roboto-Thin.ttf') format('ttf');
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: 'Roboto-Regular', Arial, sans-serif;
 }
 
 .hidden {
@@ -502,6 +508,7 @@ body {
       text-align: center;
       font-weight: 300;
       font-size: 30px;
+      font-family: 'Roboto-Thin', Arial, sans-serif;
     }
 
     .video-js {
