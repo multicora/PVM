@@ -1,0 +1,12 @@
+<div class="video-record-container {{if isShown "shown"}}">
+	<div class="popup">
+		<form class="recordForm">
+			<p class="popupTitle">Record your video</p>
+			{{ivy-videojs fluid=true controls=true setup=player}}
+			<div class="button-container">
+				<button class="cancel">cancel</button>
+				<button class="save">save</button>
+			</div>
+		</form>
+	</div>
+</div>
