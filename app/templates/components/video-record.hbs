@@ -2,7 +2,7 @@
 	<div class="popup">
 		<form class="recordForm">
 			<p class="popupTitle">Record your video</p>
-			{{ivy-videojs fluid=true controls=true setup=player}}
+			{{mk-videojs-record setup=setup}}
 			<div class="button-container">
 				<button class="cancel" {{action 'hidePopup'}}>cancel</button>
 				<button class="save" {{action 'saveVideo'}}>save</button>
