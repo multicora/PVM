@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
-module.exports.init = function (server) {
+module.exports.init = function (server, DAL) {
   server.route({
     method: 'GET',
     path: '/{param*}',
@@ -27,5 +27,5 @@ module.exports.init = function (server) {
     }
   });
 
-  require('./routing/video.js')(server);
+  require('./routing/video.js')(server, DAL);
 };

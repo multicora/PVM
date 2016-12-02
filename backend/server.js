@@ -7,6 +7,7 @@ const Promise = require('promise');
 const connectDB = require('./dataConnection.js');
 // Internal
 const config = require('./config.js');
+const migrations = require('./migrations/migrations');
 
 function logError(error) {
   console.log(' ======================= uncaughtException:');
@@ -28,20 +29,38 @@ module.exports = function () {
         }
       }
     });
-    registerACL(server).then(
-      registerStaticFilesServer(server)
+    connectDB().then(
+      _.bind(registerConnection, null)
     ).then(
-      _.bind(registerRouting, null, server)
-    // ).then(
-    //   _.bind(registerAuth, null, server)
-    ).then(
-      connectDB
-    ).then(
-      _.bind(run, null, server)
-    ).then(
-      _.bind(showSuccessMessage, null, server),
-      function (err) {
-        logError(err);
+      function(DAL) {
+        migrationsStart(DAL).then(
+        _.bind(registerACL, null, server)
+        ).then(
+          _.bind(registerStaticFilesServer, null, server)
+        // ).then(
+        //   _.bind(registerAuth, null, server)
+        ).then(
+          _.bind(registerRouting, null, server, DAL)
+        ).then(
+          _.bind(run, null, server)
+        ).then(
+          _.bind(showSuccessMessage, null, server),
+          function(err) {
+            logError(err);
+          }
+        )
+      }
+    )
+  }
+
+  function migrationsStart(DAL) {
+    return new Promise(
+      function (resolve, reject) {
+        console.log('-| Migrations start');
+        migrations(DAL, function () {
+          console.log('-| Migrations end');
+          resolve();
+        });
       }
     );
   }
@@ -57,9 +76,13 @@ module.exports = function () {
     );
   }
 
-  function registerRouting(server) {
+  function registerRouting(server, DAL) {
     const routing = require('./routing');
-    routing.init(server);
+    routing.init(server, DAL);
+  }
+
+  function registerConnection(connection) {
+    return require('./dal/dal.js')(connection);
   }
 
   function registerACL(server) {

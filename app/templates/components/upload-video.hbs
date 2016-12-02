@@ -1,9 +1,9 @@
-<div class="popupContainer">
-  <div class="popup {{if isShown "shown"}}" ondrop={{action "drop"}} ondragover="return false">
+<div class="popupContainer {{if isShown "shown"}}">
+  <div class="popup" ondrop={{action "drop"}} ondragover="return false">
     <form class="uploadForm">
       <div class="uploadIconContainer">  
         <label for="upload-video" class="uploadIcon">
-          {{file-upload url="/video" id="upload-video"}}
+          {{file-upload url="/video" id="upload-video" uploadEnd=(action 'uploadEnd') uploadStart=(action 'uploadStart')}}
         </label>
       </div>
       <p class="popupTitle">Select files to upload</p>
@@ -12,5 +12,8 @@
         <button type="button" class="closeButton" {{action 'hidePopup'}}>close</button>
       </div>
     </form>
+    <div class="loader {{if isUploading '' 'hidden'}}">
+      Uploading...
+    </div>
   </div>
 </div>

@@ -4,22 +4,24 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'pvm',
     environment: environment,
-    rootURL: '/',
+    baseURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
-      },
-      EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding Date.parse.
-        Date: false
       }
     },
-
+    sassOptions: {
+      includePaths: ['bower_components/material-design-lite/src']
+    },
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+    segment: {
+      WRITE_KEY: 'h7MbFFjaMTEG5eDssyiAOc9OO5UcGjeA',
+      LOG_EVENT_TRACKING: true
     }
   };
 
@@ -33,6 +35,7 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
+    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter

@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   isShown: true,
+  isUploading: false,
   actions: {
     hidePopup() {
       this.toggleProperty('isShown');
@@ -14,6 +15,12 @@ export default Ember.Component.extend({
       event.preventDefault();
       let file = event.dataTransfer.files[0];
       console.log(file);
+    },
+    uploadEnd() {
+      this.set('isUploading', false);
+    },
+    uploadStart() {
+      this.set('isUploading', true);
     }
   }
 });

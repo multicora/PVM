@@ -34,8 +34,15 @@ module.exports = function (config) {
       resolve({
         upload: function (fileName, data) {
           return new Promise(function (resolve, reject) {
-            box.files.uploadFile('0', fileName, data, function(err, file) {
-              err ? reject(err) : resolve();
+            box.files.uploadFile('0', fileName, data, function(err, res) {
+              err ? reject(err) : resolve(res.entries[0]);
+            });
+          });
+        },
+        download: function (id) {
+          return new Promise(function (resolve, reject) {
+            box.files.getReadStream(id, null, function(err, file) {
+              err ? reject(err) : resolve(file);
             });
           });
         }
