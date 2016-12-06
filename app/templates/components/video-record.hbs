@@ -1,12 +1,12 @@
 <div class="video-record-container {{if isShown "shown"}}">
-	<div class="popup">
-		<form class="recordForm">
-			<p class="popupTitle">Record your video</p>
-			{{mk-videojs-record setup=setup}}
-			<div class="button-container">
-				<button class="cancel" {{action 'hidePopup'}}>cancel</button>
-				<button class="save" {{action 'saveVideo'}}>save</button>
-			</div>
-		</form>
-	</div>
+  <div class="popup">
+    <form class="recordForm">
+      <p class="popupTitle">Record your video</p>
+      {{mk-videojs-record setup=setup}}
+      <div class="button-container">
+        <button class="cancel" {{action 'hidePopup'}}>cancel</button>
+        <button class="save" {{action 'saveVideo'}}>save</button>
+      </div>
+    </form>
+  </div>
 </div>

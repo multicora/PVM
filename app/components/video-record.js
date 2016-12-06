@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   isShown: true,
+  isUploading: false,
   actions: {
     hidePopup() {
       this.toggleProperty('isShown');
@@ -20,6 +21,10 @@ export default Ember.Component.extend({
         maxLength: 10,
         debug: true
       }
+    },
+    controlBar: {
+      volumeMenuButton: false,
+      fullscreenToggle: false
     }
   }
 });
