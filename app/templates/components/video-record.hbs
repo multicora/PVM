@@ -2,10 +2,10 @@
   <div class="popup">
     <form class="recordForm">
       <p class="popupTitle">Record your video</p>
-      {{mk-videojs-record setup=setup}}
+      {{mk-videojs-record setup=setup ready="ready" finishRecord="finishRecord" startRecord="startRecord"}}
       <div class="button-container">
         <button class="cancel" {{action 'hidePopup'}}>cancel</button>
-        <button class="save" {{action 'saveVideo'}}>save</button>
+        <button class="save" {{action 'saveVideo'}} disabled={{disabledButton}}>save</button>
       </div>
     </form>
   </div>

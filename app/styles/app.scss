@@ -307,6 +307,15 @@ body {
       box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
     }
 
+    .video-js .vjs-big-play-button {
+      width: 50px;
+      height: 50px;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      margin: -25px 0 0 -25px;
+    }
+
     .videoFooter {
       position: relative;
       padding-bottom: 10px;
@@ -375,7 +384,7 @@ body {
         vertical-align: top;
       }
 
-      .watch-buttons{      
+      .watch-buttons{
         position: fixed;
         right: 65px;
         bottom: 60px;
@@ -496,7 +505,7 @@ body {
     left: 50%;
     max-width: 725px;
     width: 100%;
-    height: 403px;
+    height: 643px;
     border-radius: 2px;
     background-color:  #f8f8f8;
     box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
@@ -541,6 +550,10 @@ body {
 
       button:hover {
         color: rgba(0, 0, 0, 0.87);
+      }
+
+      .save:disabled {
+        cursor: not-allowed;
       }
     }
   }
