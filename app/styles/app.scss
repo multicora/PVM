@@ -432,6 +432,10 @@ body {
           height: 40px; 
           background-color: #424242;
           color: rgba(255,255,255,0.87);
+
+          .upload-icon {
+            display: inline-block;
+          }
         }
 
         .record {
@@ -454,22 +458,22 @@ body {
 
         .record {
           margin-top: -50px;
-          transition: 0.5s;
-        }
-
-        .rotate {
-          .video-icon {
-            transition: 0.5s;
-            transform: rotate(360deg);
-          }
+          transition: 0.35s;
         }
       }
 
-      .hovered {
+
+
+      .watch-buttons:hover {
         .record {
           margin-top: 10px;
           box-shadow: 2px 4px 11px 0px rgba(0, 0, 0, 0.75);
-          transition: 0.5s;
+          transition: 0.35s;
+
+          .video-icon {
+            transition: 0.5s;
+            transform: rotate(720deg);
+          }
         }
       }
     }
