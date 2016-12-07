@@ -349,7 +349,7 @@ body {
       }
 
       .send:disabled {
-        cursor: not-allowed;
+        cursor: default;
       }
 
       .reply-text {
@@ -553,7 +553,7 @@ body {
       }
 
       .save:disabled {
-        cursor: not-allowed;
+        cursor: default;
       }
     }
   }
