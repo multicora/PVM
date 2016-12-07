@@ -16,6 +16,7 @@
 npm-debug.log*
 testem.log
 /backend/uploads
+/backend/public
 /private_key.pem
 /public_key.pem
 /backend/userConfig.js

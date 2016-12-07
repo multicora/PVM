@@ -170,9 +170,9 @@ body {
 .loader {
   position: absolute;
   top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
   background-color: rgba(0,0,0,0.5);
   text-align: center;
 }
@@ -337,6 +337,15 @@ body {
       box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
     }
 
+    .video-js .vjs-big-play-button {
+      width: 50px;
+      height: 50px;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      margin: -25px 0 0 -25px;
+    }
+
     .videoFooter {
       position: relative;
       padding-bottom: 10px;
@@ -370,7 +379,7 @@ body {
       }
 
       .send:disabled {
-        cursor: not-allowed;
+        cursor: default;
       }
 
       .reply-text {
@@ -392,7 +401,7 @@ body {
         .reply-text {
           display: block;
         }
-        
+
         .reply-text-placeholder {
           display: none;
         }
@@ -509,6 +518,78 @@ body {
       float: right;
       padding-right: 20px;
       vertical-align: middle;
+    }
+  }
+}
+
+//VIDEO RECORD 
+.video-record-container {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+
+  &.shown {
+    display: block;
+  }
+
+  .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 725px;
+    width: 100%;
+    height: 643px;
+    border-radius: 2px;
+    background-color:  #f8f8f8;
+    box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
+    transform: translate(-50%, -50%);
+
+    .popupTitle {
+      padding-top: 25px;
+      color: rgba(0, 0, 0, 0.87);
+      text-align: center;
+      font-weight: 300;
+      font-size: 30px;
+      font-family: 'Roboto-Thin', Arial, sans-serif;
+    }
+
+    .video-js {
+      margin: 15px auto 0 auto;
+    }
+
+    .button-container {
+      display: inline-block;
+      width: 100%;
+      text-align: right;
+      margin-top: 40px;
+
+      button {
+        border-radius: 2px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background-color:  #f1f1f1;
+        width: 85px;
+        height: 36px;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.50);
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      button:last-child {
+        margin-right: 15px;
+      }
+
+      button:hover {
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      .save:disabled {
+        cursor: default;
+      }
     }
   }
 }
