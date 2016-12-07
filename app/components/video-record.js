@@ -34,7 +34,7 @@ export default Ember.Component.extend({
 
       player.on('startRecord', function() {
         self.set('disabledButton', true);
-      })
+      });
     },
   },
   setup: {
@@ -45,7 +45,7 @@ export default Ember.Component.extend({
       record: {
         audio: true,
         video: true,
-        maxLength: 10,
+        maxLength: 120,
         debug: true
       }
     },
