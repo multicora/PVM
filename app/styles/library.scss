@@ -1,0 +1,39 @@
+//LIBRARY
+.library-wrapper {
+  width: 100%;
+  min-height: 100%;
+  background-color: #ebebeb;
+
+  header {
+    width: 100%;
+    height: 64px;
+    background-color: #fff;
+    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
+    line-height: 64px;
+    vertical-align: middle;
+
+    .navigation {
+      display: inline-block;
+      width: 18px;
+      height: 12px;
+      margin-left: 17px;
+      color:  rgba(0, 0, 0, 0.87);
+    }
+
+    .logo {
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .photo {
+      float: right;
+      margin-right: 10px;
+      width: 38px;
+      height: 40px;
+      border-radius: 20px;
+      background-image: url('/assets/user.png');
+      background-repeat: no-repeat;
+      margin-top: 12px;
+    }
+  }
+}
