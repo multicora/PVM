@@ -2,7 +2,8 @@
 .library-wrapper {
   width: 100%;
   min-height: 100%;
-  background-color: #ebebeb;
+  background-color: #f5f5f5;
+  padding-bottom: 40px;
 
 //HEADER
   header {
@@ -40,6 +41,8 @@
 
 //NAVIGATION
   .navigation {
+    margin-bottom: 20px;
+
     .tab-icon {
       float: left;
       margin: 25px 0 0 25px;
@@ -47,11 +50,11 @@
       height: 40px;
     }
 
-    .navigation-bur-container {
+    .navigation-bar-container {
       width: 100%;
       text-align: center;
 
-      .navigation-bur {
+      .navigation-bar {
         display: inline-block;
         list-style: none;
         padding: 0 100px 3px 100px;
@@ -67,7 +70,7 @@
             font-weight: 500;
             color: rgba(0, 0, 0, 0.87);
             padding: 0 37px;
-            border-bottom: 5px solid #ebebeb;
+            border-bottom: 5px solid #f5f5f5;;
           }
         }
 
@@ -76,6 +79,81 @@
           border-bottom: 5px solid rgb(208, 143, 60);
         }
       }
+    }
+  }
+}
+
+//CONTENT
+.content {
+  //VIDEOS
+  .videos-container {
+    width: 920px;
+    margin: 0 auto;
+    .add-button {
+      display: inline-block;
+      width: 215px;
+      height: 204px;
+      cursor: pointer;
+      border: 3px dashed #757575;
+      text-align: center;
+      color: #757575;
+      vertical-align: top;
+      margin-left: 10px;
+      box-sizing: border-box;
+
+      .icon {
+        font-size: 46px;
+        width: 47px;
+        height: 47px;
+        margin-top: 65px;
+      }
+
+      .text {
+        font-size: 24px;
+        margin-top: 24px;
+      }
+    }
+
+    .video {
+      display: inline-block;
+      width: 215px;
+      height: 204px;
+      background-color: #fff;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+      border-radius: 2px;
+      margin: 0 0 12px 10px;
+
+      .photo {
+        width: 100%;
+        height: 143px;
+      }
+
+      .text {
+        font-size: 18px;
+        color: rgba(0, 0, 0, 0.87);
+        margin: 10px 0 0 10px;
+      }
+
+      .buttons-container {
+        width: 100%;
+        text-align: right;
+
+        a {
+          text-decoration: none;
+        }
+
+        .menu {
+          margin-right: 10px;
+        }
+
+        .send {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .ember-view {
+      display: inline-block;
     }
   }
 }
