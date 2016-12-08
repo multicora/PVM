@@ -4,6 +4,7 @@
   min-height: 100%;
   background-color: #ebebeb;
 
+//HEADER
   header {
     width: 100%;
     height: 64px;
@@ -34,6 +35,47 @@
       background-image: url('/assets/user.png');
       background-repeat: no-repeat;
       margin-top: 12px;
+    }
+  }
+
+//NAVIGATION
+  .navigation {
+    .tab-icon {
+      float: left;
+      margin: 25px 0 0 25px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .navigation-bur-container {
+      width: 100%;
+      text-align: center;
+
+      .navigation-bur {
+        display: inline-block;
+        list-style: none;
+        padding: 0 100px 3px 100px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        margin: 58px 0 0 -65px;
+
+        li {
+          display: inline-block;
+          
+          a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.87);
+            padding: 0 37px;
+            border-bottom: 5px solid #ebebeb;
+          }
+        }
+
+        a:hover {
+          color: rgb(208, 143, 60);
+          border-bottom: 5px solid rgb(208, 143, 60);
+        }
+      }
     }
   }
 }
