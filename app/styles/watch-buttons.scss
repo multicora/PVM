@@ -17,6 +17,12 @@
     box-shadow: 2px 4px 11px 0px rgba(0, 0, 0, 0.35);
     font-size: 20px;
     cursor: pointer;
+    color: rgba(255, 255, 255, 0.87);
+
+    a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.87);
+    }
   }
 
   .reply {
@@ -25,7 +31,6 @@
     width: 40px;
     height: 40px; 
     background-color: #424242;
-    color: rgba(255,255,255,0.87);
 
     .upload-icon {
       display: inline-block;
@@ -39,7 +44,6 @@
     width: 56px;
     height: 56px;
     background-color: #d23f31;
-    color: rgba(255, 255, 255, 0.87);
 
     .video-icon {
       display: inline-block;
