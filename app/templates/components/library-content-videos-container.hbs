@@ -1,18 +1,17 @@
-<div class="videos-container">
-  <div class="add-button">
-    <div class="content">
-      <div class="icon">
-        <img src="/assets/a1.png" alt="" class="icon-left">
-        <img src="/assets/a2.png" alt="" class="icon-right">
+<div class="content">
+  <div class="videos-container">
+    <div class="add-button">
+      <div class="content">
+        <div class="icon">
+          <img src="/assets/a1.png" alt="" class="icon-left">
+          <img src="/assets/a2.png" alt="" class="icon-right">
+        </div>
+        <p class="text">New video</p>
       </div>
-      <p class="text">New video</p>
+      {{library-add-button-components isShownUpload=isShownUpload isShownRecord=isShownRecord}}
     </div>
-    {{library-add-button-components isShownUpload=isShownUpload isShownRecord=isShownRecord}}
+    {{#each videos as |video|}}
+      {{library-content-video video=video}}
+    {{/each}}
   </div>
-  {{library-content-video}}
-  {{library-content-video}}
-  {{library-content-video}}
-  {{library-content-video}}
-  {{library-content-video}}
-  {{library-content-video}}
 </div>

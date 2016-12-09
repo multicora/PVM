@@ -60,10 +60,20 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'GET',
-    path: '/library',
+    path: '/videos',
     handler: function (request, reply) {
-      DAL.videos.getAllVideos(function (err, docs) {
-        !err ? reply(docs) : reply(JSON.stringify(err));
+      DAL.videos.getAllVideos().then(function(res) {
+        reply({'data' : res.map(
+          function(res) {
+            return {
+              'type': 'video',
+              'id': res.v_id,
+              'attributes': res
+            };
+          }
+        )});
+      }, function(err) {
+        reply(Boom.badImplementation(500, err));
       });
     }
   });
