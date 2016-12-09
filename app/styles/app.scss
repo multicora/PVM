@@ -3,15 +3,52 @@
 @font-face {
   font-weight: normal;
   font-style: normal;
-  font-family: 'Roboto';
-  src: url('/assets/Roboto/roboto-regular-webfont.woff2') format('woff2'),
+  font-family: 'Roboto Bold';
+  src: url('/assets/Roboto/Roboto-Bold.ttf') format('ttf'),
+       url('/assets/Roboto/roboto-bold.woff2') format('woff2'),
+       url('/assets/Roboto/roboto-bold.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Regular';
+  src: url('/assets/Roboto/Roboto-Regular.ttf') format('ttf'),
+       url('/assets/Roboto/roboto-regular.woff2') format('woff2'),
        url('/assets/Roboto/roboto-regular-webfont.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Thin';
+  src: url('/assets/Roboto/Roboto-Thin.ttf') format('ttf'),
+       url('/assets/Roboto/roboto-thin.woff2') format('woff2'),
+       url('/assets/Roboto/roboto-thin.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Medium';
+  src: url('/assets/Roboto/Roboto-Medium.ttf') format('ttf'),
+       url('/assets/Roboto/roboto-medium.woff2') format('woff2'),
+       url('/assets/Roboto/roboto-medium.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Italic';
+  src: url('/assets/Roboto/Roboto-Italic.ttf') format('ttf'),
+       url('/assets/Roboto/roboto-italic.woff2') format('woff2'),
+       url('/assets/Roboto/roboto-italic.woff') format('woff');
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: 'Roboto Regular', Arial, sans-serif;
 }
 
 .hidden {
@@ -133,9 +170,9 @@ body {
 .loader {
   position: absolute;
   top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
   background-color: rgba(0,0,0,0.5);
   text-align: center;
 }
@@ -173,7 +210,7 @@ body {
         .logoText {
           color:  rgba(0, 0, 0, 0.87);
           vertical-align: middle;
-          font-weight: 300;
+          font-family: 'Roboto Thin';
           font-size: 26px;
           line-height: 63px;
         }
@@ -222,16 +259,15 @@ body {
 
           img {
             display: inline-block;
-            margin-right: 25px;
+            margin-right: 16px;
           }
 
           p {
             display: inline-block;
             margin: 0;
             color:  rgba(0, 0, 0, 0.87);
-            font-weight: 600;
             font-size: 14px;
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: 'Roboto Regular';
           }
         }
 
@@ -282,7 +318,7 @@ body {
       .userMessage {
         margin-bottom: 0;
         color:  rgba(0, 0, 0, 0.87);
-        font-weight: 400;
+        font-weight: 500;
       }
 
       .userName {
@@ -299,6 +335,15 @@ body {
       min-height: 400px;
       width: 100%;
       box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
+    }
+
+    .video-js .vjs-big-play-button {
+      width: 50px;
+      height: 50px;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      margin: -25px 0 0 -25px;
     }
 
     .videoFooter {
@@ -334,7 +379,7 @@ body {
       }
 
       .send:disabled {
-        cursor: not-allowed;
+        cursor: default;
       }
 
       .reply-text {
@@ -356,7 +401,7 @@ body {
         .reply-text {
           display: block;
         }
-        
+
         .reply-text-placeholder {
           display: none;
         }
@@ -369,7 +414,7 @@ body {
         vertical-align: top;
       }
 
-      .watch-buttons{      
+      .watch-buttons{
         position: fixed;
         right: 65px;
         bottom: 60px;
@@ -391,14 +436,20 @@ body {
         }
 
         .reply {
+          line-height: 39px;
           margin-left: 8px;
           width: 40px;
           height: 40px; 
           background-color: #424242;
           color: rgba(255,255,255,0.87);
+
+          .upload-icon {
+            display: inline-block;
+          }
         }
 
         .record {
+          line-height: 54px;
           position: relative;
           z-index: 1;
           width: 56px;
@@ -418,22 +469,22 @@ body {
 
         .record {
           margin-top: -50px;
-          transition: 0.5s;
-        }
-
-        .rotate {
-          .video-icon {
-            transition: 0.5s;
-            transform: rotate(360deg);
-          }
+          transition: 0.35s;
         }
       }
 
-      .hovered {
+
+
+      .watch-buttons:hover {
         .record {
           margin-top: 10px;
           box-shadow: 2px 4px 11px 0px rgba(0, 0, 0, 0.75);
-          transition: 0.5s;
+          transition: 0.35s;
+
+          .video-icon {
+            transition: 0.5s;
+            transform: rotate(720deg);
+          }
         }
       }
     }
@@ -447,8 +498,7 @@ body {
     width: 100%;
     height: 46px;
     box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.87);
-    color: rgba(0, 0, 0, 0.35);
-    font-weight: 300;
+    color: rgba(0, 0, 0, 0.54);
     font-size: 12px;
     line-height: 46px;
 
@@ -468,6 +518,78 @@ body {
       float: right;
       padding-right: 20px;
       vertical-align: middle;
+    }
+  }
+}
+
+//VIDEO RECORD 
+.video-record-container {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+
+  &.shown {
+    display: block;
+  }
+
+  .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 725px;
+    width: 100%;
+    height: 643px;
+    border-radius: 2px;
+    background-color:  #f8f8f8;
+    box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
+    transform: translate(-50%, -50%);
+
+    .popupTitle {
+      padding-top: 25px;
+      color: rgba(0, 0, 0, 0.87);
+      text-align: center;
+      font-weight: 300;
+      font-size: 30px;
+      font-family: 'Roboto-Thin', Arial, sans-serif;
+    }
+
+    .video-js {
+      margin: 15px auto 0 auto;
+    }
+
+    .button-container {
+      display: inline-block;
+      width: 100%;
+      text-align: right;
+      margin-top: 40px;
+
+      button {
+        border-radius: 2px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background-color:  #f1f1f1;
+        width: 85px;
+        height: 36px;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.50);
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      button:last-child {
+        margin-right: 15px;
+      }
+
+      button:hover {
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      .save:disabled {
+        cursor: default;
+      }
     }
   }
 }
