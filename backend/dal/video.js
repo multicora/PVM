@@ -28,6 +28,15 @@ module.exports = function(connection) {
         });
       });
     },
+    getAllVideos: function () {
+      return new Promise(function (resolve, reject) {
+        let request = 'SELECT * FROM `videos`;';
+
+        connection.query(request, function (err, response) {
+          (err || !response.length) ? reject(err) : resolve(response);
+        });
+      });
+    },
 
     // For migrations
     createTable: function(cb) {

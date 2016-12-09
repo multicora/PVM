@@ -58,4 +58,13 @@ module.exports = function (server, DAL) {
     }
   });
 
+  server.route({
+    method: 'GET',
+    path: '/library',
+    handler: function (request, reply) {
+      DAL.videos.getAllVideos(function (err, docs) {
+        !err ? reply(docs) : reply(JSON.stringify(err));
+      });
+    }
+  });
 };
