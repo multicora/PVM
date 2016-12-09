@@ -113,6 +113,7 @@
       text-align: center;
       vertical-align: top;
       width: 215px;
+      overflow: hidden;
 
       .content {
         display: block;
@@ -294,6 +295,9 @@
         color: rgba(0, 0, 0, 0.87);
         font-size: 18px;
         margin: 10px 0 0 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       .buttons-container {
