@@ -64,6 +64,15 @@ module.exports = function(connection) {
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+    // addColumn_autor: function (cb) {
+    //   const request = [
+    //     'ALTER TABLE `videos` ',
+    //     'ADD `author` VARCHAR(255) ',
+    //     'NOT NULL;'
+    //   ].join('');
+
+    //   return connection.query(request, cb);
+    // }
   }
 }
