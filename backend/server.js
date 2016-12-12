@@ -42,7 +42,7 @@ function startServer(tls) {
     }
   });
   connectDB().then(
-    _.bind(registerConnection, null)
+    _.bind(registerDAL, null)
   ).then(
     function(DAL) {
       migrationsStart(DAL).then(
@@ -61,6 +61,9 @@ function startServer(tls) {
           logError(err);
         }
       )
+    },
+    function (err) {
+      logError(err);
     }
   )
 }
@@ -127,7 +130,7 @@ function registerRouting(server, DAL) {
   routing.init(server, DAL);
 }
 
-function registerConnection(connection) {
+function registerDAL(connection) {
   return require('./dal/dal.js')(connection);
 }
 
