@@ -1,0 +1,17 @@
+<div class="content">
+  <div class="videos-container">
+    <div class="add-button">
+      <div class="content">
+        <div class="icon">
+          <img src="/assets/a1.png" alt="" class="icon-left">
+          <img src="/assets/a2.png" alt="" class="icon-right">
+        </div>
+        <p class="text">New video</p>
+      </div>
+      {{library-add-button-components isShownUploadPopup=isShownUploadPopup isShownRecordPopup=isShownRecordPopup}}
+    </div>
+    {{#each videos as |video|}}
+      {{library-content-video video=video class="video-container"}}
+    {{/each}}
+  </div>
+</div>

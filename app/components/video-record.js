@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   uploader: Ember.inject.service(),
-  isShown: true,
+  isShown: false,
   isUploading: false,
   disabledButton: true,
   audioFile: null,

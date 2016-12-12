@@ -28,6 +28,15 @@ module.exports = function(connection) {
         });
       });
     },
+    getAllVideos: function () {
+      return new Promise(function (resolve, reject) {
+        let request = 'SELECT * FROM `videos`;';
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
 
     // For migrations
     createTable: function(cb) {
@@ -64,6 +73,15 @@ module.exports = function(connection) {
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+    // addColumn_autor: function (cb) {
+    //   const request = [
+    //     'ALTER TABLE `videos` ',
+    //     'ADD `author` VARCHAR(255) ',
+    //     'NOT NULL;'
+    //   ].join('');
+
+    //   return connection.query(request, cb);
+    // }
   }
 }

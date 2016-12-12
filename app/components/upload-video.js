@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  isShown: false,
+  isShown: true,
   isUploading: false,
   actions: {
     hidePopup() {

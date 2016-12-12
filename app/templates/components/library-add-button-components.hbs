@@ -1,0 +1,18 @@
+<div class="hoverd-button">
+  {{#library-add-button 
+    className="upload"
+    message="Upload"
+    class="inlineBlock"
+    onClick=(action "showUploadPopup")
+  }}
+    {{fa-icon "cloud-upload"}}
+  {{/library-add-button}}
+  {{#library-add-button
+    className="record"
+    message="Record"
+    class="inlineBlock"
+    onClick=(action "showRecordPopup")
+  }}
+    {{fa-icon "video-camera"}}
+  {{/library-add-button}}
+</div>
