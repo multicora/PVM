@@ -33,7 +33,7 @@ module.exports = function(connection) {
         let request = 'SELECT * FROM `videos`;';
 
         connection.query(request, function (err, response) {
-          (err || !response.length) ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
