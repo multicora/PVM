@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  isShownRecord: false,
-  isShownUpload: false
+  isShownRecordPopup: false,
+  isShownUploadPopup: false
 });
