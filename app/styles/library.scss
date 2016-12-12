@@ -3,7 +3,6 @@
 //LIBRARY
 .library-wrapper {
   background-color: #f5f5f5;
-  min-height: 100%;
   padding-bottom: 40px;
   width: 100%;
 
@@ -82,12 +81,12 @@
         }
 
         .active {
-          border-bottom: 5px solid $red-buttons-color;
-          color: $red-buttons-color;
+          border-bottom: 5px solid $navigation-hovered-color;
+          color: $navigation-hovered-color;
         }
 
         a:hover {
-          color: $red-buttons-color;
+          color: $navigation-hovered-color;
           transition: 0.3s;
         }
       }
@@ -114,10 +113,6 @@
       vertical-align: top;
       width: 215px;
       overflow: hidden;
-
-      .content {
-        display: block;
-      }
 
       .icon {
         height: 48px;
@@ -146,7 +141,7 @@
       .hoverd-button {
         display: block;
         font-size: 46px;
-        margin-top: -125px;
+        margin-top: -110px;
         position: absolute;
         width: 100%;
         left: 0;
@@ -164,12 +159,12 @@
         }
 
         .record:hover {
-          color: $red-buttons-color;
+          color: $record-buttons-color;
           transition: 0.5s;
         }
 
         .upload:hover {
-          color: $blue-buttons-color;
+          color: $upload-buttons-color;
           transition: 0.5s;
         }
 
@@ -296,9 +291,6 @@
         font-size: 18px;
         margin: 10px 0 0 0;
         padding: 0 10px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
       }
 
       .buttons-container {
@@ -310,7 +302,7 @@
         }
 
         .send {
-          color: $red-buttons-color;
+          color: $send-buttons-color;
           font-size: 18px;
           margin-right: 10px;
         }
@@ -321,8 +313,18 @@
       }
     }
 
-    .ember-view {
+    .video-container {
       display: inline-block;
     }
   }
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.inlineBlock {
+  display: inline-block;
 }
