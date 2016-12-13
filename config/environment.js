@@ -22,6 +22,15 @@ module.exports = function(environment) {
     segment: {
       WRITE_KEY: 'h7MbFFjaMTEG5eDssyiAOc9OO5UcGjeA',
       LOG_EVENT_TRACKING: true
+    },
+    'ember-simple-auth-token': {
+      serverTokenEndpoint: '/api/login',
+      identificationField: 'login',
+      passwordField: 'password',
+      tokenPropertyName: 'token',
+      authorizationPrefix: 'Bearer ',
+      authorizationHeaderName: 'Authorization',
+      headers: {},
     }
   };
 

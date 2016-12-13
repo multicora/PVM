@@ -8,7 +8,7 @@ module.exports = (connection) => {
     getUserById: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT * FROM `users` WHERE id = ' + id
+          'SELECT * FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -20,11 +20,11 @@ module.exports = (connection) => {
     getUserForLogin: (login) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT * FROM `users` WHERE email = ' + login
+          'SELECT * FROM `users` WHERE email = "' + login + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0]);
         });
       });
     },
