@@ -8,6 +8,9 @@
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         {{input class="mdl-textfield__input" type="password" placeholder="Password..." value=model.password}}
       </div>
+      {{#if errorMessage}}
+        <p class="error">Login failed: {{errorMessage}}</p>
+      {{/if}}
       <div class="button-container">
         <button type="submit" class="login-button" disabled={{disabledButton}}>login</button>
       </div>

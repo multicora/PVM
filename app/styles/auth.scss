@@ -39,6 +39,11 @@
         text-transform: uppercase;
         width: 97px;
       }
+
+      .error {
+        font-size: 14px;
+        color: $error-message-color;
+      }
     }
   }
 }
