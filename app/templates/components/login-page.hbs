@@ -1,0 +1,16 @@
+<div class="vertical-aligned-middle auth full-page">
+  <div class="login-container">
+    <h2 class="title">Login</h2>
+    <form class="login-form">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{input class="mdl-textfield__input" type="text" placeholder="Login..." value=model.login}}
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{input class="mdl-textfield__input" type="password" placeholder="Password..." value=model.password}}
+      </div>
+      <div class="button-container">
+        <button type="submit" class="login-button" disabled={{disabledButton}}>login</button>
+      </div>
+    </form>
+  </div>
+</div>
