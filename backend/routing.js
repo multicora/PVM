@@ -28,4 +28,5 @@ module.exports.init = function (server, DAL) {
   });
 
   require('./routing/video.js')(server, DAL);
+  require('./routing/user.js')(server, DAL);
 };
