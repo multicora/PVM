@@ -17,19 +17,19 @@ module.exports = (connection) => {
       });
     },
 
-    getUserForLogin: (login, cb) => {
+    getUserForLogin: (login) => {
       return new Promise((resolve, reject) => {
         let request = [
           'SELECT * FROM `users` WHERE email = ' + login
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0], cb);
+          (err || !response.length) ? reject(err) : resolve(response[0]);
         });
       });
     },
 
-    addUser: (firstName, secondName, email, password, cb) => {
+    addUser: (firstName, secondName, email, password) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
@@ -38,13 +38,13 @@ module.exports = (connection) => {
             'VALUES (NULL, "' + firstName + '","' + secondName + '", "' + email + '", "' + password + '");'
           ].join('');
 
-          connection.query(request, (err, cb) => {
-            err ? reject(err) : resolve(cb);
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
           });
         });
     },
 
-    updateToken: (token, email, cb) => {
+    updateToken: (token, email) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE users ',
@@ -56,7 +56,7 @@ module.exports = (connection) => {
           (err || !response.length) ? reject(err) : resolve(response[0]);
         });
       });
-    }
+    },
 
     // For migrations
     createTable: (cb) => {

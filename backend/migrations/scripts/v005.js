@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 5,
     message: 'Add "user" in "users" table',
     script: function (next) {
-      DAL.users.addUser('Robert', 'Mon', 'user@user.com', 'user', next);
+      DAL.users.addUser('Robert', 'Mon', 'user@user.com', 'user').then(()=>{next();});
     }
   }
 };
