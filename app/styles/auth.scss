@@ -41,6 +41,11 @@
         width: 97px;
       }
 
+      .login-button:disabled {
+        color: $font-color-buttons-disabled;
+        cursor: default;
+      }
+
       .error {
         color: $error-message-color;
         font-size: 14px;

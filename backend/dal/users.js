@@ -2,6 +2,7 @@
 
 const Promise = require('promise');
 const passwordHash = require('password-hash');
+const Boom = require('boom');
 
 module.exports = (connection) => {
   return {
@@ -48,12 +49,12 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE users ',
-          'SET token="' + token + "' ",
-          'WHERE email=' + email
+          'SET token="' + token + '" ',
+          'WHERE email="' + email + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err  ? reject(err) : resolve(response);
         });
       });
     },
