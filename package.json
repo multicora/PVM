@@ -66,6 +66,7 @@
     "promise": "^7.1.1",
     "pug": "^2.0.0-beta6",
     "pug-loader": "^2.3.0",
+    "rand-token": "^0.3.0",
     "videojs-record": "^1.5.0",
     "webpack": "^1.13.3",
     "webpack-livereload-plugin": "^0.9.0"
