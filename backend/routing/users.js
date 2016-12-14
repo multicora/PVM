@@ -14,7 +14,7 @@ const usersController = require('../controllers/users.js')(DAL);
       handler: function (request, reply) {
         const user = request.payload;
         DAL.users.getUserForLogin(user.login).then((response) => {
-          if (usersController.verifyPassword(user, response.password)) {
+          if ( response && usersController.verifyPassword(user, response.password) ) {
             let token = utils.newToken();
             DAL.users.updateToken(token, user.login).then((response) => {
               user.token = token;

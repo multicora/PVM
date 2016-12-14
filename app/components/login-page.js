@@ -9,7 +9,14 @@ export default Ember.Component.extend({
       var credentials = this.getProperties('identification', 'password'),
         authenticator = 'authenticator:token';
 
-      this.get('session').authenticate(authenticator, credentials);
+      this.get('session').authenticate(authenticator, credentials).then(
+        () => {
+          // TODO: redirect to main page
+        },
+        () => {
+          // TODO: show error message
+        }
+      );
     }
   }
 });
