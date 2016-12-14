@@ -25,7 +25,7 @@ export default Ember.Component.extend({
         }
       );
     },
-    ready(player, component) {
+    ready(player) {
       let self = this;
       player.on('finishRecord', function() {
         self.set('disabledButton', false);
