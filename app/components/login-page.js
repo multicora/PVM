@@ -1,11 +1,7 @@
 import Ember from 'ember';
 
-const { Component } = Ember;
-
 export default Ember.Component.extend({
-  // errorMessage: 'password is wrong!',
   session: Ember.inject.service(),
-  disabledButton: false,
   actions: {
     authenticate: function() {
       var credentials = this.getProperties('identification', 'password'),

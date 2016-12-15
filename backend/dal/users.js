@@ -2,7 +2,6 @@
 
 const Promise = require('promise');
 const passwordHash = require('password-hash');
-const Boom = require('boom');
 
 module.exports = (connection) => {
   return {

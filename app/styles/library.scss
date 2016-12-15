@@ -24,11 +24,10 @@
 
     .navigation-components {
       display: inline-block;
-      width: 49%;
     }
 
     .right {
-      text-align: right;
+      float: right;
     }
 
     .logo {
@@ -45,6 +44,7 @@
 
       a {
         cursor: pointer;
+        text-decoration: none;
       }
     }
 

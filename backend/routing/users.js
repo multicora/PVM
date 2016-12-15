@@ -2,7 +2,6 @@
 
 const Boom = require('boom');
 const utils = require('../utils.js');
-const passwordHash = require('password-hash');
 
 module.exports = function (server, DAL) {
 const usersController = require('../controllers/users.js')(DAL);
