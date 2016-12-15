@@ -61,20 +61,23 @@ module.exports = function (server, DAL) {
   server.route({
     method: 'GET',
     path: '/videos',
-    handler: function (request, reply) {
-      DAL.videos.getAllVideos().then(function(res) {
-        reply({'data' : res.map(
-          function(res) {
-            return {
-              'type': 'video',
-              'id': res.v_id,
-              'attributes': res
-            };
-          }
-        )});
-      }, function(err) {
-        reply(Boom.badImplementation(500, err));
-      });
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.videos.getAllVideos().then(function(res) {
+          reply({'data' : res.map(
+            function(res) {
+              return {
+                'type': 'video',
+                'id': res.v_id,
+                'attributes': res
+              };
+            }
+          )});
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
     }
   });
 };

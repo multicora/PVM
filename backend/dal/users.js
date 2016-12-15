@@ -30,6 +30,18 @@ module.exports = (connection) => {
       });
     },
 
+    getUserByToken: (token) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `users` WHERE token = "' + token + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     addUser: (firstName, secondName, email, password) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);

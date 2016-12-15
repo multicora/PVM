@@ -12,9 +12,10 @@ export default Ember.Component.extend({
       this.get('session').authenticate(authenticator, credentials).then(
         () => {
           // TODO: redirect to main page
+          // this.transitionToRoute('library');
         },
         () => {
-          // TODO: show error message
+          this.set('errorMessage', 'login or password incorrect');
         }
       );
     }
