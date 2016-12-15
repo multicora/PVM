@@ -12,10 +12,8 @@ export default Ember.Route.extend({
         console.log(err.message);
       }
     },
-    redirectToAuth(param) {
-      console.log(123123123123123123123);
-      console.log(param);
-      // this.transitionTo('auth');
+    redirect(uri) {
+      this.transitionTo(uri);
     }
   }
 });
