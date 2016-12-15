@@ -1,6 +1,5 @@
 'use strict';
 
-const Promise = require('promise');
 const passwordHash = require('password-hash');
 
 module.exports = function (DAL) {
