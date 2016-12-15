@@ -167,13 +167,11 @@ function registerAuth(server, DAL) {
         reject();
       } else {
         server.auth.strategy('simple', 'auth-header', {
-          accessTokenName: 'Authorization',
           validateFunc: function (tokens, callback) {
-            console.log(tokens);
             var request = this;
-            var headerName = 'Authorization';
+            var tokenName = 'x-biz-token';
 
-            DAL.users.getUserByToken(tokens[headerName]).then((user) => {
+            DAL.users.getUserByToken(tokens[tokenName]).then((user) => {
               callback(null, true, user);
             }, (err) => {
               callback(null, false, null);

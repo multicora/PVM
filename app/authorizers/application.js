@@ -5,7 +5,7 @@ export default BaseAuthorizer.extend({
     console.log(data);
     const { token }  = data;
     if (token) {
-      block('Authorization', `${token}`);
+      block('Authorization', `x-biz-token ${token}`);
     }
   }
 });
