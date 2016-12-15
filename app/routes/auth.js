@@ -1,8 +1,12 @@
 import Ember from 'ember';
 
+const { Route, set } = Ember;
+
 export default Ember.Route.extend({
-  // model(params) {
-  //   return this.store.findRecord('');
-  //   // return [];
-  // }
+  actions: {
+    redirect() {
+      // handle action
+      return 42;
+    }
+  }
 });
