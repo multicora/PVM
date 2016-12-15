@@ -4,7 +4,7 @@ const { Route, set } = Ember;
 
 export default Ember.Route.extend({
   actions: {
-    redirect() {
+    redirect(uri) {
       // handle action
       return 42;
     }

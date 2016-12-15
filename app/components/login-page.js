@@ -13,18 +13,12 @@ export default Ember.Component.extend({
 
       this.get('session').authenticate(authenticator, credentials).then(
         () => {
-          // TODO: redirect to main page
-          this.send('anotherAction');
+          this.get('success')();
         },
         () => {
           this.set('errorMessage', 'login or password incorrect');
         }
       );
-    },
-    anotherAction() {
-      let result = this.get('redirect');
-
-      console.log(result); // 42
     }
   }
 });
