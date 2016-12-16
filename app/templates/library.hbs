@@ -1,5 +1,5 @@
 <div class="library-wrapper">
-  {{library-header}}
+  {{library-header loginRedirect=(route-action "redirect" "auth")}}
   {{library-navigation}}
   {{library-container videos=model}}
 </div>

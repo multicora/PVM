@@ -66,6 +66,7 @@
     "promise": "^7.1.1",
     "pug": "^2.0.0-beta6",
     "pug-loader": "^2.3.0",
+    "rand-token": "^0.3.0",
     "videojs-record": "^1.5.0",
     "webpack": "^1.13.3",
     "webpack-livereload-plugin": "^0.9.0"
@@ -77,7 +78,12 @@
     "ember-cli-segment": "1.0.0-beta.4",
     "ember-composability": "0.3.7",
     "ember-font-awesome": "2.2.0",
+    "ember-material-lite": "0.2.5",
     "ember-new-computed": "1.0.3",
+    "ember-route-action-helper": "2.0.1",
+    "ember-simple-auth": "1.2.0-beta.1",
+    "ember-simple-auth-token": "1.2.0",
+    "ember-truth-helpers": "1.2.0",
     "ember-uploader": "1.2.1",
     "ivy-videojs": "0.6.4",
     "mk-videojs-record": "0.0.7"

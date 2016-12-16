@@ -49,8 +49,8 @@ function startServer(tls) {
       _.bind(registerACL, null, server)
       ).then(
         _.bind(registerStaticFilesServer, null, server)
-      // ).then(
-      //   _.bind(registerAuth, null, server)
+      ).then(
+        _.bind(registerAuth, null, server, DAL)
       ).then(
         _.bind(registerRouting, null, server, DAL)
       ).then(
@@ -157,30 +157,29 @@ function run(server) {
   );
 }
 
-// function registerAuth(server) {
-//   return new Promise(function (resolve, reject) {
-//     const AuthHeader = require('hapi-auth-header');
+function registerAuth(server, DAL) {
+  return new Promise(function (resolve, reject) {
+    debugger;
+    const AuthHeader = require('hapi-auth-header');
 
-//     server.register(AuthHeader, (err) => {
-//       if (err) {
-//         reject();
-//       } else {
-//         server.auth.strategy('simple', 'auth-header', {
-//           accessTokenName: 'X-CART-Token',
-//           validateFunc: function (tokens, callback) {
-//             var headerName = 'X-CART-Token';
+    server.register(AuthHeader, (err) => {
+      if (err) {
+        reject();
+      } else {
+        server.auth.strategy('simple', 'auth-header', {
+          validateFunc: function (tokens, callback) {
+            var request = this;
+            var tokenName = 'x-biz-token';
 
-//             DAL.users.getUserByToken(tokens[headerName], function (err, user) {
-//               if (user) {
-//                 callback(null, true, user);
-//               } else {
-//                 callback(null, false, null);
-//               }
-//             });
-//           }
-//         });
-//         resolve();
-//       }
-//     });
-//   });
-// }
+            DAL.users.getUserByToken(tokens[tokenName]).then((user) => {
+              callback(null, true, user);
+            }, (err) => {
+              callback(null, false, null);
+            });
+          }
+        });
+        resolve();
+      }
+    });
+  });
+}

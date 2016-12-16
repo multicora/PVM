@@ -2,6 +2,7 @@
 @import 'library';
 @import 'watch-buttons';
 @import 'variables';
+@import 'auth';
 
 @font-face {
   font-weight: normal;
@@ -55,6 +56,21 @@ body {
   background-color: #f5f5f5;
 }
 
+.full-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.vertical-aligned-middle:before {
+  content:'';
+  display: inline-block;
+  height: 100%;
+  width: 0;
+  vertical-align: middle;
+}
 
 .hidden {
   display: none;

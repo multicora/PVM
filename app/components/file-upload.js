@@ -21,7 +21,7 @@ export default EmberUploader.FileField.extend({
       console.log('progress: ' + e.percent.toFixed(2) + '%');
     });
 
-    function success(data) {
+    function success() {
       console.log('finish');
       uploadEndCb();
     }

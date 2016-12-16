@@ -1,0 +1,19 @@
+<div class="vertical-aligned-middle auth full-page">
+  <div class="login-container">
+    <h2 class="title">Login</h2>
+    <form class="login-form" {{action 'authenticate' on='submit'}}>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{input class="mdl-textfield__input" type="text" placeholder="Login..." value=identification}}
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{input class="mdl-textfield__input" type="password" placeholder="Password..." value=password}}
+      </div>
+      {{#if errorMessage}}
+        <p class="error">Login failed: {{errorMessage}}</p>
+      {{/if}}
+      <div class="button-container">
+        <button type="submit" class="login-button">login</button>
+      </div>
+    </form>
+  </div>
+</div>

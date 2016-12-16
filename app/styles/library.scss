@@ -10,7 +10,6 @@
   header {
     background-color: #fff;
     box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
-    height: 64px;
     line-height: 64px;
     vertical-align: middle;
     width: 100%;
@@ -23,19 +22,41 @@
       width: 18px;
     }
 
+    .navigation-components {
+      display: inline-block;
+    }
+
+    .right {
+      float: right;
+    }
+
     .logo {
       display: inline-block;
       margin-left: 10px;
+    }
+
+    .auth-buttons {
+      display: inline-block;
+      line-height: 64px;
+      vertical-align: middle;
+      margin-right: 12px;
+      color: $font-color-buttons;
+
+      a {
+        cursor: pointer;
+        text-decoration: none;
+      }
     }
 
     .photo {
       background-image: url('/assets/user.png');
       background-repeat: no-repeat;
       border-radius: 20px;
-      float: right;
+      display: inline-block;
       height: 40px;
+      line-height: 64px;
       margin-right: 10px;
-      margin-top: 12px;
+      vertical-align: middle;
       width: 38px;
     }
   }
@@ -108,11 +129,11 @@
       display: inline-block;
       height: 204px;
       margin-left: 10px;
+      overflow: hidden;
       position: relative;
       text-align: center;
       vertical-align: top;
       width: 215px;
-      overflow: hidden;
 
       .icon {
         height: 48px;
@@ -141,10 +162,10 @@
       .hoverd-button {
         display: block;
         font-size: 46px;
+        left: 0;
         margin-top: -110px;
         position: absolute;
         width: 100%;
-        left: 0;
 
         .record,
         .upload {
@@ -321,8 +342,8 @@
 
 .ellipsis {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .inlineBlock {
