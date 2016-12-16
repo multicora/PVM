@@ -3,9 +3,9 @@
 module.exports = function(DAL) {
   return {
     version: 6,
-    message: 'Created conversations table',
+    message: 'Add "author" in "videos" table',
     script: function (next) {
-      DAL.conversations.createTable(next);
+      DAL.videos.addColumn_author(next);
     }
   }
 };
