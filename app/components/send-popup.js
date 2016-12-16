@@ -6,9 +6,11 @@ export default Ember.Component.extend({
   email: 'bizkonect.project@gmail.com',
   actions: {
     sendVideo() {
-      let message = {};
-      message.email = this.getProperties('email');
-      this.store.createRecord('conversation', message);
+      let message = {
+        email: this.get('email')
+      };
+      let record = this.get('store').createRecord('conversation', message);
+      record.save();
     }
   }
 });
