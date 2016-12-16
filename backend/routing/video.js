@@ -50,7 +50,8 @@ module.exports = function (server, DAL) {
             });
           },
           function (err) {
-            console.log(err);
+            console.log('Error:')
+            console.log(new Error(err))
             reply(500, 'Internal error');
           }
         );
