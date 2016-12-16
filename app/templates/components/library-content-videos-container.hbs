@@ -11,7 +11,11 @@
       {{library-add-button-components isShownUploadPopup=isShownUploadPopup isShownRecordPopup=isShownRecordPopup}}
     </div>
     {{#each videos as |video|}}
-      {{library-content-video video=video class="video-container"}}
+      {{library-content-video
+          video=video
+          class="video-container"
+          isShownSendPopup=isShownSendPopup
+      }}
     {{/each}}
   </div>
 </div>

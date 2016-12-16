@@ -5,8 +5,10 @@
     <a href="" class="menu">
       <img src="/assets/dots.png" alt="">
     </a>
-    <a href="" class="send">
-      {{fa-icon "send"}}
-    </a>
+    {{send-button
+        isShownSendPopup=isShownSendPopup
+        class="inlineBlock"
+        onClick="onClick"
+    }}
   </div>
 </div>

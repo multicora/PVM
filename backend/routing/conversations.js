@@ -1,13 +1,17 @@
 'use strict';
 
+const Boom = require('boom');
+const Mailer = require('../services/mailer.js');
+const config = require('../config.js');
+
 module.exports = function (server, DAL) {
 
   server.route({
     method: 'POST',
     path: '/conversations',
     handler: function (request, reply) {
-      DAL.conversations.createConversation(request.payload).then(function(res) {
-        reply();
+      DAL.conversations.createConversation(request.payload.data.attributes).then(function(res) {
+        reply(res[0]);
       }, function(err) {
         reply(Boom.badImplementation(err));
       });

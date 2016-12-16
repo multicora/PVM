@@ -9,12 +9,12 @@ module.exports = (connection) => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
-            '`conversations` (`id`, `videoId`, `email`) ',
-            'VALUES (NULL, "' + data.videoId + '"' + data.email + '");'
+            '`conversations` (`id`, `videoId`, `email`, `author`) ',
+            'VALUES (NULL, "' + data.video + '" ,"' + data.email + '" ,"' + data.author + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
+            err ? reject(err) : resolve(response);
           });
         });
     },
@@ -28,6 +28,7 @@ module.exports = (connection) => {
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
           'videoId varchar(255), ',
           'email varchar(255), ',
+          'author varchar(255), ',
           'PRIMARY KEY (id)',
         ') '
       ].join('');
