@@ -6,9 +6,8 @@
       <img src="/assets/dots.png" alt="">
     </a>
     {{send-button
-        isShownSendPopup=isShownSendPopup
         class="inlineBlock"
-        onClick="onClick"
+        onClick=(action 'sendBtnClick')
     }}
   </div>
 </div>

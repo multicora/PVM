@@ -36,7 +36,7 @@ var config = {
   },
   google: {
     APIkey: 'AIzaSyBrdvFI8tYGlK1nkjUTWkF6BLUPvm7i4IY' 
-  }
+  },
   mail: {
     host: 'smtp.gmail.com',
     port: 465,
