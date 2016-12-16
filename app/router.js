@@ -7,7 +7,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('watch', {path: 'watch/:video_id'});
+  this.route('conversation', {path: 'conversation/:video_id'});
   this.route('library');
   this.route('auth');
 });

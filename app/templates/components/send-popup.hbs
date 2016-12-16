@@ -1,0 +1,12 @@
+{{!-- <div class="send-popup-container {{if isShownSendPopup "shown"}}"> --}}
+<div class="send-popup-container {{if isShown "shown"}}">
+  <div class="popup">
+    <form class="send-form" {{action 'sendVideo' on='submit'}}>
+      <p class="popupTitle">send</p>
+      {{input type="email" class="email" value=email placeholder="email"}}
+      <div class="button-container">
+        <button class="save" type="submit">send</button>
+      </div>
+    </form>
+  </div>
+</div>

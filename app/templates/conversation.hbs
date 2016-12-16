@@ -42,7 +42,7 @@
       {{ivy-videojs fluid=true src=model.video.url controls=true}}
     </div>
     <div class="videoFooter">
-      {{reply-text-box}}
+      {{reply-text-box isShownSendPopup=isShownSendPopup}}
       {{watch-buttons}}
     </div>
   </div>
@@ -55,4 +55,5 @@
   </footer>
 </div>
 
+{{send-popup isShownSendPopup=isShownSendPopup}}
 {{video-record}}
