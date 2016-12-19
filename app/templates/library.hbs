@@ -1,6 +1,7 @@
 <div class="library-wrapper">
   {{library-header loginRedirect=(route-action "redirect" "auth")}}
   {{library-navigation}}
-  {{library-container videos=model isShownSendPopup=isShownSendPopup}}
-  {{send-popup isShownSendPopup=isShownSendPopup}}
+  {{library-container
+      videos=model
+  }}
 </div>

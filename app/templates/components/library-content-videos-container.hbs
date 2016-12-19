@@ -8,7 +8,10 @@
         </div>
         <p class="text">New video</p>
       </div>
-      {{library-add-button-components isShownUploadPopup=isShownUploadPopup isShownRecordPopup=isShownRecordPopup}}
+      {{library-add-button-components
+          isShownUploadPopup=isShownUploadPopup
+          isShownRecordPopup=isShownRecordPopup
+      }}
     </div>
     {{#each videos as |video|}}
       {{library-content-video

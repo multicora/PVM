@@ -2,8 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   actions: {
-    onSendClick() {
-      console.log('onSendClick !!!');
+    onSendClick(param) {
+      this.set('videoId', param)
+      this.set('isShownSendPopup', true);
     }
   }
 });
