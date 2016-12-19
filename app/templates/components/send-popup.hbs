@@ -2,8 +2,9 @@
   <div class="popup">
     <form class="send-form" {{action 'sendVideo' on='submit'}}>
       <p class="popupTitle">send</p>
-      {{input type="email" class="email" value=videoId placeholder="email"}}
+      {{input type="email" class="email" value=email placeholder="email"}}
       <div class="button-container">
+      <button class="close" type="submit" {{action 'hidePopup'}}>close</button>
         <button class="save" type="submit">send</button>
       </div>
     </form>
