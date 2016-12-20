@@ -42,6 +42,9 @@ var config = {
     port: 465,
     user: 'bizkonect.project@gmail.com',
     pass: '2903tujaglvs;kcM'
+  },
+  mailConfig: {
+    link: 'http://localhost:4200/conversation/'
   }
 };
 
