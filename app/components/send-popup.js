@@ -6,7 +6,6 @@ export default Ember.Component.extend({
   actions: {
     sendVideo() {
       let email = this.get('email');
-      // let email = this.getProperties('email').email;
       let video = this.get('videoId');
       let record = this.get('store').createRecord('conversation', {'email': email, 'video': video});
       record.save();
