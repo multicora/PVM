@@ -26,10 +26,12 @@ module.exports = (connection) => {
         'conversations ',
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
-          'videoId varchar(255), ',
+          'videoId int(255), ',
           'email varchar(255), ',
-          'author varchar(255), ',
-          'PRIMARY KEY (id)',
+          'author int(255), ',
+          'PRIMARY KEY (id), ',
+          'FOREIGN KEY (author) REFERENCES users(id), ',
+          'FOREIGN KEY (videoId) REFERENCES videos(v_id) ',
         ') '
       ].join('');
 
