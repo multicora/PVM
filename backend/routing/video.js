@@ -36,9 +36,7 @@ module.exports = function (server, DAL) {
     method: 'GET',
     path: '/videos/{id}',
     config: {
-      auth: 'forCheckUser',
       handler: function (request, reply) {
-        console.log(request.auth);
         videoCtrl.getFile(request.params.id).then(
           function (buffer) {
             reply({
