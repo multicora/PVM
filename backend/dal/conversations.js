@@ -18,6 +18,23 @@ module.exports = (connection) => {
           });
         });
     },
+
+    checkAsViewed: (id) => {
+        return new Promise((resolve, reject) => {
+
+          let request = [
+            'INSERT INTO ',
+            '`conversations` (`viewed`) ',
+            'VALUES (TRUE) ',
+            'WHERE id=`' + id + '`;'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [
@@ -33,6 +50,17 @@ module.exports = (connection) => {
           'FOREIGN KEY (author) REFERENCES users(id), ',
           'FOREIGN KEY (videoId) REFERENCES videos(v_id) ',
         ') '
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumn_viewed: function (cb) {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `viewed` BOOLEAN ',
+        'NOT NULL ',
+        'DEFAULT false '
       ].join('');
 
       return connection.query(request, cb);
