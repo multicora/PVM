@@ -44,7 +44,7 @@ var config = {
     pass: '2903tujaglvs;kcM'
   },
   mailConfig: {
-    link: 'http://localhost:4200/conversation/'
+    link: 'https://159.203.232.30:80/conversation/'
   }
 };
 
