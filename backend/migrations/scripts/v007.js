@@ -2,10 +2,10 @@
 
 module.exports = function(DAL) {
   return {
-    version: 6,
-    message: 'Add "author" in "videos" table',
+    version: 7,
+    message: 'Add "viewed" in "conversations" table',
     script: function (next) {
-      DAL.videos.addColumn_author(next);
+      DAL.conversations.addColumn_viewed(next);
     }
   }
 };

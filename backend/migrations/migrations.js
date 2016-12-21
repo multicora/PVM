@@ -13,7 +13,7 @@ module.exports = function (DAL, cb) {
       require('./scripts/v004.js')(DAL),
       require('./scripts/v005.js')(DAL),
       require('./scripts/v006.js')(DAL),
-      // require('./scripts/v007.js')(DAL),
+      require('./scripts/v007.js')(DAL),
     ],
     done: cb
   };
