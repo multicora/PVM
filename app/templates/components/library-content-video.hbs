@@ -5,8 +5,9 @@
     <a href="" class="menu">
       <img src="/assets/dots.png" alt="">
     </a>
-    <a href="" class="send">
-      {{fa-icon "send"}}
-    </a>
+    {{send-button
+        class="inlineBlock"
+        onClick=(action 'sendBtnClick')
+    }}
   </div>
 </div>

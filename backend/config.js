@@ -36,6 +36,15 @@ var config = {
   },
   google: {
     APIkey: 'AIzaSyBrdvFI8tYGlK1nkjUTWkF6BLUPvm7i4IY' 
+  },
+  mail: {
+    host: 'smtp.gmail.com',
+    port: 465,
+    user: 'bizkonect.project@gmail.com',
+    pass: '2903tujaglvs;kcM'
+  },
+  mailConfig: {
+    link: 'https://159.203.232.30:80/conversation/'
   }
 };
 

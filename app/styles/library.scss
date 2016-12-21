@@ -324,8 +324,10 @@
 
         .send {
           color: $send-buttons-color;
+          display: inline-block;
           font-size: 18px;
           margin-right: 10px;
+          cursor: pointer;
         }
 
         .menu {
