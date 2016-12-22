@@ -22,7 +22,7 @@ module.exports = (connection) => {
     selectVideoById: (id) => {
         return new Promise((resolve, reject) => {
           let request = [
-            'SELECT video ',
+            'SELECT videoId ',
             'FROM conversations ',
             'WHERE id=' + id + ';'
           ].join('');
@@ -47,6 +47,20 @@ module.exports = (connection) => {
         });
     },
 
+    checkForViewed: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'SELECT viewed ',
+            'FROM conversations ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0].viewed);
+          });
+        });
+    },
+
     checkAsViewed: (id) => {
         return new Promise((resolve, reject) => {
           let request = [
@@ -56,7 +70,6 @@ module.exports = (connection) => {
           ].join('');
 
           connection.query(request, (err, response) => {
-            console.log()
             err ? reject(err) : resolve(response);
           });
         });

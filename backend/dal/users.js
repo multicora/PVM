@@ -29,6 +29,20 @@ module.exports = (connection) => {
       });
     },
 
+    selectUserEmailById: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'SELECT email ',
+            'FROM users ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
     getUserByToken: (token) => {
       return new Promise((resolve, reject) => {
         let request = [

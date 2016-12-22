@@ -7,6 +7,7 @@ const Template = require('../services/mailTemplate.js');
 
 module.exports = function (server, DAL) {
   const notifyCtrl = require('../controllers/notification.js')(DAL);
+  const videoCtrl = require('../controllers/video.js')(DAL);
 
   server.route({
     method: 'POST',
@@ -53,9 +54,9 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         let conversationId = request.params.id;
 
-        notifyCtrl.checkAsViewed(conversationId, request.headers.authorization);
+        notifyCtrl.checkAsViewed(conversationId, request.headers.authorization); // send notify if user isn`t logine
         DAL.conversations.selectVideoById(conversationId).then((res) => {
-          videoCtrl.getFile(res.video).then(
+          videoCtrl.getFile(res.videoId).then(
             function (buffer) {
               reply({
                 data: {
