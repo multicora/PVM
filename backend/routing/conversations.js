@@ -46,13 +46,38 @@ module.exports = function (server, DAL) {
     }
   });
 
-    server.route({
-      method: 'GET',
-      path: '/conversations_viewed',
+  server.route({
+    method: 'GET',
+    path: '/conversations/{id}',
+    config: {
       handler: function (request, reply) {
-        if (request.auth.credentials) {
-          
-        }
+        let conversationId = request.params.id;
+
+        notifyCtrl.checkAsViewed(conversationId, request.headers.authorization);
+        DAL.conversations.selectVideoById(conversationId).then((res) => {
+          videoCtrl.getFile(res.video).then(
+            function (buffer) {
+              reply({
+                data: {
+                  "type": "video",
+                  id: 7,
+                  attributes: {
+                    url:buffer.uri.href
+                  }
+                }
+              });
+            },
+            function (err) {
+              console.log('Error:')
+              console.log(new Error(err))
+              reply(500, 'Internal error');
+            }
+          );
+        }, (err) => {
+          reply(Boom.badImplementation(err));
+        });
+
       }
-    });
+    }
+  });
 };
