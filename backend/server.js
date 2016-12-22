@@ -178,6 +178,18 @@ function registerAuth(server, DAL) {
             });
           }
         });
+        server.auth.strategy('forCheckUser', 'auth-header', {
+          validateFunc: function (tokens, callback) {
+            var request = this;
+            var tokenName = 'x-biz-token';
+
+            DAL.users.getUserByToken(tokens[tokenName]).then((user) => {
+              callback(null, true, user);
+            }, (err) => {
+              callback(null, true, {});
+            });
+          }
+        });
         resolve();
       }
     });
