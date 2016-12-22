@@ -6,6 +6,7 @@ const config = require('../config.js');
 const Template = require('../services/mailTemplate.js');
 
 module.exports = function (server, DAL) {
+  const notifyCtrl = require('../controllers/notification.js')(DAL);
 
   server.route({
     method: 'POST',
@@ -44,4 +45,14 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+    server.route({
+      method: 'GET',
+      path: '/conversations_viewed',
+      handler: function (request, reply) {
+        if (request.auth.credentials) {
+          
+        }
+      }
+    });
 };
