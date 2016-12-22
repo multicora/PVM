@@ -19,6 +19,20 @@ module.exports = (connection) => {
         });
     },
 
+    selectVideoById: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'SELECT video ',
+            'FROM conversations ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
     selectUserEmailById: (id) => {
         return new Promise((resolve, reject) => {
           let request = [
