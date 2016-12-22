@@ -19,16 +19,30 @@ module.exports = (connection) => {
         });
     },
 
-    checkAsViewed: (id) => {
+    selectUserEmailById: (id) => {
         return new Promise((resolve, reject) => {
           let request = [
-            'INSERT INTO ',
-            '`conversations` (`viewed`) ',
-            'VALUES (TRUE) ',
-            'WHERA id=`' + id + '`;'
+            'SELECT email ',
+            'FROM conversations ',
+            'WHERE id=' + id + ';'
           ].join('');
 
           connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
+    checkAsViewed: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'UPDATE `conversations` ',
+            'SET viewed=TRUE ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            console.log()
             err ? reject(err) : resolve(response);
           });
         });

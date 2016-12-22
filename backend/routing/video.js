@@ -38,8 +38,9 @@ module.exports = function (server, DAL) {
     path: '/videos/{id}',
     config: {
       handler: function (request, reply) {
-        console.log(request.headers.authorization);
+
         notifyCtrl.checkAsViewed(request.params.id, request.headers.authorization);
+
         videoCtrl.getFile(request.params.id).then(
           function (buffer) {
             reply({
