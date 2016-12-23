@@ -61,7 +61,7 @@ module.exports = (connection) => {
         });
     },
 
-    checkAsViewed: (id) => {
+    markAsViewed: (id) => {
         return new Promise((resolve, reject) => {
           let request = [
             'UPDATE `conversations` ',

@@ -8,7 +8,7 @@ module.exports = function (DAL) {
       if (!token) {
         DAL.conversations.checkForViewed(id).then((res) => {
           if(!res) {
-            DAL.conversations.checkAsViewed(id).then((res) => {
+            DAL.conversations.markAsViewed(id).then((res) => {
               // DAL.users.selectUserEmailById(id).then((res) => {   // It should be implemented when registration will be added 
               DAL.conversations.selectUserEmailById(id).then((res) => { // It should be remove when registration will be added
 
@@ -26,18 +26,14 @@ module.exports = function (DAL) {
 
                 Mailer(config.mail).send(mail).then(
                   (res) => {
-                    reply(res);
                   }, (err) => {
-                    reply( Boom.badImplementation(err.message, err) );
                   }
                 );
               });
             }, (err) => {
-              reply( Boom.badImplementation(err.message, err) );
             });
           }
         }, (err) => {
-          reply( Boom.badImplementation(err.message, err) );
         });
       }
     }
