@@ -7,6 +7,7 @@ const Template = require('../services/mailTemplate.js');
 
 module.exports = function (server, DAL) {
   const notifyCtrl = require('../controllers/notification.js')(DAL);
+  const videoCtrl = require('../controllers/video.js')(DAL);
 
   server.route({
     method: 'POST',
@@ -42,6 +43,41 @@ module.exports = function (server, DAL) {
         }, function(err) {
           reply(Boom.badImplementation(err));
         });
+      }
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/conversations/{id}',
+    config: {
+      handler: function (request, reply) {
+        let conversationId = request.params.id;
+
+        notifyCtrl.checkAsViewed(conversationId, request.headers.authorization); // send notify if user isn`t logine
+        DAL.conversations.selectVideoById(conversationId).then((res) => {
+          videoCtrl.getFile(res.videoId).then(
+            function (buffer) {
+              reply({
+                data: {
+                  "type": "video",
+                  id: 7,
+                  attributes: {
+                    url:buffer.uri.href
+                  }
+                }
+              });
+            },
+            function (err) {
+              console.log('Error:')
+              console.log(new Error(err))
+              reply(500, 'Internal error');
+            }
+          );
+        }, (err) => {
+          reply(Boom.badImplementation(err));
+        });
+
       }
     }
   });

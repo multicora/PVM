@@ -19,6 +19,62 @@ module.exports = (connection) => {
         });
     },
 
+    selectVideoById: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'SELECT videoId ',
+            'FROM conversations ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
+    selectUserEmailById: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'SELECT email ',
+            'FROM conversations ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
+    checkForViewed: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'SELECT viewed ',
+            'FROM conversations ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0].viewed);
+          });
+        });
+    },
+
+    markAsViewed: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'UPDATE `conversations` ',
+            'SET viewed=TRUE ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response);
+          });
+        });
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [
@@ -39,16 +95,15 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
-    addColumn_viewed: function (cb) {
+    addColumn_viewed: (cb) => {
       const request = [
         'ALTER TABLE `conversations` ',
         'ADD `viewed` BOOLEAN ',
-        'NOT NULL ',
-        'DEFAULT false '
+        'DEFAULT FALSE;'
       ].join('');
 
       return connection.query(request, cb);
-    },
+    }
 
   }
 }
