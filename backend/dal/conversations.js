@@ -19,22 +19,6 @@ module.exports = (connection) => {
         });
     },
 
-    checkAsViewed: (id) => {
-        return new Promise((resolve, reject) => {
-
-          let request = [
-            'INSERT INTO ',
-            '`conversations` (`viewed`) ',
-            'VALUES (TRUE) ',
-            'WHERE id=`' + id + '`;'
-          ].join('');
-
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
-        });
-    },
-
     // For migrations
     createTable: (cb) => {
       let request = [

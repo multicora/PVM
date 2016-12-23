@@ -45,14 +45,4 @@ module.exports = function (server, DAL) {
       }
     }
   });
-
-    server.route({
-      method: 'GET',
-      path: '/conversations_viewed',
-      handler: function (request, reply) {
-        if (request.auth.credentials) {
-          
-        }
-      }
-    });
 };
