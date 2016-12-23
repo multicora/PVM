@@ -2,7 +2,6 @@
 
 module.exports = function (server, DAL) {
   const videoCtrl = require('../controllers/video.js')(DAL);
-  const notifyCtrl = require('../controllers/notification.js')(DAL);
 
   server.route({
     method: 'POST',
@@ -38,9 +37,6 @@ module.exports = function (server, DAL) {
     path: '/videos/{id}',
     config: {
       handler: function (request, reply) {
-
-        notifyCtrl.checkAsViewed(request.params.id, request.headers.authorization);
-
         videoCtrl.getFile(request.params.id).then(
           function (buffer) {
             reply({
