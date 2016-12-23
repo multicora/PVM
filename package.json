@@ -63,6 +63,7 @@
     "merge": "^1.2.0",
     "mysql": "^2.12.0",
     "node-uuid": "^1.4.7",
+    "password-hash": "^1.2.2",
     "nodemailer": "^2.7.0",
     "promise": "^7.1.1",
     "pug": "^2.0.0-beta6",
