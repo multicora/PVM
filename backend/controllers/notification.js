@@ -7,7 +7,6 @@ module.exports = function (DAL) {
     checkAsViewed: (id, token) => {
       if (!token) {
         DAL.conversations.checkForViewed(id).then((res) => {
-          console.log(res);
           if(!res) {
             DAL.conversations.checkAsViewed(id).then((res) => {
               // DAL.users.selectUserEmailById(id).then((res) => {   // It should be implemented when registration will be added 
