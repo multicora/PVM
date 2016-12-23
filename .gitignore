@@ -21,3 +21,6 @@ testem.log
 /public_key.pem
 /backend/userConfig.js
 /backend/public
+/backend/cacert.pem
+/backend/cakey.pem
+/backend/passphrase.txt
