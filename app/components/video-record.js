@@ -13,8 +13,12 @@ export default Ember.Component.extend({
     saveVideo() {
       let audioFile =this.get('audioFile');
       let uploader = this.get('uploader');
+      let uplaodStart = this.set('isUploading', true);
+      let uplaodEnd = this.set('isUploading', false);
       uploader.video({
-        file: audioFile.video
+        file: audioFile.video,
+        uploadStart: uploadStart,
+        uploadEnd: uplaodEnd
       }).then(
         () => {
           console.log('finish');
