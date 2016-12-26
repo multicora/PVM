@@ -20,7 +20,7 @@ export default Ember.Component.extend({
           console.log('finish');
         },
         (error) => {
-          console.log('File uploading failure:');
+          this.set('errorMessage', 'File uploading failure:' + error);
           console.log(error);
         }
       );

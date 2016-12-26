@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  isShown: true,
-  isUploading: false,
   actions: {
     hidePopup() {
       this.toggleProperty('isShown');
@@ -15,6 +13,9 @@ export default Ember.Component.extend({
       event.preventDefault();
       let file = event.dataTransfer.files[0];
       console.log(file);
+    },
+    error(err) {
+      this.set('errorMessage', 'Error upload video: ' + err);
     },
     uploadEnd() {
       this.set('isUploading', false);
