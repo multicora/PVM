@@ -18,6 +18,7 @@ export default Ember.Component.extend({
       }).then(
         () => {
           console.log('finish');
+          this.set('isShown', false);
         },
         (error) => {
           console.log('File uploading failure:');
