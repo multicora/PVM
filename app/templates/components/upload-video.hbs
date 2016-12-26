@@ -12,8 +12,6 @@
         <button type="button" class="closeButton" {{action 'hidePopup'}}>close</button>
       </div>
     </form>
-    <div class="loader {{if isUploading '' 'hidden'}}">
-      Uploading...
-    </div>
   </div>
 </div>
+{{loading-overlay isUploading=isUploading}}
