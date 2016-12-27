@@ -496,11 +496,22 @@ body {
     left: 50%;
     max-width: 725px;
     width: 100%;
-    height: 643px;
+    min-height: 643px;
     border-radius: 2px;
     background-color:  #f8f8f8;
     box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
     transform: translate(-50%, -50%);
+    
+    .videoNameContainer {
+      text-align: center;
+
+      input {
+        border: 1px solid #f6f6f6;
+        background: none;
+        font-size: 18px;
+        margin: 10px 0 -10px 0;
+      }
+    }
 
     .popupTitle {
       padding-top: 25px;
