@@ -55,6 +55,20 @@ module.exports = (connection) => {
       });
     },
 
+    addResetToken: (resetToken, email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET resetToken="' + resetToken + '" ',
+          'WHERE email="' + email + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     newPassword: (resetToken, password) => {
       return new Promise((resolve, reject) => {
         password = passwordHash.generate(password);
