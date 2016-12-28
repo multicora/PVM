@@ -30,4 +30,22 @@ const usersController = require('../controllers/users.js')(DAL);
       }
     }
   });
+
+  server.route({
+    method: 'POST',
+    path: '/api/new_password',
+    config: {
+      handler: function (request, reply) {
+        if (request.payload.newPassword === request.payload.confirmPassword) {
+          DAL.users.resetPassword(id, newPassword).then((response) => {
+            reply();
+          }, (err) => {
+            reply(err);
+          });
+        } else {
+          reply(Boom.badImplementation('Passwords do not match'));
+        }
+      }
+    }
+  });
 }

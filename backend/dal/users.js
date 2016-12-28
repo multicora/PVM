@@ -55,6 +55,21 @@ module.exports = (connection) => {
       });
     },
 
+    resetPassword: (id, password) => {
+      return new Promise((resolve, reject) => {
+        password = passwordHash.generate(password);
+        let request = [
+          'UPDATE `users` ',
+          'SET password=' + password + ' ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     addUser: (firstName, secondName, email, password) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
