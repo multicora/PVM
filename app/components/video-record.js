@@ -18,8 +18,8 @@ export default Ember.Component.extend({
       let uplaodEnd = this.set('isUploading', false);
       uploader.video({
         file: audioFile.video,
-        // uploadStart: uploadStart,
-        // uploadEnd: uplaodEnd
+        uploadStart: uploadStart,
+        uploadEnd: uplaodEnd
       }).then(
         () => {
           console.log('finish');
