@@ -1,22 +1,5 @@
 @import 'variables';
 
-
-  input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px $auth-background-color inset;
-  }
-
-  input:-moz-autofill {
-    -moz-box-shadow: 0 0 0px 1000px $auth-background-color inset;
-  }
-
-  input:-o-autofill {
-    -o-box-shadow: 0 0 0px 1000px $auth-background-color inset;
-  }
-
-  input:-khtml-autofill {
-    -khtml-box-shadow: 0 0 0px 1000px $auth-background-color inset;
-  }
-
 .auth {
   background-color: $auth-background-color;
   text-align: center;
