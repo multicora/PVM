@@ -55,13 +55,13 @@ module.exports = (connection) => {
       });
     },
 
-    resetPassword: (id, password) => {
+    newPassword: (resetToken, password) => {
       return new Promise((resolve, reject) => {
         password = passwordHash.generate(password);
         let request = [
           'UPDATE `users` ',
-          'SET password=' + password + ' ',
-          'WHERE id=' + id + ';'
+          'SET password="' + password + '" ',
+          'WHERE resetToken="' + resetToken + '";'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -118,6 +118,16 @@ module.exports = (connection) => {
 
       return connection.query(request, cb);
     },
+
+    addColumn_resetToken: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `resetToken` VARCHAR(255) ',
+        'NOT NULL;'
+      ].join('');
+
+      return connection.query(request, cb);
+    }
 
   }
 }
