@@ -6,6 +6,7 @@
       {{mdl-textfield label='Password' type="password" value=password}}
       {{#if errorMessage}}
         <p class="error">Login failed: {{errorMessage}}</p>
+        {{#link-to "reset-password"}}reset password{{/link-to}}
       {{/if}}
       <div class="button-container">
         {{mdl-button isRaised=true type="submit" text='login'}}
