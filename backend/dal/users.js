@@ -64,7 +64,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response);
         });
       });
     },

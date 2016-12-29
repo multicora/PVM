@@ -72,18 +72,18 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/new-passwords',
     config: {
       handler: function (request, reply) {
-        let resetToken = request.payload.data.attributes.resettoken;
-        let newPassword = request.payload.data.attributes.newpassword;
-        let confirmPassword = request.payload.data.attributes.confirmpassword;
+        let resetToken = request.payload.data.attributes.token;
+        let newPassword = request.payload.data.attributes.new;
+        let confirmPassword = request.payload.data.attributes.confirm;
         if (newPassword === confirmPassword) {
           DAL.users.newPassword(resetToken, newPassword).then(
-            (response) => {
-              reply(response);
+            (res) => {
+              reply(res);
             }, (err) => {
               reply(err);
             });
         } else {
-          reply(Boom.badImplementation('Passwords do not match'));
+          reply(Boom.badData('Passwords do not match'));
         }
       }
     }

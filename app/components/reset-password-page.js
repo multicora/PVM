@@ -6,6 +6,7 @@ export default Ember.Component.extend({
     reset() {
       let email = this.getProperties('email').email;
       let record = this.get('store').createRecord('reset-password', {'email': email});
+
       record.save();
     }
   }
