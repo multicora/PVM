@@ -71,6 +71,7 @@ module.exports = (connection) => {
 
     newPassword: (resetToken, password) => {
       return new Promise((resolve, reject) => {
+
         password = passwordHash.generate(password);
         let request = [
           'UPDATE `users` ',
@@ -79,7 +80,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response);
         });
       });
     },

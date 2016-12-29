@@ -35,18 +35,19 @@ const usersController = require('../controllers/users.js')(DAL);
 
   server.route({
     method: 'POST',
-    path: '/api/reset_password',
+    path: '/reset-passwords',
     config: {
       handler: function (request, reply) {
         let resetToken = utils.newToken();
-        DAL.users.addResetToken(resetToken, email).then((response) => {
+        DAL.users.addResetToken(resetToken, request.payload.data.attributes.email).then((response) => {
           const message = [
             'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken,
           ].join('\n');
 
           const mail = {
             from: '<bizkonect.project@gmail.com>', // sender address
-            to: email, // list of receivers
+            to: '<bizkonect.project@gmail.com>', //for test
+            // to: mail, // list of receivers 
             subject: 'Reset password', // Subject line
             text: message, // plaintext body
             html: '<div style="white-space: pre;">' + message + '</div>'
@@ -59,22 +60,28 @@ const usersController = require('../controllers/users.js')(DAL);
               reply( Boom.badImplementation(err.message, err) );
             }
           );
-        })
+        }, (err) => {
+          reply(err);
+        });
       }
     }
   });
 
   server.route({
     method: 'POST',
-    path: '/api/new_password',
+    path: '/new-passwords',
     config: {
       handler: function (request, reply) {
-        if (request.payload.newPassword === request.payload.confirmPassword) {
-          DAL.users.resetPassword(resetToken, newPassword).then((response) => {
-            reply();
-          }, (err) => {
-            reply(err);
-          });
+        let resetToken = request.payload.data.attributes.resettoken;
+        let newPassword = request.payload.data.attributes.newpassword;
+        let confirmPassword = request.payload.data.attributes.confirmpassword;
+        if (newPassword === confirmPassword) {
+          DAL.users.newPassword(resetToken, newPassword).then(
+            (response) => {
+              reply(response);
+            }, (err) => {
+              reply(err);
+            });
         } else {
           reply(Boom.badImplementation('Passwords do not match'));
         }
