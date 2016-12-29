@@ -78,7 +78,7 @@ const usersController = require('../controllers/users.js')(DAL);
         if (newPassword === confirmPassword) {
           DAL.users.newPassword(resetToken, newPassword).then(
             (res) => {
-              reply(res);
+              reply();
             }, (err) => {
               reply(err);
             });

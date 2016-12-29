@@ -12,9 +12,13 @@ export default Ember.Component.extend({
         'token': resetToken
       });
 
-      console.log(resetToken, passwords);
-
-      record.save();
+      record.save().then(
+        (res) => {
+          this.get('success')();
+        },
+        (err) => {
+          this.set('errorMessage', err);
+      });
     }
   }
 });
