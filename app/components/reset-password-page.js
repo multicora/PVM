@@ -5,13 +5,20 @@ export default Ember.Component.extend({
   actions: {
     reset() {
       let email = this.getProperties('email').email;
-      let record = this.get('store').createRecord('reset-password', {'email': email});
+      let data = {'email': email};
 
-      record.save().then(
-        (res) => {
+      $.ajax({
+        type: "POST",
+        url: 'reset-password',
+        data: data,
+        success: function(res) {
         },
-        (err) => {
-          this.set('errorMessage', err);
+        error: function(err) {
+          Ember.run(function() {
+            self.set('errorMessage', err);
+        });
+      },
+        dataType: 'text'
       });
     }
   }

@@ -6,18 +6,28 @@ export default Ember.Component.extend({
     save() {
       let passwords = this.getProperties('newPassword', 'confirmPassword');
       let resetToken = this.get('resetToken');
-      let record = this.get('store').createRecord('new-password', {
-        'new': passwords.newPassword,
-        'confirm': passwords.confirmPassword,
-        'token': resetToken
-      });
+      let data = {
+        'newPassword': passwords.newPassword,
+        'confirmPassword': passwords.confirmPassword,
+        'resetToken': resetToken
+      };
+      let self = this;
 
-      record.save().then(
-        (res) => {
-          this.get('success')();
+      $.ajax({
+        type: "POST",
+        url: 'new-password',
+        data: data,
+        success: function(res) {
+          Ember.run(function() {
+            self.get('success')();
+          });
         },
-        (err) => {
-          this.set('errorMessage', err);
+        error: function(err) {
+          Ember.run(function() {
+            self.set('errorMessage', err);
+        });
+      },
+        dataType: 'text'
       });
     }
   }

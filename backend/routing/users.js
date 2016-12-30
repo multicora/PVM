@@ -35,11 +35,11 @@ const usersController = require('../controllers/users.js')(DAL);
 
   server.route({
     method: 'POST',
-    path: '/reset-passwords',
+    path: '/reset-password',
     config: {
       handler: function (request, reply) {
         let resetToken = utils.newToken();
-        DAL.users.addResetToken(resetToken, request.payload.data.attributes.email).then((response) => {
+        DAL.users.addResetToken(resetToken, request.payload.email).then((response) => {
           const message = [
             'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken,
           ].join('\n');
@@ -69,12 +69,12 @@ const usersController = require('../controllers/users.js')(DAL);
 
   server.route({
     method: 'POST',
-    path: '/new-passwords',
+    path: '/new-password',
     config: {
       handler: function (request, reply) {
-        let resetToken = request.payload.data.attributes.token;
-        let newPassword = request.payload.data.attributes.new;
-        let confirmPassword = request.payload.data.attributes.confirm;
+        let resetToken = request.payload.resetToken;
+        let newPassword = request.payload.newPassword;
+        let confirmPassword = request.payload.confirmPassword;
         if (newPassword === confirmPassword) {
           DAL.users.newPassword(resetToken, newPassword).then(
             (res) => {
