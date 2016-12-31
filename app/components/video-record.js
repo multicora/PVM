@@ -2,8 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   uploader: Ember.inject.service(),
-  isShown: false,
-  isUploading: false,
   disabledButton: true,
   audioFile: null,
   actions: {
@@ -14,18 +12,17 @@ export default Ember.Component.extend({
       let audioFile =this.get('audioFile');
       audioFile.video.name = this.getProperties('videoName').videoName;
       let uploader = this.get('uploader');
-      let uplaodStart = this.set('isUploading', true);
-      let uplaodEnd = this.set('isUploading', false);
       uploader.video({
         file: audioFile.video,
-        uploadStart: uploadStart,
-        uploadEnd: uplaodEnd
+        uploadStart: this.set('isUploading', true)
       }).then(
         () => {
+          this.set('isUploading', false);
           console.log('finish');
           this.set('isShown', false);
         },
         (error) => {
+          this.set('isUploading', false);
           this.set('errorMessage', 'File uploading failure:' + error);
           console.log(error);
         }
