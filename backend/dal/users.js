@@ -50,7 +50,13 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response[0]);
+          if (err) {
+            reject(err);
+          } else if (!response.length) {
+            reject('Not found');
+          } else {
+            resolve(response[0]);
+          }
         });
       });
     },
