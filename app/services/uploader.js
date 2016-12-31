@@ -5,6 +5,7 @@ export default Ember.Service.extend({
   url: '/video',
   video(config) {
       const url = this.url;
+      const videoName = config.file.name;
       // TODO: change this to promise
       const progressCb = config.progressCb || (() => {});
       const file = config.file;
@@ -16,6 +17,6 @@ export default Ember.Service.extend({
         progressCb( e.percent.toFixed(2) );
       });
 
-      return uploader.upload(file);
+      return uploader.upload(file, {videoName: videoName});
   }
 });

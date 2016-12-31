@@ -10,6 +10,7 @@ export default Ember.Component.extend({
     },
     saveVideo() {
       let audioFile =this.get('audioFile');
+      audioFile.video.name = this.getProperties('videoName').videoName;
       let uploader = this.get('uploader');
       uploader.video({
         file: audioFile.video,
