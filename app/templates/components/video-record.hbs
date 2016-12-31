@@ -6,6 +6,9 @@
       <div class="videoNameContainer {{if disabledButton 'hidden' ''}}">
         {{input type="text" value=videoName placeholder="Enter video name"}}
       </div>
+      {{#if errorMessage}}
+        <p class="error">Error: {{errorMessage}}</p>
+      {{/if}}
       <div class="button-container">
         <button class="cancel" {{action 'hidePopup'}}>cancel</button>
         <button class="save" {{action 'saveVideo'}} disabled={{disabledButton}}>save</button>

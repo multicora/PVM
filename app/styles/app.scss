@@ -85,6 +85,12 @@ body {
   vertical-align: middle;
 }
 
+.error {
+  color: $error-message-color;
+  text-align: center;
+  margin: 10px auto 0px auto;
+}
+
 //UPLOAD POPUP
 .popupContainer {
   position: fixed;
@@ -486,6 +492,10 @@ body {
 
   &.shown {
     display: block;
+  }
+
+  .error {
+    margin-bottom: -30px;
   }
 
   .popup {
