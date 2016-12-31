@@ -25,7 +25,7 @@ export default Ember.Component.extend({
           this.set('isShown', false);
         },
         (error) => {
-          console.log('File uploading failure:');
+          this.set('errorMessage', 'File uploading failure:' + error);
           console.log(error);
         }
       );
