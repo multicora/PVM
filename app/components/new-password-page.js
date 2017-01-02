@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  store: Ember.inject.service(),
   actions: {
     save() {
       let passwords = this.getProperties('newPassword', 'confirmPassword');
