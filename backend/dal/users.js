@@ -137,8 +137,7 @@ module.exports = (connection) => {
     addColumn_resetToken: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
-        'ADD `resetToken` VARCHAR(255) ',
-        'NOT NULL;'
+        'ADD `resetToken` VARCHAR(255);'
       ].join('');
 
       return connection.query(request, cb);

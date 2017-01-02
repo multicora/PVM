@@ -38,31 +38,7 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/reset-password',
     config: {
       handler: function (request, reply) {
-        let resetToken = utils.newToken();
-        DAL.users.addResetToken(resetToken, request.payload.email).then((response) => {
-          const message = [
-            'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken,
-          ].join('\n');
-
-          const mail = {
-            from: '<bizkonect.project@gmail.com>', // sender address
-            to: '<bizkonect.project@gmail.com>', //for test
-            // to: mail, // list of receivers 
-            subject: 'Reset password', // Subject line
-            text: message, // plaintext body
-            html: '<div style="white-space: pre;">' + message + '</div>'
-          };
-
-          Mailer(config.mail).send(mail).then(
-            (res) => {
-              reply(res);
-            }, (err) => {
-              reply( Boom.badImplementation(err.message, err) );
-            }
-          );
-        }, (err) => {
-          reply(err);
-        });
+        usersController.resetPassword(request.payload.email);
       }
     }
   });
@@ -80,7 +56,7 @@ const usersController = require('../controllers/users.js')(DAL);
             (res) => {
               reply();
             }, (err) => {
-              reply(err);
+              reply( Boom.badImplementation(err.message, err) );
             });
         } else {
           reply(Boom.badData('Passwords do not match'));
