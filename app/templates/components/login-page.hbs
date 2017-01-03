@@ -8,6 +8,7 @@
         <p class="error">Login failed: {{errorMessage}}</p>
       {{/if}}
       <div class="button-container">
+        {{#link-to "reset-password"}}Forgot password{{/link-to}}
         {{mdl-button isRaised=true type="submit" text='login'}}
       </div>
     </form>

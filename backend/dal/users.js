@@ -61,6 +61,37 @@ module.exports = (connection) => {
       });
     },
 
+    addResetToken: (resetToken, email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET resetToken="' + resetToken + '" ',
+          'WHERE email="' + email + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    newPassword: (resetToken, password) => {
+      return new Promise((resolve, reject) => {
+
+        password = passwordHash.generate(password);
+        let request = [
+          'UPDATE `users` ',
+          'SET password="' + password + '", ',
+          'resetToken="' + null + '" ',
+          'WHERE resetToken="' + resetToken + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     addUser: (firstName, secondName, email, password) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
@@ -109,6 +140,15 @@ module.exports = (connection) => {
 
       return connection.query(request, cb);
     },
+
+    addColumn_resetToken: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `resetToken` VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    }
 
   }
 }

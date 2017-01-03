@@ -2,10 +2,10 @@
 
 module.exports = function(DAL) {
   return {
-    version: 6,
-    message: 'Add "author" in "videos" table',
+    version: 8,
+    message: 'Add "resetToken" in "users" table',
     script: function (next) {
-      DAL.videos.addColumn_author(next);
+      DAL.users.addColumn_resetToken(next);
     }
   }
 };

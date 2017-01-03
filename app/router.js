@@ -10,6 +10,8 @@ Router.map(function() {
   this.route('conversation', {path: 'conversation/:conversation_id'});
   this.route('library');
   this.route('auth');
+  this.route('reset-password');
+  this.route('new-password', {path: 'new-password/:reset_token'});
 });
 
 export default Router;
