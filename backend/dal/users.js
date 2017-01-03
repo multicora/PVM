@@ -79,22 +79,15 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
 
         password = passwordHash.generate(password);
-        let request1 = [
+        let request = [
           'UPDATE `users` ',
-          'SET password="' + password + '" ',
+          'SET password="' + password + '", ',
+          'resetToken="' + null + '" ',
           'WHERE resetToken="' + resetToken + '";'
         ].join('');
 
-        let request2 = [
-          'UPDATE `users` ',
-          'SET resetToken="' + null + '" ',
-          'WHERE resetToken="' + resetToken + '";'
-        ].join('');
-
-        connection.query(request1, () => {
-          connection.query(request2, (err, response) => {
-            err ? reject(err) : resolve(response);
-          })
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
         });
       });
     },

@@ -38,16 +38,7 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/reset-password',
     config: {
       handler: function (request, reply) {
-        let resetToken = utils.newToken();
-        DAL.users.addResetToken(resetToken, request.payload.email).then((response) => {
-          if (response.affectedRows) {
-            reply (usersController.resetPassword(resetToken, request.payload.email));
-          } else {
-            reply(Boom.badData('Invalid email'));
-          }
-        }, (err) => {
-          reply(Boom.badImplementation(err.message, err));
-        });
+        reply (usersController.resetPassword(request.payload.email, Boom.badData('Invalid email'), Boom.badImplementation('Server error')));
       }
     }
   });
@@ -63,7 +54,7 @@ const usersController = require('../controllers/users.js')(DAL);
         if (newPassword === confirmPassword) {
           DAL.users.newPassword(resetToken, newPassword).then(
             (res) => {
-              reply();
+              reply({"status": "success"});
             }, (err) => {
               reply( Boom.badImplementation(err.message, err) );
             });

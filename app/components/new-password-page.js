@@ -19,6 +19,7 @@ export default Ember.Component.extend({
         success: function() {
           Ember.run(function() {
             self.get('success')();
+            self.set('errorMessage', false);
           });
         },
         error: function(err) {
@@ -26,7 +27,7 @@ export default Ember.Component.extend({
             self.set('errorMessage', JSON.parse(err.responseText).message);
         });
       },
-        dataType: 'text'
+        dataType: 'JSON'
       });
     }
   }
