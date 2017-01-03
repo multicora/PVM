@@ -3,6 +3,12 @@
     <form class="recordForm">
       <p class="popupTitle">Record your video</p>
       {{mk-videojs-record setup=setup ready="ready" finishRecord="finishRecord" startRecord="startRecord"}}
+      <div class="videoNameContainer {{if disabledButton 'hidden' ''}}">
+        {{input type="text" value=videoName placeholder="Enter video name"}}
+      </div>
+      {{#if errorMessage}}
+        <p class="error">Error: {{errorMessage}}</p>
+      {{/if}}
       <div class="button-container">
         <button class="cancel" {{action 'hidePopup'}}>cancel</button>
         <button class="save" {{action 'saveVideo'}} disabled={{disabledButton}}>save</button>
@@ -10,3 +16,4 @@
     </form>
   </div>
 </div>
+{{loading-overlay show=isUploading}}

@@ -16,7 +16,7 @@ module.exports = function (server, DAL) {
 
       handler: function (request, reply) {
         videoCtrl.saveFile(
-          request.payload.file.hapi.filename,
+          request.payload.videoName,
           request.payload.file._data
         ).then(
           function () {

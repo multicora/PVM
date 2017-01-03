@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const Promise = require('promise');
-const xoauth2 = require('xoauth2');
+// const xoauth2 = require('xoauth2');
 
 module.exports = function (config) {
   // generator.on('token', function(token){

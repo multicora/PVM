@@ -3,17 +3,18 @@
     <form class="uploadForm">
       <div class="uploadIconContainer">  
         <label for="upload-video" class="uploadIcon">
-          {{file-upload url="/video" id="upload-video" uploadEnd=(action 'uploadEnd') uploadStart=(action 'uploadStart')}}
+          {{file-upload url="/video" id="upload-video" uploadEnd=(action 'uploadEnd') uploadStart=(action 'uploadStart') error=(action 'error')}}
         </label>
       </div>
       <p class="popupTitle">Select files to upload</p>
       <p class="popupSubTitle">Or drag and drop video files</p>
+      {{#if errorMessage}}
+        <p class="error">Error: {{errorMessage}}</p>
+      {{/if}}
       <div class="buttonContainer">
         <button type="button" class="closeButton" {{action 'hidePopup'}}>close</button>
       </div>
     </form>
-    <div class="loader {{if isUploading '' 'hidden'}}">
-      Uploading...
-    </div>
   </div>
 </div>
+{{loading-overlay show=isUploading}}
