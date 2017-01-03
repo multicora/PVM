@@ -41,25 +41,7 @@ const usersController = require('../controllers/users.js')(DAL);
         let resetToken = utils.newToken();
         DAL.users.addResetToken(resetToken, request.payload.email).then((response) => {
           if (response.affectedRows) {
-            const message = [
-              'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken,
-            ].join('\n');
-
-            const mail = {
-              from: '<bizkonect.project@gmail.com>', // sender address
-              to: email, // list of receivers
-              subject: 'Reset password', // Subject line
-              text: message, // plaintext body
-              html: '<div style="white-space: pre;">' + message + '</div>'
-            };
-
-            Mailer(config.mail).send(mail).then(
-              (res) => {
-                reply({"status":"success"});
-              }, (err) => {
-                reply(Boom.badImplementation(err.message, err));
-              }
-            );
+            reply (usersController.resetPassword(resetToken, request.payload.email));
           } else {
             reply(Boom.badData('Invalid email'));
           }
