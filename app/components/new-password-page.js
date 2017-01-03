@@ -16,14 +16,14 @@ export default Ember.Component.extend({
         type: "POST",
         url: 'new-password',
         data: data,
-        success: function(res) {
+        success: function() {
           Ember.run(function() {
             self.get('success')();
           });
         },
         error: function(err) {
           Ember.run(function() {
-            self.set('errorMessage', err);
+            self.set('errorMessage', JSON.parse(err.responseText).message);
         });
       },
         dataType: 'text'
