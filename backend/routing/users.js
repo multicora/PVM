@@ -55,7 +55,7 @@ const usersController = require('../controllers/users.js')(DAL);
 
             Mailer(config.mail).send(mail).then(
               (res) => {
-                reply(res);
+                reply({"status":"success"});
               }, (err) => {
                 reply(Boom.badImplementation(err.message, err));
               }

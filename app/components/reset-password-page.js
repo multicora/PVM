@@ -18,7 +18,7 @@ export default Ember.Component.extend({
             self.set('errorMessage', JSON.parse(err.responseText).message);
         });
       },
-        dataType: 'text'
+        dataType: 'JSON'
       });
     }
   }
