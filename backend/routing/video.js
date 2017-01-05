@@ -65,21 +65,24 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        videoCtrl.getAllvideos();
-        videoCtrl.getAllvideos().then(function(res) {
-          reply({'data' : res.map(
-            function(res) {
-              console.log(res.v_id, '===========================',res.thumbnail);
-                return {
-                  'type': 'video',
-                  'id': res.v_id,
-                  'attributes': res
-                };
-            }
-          )});
-        }, function(err) {
-          reply(Boom.badImplementation(err));
-        });
+        videoCtrl.getAllvideos().then(
+          function(res) {
+            reply(
+              {
+                'data' : res.map(function(res) {
+                  return {
+                    'type': 'video',
+                    'id': res.v_id,
+                    'attributes': res
+                  };
+                })
+              }
+            );
+          },
+          function(err) {
+            reply(Boom.badImplementation(err));
+          }
+        );
       }
     }
   });
