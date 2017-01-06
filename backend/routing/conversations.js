@@ -15,6 +15,7 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
+        console.log(request.payload.data);
         let author = request.auth.credentials;
         let data = request.payload.data.attributes;
         data.author = author.id;
