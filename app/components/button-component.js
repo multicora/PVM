@@ -1,13 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  segment: Ember.inject.service(),
-  segmentEventName: null,
+  eventName: null,
   click() {
-    const eventName = this.get('segmentEventName');
+    const eventCategory = this.get('eventCategory');
+    const eventAction = this.get('eventAction');
+    const eventLabel = this.get('eventLabel');
 
-    if (eventName) {
-      this.get('segment').trackEvent(eventName);
+    if (eventCategory && eventAction) {
+      ga('send', 'event', eventCategory, eventAction, eventLabel);
     }
   }
 });
