@@ -1,0 +1,16 @@
+.vertical-aligned-middle.auth.full-page
+  .container
+    h2.title Reset Password
+    form.form
+      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+        input.mdl-textfield__input(
+          type="email"
+          id="email"
+          ng-model="email")
+        label.mdl-textfield__label(for='email') Email
+      p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
+      p.success(ng-if="vm.successMessage") {{vm.successMessage}}
+      .button-container
+        button.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--colored(
+          ng-click="vm.sendResetRequest(email)")
+          | send

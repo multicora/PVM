@@ -12,5 +12,21 @@
         password: password
       });
     };
+
+    this.reset = function (email) {
+      var data = {'email': email};
+
+      return $http.post('api/reset-password', data);
+    }
+
+    this.setPassword = function (newPassword, confirmPassword, resetToken) {
+      var data = {
+        'newPassword': passwords.newPassword,
+        'confirmPassword': passwords.confirmPassword,
+        'resetToken': resetToken
+      };
+
+      return $http.post('api/new-password', data);
+    }
   }
 })(angular);

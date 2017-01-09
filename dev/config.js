@@ -12,6 +12,14 @@
       controller: 'authCtrl',
       controllerAs: 'vm',
       templateUrl: 'auth/login.html'
+    }).when('/reset-password', {
+      controller: 'authCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'auth/resetTpl.html'
+    }).when('/new-password/:token', {
+      controller: 'authCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'auth/newPassword.html'
     }).when('/library', {
       controller: 'libraryCtrl',
       controllerAs: 'vm',
