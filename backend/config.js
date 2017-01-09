@@ -24,7 +24,7 @@ var config = {
     password: ''
   },
   server: {
-    port: 8081
+    port: 443
   },
   box: {
     sslFilename: '../private_key.pem',

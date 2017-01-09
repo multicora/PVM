@@ -1,0 +1,28 @@
+.popup-overlay {
+  background-color: rgba(0, 0, 0, 0.35);
+  height: 100%;
+  left: 0;
+  overflow: auto;
+  outline: none;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+
+  .zero-width-block {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  .popup {
+    // background: #FFFFFF;
+    display: inline-block;
+    // margin: 100px 0;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    // width: 420px;
+  }
+}

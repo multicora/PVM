@@ -1,0 +1,73 @@
+.library-wrapper
+  app-header
+  .navigation
+    img.tab-icon(src='/files/images/video-tab-icon.png', alt='')
+    .navigation-bar-container
+      ul.navigation-bar
+        li
+          a.active(href='') VIDEOS
+        li
+          a(href='') LANDINGS
+        li
+          a(href='') EMAILS
+        li
+          a(href='') ANALYTICS
+        li
+          a(href='') CONTACTS
+
+  video-fab-buttons(
+    upload-btn-click="vm.uploadBtnClick()"
+    record-btn-click="vm.recordBtnClick()")
+
+  //- TODO: handlers
+  video-list(
+    list="vm.list"
+    on-upload-click="vm.uploadBtnClick()"
+    on-record-click="vm.recordBtnClick()"
+    on-send-click="vm.sendClickHandler($data)")
+
+  //- Send popup
+  popup.send-popup-container(ng-if="vm.showSendPopup")
+    form.send-form({{action='', on='submit', }}='')
+      p.popupTitle send
+      input.email(
+        type="email"
+        placeholder="email"
+        ng-model="email")
+      .button-container
+        button.close(ng-click="vm.closeSendPopup()") close
+        button.save(ng-click="vm.sendVideo(email, vm.videoForSending)") send
+
+  //- Record popup
+  popup(ng-if="vm.showRecordPopup")
+    .video-record-container
+      form.recordForm
+        p.popupTitle Record your video
+        .record-video
+          record-video(finish="vm.finishRecord($data)")
+        .videoNameContainer
+          input(type="text" value="vm.videoName" placeholder="Enter video name")
+        p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
+        .button-container
+          button.cancel(ng-click="vm.closeRecordPopup()") cancel
+          button.save(
+            ng-click="vm.sendRecordClick(vm.videoName)"
+            ng-disabled="!vm.recordedData") save
+
+  //- Upload popup
+  popup.uploadForm(ng-if="vm.showUploadPopup")
+    form
+      .uploadIconContainer
+        label.uploadIcon(for='upload-video')
+          div(
+            file-uploader
+            url="/video"
+            input-id="upload-video"
+            upload-end="vm.uploadEnd()"
+            upload-start=""
+            on-error="")
+      p.popupTitle Select files to upload
+      p.popupSubTitle Or drag and drop video files
+      p.error(ng-if="errorMessage") Error: {{errorMessage}}
+      .buttonContainer
+        button.closeButton(ng-click="vm.closeUploadPopup()") close

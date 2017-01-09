@@ -1,0 +1,42 @@
+.video-tile {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+  display: inline-block;
+  height: 204px;
+  margin: 0 0 12px 10px;
+  width: 215px;
+
+  .photo {
+    height: 143px;
+    width: 100%;
+  }
+
+  .text {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 18px;
+    margin: 10px 0 0 0;
+    padding: 0 10px;
+  }
+
+  .buttons-container {
+    text-align: right;
+    width: 100%;
+
+    a {
+      text-decoration: none;
+    }
+
+    .send {
+      color: $send-buttons-color;
+      display: inline-block;
+      font-size: 18px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .menu {
+      margin-right: 10px;
+    }
+  }
+}

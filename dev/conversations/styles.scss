@@ -1,0 +1,219 @@
+.watchVideoContainer {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f5f5f5;
+  background-size: cover;
+
+  //HEADER
+  header {
+    width: 100%;
+    height: 64px;
+    background-color:  #fff;
+    box-shadow: 0px 0px 4.05px 0.95px rgba(0, 0, 0, 0.28);
+
+    .logoContainer {
+      display: inline-block;
+      width: 50%;
+      text-align: left;
+
+      .logo{
+        display: inline-block;
+
+        img {
+          margin-left: 15px;
+          width: 30px;
+          height: 23px;
+          vertical-align: middle;
+          line-height: 63px;
+        }
+
+        .logoText {
+          color:  rgba(0, 0, 0, 0.87);
+          vertical-align: middle;
+          font-family: 'Roboto Thin';
+          font-size: 26px;
+          line-height: 63px;
+        }
+      }
+    }
+
+    .socialContainer {
+      display: inline-block;
+      width: 49%;
+      text-align: right;
+
+      .social {
+        display: inline-block;
+        margin-right: 20px;
+        vertical-align: middle;
+        line-height: 64px;
+
+        a {
+          margin-right: 8px;
+          width: 27px;
+          height: 27px;
+          text-decoration: none;
+
+          img {
+            width: 27px;
+            height: 27px;
+          }
+        }
+
+        a:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .contacts {
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: middle;
+        line-height: 64px;
+
+        .phone,
+        .email {
+          vertical-align: middle;
+          text-align: left;
+          line-height: 32px;
+
+          img {
+            display: inline-block;
+            margin-right: 16px;
+          }
+
+          p {
+            display: inline-block;
+            margin: 0;
+            color:  rgba(0, 0, 0, 0.87);
+            font-size: 14px;
+            font-family: 'Roboto Regular';
+          }
+        }
+
+        .phone {
+          img {
+            width: 18px;
+            height: 18px;
+          }
+        }
+
+        .email {
+          img {
+            width: 20px;
+            height: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  //VIDEO PLAYER CONTAINER
+  .video {
+    margin: 20px auto 0 auto;
+    width: 845px;
+    border-radius: 2px;
+    background-color:  #fff;
+    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
+
+    .videoHeader {
+      padding-top: 10px;
+      height: 54px;
+
+      .photo {
+        display: inline-block;
+        margin-left: 10px;
+        width: 38px;
+        height: 40px;
+        border-radius: 20px;
+        background-image: url('/files/images/user.png');
+      }
+
+      .text {
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      .userName,
+      .userMessage {
+        margin-bottom: 0;
+        color:  rgba(0, 0, 0, 0.87);
+        font-weight: 500;
+      }
+
+      .userName {
+        font-size: 20px;
+      }
+
+      .userMessage {
+        font-size: 16px
+      }
+
+    }
+
+    .videoContent {
+      min-height: 400px;
+      width: 100%;
+      box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
+    }
+
+    .video-js .vjs-big-play-button {
+      width: 50px;
+      height: 50px;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      margin: -25px 0 0 -25px;
+    }
+
+    .videoFooter {
+      position: relative;
+      padding-bottom: 10px;
+
+      .replyContainer {
+        display: inline-block;
+        padding-top: 20px;
+        width: 9%;
+        vertical-align: top;
+      }
+    }
+  }
+
+  .reply-text-placeholder {
+    margin: 22px 0 20px 71px;
+    color: rgba(0, 0, 0, 0.54);
+    font-weight: 400;
+    font-size: 16px;
+    font-family: Helvetica;
+  }
+
+  //FOOTER
+  footer {
+    margin-top: 20px;
+    padding: 10px 0;
+    width: 100%;
+    height: 46px;
+    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.87);
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    line-height: 46px;
+
+    .logo-container {
+      float: left;
+      padding-left: 20px;
+      vertical-align: middle;
+
+      .logo {
+        margin-left: 10px;
+        height: 46px;
+        widows: 190px;
+      }
+    }
+
+    .rights {
+      float: right;
+      padding-right: 20px;
+      vertical-align: middle;
+    }
+  }
+}

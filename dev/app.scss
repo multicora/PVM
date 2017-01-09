@@ -1,0 +1,127 @@
+$record-buttons-color:         #E53935;
+$upload-buttons-color:         #1E88E5;
+$navigation-hovered-color:     #E53935;
+$send-buttons-color:           #E53935;
+$auth-background-color:        #fdfdfd;
+$font-color-titles:            rgba(0, 0, 0, 0.54);
+$font-color-buttons:           rgba(0, 0, 0, 0.87);
+$font-color-buttons-disabled:  rgba(0, 0, 0, 0.26);
+$color-font:                   rgba(0, 0, 0, 0.38);
+$error-message-color:          #B71C1C;
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Bold';
+  src: url('/files/Roboto/Roboto-Bold.ttf') format('ttf'),
+       url('/files/Roboto/roboto-bold.woff2') format('woff2'),
+       url('/files/Roboto/roboto-bold.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Regular';
+  src: url('/files/Roboto/Roboto-Regular.ttf') format('ttf'),
+       url('/files/Roboto/roboto-regular.woff2') format('woff2'),
+       url('/files/Roboto/roboto-regular-webfont.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Thin';
+  src: url('/files/Roboto/Roboto-Thin.ttf') format('ttf'),
+       url('/files/Roboto/roboto-thin.woff2') format('woff2'),
+       url('/files/Roboto/roboto-thin.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Medium';
+  src: url('/files/Roboto/Roboto-Medium.ttf') format('ttf'),
+       url('/files/Roboto/roboto-medium.woff2') format('woff2'),
+       url('/files/Roboto/roboto-medium.woff') format('woff');
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Roboto Italic';
+  src: url('/files/Roboto/Roboto-Italic.ttf') format('ttf'),
+       url('/files/Roboto/roboto-italic.woff2') format('woff2'),
+       url('/files/Roboto/roboto-italic.woff') format('woff');
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px $auth-background-color inset;
+}
+
+input:-moz-autofill {
+  -moz-box-shadow: 0 0 0px 1000px $auth-background-color inset;
+}
+
+input:-o-autofill {
+  -o-box-shadow: 0 0 0px 1000px $auth-background-color inset;
+}
+
+input:-khtml-autofill {
+  -khtml-box-shadow: 0 0 0px 1000px $auth-background-color inset;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Regular', Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.full-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.vertical-aligned-middle:before {
+  content:'';
+  display: inline-block;
+  height: 100%;
+  width: 0;
+  vertical-align: middle;
+}
+
+.hidden {
+  display: none;
+}
+
+.vertical-align-middle:before {
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  content:'';
+  vertical-align: middle;
+}
+
+.error {
+  color: $error-message-color;
+  text-align: center;
+  margin: 10px auto 0px auto;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  text-align: center;
+  z-index: 999;
+}
