@@ -1,0 +1,12 @@
+header
+  .navigation-components
+    a.navigation(href='')
+      i.fa.fa-bars(aria-hidden="true")
+    img.logo(src='/files/images/logo_bizkonect.png')
+  .navigation-components.right
+    div.auth-buttons.inlineBlock
+      span.pointer(
+        ng-if="vm.isAuthenticated"
+        ng-click="vm.invalidateSession()")
+        | Logout
+    .photo

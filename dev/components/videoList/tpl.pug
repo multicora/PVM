@@ -1,0 +1,24 @@
+.content
+  .videos-container
+    .add-button
+      .content
+        .icon
+          img.icon-left(src='/files/images/a1.png', alt='')
+          img.icon-right(src='/files/images/a2.png', alt='')
+        p.text New video
+        .hoverd-button
+          .inlineBlock
+            //- TODO
+            .upload(ng-click="vm.onUploadClick()")
+              .fa.fa-cloud-upload(aria-hidden="true")
+              p Upload
+          .inlineBlock
+            //- TODO
+            .record(ng-click="vm.onRecordClick()")
+              .fa.fa-video-camera(aria-hidden="true")
+              p Record
+
+    .video-container(ng-repeat="item in vm.list")
+      video-tile(
+        video="item"
+        on-send-click="vm.onSendClick({$data: item})")

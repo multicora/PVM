@@ -1,0 +1,11 @@
+{
+  "name": "project",
+  "dependencies": {
+    "ember": "~2.9.0",
+    "ember-cli-shims": "0.1.3",
+    "material-design-lite": "~1.0.4",
+    "font-awesome": "~4.5.0",
+    "video.js": "~5.12",
+    "mc-videojs-record": "1.5.2"
+  }
+}

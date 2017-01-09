@@ -1,0 +1,293 @@
+//LIBRARY
+.library-wrapper {
+  background-color: #f5f5f5;
+  padding-bottom: 40px;
+  width: 100%;
+
+//NAVIGATION
+  .navigation {
+    margin-bottom: 20px;
+
+    .tab-icon {
+      float: left;
+      height: 40px;
+      margin: 25px 0 0 25px;
+      width: 40px;
+    }
+
+    .navigation-bar-container {
+      text-align: center;
+      width: 100%;
+
+      .navigation-bar {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        display: inline-block;
+        list-style: none;
+        margin: 58px 0 0 -65px;
+        padding: 0 100px 3px 100px;
+
+        li {
+          display: inline-block;
+
+          a {
+            font-family: 'Roboto Medium';
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0 37px;
+            text-decoration: none;
+          }
+
+          a {
+            border-bottom: 5px solid #f5f5f5;
+            color: rgba(0, 0, 0, 0.54);
+            transition: 0.3s;
+          }
+        }
+
+        .active {
+          border-bottom: 5px solid $navigation-hovered-color;
+          color: $navigation-hovered-color;
+        }
+
+        a:hover {
+          color: $navigation-hovered-color;
+          transition: 0.3s;
+        }
+      }
+    }
+  }
+
+  // Record
+  .video-record-container {
+    max-width: 725px;
+    width: 100%;
+    border-radius: 2px;
+    background-color:  #f8f8f8;
+    box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
+
+    .error {
+      margin-bottom: -30px;
+    }
+
+    .videoNameContainer {
+      text-align: center;
+
+      input {
+        border: 1px solid #f6f6f6;
+        background: none;
+        font-size: 18px;
+        margin: 10px 0 -10px 0;
+      }
+    }
+
+    .popupTitle {
+      padding-top: 25px;
+      color: rgba(0, 0, 0, 0.87);
+      text-align: center;
+      font-weight: 300;
+      font-size: 30px;
+      font-family: 'Roboto-Thin', Arial, sans-serif;
+    }
+
+    .button-container {
+      display: inline-block;
+      width: 100%;
+      text-align: right;
+      margin-top: 40px;
+
+      button {
+        border-radius: 2px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background-color:  #f1f1f1;
+        width: 85px;
+        height: 36px;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.50);
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      button:last-child {
+        margin-right: 15px;
+      }
+
+      button:hover {
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      .save:disabled {
+        cursor: default;
+      }
+    }
+
+    .record-video {
+      margin: 0 40px;
+    }
+  }
+
+  // Upload
+  .uploadForm {
+    .popup {
+      border-radius: 2px;
+      background-color:  #ffffff;
+      box-shadow: 0px 1px 48.6px 5.4px rgba(0, 0, 0, 0.35);
+      box-sizing: border-box;
+      max-width: 725px;
+      padding: 30px;
+      width: 100%;
+    }
+
+    .popupTitle,
+    .popupSubTitle {
+      color: #161616;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .popupTitle {
+      font-size: 20px;
+    }
+
+    .popupSubTitle {
+      font-size: 15px;
+    }
+
+    .uploadIconContainer,
+    .buttonContainer {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+
+    #upload-video {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+
+    .uploadIcon {
+      display: inline-block;
+      width: 150px;
+      height: 150px;
+      border: none;
+      background-color: #fff;
+      background-size: cover;
+      cursor: pointer;
+    }
+
+    .uploadIcon {
+      background-image: url('/files/images/upload.svg');
+      transition: 1s;
+    }
+
+    .uploadIcon:hover {
+      background-image: url('/files/images/uploadHover.svg');
+      transition: 1s;
+    }
+
+    .closeButton {
+      width: 88px;
+      height: 36px;
+      border: none;
+      border-radius: 2px;
+      color: #161616;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .closeButton {
+      background-color: #fff;
+      transition: 1s; 
+    }
+
+    .closeButton:hover {
+      background-color: #f0f0f0;
+      transition: 1s;
+    }
+
+    .closeButton:focus {
+      outline: none;
+      background-color: #b3b3b3;
+      transition: 1s;
+    }
+
+  }
+
+  // Send popup
+  .send-popup-container {
+    .popup {
+      background-color:  #f8f8f8;
+      border-radius: 2px;
+      box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .popupTitle {
+      color: rgba(0, 0, 0, 0.87);
+      font-family: 'Roboto-Thin', Arial, sans-serif;
+      font-size: 30px;
+      font-weight: 300;
+      padding-top: 25px;
+      text-align: center;
+    }
+
+    .send-form {
+      text-align: center;
+      width: 100%;
+
+      input {
+        display: inline-block;
+        width: 200px;
+      }
+    }
+
+    .button-container {
+      display: inline-block;
+      margin-top: 40px;
+      text-align: right;
+      width: 100%;
+
+      button {
+        background-color:  #f1f1f1;
+        border: none;
+        border-radius: 2px;
+        color: rgba(0, 0, 0, 0.50);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        height: 36px;
+        outline: none;
+        text-transform: uppercase;
+        width: 85px;
+      }
+
+      button:last-child {
+        margin-right: 15px;
+      }
+
+      button:hover {
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      .save:disabled {
+        cursor: default;
+      }
+    }
+  }
+
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inlineBlock {
+  display: inline-block;
+}

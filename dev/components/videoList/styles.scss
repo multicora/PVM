@@ -1,0 +1,183 @@
+//CONTENT
+.content {
+  //VIDEOS
+  .videos-container {
+    margin: 0 auto;
+    max-width: 920px;
+
+    .add-button {
+      border: 3px dashed #757575;
+      box-sizing: border-box;
+      color: #757575;
+      display: inline-block;
+      height: 204px;
+      margin-left: 10px;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      vertical-align: top;
+      width: 215px;
+
+      .icon {
+        height: 48px;
+        margin: 65px auto 0 auto;
+        opacity: 1;
+        transform: rotate(45deg);
+        width: 48px;
+
+        img {
+          display: inline-block;
+          height: 48px;
+          width: 24px;
+        }
+
+        .icon-left {
+          margin-right: -4px;
+        }
+      }
+
+      .text {
+        font-size: 24px;
+        margin-top: 24px;
+        opacity: 1;
+      }
+
+      .hoverd-button {
+        display: block;
+        font-size: 46px;
+        left: 0;
+        margin-top: -110px;
+        position: absolute;
+        width: 100%;
+
+        .record,
+        .upload {
+          cursor: pointer;
+          display: inline-block;
+        }
+
+        .record,
+        .upload {
+          color: #757575;
+          opacity: 0;
+        }
+
+        .record:hover {
+          color: $record-buttons-color;
+          transition: 0.5s;
+        }
+
+        .upload:hover {
+          color: $upload-buttons-color;
+          transition: 0.5s;
+        }
+
+        .record {
+          margin-left: -30px;
+        }
+
+        .upload {
+          margin-right: -30px;
+        }
+      }
+    }
+    @keyframes left-plus {
+      from {
+        opacity: 1;
+        transform: translateX(0px)
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(150px)
+      }
+    }
+    @keyframes right-plus {
+      from {
+        opacity: 1;
+        transform: translateX(0px)
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(-150px)
+      }
+    }
+    @keyframes record-button {
+      from {
+        font-size: 0px;
+        opacity: 0;
+        transform: translateX(0px);
+      }
+
+      to {
+        font-size: 46px;
+        opacity: 1;
+        transform: translateX(40px);
+      }
+    }
+    @keyframes upload-button {
+      from {
+        font-size: 0px;
+        opacity: 0;
+        transform: translateX(0px);
+      }
+
+      to {
+        font-size: 46px;
+        opacity: 1;
+        transform: translateX(-40px);
+      }
+    }
+    .add-button:hover {
+      .content {
+        .icon {
+          transform: rotate(180deg);
+          transition: 0.28s;
+        }
+
+        .text {
+          font-size: 0;
+          opacity: 0;
+          transition: 0.4s;
+        }
+
+        .icon {
+          .icon-left {
+            animation-delay: 0.12s;
+            animation-duration: 0.6s;
+            animation-fill-mode: forwards;
+            animation-name: left-plus;
+          }
+
+          .icon-right {
+            animation-delay: 0.12s;
+            animation-duration: 0.6s;
+            animation-fill-mode: forwards;
+            animation-name: right-plus;
+          }
+        }
+      }
+
+      .hoverd-button {
+        .upload {
+          animation-delay: 0.2s;
+          animation-duration: 0.4s;
+          animation-fill-mode: forwards;
+          animation-name: upload-button;
+        }
+
+        .record {
+          animation-delay: 0.2s;
+          animation-duration: 0.4s;
+          animation-fill-mode: forwards;
+          animation-name: record-button;
+        }
+      }
+    }
+
+    .video-container {
+      display: inline-block;
+    }
+  }
+}
