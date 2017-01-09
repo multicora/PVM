@@ -32,7 +32,7 @@ var config = {
 
 var path = {};
 path.dev = 'dev';
-path.dest = 'public';
+path.dest = 'backend/public';
 path.pug = path.dev + '/**/*.pug';
 path.css = path.dev + '/**/*.scss';
 path.js = path.dev + '/**/*.js';
