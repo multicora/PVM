@@ -72,15 +72,7 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       handler: function (request, reply) {
         DAL.users.getAllUsers().then(function(res) {
-          reply({'data' : res.map(
-            function(res) {
-              return {
-                'type': 'users',
-                'id': res.id,
-                'attributes': res
-              };
-            }
-          )});
+          reply(res);
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });
