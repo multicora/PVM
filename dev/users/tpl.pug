@@ -1,5 +1,22 @@
 .users-wrapper
-  div(ng-repeat="user in vm.users")
-    span {{user.firstName}}
-    span {{user.secondName}}
-    p {{user.email}}
+  .title-container
+    h2.title List of users
+  .users-content
+    .title
+      p.name First name
+      p.name Second name
+      p.email Email
+    .user(ng-repeat="user in vm.users")
+      p.name(ng-bind="user.firstName") Name
+      p.name(ng-bind="user.secondName") Name
+      p.email(ng-bind="user.email") Email
+      .buttons
+        button.mdl-button.mdl-js-button.mdl-button--raised
+          | Block
+        button.mdl-button.mdl-js-button.mdl-button--raised
+          | Unblock
+        button.mdl-button.mdl-js-button.mdl-button--raised
+          | Edit
+  .add-user.fab-buttons
+    button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored(ng-click="vm.addUser()")
+      i.material-icons add

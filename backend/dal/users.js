@@ -19,9 +19,10 @@ module.exports = (connection) => {
 
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT * FROM `users`;';
+        let request = 'SELECT firstName, secondName, email FROM `users`;';
 
         connection.query(request, function (err, response) {
+          console.log(response);
           err ? reject(err) : resolve(response);
         });
       });

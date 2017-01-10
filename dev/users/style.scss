@@ -1,0 +1,42 @@
+.users-wrapper {
+  width: 100%;
+  min-height: 100%;
+
+  .title-container {
+    width: 100%;
+    text-align: center;
+
+    .title {
+      display: inline-block;
+    }
+  }
+
+  .users-content {
+    margin-top: 20px;
+    padding: 0 30px;
+  }
+
+  .name,
+  .email,
+  .buttons {
+    display: inline-block;
+    height: 50px;
+    padding: 0 10px 0 10px;
+  }
+
+  .name,
+  .email {
+    width: 200px;
+    font-size: 16px;
+  }
+
+  .buttons {
+    button {
+      margin-right: 10px;
+    }
+
+    button:last-child {
+      margin-right: 0;
+    }
+  }
+}
