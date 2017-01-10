@@ -65,52 +65,45 @@ module.exports = function (server, DAL) {
     }
   });
 
-  server.route({
+server.route({
     method: 'GET',
     path: '/api/videos',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-            console.log(11111);
-        DAL.getAllvideos().then(
-          function(res) {
-            console.log(res);
-            reply(
-              {
-                'data' : res.map(function(res) {
-                  return {
-                    'type': 'video',
-                    'id': res.v_id,
-                    'attributes': res
-                  };
-                })
-              }
-            );
-          },
-          function(err) {
-            reply(Boom.badImplementation(err));
-          }
-        );
+        DAL.videos.getAllVideos().then(function(res) {
+          reply({'data' : res.map(
+            function(res) {
+              return {
+                'type': 'video',
+                'id': res.v_id,
+                'attributes': res
+              };
+            }
+          )});
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
       }
     }
   });
+
   server.route({
     method: 'GET',
     path: '/api/thumbnails',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        videoCtrl.getAllThumbnails().then(
+        videoCtrl.getThumbnails().then(
           function(res) {
             reply(
               {
                 'data' : res.map(function(res) {
-                  console.log(res);
-                  // return {
-                  //   'type': 'thumbnail',
-                  //   'id': res.v_id,
-                  //   'attributes': res
-                  // };
+                  return {
+                    'type': 'thumbnail',
+                    'id': res.v_id,
+                    'attributes': res.thumbnail
+                  };
                 })
               }
             );

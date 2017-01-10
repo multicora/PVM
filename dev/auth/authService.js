@@ -7,7 +7,7 @@
   service.$inject = ['$http'];
   function service($http) {
     this.login = function (login, password) {
-      return $http.post('/api/api/login', {
+      return $http.post('/api/login', {
         login: login,
         password: password
       });

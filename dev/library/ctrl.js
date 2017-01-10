@@ -12,13 +12,19 @@
     vm.showSendPopup = false;
     vm.recordedData = null;
 
-    libraryService.getVideos().then(function (res) {
-      vm.list = res.data.data;
-      console.log(res);
-    });
+    vm.getVideos = function () {
+      libraryService.getVideos().then(function (res) {
+        vm.list = res.data.data;
+      });
+    };
+
+    vm.getVideos();
+
 
     libraryService.getThumbnails().then(function (res) {
-      console.log(res);
+      for (let i = 0; i < res.data.data.length; i++) {
+        vm.list[i].attributes.thumbnail = res.data.data[i].attributes;
+      }
     });
 
     // Rocord popup
@@ -42,6 +48,7 @@
         {name: name + '.wmv'}
       ).then(function () {
         vm.closeRecordPopup();
+        vm.getVideos();
       });
     };
 
@@ -56,6 +63,7 @@
 
     vm.uploadEnd = function () {
       vm.closeUploadPopup();
+      vm.getVideos();
     }
 
     // Send

@@ -11,7 +11,7 @@
     };
 
     this.getThumbnails = function () {
-      return $http.get('/api/thumbnail');
+      return $http.get('/api/thumbnails');
     }
   }
 })(angular);
