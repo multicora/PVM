@@ -64,4 +64,27 @@ const usersController = require('../controllers/users.js')(DAL);
       }
     }
   });
+
+  server.route({
+    method: 'GET',
+    path: '/api/users',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.getAllUsers().then(function(res) {
+          reply({'data' : res.map(
+            function(res) {
+              return {
+                'type': 'users',
+                'id': res.id,
+                'attributes': res
+              };
+            }
+          )});
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
 }

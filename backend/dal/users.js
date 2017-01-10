@@ -17,6 +17,16 @@ module.exports = (connection) => {
       });
     },
 
+    getAllUsers: function () {
+      return new Promise(function (resolve, reject) {
+        let request = 'SELECT * FROM `users`;';
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getUserForLogin: (login) => {
       return new Promise((resolve, reject) => {
         let request = [
