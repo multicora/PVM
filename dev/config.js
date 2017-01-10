@@ -20,6 +20,10 @@
       controller: 'conversationCtrl',
       controllerAs: 'vm',
       templateUrl: 'conversations/tpl.html'
+    }).when('/users', {
+      controller: 'usersCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'users/tpl.html'
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });
