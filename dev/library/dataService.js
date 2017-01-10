@@ -10,7 +10,7 @@
       return $http.get('/api/videos');
     };
 
-    this.getThumbnail = function () {
+    this.getThumbnails = function () {
       return $http.get('/api/thumbnail');
     }
   }

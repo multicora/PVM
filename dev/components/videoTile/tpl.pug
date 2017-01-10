@@ -1,5 +1,5 @@
 .video-tile
-  img.photo(src='/files/images/photo-video.png', alt='')
+  img.photo(src='data:image/png;base64,{{vm.video.attributes.thumbnail}}', alt='')
   p.text.ellipsis(title='{{vm.video.attributes.name}}') {{vm.video.attributes.name}}
   .buttons-container
     a.menu

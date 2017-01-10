@@ -14,6 +14,11 @@
 
     libraryService.getVideos().then(function (res) {
       vm.list = res.data.data;
+      console.log(res);
+    });
+
+    libraryService.getThumbnails().then(function (res) {
+      console.log(res);
     });
 
     // Rocord popup
