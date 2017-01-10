@@ -28,7 +28,7 @@ module.exports = function (DAL) {
         });
       });
     },
-    getAllvideos: () => {
+    getThumbnails: () => {
       let boxActions;
       let videosArr;
       return Box(config.box).then(function(box) {
@@ -53,19 +53,6 @@ module.exports = function (DAL) {
         }
         return videosArr;
       });
-    },
-    getAllThumbnails: (idArr) => {
-      return Box(config.box).then(function(box) {
-        return box;
-      }).then(function(box) {
-        let thumbnailPromisies;
-
-        thumbnailPromisies = idArr.map(function(video) {
-          return box.getThumbnail(video);
-        })
-
-        return Promise.all(thumbnailPromisies);
-      })
     }
   };
 };

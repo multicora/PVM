@@ -9,5 +9,9 @@
     this.getVideos = function () {
       return $http.get('/api/videos');
     };
+
+    this.getThumbnail = function () {
+      return $http.get('/api/thumbnail');
+    }
   }
 })(angular);

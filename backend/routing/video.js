@@ -5,7 +5,7 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'POST',
-    path: '/video',
+    path: '/api/video',
     config: {
       payload: {
         output: 'stream',
@@ -40,7 +40,7 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'GET',
-    path: '/videos/{id}',
+    path: '/api/videos/{id}',
     config: {
       handler: function (request, reply) {
         videoCtrl.getFile(request.params.id).then(
@@ -67,12 +67,14 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'GET',
-    path: '/videos',
+    path: '/api/videos',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        videoCtrl.getAllvideos().then(
+            console.log(11111);
+        DAL.getAllvideos().then(
           function(res) {
+            console.log(res);
             reply(
               {
                 'data' : res.map(function(res) {
@@ -94,7 +96,7 @@ module.exports = function (server, DAL) {
   });
   server.route({
     method: 'GET',
-    path: '/thumbnails',
+    path: '/api/thumbnails',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
