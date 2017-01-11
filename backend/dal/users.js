@@ -19,7 +19,7 @@ module.exports = (connection) => {
 
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT firstName, secondName, email FROM `users`;';
+        let request = 'SELECT firstName, secondName, email, blocked FROM `users`;';
 
         connection.query(request, function (err, response) {
           console.log(response);
@@ -156,6 +156,16 @@ module.exports = (connection) => {
       const request = [
         'ALTER TABLE `users` ',
         'ADD `resetToken` VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumn_blocked: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `blocked` BOOLEAN ',
+        'DEFAULT FALSE;'
       ].join('');
 
       return connection.query(request, cb);
