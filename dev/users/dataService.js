@@ -17,5 +17,9 @@
     this.unblockUser = function (id) {
       return $http.post('/api/unblock-user', id);
     };
+
+    this.inviteUser = function (email) {
+      return $http.post('/api/invite-user', JSON.stringify(email));
+    };
   }
 })(angular);

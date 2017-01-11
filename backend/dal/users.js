@@ -22,7 +22,6 @@ module.exports = (connection) => {
         let request = 'SELECT firstName, secondName, email, blocked, id FROM `users`;';
 
         connection.query(request, function (err, response) {
-          console.log(response);
           err ? reject(err) : resolve(response);
         });
       });
@@ -138,6 +137,20 @@ module.exports = (connection) => {
             'INSERT INTO ',
             '`users` (`id`, `firstName`, `secondName`, `email`, `password`) ',
             'VALUES (NULL, "' + firstName + '","' + secondName + '", "' + email + '", "' + password + '");'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
+    addUserInvite: (email) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'INSERT INTO ',
+            '`users` (`id`, `email`) ',
+            'VALUES (NULL, "' + email + '");'
           ].join('');
 
           connection.query(request, (err, response) => {

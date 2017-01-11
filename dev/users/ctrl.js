@@ -29,6 +29,7 @@
     vm.inviteUser = function (email) {
       usersService.inviteUser(email).then(function () {
         vm.closeAddPopup();
+        vm.getUsers();
       });
     }
 

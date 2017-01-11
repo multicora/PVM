@@ -45,6 +45,16 @@ const usersController = require('../controllers/users.js')(DAL);
 
   server.route({
     method: 'POST',
+    path: '/api/invite-user',
+    config: {
+      handler: function (request, reply) {
+        reply (usersController.inviteUser(request.payload, Boom.badImplementation('Server error')));
+      }
+    }
+  });
+
+  server.route({
+    method: 'POST',
     path: '/new-password',
     config: {
       handler: function (request, reply) {
