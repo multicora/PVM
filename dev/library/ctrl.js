@@ -12,13 +12,13 @@
     vm.showSendPopup = false;
     vm.recordedData = null;
 
-    vm.getVideos = function () {
+    var getVideos = function () {
       libraryService.getVideos().then(function (res) {
         vm.list = res.data.data;
       });
     };
 
-    vm.getVideos();
+    getVideos();
 
 
     libraryService.getThumbnails().then(function (res) {
@@ -48,7 +48,7 @@
         {name: name + '.wmv'}
       ).then(function () {
         vm.closeRecordPopup();
-        vm.getVideos();
+        getVideos();
       });
     };
 
