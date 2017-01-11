@@ -1,5 +1,5 @@
 .vertical-aligned-middle.auth.full-page
-  .login-container
+  .auth-container
     h2.title Login
     form.login-form
       .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
@@ -7,7 +7,7 @@
           type="text"
           id="Login"
           ng-model="login")
-        label.mdl-textfield__label(for='sample3') Login
+        label.mdl-textfield__label(for='Login') Login
       .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
         input.mdl-textfield__input(
           type="password"
@@ -17,7 +17,7 @@
       p.error(ng-if="vm.errorMessage") Login failed: {{vm.errorMessage}}
 
       .button-container
-        a(href="/reset-password") Forgot password
+        a(ng-href="#!/reset-password") Forgot password
         button.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--colored(
           ng-click="vm.authenticate(login, password)")
           | login

@@ -35,7 +35,7 @@ const usersController = require('../controllers/users.js')(DAL);
 
   server.route({
     method: 'POST',
-    path: '/reset-password',
+    path: '/api/reset-password',
     config: {
       handler: function (request, reply) {
         reply (usersController.resetPassword(request.payload.email, Boom.badData('Invalid email'), Boom.badImplementation('Server error')));
@@ -56,6 +56,7 @@ const usersController = require('../controllers/users.js')(DAL);
   server.route({
     method: 'POST',
     path: '/new-password',
+    path: '/api/new-password',
     config: {
       auth: 'simple',
       handler: function (request, reply) {

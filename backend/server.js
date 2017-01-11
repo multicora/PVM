@@ -159,7 +159,6 @@ function run(server) {
 
 function registerAuth(server, DAL) {
   return new Promise(function (resolve, reject) {
-    debugger;
     const AuthHeader = require('hapi-auth-header');
 
     server.register(AuthHeader, (err) => {
