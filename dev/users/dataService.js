@@ -10,12 +10,20 @@
       return $http.get('/api/users');
     };
 
+    this.getUserById = function (id) {
+      return $http.get('/api/user/' + id);
+    };
+
     this.blockUser = function (id) {
       return $http.post('/api/block-user', id);
     };
 
     this.unblockUser = function (id) {
       return $http.post('/api/unblock-user', id);
+    };
+
+    this.updateUser = function (user) {
+      return $http.post('/api/update-user', user);
     };
 
     this.inviteUser = function (email) {

@@ -92,6 +92,36 @@ const usersController = require('../controllers/users.js')(DAL);
   });
 
   server.route({
+    method: 'GET',
+    path: '/api/user/{id}',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.getUserForEdit(request.params.id).then(function(res) {
+          reply(res);
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/api/update-user',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.updateUser(request.payload).then(function(res) {
+          reply(res);
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  server.route({
     method: 'POST',
     path: '/api/block-user',
     config: {

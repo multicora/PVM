@@ -12,21 +12,29 @@
   }
 
   .users-content {
-    margin-top: 20px;
+    width: 80%;
+    margin: 20px auto 0 auto;
     padding: 0 30px;
+
+    .title {
+      .name,
+      .email {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
   }
 
   .name,
   .email,
   .buttons {
     display: inline-block;
-    height: 50px;
-    padding: 0 10px 0 10px;
+    padding: 0 1%;
   }
 
   .name,
   .email {
-    width: 200px;
+    width: 23%;
     font-size: 16px;
   }
 
@@ -48,6 +56,7 @@
       box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
       max-width: 300px;
       width: 100%;
+      padding: 10px 0;
     }
 
     .popupTitle {

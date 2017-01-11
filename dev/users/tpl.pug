@@ -17,7 +17,7 @@
         button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="user.blocked"
         ng-click="vm.unblockUser(user.id)")
           | Unblock
-        button.mdl-button.mdl-js-button.mdl-button--raised
+        a.mdl-button.mdl-js-button.mdl-button--raised(ng-href="#!/user/{{user.id}}")
           | Edit
   .add-user.fab-buttons
     button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored(ng-click="vm.addUser()")

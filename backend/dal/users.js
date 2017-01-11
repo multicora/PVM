@@ -17,6 +17,18 @@ module.exports = (connection) => {
       });
     },
 
+    getUserForEdit: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT firstName, secondName, email, id FROM `users` WHERE id = "' + id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
         let request = 'SELECT firstName, secondName, email, blocked, id FROM `users`;';
@@ -165,6 +177,22 @@ module.exports = (connection) => {
           'UPDATE users ',
           'SET token="' + token + '" ',
           'WHERE email="' + email + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateUser: (user) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET firstName="' + user.firstName + '", ',
+          'secondName="' + user.secondName + '", ',
+          'email="' + user.email + '" ',
+          'WHERE id="' + user.id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
