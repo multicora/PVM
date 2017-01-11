@@ -8,7 +8,6 @@
     var vm = this;
 
     usersService.getUserById($routeParams.id).then(function (res) {
-      console.log(res.data);
       vm.user = res.data[0];
     });
 

@@ -14,7 +14,7 @@
   .users-content {
     width: 80%;
     margin: 20px auto 0 auto;
-    padding: 0 30px;
+    padding-bottom: 30px;
 
     .title {
       .name,
@@ -23,6 +23,10 @@
         font-weight: 600;
       }
     }
+
+    .user {
+      margin-top: 10px;
+    }
   }
 
   .name,
@@ -30,12 +34,16 @@
   .buttons {
     display: inline-block;
     padding: 0 1%;
+    vertical-align: middle;
   }
 
   .name,
   .email {
     width: 23%;
     font-size: 16px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .buttons {
