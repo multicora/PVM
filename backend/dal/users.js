@@ -19,7 +19,7 @@ module.exports = (connection) => {
 
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT firstName, secondName, email, blocked FROM `users`;';
+        let request = 'SELECT firstName, secondName, email, blocked, id FROM `users`;';
 
         connection.query(request, function (err, response) {
           console.log(response);
@@ -78,6 +78,34 @@ module.exports = (connection) => {
           'UPDATE `users` ',
           'SET resetToken="' + resetToken + '" ',
           'WHERE email="' + email + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    blockUser: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET blocked=TRUE ',
+          'WHERE id="' + id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    unblockUser: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET blocked=FALSE ',
+          'WHERE id="' + id + '";'
         ].join('');
 
         connection.query(request, (err, response) => {

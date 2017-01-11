@@ -11,9 +11,11 @@
       p.name(ng-bind="user.secondName") Name
       p.email(ng-bind="user.email") Email
       .buttons
-        button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="!user.blocked")
+        button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="!user.blocked"
+        ng-click="vm.blockUser(user.id)")
           | Block
-        button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="user.blocked")
+        button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="user.blocked"
+        ng-click="vm.unblockUser(user.id)")
           | Unblock
         button.mdl-button.mdl-js-button.mdl-button--raised
           | Edit

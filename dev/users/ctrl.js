@@ -32,14 +32,15 @@
       });
     }
 
-    vm.blockUser = function () {
-      usersService.blockUser().then(function () {
+    vm.blockUser = function (id) {
+      console.log(id);
+      usersService.blockUser(id).then(function () {
         vm.getUsers();
       });
     }
 
-    vm.unblockUser = function () {
-      usersService.unblockUser().then(function () {
+    vm.unblockUser = function (id) {
+      usersService.unblockUser(id).then(function () {
         vm.getUsers();
       });
     }

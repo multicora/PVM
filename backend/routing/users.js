@@ -79,4 +79,34 @@ const usersController = require('../controllers/users.js')(DAL);
       }
     }
   });
+
+  server.route({
+    method: 'POST',
+    path: '/api/block-user',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.blockUser(request.payload).then(function(res) {
+          reply(res);
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/api/unblock-user',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.unblockUser(request.payload).then(function(res) {
+          reply(res);
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
 }
