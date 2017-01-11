@@ -6,7 +6,6 @@ const passwordHash = require('password-hash');
 module.exports = (connection) => {
   return {
     createConversation: (data) => {
-      console.log(data);
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
@@ -15,7 +14,6 @@ module.exports = (connection) => {
           ].join('');
 
           connection.query(request, (err, response) => {
-            console.log(err, response);
             err ? reject(err) : resolve(response);
           });
         });

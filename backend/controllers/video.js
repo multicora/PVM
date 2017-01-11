@@ -30,7 +30,6 @@ module.exports = function (DAL) {
     },
     getThumbnails: () => {
       let boxActions;
-      let videosArr;
       return Box(config.box).then(function(box) {
 
         boxActions = box;
@@ -40,7 +39,7 @@ module.exports = function (DAL) {
 
         let thumbnailPromisies;
 
-        videosArr = videos;
+        let videosArr = videos;
         thumbnailPromisies = videos.map(function(video) {
           return boxActions.getThumbnail(video.external_file_id);
         });

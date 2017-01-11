@@ -96,17 +96,7 @@ server.route({
       handler: function (request, reply) {
         videoCtrl.getThumbnails().then(
           function(res) {
-            reply(
-              {
-                'data' : res.map(function(res) {
-                  return {
-                    'type': 'thumbnail',
-                    'id': res.v_id,
-                    'attributes': res.thumbnail
-                  };
-                })
-              }
-            );
+            reply(res.thumbnails);
           },
           function(err) {
             reply(Boom.badImplementation(err));
