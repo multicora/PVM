@@ -5,7 +5,7 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'POST',
-    path: '/video',
+    path: '/api/video',
     config: {
       payload: {
         output: 'stream',
@@ -15,8 +15,14 @@ module.exports = function (server, DAL) {
       },
 
       handler: function (request, reply) {
+        let name;
+        if(request.payload.videoName) {
+          name = request.payload.videoName;
+        } else {
+          name = request.payload.file.hapi.filename;
+        }
         videoCtrl.saveFile(
-          request.payload.videoName,
+          name,
           request.payload.file._data
         ).then(
           function () {
@@ -34,7 +40,7 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'GET',
-    path: '/videos/{id}',
+    path: '/api/videos/{id}',
     config: {
       handler: function (request, reply) {
         videoCtrl.getFile(request.params.id).then(
@@ -59,9 +65,9 @@ module.exports = function (server, DAL) {
     }
   });
 
-  server.route({
+server.route({
     method: 'GET',
-    path: '/videos',
+    path: '/api/videos',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
@@ -78,6 +84,24 @@ module.exports = function (server, DAL) {
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });
+      }
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/api/thumbnails',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        videoCtrl.getThumbnails().then(
+          function(res) {
+            reply(res.thumbnails);
+          },
+          function(err) {
+            reply(Boom.badImplementation(err));
+          }
+        );
       }
     }
   });
