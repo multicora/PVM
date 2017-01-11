@@ -7,9 +7,41 @@
   function ctrl(usersService) {
     var vm = this;
 
-    usersService.getUsers().then(function (res) {
-      vm.users = res.data;
-      console.log(vm.users);
-    })
+    vm.showAddPopup = false;
+
+    vm.getUsers = function () {
+      usersService.getUsers().then(function (res) {
+        vm.users = res.data;
+        console.log(vm.users);
+      })
+    };
+
+    vm.getUsers();
+
+    vm.addUser = function () {
+      vm.showAddPopup = true;
+    }
+
+    vm.closeAddPopup = function () {
+      vm.showAddPopup = false;
+    }
+
+    vm.inviteUser = function (email) {
+      usersService.inviteUser(email).then(function () {
+        vm.closeAddPopup();
+      });
+    }
+
+    vm.blockUser = function () {
+      usersService.blockUser().then(function () {
+        vm.getUsers();
+      });
+    }
+
+    vm.unblockUser = function () {
+      usersService.unblockUser().then(function () {
+        vm.getUsers();
+      });
+    }
   }
 })(angular);

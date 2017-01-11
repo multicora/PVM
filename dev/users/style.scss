@@ -39,4 +39,45 @@
       margin-right: 0;
     }
   }
+
+  // Add popup
+  .add-popup-container {
+    .popup {
+      background-color:  #f8f8f8;
+      border-radius: 2px;
+      box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .popupTitle {
+      color: rgba(0, 0, 0, 0.87);
+      font-family: 'Roboto-Thin', Arial, sans-serif;
+      font-size: 30px;
+      font-weight: 300;
+      padding-top: 25px;
+      text-align: center;
+    }
+
+    .add-form {
+      text-align: center;
+      width: 100%;
+
+      input {
+        display: inline-block;
+        width: 80%;
+      }
+    }
+
+    .button-container {
+      display: inline-block;
+      margin-top: 40px;
+      text-align: right;
+      width: 100%;
+
+      button:last-child {
+        margin-right: 15px;
+      }
+    }
+  }
 }
