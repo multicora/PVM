@@ -56,7 +56,7 @@ module.exports = function (DAL) {
         })
         .then((response) => {
           const message = [
-            'Enter password for your login: ' + 'http://localhost:4200/new-password/' + resetToken,
+            'Enter password for your login: ' + 'http://localhost:9000/#!/new-password/' + resetToken,
           ].join('\n');
 
           const mail = {
