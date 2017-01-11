@@ -1,7 +1,8 @@
+'use strict';
+
 const uuid = require('node-uuid');
 const config = require('../config.js');
 const Box = require('../services/box.js');
-
 const separator = '_';
 
 module.exports = function (DAL) {
@@ -25,6 +26,31 @@ module.exports = function (DAL) {
         return DAL.videos.get(id).then(function (res) {
           return box.download(res.external_file_id);
         });
+      });
+    },
+    getThumbnails: () => {
+      let boxActions;
+      return Box(config.box).then(function(box) {
+
+        boxActions = box;
+        return DAL.videos.getAllVideos();
+
+      }).then(function(videos) {
+
+        let thumbnailPromisies;
+
+        let videosArr = videos;
+        thumbnailPromisies = videos.map(function(video) {
+          return boxActions.getThumbnail(video.external_file_id);
+        });
+
+        return Promise.all(thumbnailPromisies);
+
+      }).then(function(response) {
+        for (let i = 0; i < videosArr.length; i++) {
+          videosArr[i].thumbnail = response[i].file ? response[i].file.toString('base64') : null;
+        }
+        return videosArr;
       });
     }
   };

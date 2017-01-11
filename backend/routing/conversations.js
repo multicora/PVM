@@ -11,10 +11,11 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'POST',
-    path: '/conversations',
+    path: '/api/conversations',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
+        console.log(request.payload.data);
         let author = request.auth.credentials;
         let data = request.payload.data.attributes;
         data.author = author.id;
@@ -49,7 +50,7 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'GET',
-    path: '/conversations/{id}',
+    path: '/api/conversations/{id}',
     config: {
       handler: function (request, reply) {
         let conversationId = request.params.id;

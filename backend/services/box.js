@@ -45,6 +45,13 @@ module.exports = function (config) {
               err ? reject(err) : resolve(file);
             });
           });
+        },
+        getThumbnail: function (id) {
+          return new Promise(function (resolve, reject) {
+            box.files.getThumbnail(id, null, function(err, thumbnail) {
+              err ? reject(err) : resolve(thumbnail);
+            });
+          });
         }
       });
     });
