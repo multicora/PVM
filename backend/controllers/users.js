@@ -52,11 +52,8 @@ module.exports = function (DAL) {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();
         DAL.users.addUserInvite(email).then(function() {
-          DAL.users.addResetToken(resetToken, email).then(function (res) {
-            return res;
-          });
-        })
-        .then((response) => {
+           return DAL.users.addResetToken(resetToken, email);
+        }).then((response) => {
           const message = [
             'Enter password for your login: ' + config.mailConfig.linkForNewPassword + resetToken,
           ].join('\n');
