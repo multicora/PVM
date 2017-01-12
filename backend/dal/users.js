@@ -142,13 +142,13 @@ module.exports = (connection) => {
       });
     },
 
-    addUser: (firstName, secondName, email, password) => {
+    addUser: (firstName, secondName, email, password, permanent) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
             'INSERT INTO ',
             '`users` (`id`, `firstName`, `secondName`, `email`, `password`) ',
-            'VALUES (NULL, "' + firstName + '","' + secondName + '", "' + email + '", "' + password + '");'
+            'VALUES (NULL, "' + firstName + '","' + secondName + '","' + email + '","' + password + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -201,6 +201,20 @@ module.exports = (connection) => {
       });
     },
 
+    permanentUser: (email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET permanent=TRUE ',
+          'WHERE email="' + email + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [
@@ -230,10 +244,11 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
-    addColumn_role: function (cb) {
+    addColumn_permanent: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
-        'ADD `role` VARCHAR(255);'
+        'ADD `permanent` BOOLEAN ',
+        'DEFAULT FALSE;'
       ].join('');
 
       return connection.query(request, cb);
