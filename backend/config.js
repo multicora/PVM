@@ -47,7 +47,8 @@ var config = {
     // refreshToken:"1/X_8O--i8CLIiFB5jwVV7twvdnZPRbMkazd5ZCiGV4Ic"
   },
   mailConfig: {
-    link: 'https://159.203.232.30:80/conversation/'
+    link: 'https://159.203.232.30:80/conversation/',
+    linkForNewPassword: 'https://159.203.232.30:80/new-password/'
   }
 };
 

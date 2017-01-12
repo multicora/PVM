@@ -48,21 +48,23 @@ module.exports = function (DAL) {
       });
     },
 
-    inviteUser: (email, serverError) => {
+    inviteUser: (email) => {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();
         DAL.users.addUserInvite(email).then(function() {
-          DAL.users.addResetToken(resetToken, email);
+          DAL.users.addResetToken(resetToken, email).then(function (res) {
+            return res;
+          });
         })
         .then((response) => {
           const message = [
-            'Enter password for your login: ' + 'http://localhost:9000/#!/new-password/' + resetToken,
+            'Enter password for your login: ' + config.mailConfig.linkForNewPassword + resetToken,
           ].join('\n');
 
           const mail = {
-            from: '<bizkonect.project@gmail.com>', // sender address
+            from: config.mail.user, // sender address
             to: email, // list of receivers
-            subject: 'Reset password', // Subject line
+            subject: 'Invitation', // Subject line
             text: message, // plaintext body
             html: '<div style="white-space: pre;">' + message + '</div>'
           };
@@ -75,7 +77,7 @@ module.exports = function (DAL) {
             }
           );
         }, (err) => {
-          reject(serverError);
+          reject(err);
         });
       });
     }

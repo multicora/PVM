@@ -48,7 +48,7 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/invite-user',
     config: {
       handler: function (request, reply) {
-        reply (usersController.inviteUser(request.payload, Boom.badImplementation('Server error')));
+        reply (usersController.inviteUser(request.payload.email));
       }
     }
   });

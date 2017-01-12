@@ -27,7 +27,8 @@
     };
 
     this.inviteUser = function (email) {
-      return $http.post('/api/invite-user', JSON.stringify(email));
+      console.log(email);
+      return $http.post('/api/invite-user', {'email': email});
     };
   }
 })(angular);
