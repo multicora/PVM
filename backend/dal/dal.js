@@ -15,5 +15,8 @@ module.exports = function(connection){
   // Settings
   DAL.settings = require('./settings.js')(connection);
 
+  // Roles
+  DAL.roles = require('./roles.js')(connection);
+
   return DAL;
 };

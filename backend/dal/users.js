@@ -230,6 +230,15 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
+    addColumn_role: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `role` VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
     addColumn_blocked: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
