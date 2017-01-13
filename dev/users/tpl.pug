@@ -7,7 +7,8 @@
       p.name First name
       p.name Second name
       p.email Email
-    .user(ng-repeat="user in vm.users")
+    .user(ng-repeat="user in vm.users"
+      ng-if="!user.permanent")
       p.name(ng-bind="user.firstName") Name
       p.name(ng-bind="user.secondName") Name
       p.email(ng-bind="user.email") Email

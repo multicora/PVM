@@ -5,10 +5,22 @@ const Promise = require('promise');
 module.exports = function(connection) {
   return {
 
-    getRolesByName: (name) => {
+    getRoleByName: (name) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT * FROM `roles` WHERE name = "' + name + '"'
+          'SELECT * FROM `roles` WHERE name = "' + name + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
+    getRolesByUserId: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `roles_to_user` WHERE id_user = "' + id + '";'
         ].join('');
 
         connection.query(request, (err, response) => {

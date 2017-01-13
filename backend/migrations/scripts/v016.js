@@ -11,9 +11,9 @@ module.exports = function(DAL) {
         userId = res.id;
         return userId;
       }).then(() => {
-        return DAL.roles.getRolesByName('admin');
+        return DAL.roles.getRoleByName('admin');
       }).then((res) => {
-        let roleId = res[0].id;
+        let roleId = res.id;
         return DAL.roles.addRoleToUser(userId, roleId);
       }).then((res) => {
         next();

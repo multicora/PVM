@@ -10,11 +10,7 @@ const permissionsFunc = function(credentials, callback) {
   };
 
   var userPermissions = {
-   users: {
-      create: hasRole('admin'),
-      write: hasRole('admin'),
-      read: hasRole('admin'),
-    }
+
   };
 
   callback(null, userPermissions);

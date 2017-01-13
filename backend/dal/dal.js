@@ -19,7 +19,7 @@ module.exports = function(connection){
   DAL.roles = require('./roles.js')(connection);
 
   // Actions
-  DAL.roles = require('./actions.js')(connection);
+  DAL.actions = require('./actions.js')(connection);
 
   return DAL;
 };

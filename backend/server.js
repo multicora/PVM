@@ -171,10 +171,19 @@ function registerAuth(server, DAL) {
             var tokenName = 'x-biz-token';
 
             DAL.users.getUserByToken(tokens[tokenName]).then((user) => {
-              callback(null, true, user);
-            }, (err) => {
-              callback(null, false, null);
-            });
+              return DAL.roles.getRolesByUserId(user.id);
+            }).then((roles) => {
+              console.log(roles);
+              return DAL.actions.getActionsByRoleId(roles[0].id_role);
+            }).then((actions) => {
+              console.log(actions);
+            })
+              // callback(null, true, user);
+            // }, 
+
+            // (err) => {
+              // callback(null, false, null);
+            // });
           }
         });
         resolve();
