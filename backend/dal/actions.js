@@ -17,6 +17,18 @@ module.exports = function(connection) {
       });
     },
 
+    getActionById: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `actions` WHERE id = "' + id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     addActionToRole: (actionId, roleId) => {
       return new Promise((resolve, reject) => {
         let request = [

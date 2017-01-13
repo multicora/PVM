@@ -167,23 +167,47 @@ function registerAuth(server, DAL) {
       } else {
         server.auth.strategy('simple', 'auth-header', {
           validateFunc: function (tokens, callback) {
-            var request = this;
-            var tokenName = 'x-biz-token';
+            let request = this;
+            let tokenName = 'x-biz-token';
+            let actionsArr;
+            let rolesArr;
+            let user;
 
-            DAL.users.getUserByToken(tokens[tokenName]).then((user) => {
+            DAL.users.getUserByToken(tokens[tokenName]).then((res) => {
+              user = res;
+
               return DAL.roles.getRolesByUserId(user.id);
             }).then((roles) => {
-              console.log(roles);
-              return DAL.actions.getActionsByRoleId(roles[0].id_role);
-            }).then((actions) => {
-              console.log(actions);
-            })
-              // callback(null, true, user);
-            // }, 
+              rolesArr = roles.map(function(role) {
+                return role.id_role;
+              });
 
-            // (err) => {
-              // callback(null, false, null);
-            // });
+              let getActionsPromisies = roles.map(function(role) {
+                return DAL.actions.getActionsByRoleId(role.id_role);
+              })
+
+              return Promise.all(getActionsPromisies);
+            }).then((actions) => {
+              let actionsId = actions[0].map(function(action) {
+                return action.id_action;
+              });
+
+              let actionsPromisies = actionsId.map(function(action) {
+                return DAL.actions.getActionById(action);
+              })
+
+              return Promise.all(actionsPromisies);
+            }).then((actions) => {
+              actionsArr = actions.map(function(action) {
+                return action.name;
+              });
+            }).then(() => {
+              user.roles = rolesArr;
+              user.actions = actionsArr;
+              return callback(null, true, user);
+            }, (err) => {
+              return callback(null, false, null);
+            });
           }
         });
         resolve();
