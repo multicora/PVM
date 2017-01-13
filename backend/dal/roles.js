@@ -17,6 +17,18 @@ module.exports = function(connection) {
       });
     },
 
+    getRoleById: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `roles` WHERE id = "' + id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getRolesByUserId: (id) => {
       return new Promise((resolve, reject) => {
         let request = [

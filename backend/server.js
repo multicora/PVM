@@ -178,12 +178,18 @@ function registerAuth(server, DAL) {
 
               return DAL.roles.getRolesByUserId(user.id);
             }).then((roles) => {
+              let rolesPromisies = roles.map(function(role) {
+                return DAL.roles.getRoleById(role.id_role);
+              });
+
+              return Promise.all(rolesPromisies);
+            }).then((roles) => {
               rolesArr = roles.map(function(role) {
-                return role.id_role;
+                return role.name;
               });
 
               let getActionsPromisies = roles.map(function(role) {
-                return DAL.actions.getActionsByRoleId(role.id_role);
+                return DAL.actions.getActionsByRoleId(role.id);
               })
 
               return Promise.all(getActionsPromisies);
@@ -204,6 +210,7 @@ function registerAuth(server, DAL) {
             }).then(() => {
               user.roles = rolesArr;
               user.actions = actionsArr;
+
               return callback(null, true, user);
             }, (err) => {
               return callback(null, false, null);

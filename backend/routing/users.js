@@ -55,7 +55,6 @@ const usersController = require('../controllers/users.js')(DAL);
 
   server.route({
     method: 'POST',
-    path: '/new-password',
     path: '/api/new-password',
     config: {
       auth: 'simple',
@@ -97,6 +96,11 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/user/{id}',
     config: {
       auth: 'simple',
+      plugins: {
+        hapiRouteAcl: {
+          permissions: ['edit']
+        }
+      },
       handler: function (request, reply) {
         DAL.users.getUserForEdit(request.params.id).then(function(res) {
           reply(res);
