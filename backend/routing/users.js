@@ -47,6 +47,12 @@ const usersController = require('../controllers/users.js')(DAL);
     method: 'POST',
     path: '/api/invite-user',
     config: {
+      auth: 'simple',
+      plugins: {
+        hapiRouteAcl: {
+          permissions: ['users:invite']
+        }
+      },
       handler: function (request, reply) {
         reply (usersController.inviteUser(request.payload.email));
       }
@@ -81,6 +87,11 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/users',
     config: {
       auth: 'simple',
+      plugins: {
+        hapiRouteAcl: {
+          permissions: ['users:read']
+        }
+      },
       handler: function (request, reply) {
         DAL.users.getAllUsers().then(function(res) {
           reply(res);
@@ -98,7 +109,7 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       plugins: {
         hapiRouteAcl: {
-          permissions: ['edit']
+          permissions: ['users:edit']
         }
       },
       handler: function (request, reply) {
@@ -116,6 +127,11 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/update-user',
     config: {
       auth: 'simple',
+      plugins: {
+        hapiRouteAcl: {
+          permissions: ['users:edit']
+        }
+      },
       handler: function (request, reply) {
         DAL.users.updateUser(request.payload).then(function(res) {
           reply(res);
@@ -131,6 +147,11 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/block-user',
     config: {
       auth: 'simple',
+      plugins: {
+        hapiRouteAcl: {
+          permissions: ['users:edit']
+        }
+      },
       handler: function (request, reply) {
         DAL.users.blockUser(request.payload).then(function(res) {
           reply(res);
@@ -146,6 +167,11 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/unblock-user',
     config: {
       auth: 'simple',
+      plugins: {
+        hapiRouteAcl: {
+          permissions: ['users:edit']
+        }
+      },
       handler: function (request, reply) {
         DAL.users.unblockUser(request.payload).then(function(res) {
           reply(res);

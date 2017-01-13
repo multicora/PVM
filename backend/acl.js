@@ -7,9 +7,11 @@ const permissionsFunc = function(credentials, callback) {
   };
 
   var userPermissions = {
-    read: hasAction('CAN_SEE_USERS_PAGE'),
-    edit: hasAction('CAN_EDIT_USERS'),
-    invite: hasAction('CAN_INVITE_USERS')
+    users: {
+      read: hasAction('CAN_SEE_USERS_PAGE'),
+      edit: hasAction('CAN_EDIT_USERS'),
+      invite: hasAction('CAN_INVITE_USERS')
+    }
   };
 
   callback(null, userPermissions);
