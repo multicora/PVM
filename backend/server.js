@@ -190,17 +190,21 @@ function registerAuth(server, DAL) {
 
               let getActionsPromisies = roles.map(function(role) {
                 return DAL.actions.getActionsByRoleId(role.id);
-              })
+              });
 
               return Promise.all(getActionsPromisies);
             }).then((actions) => {
-              let actionsId = actions[0].map(function(action) {
-                return action.id_action;
-              });
+
+              let actionsId = [];
+              if (actions.length > 0) {
+                actionsId = actions[0].map(function(action) {
+                  return action.id_action;
+                });
+              }
 
               let actionsPromisies = actionsId.map(function(action) {
                 return DAL.actions.getActionById(action);
-              })
+              });
 
               return Promise.all(actionsPromisies);
             }).then((actions) => {

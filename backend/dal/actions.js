@@ -12,7 +12,7 @@ module.exports = function(connection) {
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0]);
         });
       });
     },
@@ -24,7 +24,7 @@ module.exports = function(connection) {
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0]);
         });
       });
     },
