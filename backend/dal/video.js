@@ -77,11 +77,28 @@ module.exports = function(connection) {
     addColumn_author: function (cb) {
       const request = [
         'ALTER TABLE `videos` ',
-        'ADD `author` VARCHAR(255) ',
+        'ADD `author` varchar(255) ',
         'NOT NULL;'
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+    changeDataType_author: function (cb) {
+      const request = [
+        'ALTER TABLE `videos` ',
+        'MODIFY `author` int(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+    addForeignKey_author: function (cb) {
+      const request = [
+       'ALTER TABLE `videos` ',
+       'ADD FOREIGN KEY (author) REFERENCES users(id);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
   }
 }
+'ADD FOREIGN KEY (author) REFERENCES users(id);'
