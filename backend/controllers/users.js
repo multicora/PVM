@@ -46,6 +46,37 @@ module.exports = function (DAL) {
           reject(serverError);
         });
       });
+    },
+
+    inviteUser: (email) => {
+      return new Promise((resolve, reject) => {
+        let resetToken = utils.newToken();
+        DAL.users.addUserInvite(email).then(function() {
+           return DAL.users.addResetToken(resetToken, email);
+        }).then((response) => {
+          const message = [
+            'Enter password for your login: ' + config.mailConfig.linkForNewPassword + resetToken,
+          ].join('\n');
+
+          const mail = {
+            from: config.mail.user, // sender address
+            to: email, // list of receivers
+            subject: 'Invitation', // Subject line
+            text: message, // plaintext body
+            html: '<div style="white-space: pre;">' + message + '</div>'
+          };
+
+          Mailer(config.mail).send(mail).then(
+            (res) => {
+              resolve({"status": "success"});
+            }, (err) => {
+              reject(err);
+            }
+          );
+        }, (err) => {
+          reject(err);
+        });
+      });
     }
   };
 }

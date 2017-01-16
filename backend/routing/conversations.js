@@ -31,7 +31,7 @@ module.exports = function (server, DAL) {
             to: request.payload.data.attributes.email, // list of receivers
             subject: 'Complaint from ' + author.firstName + ' ' +author.secondName, // Subject line
             text: message, // plaintext body
-            html: Template(config.mailConfig.link, data.video)
+            html: Template.templateForConversation(config.mailConfig.link, data.video)
           };
 
           Mailer(config.mail).send(mail).then(

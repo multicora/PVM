@@ -1,0 +1,97 @@
+.users-wrapper {
+  width: 100%;
+  min-height: 100%;
+
+  .title-container {
+    width: 100%;
+    text-align: center;
+
+    .title {
+      display: inline-block;
+    }
+  }
+
+  .users-content {
+    width: 80%;
+    margin: 20px auto 0 auto;
+    padding-bottom: 30px;
+
+    .title {
+      .name,
+      .email {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    .user {
+      margin-top: 10px;
+    }
+  }
+
+  .name,
+  .email,
+  .buttons {
+    display: inline-block;
+    padding: 0 1%;
+    vertical-align: middle;
+  }
+
+  .name,
+  .email {
+    width: 23%;
+    font-size: 16px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .buttons {
+    .blocked-buttons {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+
+  // Add popup
+  .add-popup-container {
+    .popup {
+      background-color:  #f8f8f8;
+      border-radius: 2px;
+      box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
+      max-width: 300px;
+      width: 100%;
+      padding: 10px 0;
+    }
+
+    .popupTitle {
+      color: rgba(0, 0, 0, 0.87);
+      font-family: 'Roboto-Thin', Arial, sans-serif;
+      font-size: 30px;
+      font-weight: 300;
+      padding-top: 25px;
+      text-align: center;
+    }
+
+    .add-form {
+      text-align: center;
+      width: 100%;
+
+      input {
+        display: inline-block;
+        width: 80%;
+      }
+    }
+
+    .button-container {
+      display: inline-block;
+      margin-top: 40px;
+      text-align: right;
+      width: 100%;
+
+      button:last-child {
+        margin-right: 15px;
+      }
+    }
+  }
+}

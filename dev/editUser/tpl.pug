@@ -1,0 +1,22 @@
+.user-wrapper
+  app-header
+  .title-container
+    h2.title Edit user
+  .edit-user-form
+    form
+      input.mdl-textfield__input(
+        type="text"
+        placeholder="First Name"
+        ng-model="vm.user.firstName")
+      input.mdl-textfield__input(
+        type="text"
+        placeholder="Second Name"
+        ng-model="vm.user.secondName")
+      input.mdl-textfield__input(
+        type="email"
+        placeholder="Email"
+        ng-model="vm.user.email"
+        required)
+      .button-container
+        button.mdl-button.mdl-js-button.mdl-button--raised.save(ng-click="vm.editUser()")
+          | Save

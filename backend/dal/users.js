@@ -17,6 +17,28 @@ module.exports = (connection) => {
       });
     },
 
+    getUserForEdit: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT firstName, secondName, email, id FROM `users` WHERE id = "' + id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    getAllUsers: function () {
+      return new Promise(function (resolve, reject) {
+        let request = 'SELECT firstName, secondName, email, blocked, id, permanent FROM `users`;';
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getUserForLogin: (login) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -75,6 +97,34 @@ module.exports = (connection) => {
       });
     },
 
+    blockUser: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET blocked=TRUE ',
+          'WHERE id="' + id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    unblockUser: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET blocked=FALSE ',
+          'WHERE id="' + id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     newPassword: (resetToken, password) => {
       return new Promise((resolve, reject) => {
 
@@ -92,13 +142,27 @@ module.exports = (connection) => {
       });
     },
 
-    addUser: (firstName, secondName, email, password) => {
+    addUser: (firstName, secondName, email, password, permanent) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
             'INSERT INTO ',
             '`users` (`id`, `firstName`, `secondName`, `email`, `password`) ',
-            'VALUES (NULL, "' + firstName + '","' + secondName + '", "' + email + '", "' + password + '");'
+            'VALUES (NULL, "' + firstName + '","' + secondName + '","' + email + '","' + password + '");'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
+    addUserInvite: (email) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'INSERT INTO ',
+            '`users` (`id`, `email`) ',
+            'VALUES (NULL, "' + email + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -113,6 +177,36 @@ module.exports = (connection) => {
           'UPDATE users ',
           'SET token="' + token + '" ',
           'WHERE email="' + email + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateUser: (user) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET firstName="' + user.firstName + '", ',
+          'secondName="' + user.secondName + '", ',
+          'email="' + user.email + '" ',
+          'WHERE id="' + user.id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    permanentUser: (email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET permanent=TRUE ',
+          'WHERE email="' + email + '";'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -145,6 +239,26 @@ module.exports = (connection) => {
       const request = [
         'ALTER TABLE `users` ',
         'ADD `resetToken` VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumn_permanent: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `permanent` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumn_blocked: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `blocked` BOOLEAN ',
+        'DEFAULT FALSE;'
       ].join('');
 
       return connection.query(request, cb);

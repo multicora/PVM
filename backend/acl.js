@@ -1,15 +1,17 @@
 const permissionsFunc = function(credentials, callback) {
-  // let userPermissions = {};
 
-  const roles = credentials.roles.map( (role) => {
-    return role.name;
-  } );
+  const actions = credentials.actions;
 
-  const hasRole = (name) => {
-    return roles.indexOf(name) >= 0;
+  const hasAction = (name) => {
+    return actions.indexOf(name) >= 0;
   };
 
   var userPermissions = {
+    users: {
+      read: hasAction('CAN_SEE_USERS_PAGE'),
+      edit: hasAction('CAN_EDIT_USERS'),
+      invite: hasAction('CAN_INVITE_USERS')
+    }
   };
 
   callback(null, userPermissions);

@@ -1,0 +1,38 @@
+.users-wrapper
+  app-header
+  .title-container
+    h2.title List of users
+  .users-content
+    .title
+      p.name First name
+      p.name Second name
+      p.email Email
+    .user(ng-repeat="user in vm.users")
+      p.name(ng-bind="user.firstName") Name
+      p.name(ng-bind="user.secondName") Name
+      p.email(ng-bind="user.email") Email
+      .buttons
+        .blocked-buttons(ng-if="!user.permanent")
+          button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="!user.blocked"
+          ng-click="vm.blockUser(user.id)")
+            | Block
+          button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="user.blocked"
+          ng-click="vm.unblockUser(user.id)")
+            | Unblock
+        a.mdl-button.mdl-js-button.mdl-button--raised(ng-href="#!/user/{{user.id}}")
+          | Edit
+  .add-user.fab-buttons
+    button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored(ng-click="vm.addUser()")
+      i.material-icons add
+
+  //- Add user popup
+  popup.add-popup-container(ng-if="vm.showAddPopup")
+    form.add-form({{action='', on='submit', }}='')
+      p.popupTitle Add user
+      input.mdl-textfield__input(
+        type="email"
+        placeholder="email"
+        ng-model="email")
+      .button-container
+        button.mdl-button.mdl-js-button.mdl-button--raised.close(ng-click="vm.closeAddPopup()") close
+        button.mdl-button.mdl-js-button.mdl-button--raised.save(ng-click="vm.inviteUser(email)") send

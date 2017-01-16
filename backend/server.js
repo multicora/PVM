@@ -167,13 +167,57 @@ function registerAuth(server, DAL) {
       } else {
         server.auth.strategy('simple', 'auth-header', {
           validateFunc: function (tokens, callback) {
-            var request = this;
-            var tokenName = 'x-biz-token';
+            let request = this;
+            let tokenName = 'x-biz-token';
+            let actionsArr;
+            let rolesArr;
+            let user;
 
-            DAL.users.getUserByToken(tokens[tokenName]).then((user) => {
-              callback(null, true, user);
+            DAL.users.getUserByToken(tokens[tokenName]).then((res) => {
+              user = res;
+
+              return DAL.roles.getRolesByUserId(user.id);
+            }).then((roles) => {
+              let rolesPromisies = roles.map(function(role) {
+                return DAL.roles.getRoleById(role.id_role);
+              });
+
+              return Promise.all(rolesPromisies);
+            }).then((roles) => {
+              rolesArr = roles.map(function(role) {
+                return role.name;
+              });
+
+              let getActionsPromisies = roles.map(function(role) {
+                return DAL.actions.getActionsByRoleId(role.id);
+              });
+
+              return Promise.all(getActionsPromisies);
+            }).then((actions) => {
+
+              let actionsId = [];
+              if (actions.length > 0) {
+                actionsId = actions[0].map(function(action) {
+                  return action.id_action;
+                });
+              }
+
+              let actionsPromisies = actionsId.map(function(action) {
+                return DAL.actions.getActionById(action);
+              });
+
+              return Promise.all(actionsPromisies);
+            }).then((actions) => {
+              actionsArr = actions.map(function(action) {
+                return action.name;
+              });
+            }).then(() => {
+              user.roles = rolesArr;
+              user.actions = actionsArr;
+
+              return callback(null, true, user);
             }, (err) => {
-              callback(null, false, null);
+              return callback(null, false, null);
             });
           }
         });

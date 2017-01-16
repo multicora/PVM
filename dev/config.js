@@ -28,6 +28,14 @@
       controller: 'conversationCtrl',
       controllerAs: 'vm',
       templateUrl: 'conversations/tpl.html'
+    }).when('/users', {
+      controller: 'usersCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'users/tpl.html'
+    }).when('/user/:id', {
+      controller: 'editUserCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'editUser/tpl.html'
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });
