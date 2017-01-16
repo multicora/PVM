@@ -28,9 +28,9 @@ module.exports = function(connection) {
         });
       });
     },
-    getAllVideos: function () {
+    getAllVideos: function (author) {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT * FROM `videos`;';
+        let request = 'SELECT * FROM `videos` WHERE author = ' + author + ';';
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);

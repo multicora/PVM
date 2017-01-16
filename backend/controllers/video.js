@@ -28,13 +28,13 @@ module.exports = function (DAL) {
         });
       });
     },
-    getThumbnails: () => {
+    getThumbnails: (authorId) => {
       let boxActions;
       let videosArr;
       return Box(config.box).then(function(box) {
 
         boxActions = box;
-        return DAL.videos.getAllVideos();
+        return DAL.videos.getAllVideos(authorId);
 
       }).then(function(videos) {
 
