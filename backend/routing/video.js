@@ -97,7 +97,7 @@ server.route({
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        videoCtrl.getThumbnails().then(
+        videoCtrl.getThumbnails(request.auth.credentials.id).then(
           function(res) {
           reply({'data' : res.map(
             function(res) {
