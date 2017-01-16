@@ -4,12 +4,12 @@ const Promise = require('promise');
 
 module.exports = function(connection) {
   return {
-    add: function (name, externalName, id) {
+    add: function (name, userId, externalName, id) {
       return new Promise(function (resolve, reject) {
         let request = [
           'INSERT INTO ',
-            '`videos` (`v_id`, `name`, `url`, `external_file_name`, `external_file_id`) ',
-            'VALUES (NULL, "' + name + '", NULL, "' + externalName + '", "' + id + '");'
+            '`videos` (`v_id`, `name`, `url`, `external_file_name`, `external_file_id`, `author`) ',
+            'VALUES (NULL, "' + name + '", NULL, "' + externalName + '", "' + id + '", "' + userId + '");'
         ].join('');
 
         connection.query(request, function (err) {
@@ -74,14 +74,14 @@ module.exports = function(connection) {
 
       return connection.query(request, cb);
     },
-    // addColumn_autor: function (cb) {
-    //   const request = [
-    //     'ALTER TABLE `videos` ',
-    //     'ADD `author` VARCHAR(255) ',
-    //     'NOT NULL;'
-    //   ].join('');
+    addColumn_author: function (cb) {
+      const request = [
+        'ALTER TABLE `videos` ',
+        'ADD `author` VARCHAR(255) ',
+        'NOT NULL;'
+      ].join('');
 
-    //   return connection.query(request, cb);
-    // }
+      return connection.query(request, cb);
+    }
   }
 }

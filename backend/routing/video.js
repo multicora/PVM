@@ -13,8 +13,10 @@ module.exports = function (server, DAL) {
         maxBytes: 2e+8, // 200Mb
         allow: 'multipart/form-data'
       },
+      auth: 'simple',
 
       handler: function (request, reply) {
+        let user = request.auth.credentials;
         let name;
         if(request.payload.videoName) {
           name = request.payload.videoName;
@@ -23,6 +25,7 @@ module.exports = function (server, DAL) {
         }
         videoCtrl.saveFile(
           name,
+          user.id,
           request.payload.file._data
         ).then(
           function () {
