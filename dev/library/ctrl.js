@@ -63,7 +63,7 @@
 
     vm.uploadEnd = function () {
       vm.closeUploadPopup();
-      vm.getVideos();
+      getVideos();
     }
 
     // Send
