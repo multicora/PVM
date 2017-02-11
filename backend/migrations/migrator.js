@@ -18,6 +18,8 @@ module.exports = function (DAL, options) {
   function versionCb(v) {
     var migrations = fillMigrations(options.migrations || []);
 
+    console.log('    Current DB version: ' + v);
+
     runAllMigrations(
       migrations,
       parseInt(v, 10),
