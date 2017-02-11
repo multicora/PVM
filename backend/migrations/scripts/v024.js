@@ -8,10 +8,6 @@ module.exports = function(DAL) {
       let userId;
 
       DAL.users.getAllUsers().then((users) => {
-        console.log('=-=');
-        console.log(users);
-        console.log('=-=');
-        console.log(users[0]);
         userId = users[0].id;
       }).then(() => {
         return DAL.videos.getAll();
