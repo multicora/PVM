@@ -28,9 +28,31 @@ module.exports = function(connection) {
         });
       });
     },
-    getAllVideos: function (author) {
+    getByAuthor: function (author) {
       return new Promise(function (resolve, reject) {
         let request = 'SELECT * FROM `videos` WHERE author = ' + author + ';';
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+    getAll: function () {
+      return new Promise(function (resolve, reject) {
+        let request = 'SELECT * FROM `videos`;';
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    setAuthor: function (videoId, authorId) {
+      return new Promise(function (resolve, reject) {
+        const request = [
+         'UPDATE videos SET author=' + authorId + ' ',
+         'WHERE v_id = ' + videoId
+        ].join('');
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
@@ -75,13 +97,16 @@ module.exports = function(connection) {
       return connection.query(request, cb);
     },
     addColumn_author: function (cb) {
+      const removeRequest = 'ALTER TABLE videos DROP COLUMN author;';
       const request = [
         'ALTER TABLE `videos` ',
         'ADD `author` varchar(255) ',
         'NOT NULL;'
       ].join('');
 
-      return connection.query(request, cb);
+      return connection.query(removeRequest, function () {
+        connection.query(request, cb);
+      });
     },
     changeDataType_author: function (cb) {
       const request = [
@@ -98,7 +123,6 @@ module.exports = function(connection) {
       ].join('');
 
       return connection.query(request, cb);
-    },
+    }
   }
-}
-'ADD FOREIGN KEY (author) REFERENCES users(id);'
+};

@@ -74,7 +74,7 @@ server.route({
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.videos.getAllVideos(request.auth.credentials.id).then(function(res) {
+        DAL.videos.getByAuthor(request.auth.credentials.id).then(function(res) {
           reply({'data' : res.map(
             function(res) {
               return {

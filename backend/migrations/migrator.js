@@ -25,10 +25,8 @@ module.exports = function (DAL, options) {
       function (v) {
         if (!DEBUG) {
           console.log('    DB version: ' + v);
-          options.setDbVersion(DAL, v, options.done);
-        } else {
-          options.done();
         }
+        options.done();
       }
     );
   }
@@ -59,7 +57,17 @@ module.exports = function (DAL, options) {
         runMigration(
           currentMigration.script,
           currentMigration.message,
-          _.bind(next, null, migrations, v + 1, DAL, cb)
+          function () {
+            if (!DEBUG) {
+              options.setDbVersion(
+                DAL,
+                v,
+                _.bind(next, null, migrations, v + 1, DAL, cb)
+              );
+            } else {
+              next(migrations, v + 1, DAL, cb);
+            }
+          }
         );
       } else {
         cb(v - 1, DAL);

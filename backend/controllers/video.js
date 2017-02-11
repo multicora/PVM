@@ -34,7 +34,7 @@ module.exports = function (DAL) {
       return Box(config.box).then(function(box) {
 
         boxActions = box;
-        return DAL.videos.getAllVideos(authorId);
+        return DAL.videos.getByAuthor(authorId);
 
       }).then(function(videos) {
 

@@ -151,7 +151,7 @@ function run(server) {
   return new Promise(
     function (resolve, reject) {
       server.start((err) => {
-        err ? reject() : resolve();
+        err ? reject(err) : resolve();
       });
     }
   );
