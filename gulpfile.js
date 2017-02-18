@@ -162,7 +162,7 @@ gulp.task('clean', function() {
 
 gulp.task('install', function() {
   return gulp.src(['./bower.json', './package.json'])
-    .pipe(install());
+    .pipe(install({allowRoot: true}));
 });
 
 gulp.task('backend', function() {
