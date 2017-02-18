@@ -82,6 +82,20 @@ const usersController = require('../controllers/users.js')(DAL);
     }
   });
 
+  /**
+   * @api {get} /api/users Request Users list
+   * @apiName GetUsers
+   * @apiGroup Users
+   *
+   * @apiSuccess {Object[]} users           List of user profiles.
+   * @apiSuccess {String}   profiles.name   User name.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     [{
+   *       "name": "John"
+   *     }]
+   */
   server.route({
     method: 'GET',
     path: '/api/users',
@@ -181,4 +195,4 @@ const usersController = require('../controllers/users.js')(DAL);
       }
     }
   });
-}
+};

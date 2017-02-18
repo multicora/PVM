@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 7,
     message: 'Add "viewed" in "conversations" table',
     script: function (next) {
-      DAL.conversations.addColumn_viewed(next);
+      DAL.conversations.addColumnViewed(next);
     }
-  }
+  };
 };

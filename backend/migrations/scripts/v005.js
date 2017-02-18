@@ -7,5 +7,5 @@ module.exports = function(DAL) {
     script: function (next) {
       DAL.users.addUser('Robert', 'Mon', 'user@user.com', 'user').then(()=>{next();});
     }
-  }
+  };
 };

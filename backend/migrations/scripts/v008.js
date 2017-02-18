@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 8,
     message: 'Add "resetToken" in "users" table',
     script: function (next) {
-      DAL.users.addColumn_resetToken(next);
+      DAL.users.addColumnResetToken(next);
     }
-  }
+  };
 };

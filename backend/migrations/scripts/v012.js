@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 12,
     message: 'Add "permanent" in "users" table',
     script: function (next) {
-      DAL.users.addColumn_permanent(next);
+      DAL.users.addColumnPermanent(next);
     }
-  }
+  };
 };

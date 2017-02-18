@@ -1,3 +1,5 @@
+'use strict';
+
 const permissionsFunc = function(credentials, callback) {
 
   const actions = credentials.actions;

@@ -7,5 +7,5 @@ module.exports = function(DAL) {
     script: function (next) {
       DAL.roles.addRole('admin').then(()=>{next();});
     }
-  }
+  };
 };

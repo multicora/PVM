@@ -60,12 +60,12 @@ function startServer(tls) {
         function(err) {
           logError(err);
         }
-      )
+      );
     },
     function (err) {
       logError(err);
     }
-  )
+  );
 }
 
 function getTls() {
@@ -78,17 +78,17 @@ function getTls() {
     };
     fs.readFile('./cakey.pem', function (err, key) {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
         tls.key = key;
         fs.readFile('./cacert.pem', function (err, cert) {
           if (err) {
-            reject(err)
+            reject(err);
           } else {
             tls.cert = cert;
             fs.readFile('./passphrase.txt', 'utf8', function (err, passphrase) {
               if (err) {
-                reject(err)
+                reject(err);
               } else {
                 tls.passphrase = passphrase;
                 resolve(tls);

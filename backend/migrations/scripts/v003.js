@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 3,
     message: 'Add "external_file_id" in "videos" table',
     script: function (next) {
-      DAL.videos.addColumn_externalFileId(next);
+      DAL.videos.addColumnExternalFileId(next);
     }
-  }
+  };
 };

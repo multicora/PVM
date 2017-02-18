@@ -1,7 +1,7 @@
 'use strict';
 
 const Boom = require('boom');
-const Mailer = require('../services/mailer.js');
+const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const Template = require('../services/mailTemplate.js');
 
@@ -23,7 +23,7 @@ module.exports = function (server, DAL) {
         DAL.conversations.createConversation(request.payload.data.attributes).then(function(res) {
 
           const message = [
-            'Link: ' + config.mailConfig.link + data.video,
+            'Link: ' + config.mailConfig.link + data.video
           ].join('\n');
 
           const mail = {
@@ -34,7 +34,7 @@ module.exports = function (server, DAL) {
             html: Template.templateForConversation(config.mailConfig.link, data.video)
           };
 
-          Mailer(config.mail).send(mail).then(
+          mailer(config.mail).send(mail).then(
             (res) => {
               reply(res);
             }, (err) => {
@@ -70,8 +70,8 @@ module.exports = function (server, DAL) {
               });
             },
             function (err) {
-              console.log('Error:')
-              console.log(new Error(err))
+              console.log('Error:');
+              console.log(new Error(err));
               reply(500, 'Internal error');
             }
           );

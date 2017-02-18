@@ -235,7 +235,7 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
-    addColumn_resetToken: function (cb) {
+    addColumnResetToken: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
         'ADD `resetToken` VARCHAR(255);'
@@ -244,7 +244,7 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
-    addColumn_permanent: function (cb) {
+    addColumnPermanent: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
         'ADD `permanent` BOOLEAN ',
@@ -254,7 +254,7 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
-    addColumn_blocked: function (cb) {
+    addColumnBlocked: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
         'ADD `blocked` BOOLEAN ',
@@ -264,5 +264,5 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     }
 
-  }
-}
+  };
+};

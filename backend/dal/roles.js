@@ -130,4 +130,4 @@ module.exports = function(connection) {
       return connection.query(request, cb);
     }
   };
-}
+};
