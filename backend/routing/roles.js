@@ -35,30 +35,21 @@ module.exports = function (server, DAL) {
           });
 
           roles.map(function(role) {
-            actions.forEach(function(action) {
-              role.forEach(function(actionId) {
-                if (actionId == action.id) {
-                  actionId = action;
+            actions.map(function(action) {
+              for (var i = 0; i < role.actions.length; i++) {
+                if (role.actions[i] === action.id) {
+                  role.actions[i] = action;
                 }
-              });
+              }
             });
           });
 
-          console.log(roles);
+          reply(roles);
+
         } catch (err) {
-          console.log(err);
+          reply(JSON.stringify(Boom.badImplementation(err)));
         }
-
       });
-
-    //   DAL.roles.getRoles().then(
-    //     function (roles) {
-
-    //     reply(docs)
-    //     }, function(err) {
-    //       reply(JSON.stringify(Boom.badImplementation(err)));
-    //     }
-    //   );
     }
   });
 };

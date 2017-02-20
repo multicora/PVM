@@ -24,8 +24,8 @@
         });
 
         user.roles.forEach(function (roles) {
-          rolesMap[roles.name].actions.forEach(function (name, i) {
-            usersActions = usersActions.concat(rolesMap[roles.name].actions[i].name);
+          rolesMap[roles].actions.forEach(function (name, i) {
+            usersActions = usersActions.concat(rolesMap[roles].actions[i].name);
           });
         });
         answer = usersActions.indexOf(action) >= 0;
