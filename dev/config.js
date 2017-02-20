@@ -4,9 +4,18 @@
 
   app.config(config);
 
-  config.$inject = ['$routeProvider', '$httpProvider'];
-  function config($routeProvider, $httpProvider) {
+  config.$inject = [
+    '$routeProvider',
+    '$httpProvider',
+    'resolverProvider'
+  ];
+  function config(
+    $routeProvider,
+    $httpProvider,
+    resolverProvider
+  ) {
     $httpProvider.interceptors.push('interseptor');
+    var resolver = resolverProvider.$get();
 
     $routeProvider.when('/login', {
       controller: 'authCtrl',
@@ -31,11 +40,17 @@
     }).when('/users', {
       controller: 'usersCtrl',
       controllerAs: 'vm',
-      templateUrl: 'users/tpl.html'
+      templateUrl: 'users/tpl.html',
+      resolve: {
+        resolver: resolver.get('SEE_ADMIN_PAGE', /^\/admin\/users/)
+      }
     }).when('/user/:id', {
       controller: 'editUserCtrl',
       controllerAs: 'vm',
-      templateUrl: 'editUser/tpl.html'
+      templateUrl: 'editUser/tpl.html',
+      resolve: {
+        resolver: resolver.get('SEE_ADMIN_PAGE', /^\/admin\/use\/[a-zA-Z-0-9]+/)
+      }
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });

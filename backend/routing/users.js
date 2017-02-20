@@ -181,4 +181,15 @@ const usersController = require('../controllers/users.js')(DAL);
       }
     }
   });
+
+  server.route({
+    method: 'GET',
+    path: '/api/currentUser',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        reply(request.auth.credentials);
+      }
+    }
+  });
 }

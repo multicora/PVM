@@ -29,5 +29,6 @@ module.exports.init = function (server, DAL) {
 
   require('./routing/video.js')(server, DAL);
   require('./routing/users.js')(server, DAL);
+  require('./routing/roles.js')(server, DAL);
   require('./routing/conversations.js')(server, DAL);
 };
