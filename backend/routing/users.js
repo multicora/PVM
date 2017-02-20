@@ -206,4 +206,4 @@ const usersController = require('../controllers/users.js')(DAL);
       }
     }
   });
-}
+};
