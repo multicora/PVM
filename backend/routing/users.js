@@ -45,6 +45,26 @@ const usersController = require('../controllers/users.js')(DAL);
 
   server.route({
     method: 'POST',
+    path: '/api/register',
+    config: {
+      handler: function (request, reply) {
+        if (request.payload.confirmPassword === request.payload.password) {
+          DAL.users.register(request.payload.email, request.payload.password).then(
+            (res) => {
+              reply({"status": "success"});
+            }, (err) => {
+              reply( Boom.badImplementation(err.message, err) );
+            }
+          );
+        } else {
+          reply(Boom.badData('Passwords do not match'));
+        }
+      }
+    }
+  });
+
+  server.route({
+    method: 'POST',
     path: '/api/invite-user',
     config: {
       auth: 'simple',
