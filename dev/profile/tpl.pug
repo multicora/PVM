@@ -1,0 +1,97 @@
+.profile-wrap
+  app-header
+  .title-container
+    button.button-edit.btn(
+    type="button"
+    ng-hide="vm.editMod"
+    ng-click="vm.editMod = true")
+      i.material-icons edit
+    button.button-edit.btn(
+    type="button"
+    ng-show="vm.editMod"
+    ng-click="vm.save()")
+      i.material-icons save
+    h2.title My profile
+  .profile-container
+    .profile-photo(
+      ng-style="{backgroundImage: 'url('+ vm.newUser.photo + ')' }")
+      div
+        label(for="file")
+          .upload-photo.btn
+            input.hidden(type="file" id="file")
+            i.material-icons file_upload
+    p.errorMessage(ng-if="vm.fileError"
+      ng-bind="vm.fileError")
+    .personal-info
+      ul.mdl-list.info-content
+        li.mdl-list__item
+          .mdl-list__item-primary-content Personal information
+
+        li.mdl-list__item
+          .mdl-list__item-primary-content
+            i.material-icons.mdl-list__item-icon person
+            span(ng-hide="vm.editMod") {{vm.newUser.firstName}}
+            input.mdl-textfield__input(
+              ng-show="vm.editMod"
+              type="text"
+              ng-model="vm.newUser.firstName")
+
+        li.mdl-list__item
+          .mdl-list__item-primary-content
+            i.material-icons.mdl-list__item-icon person
+            span(ng-hide="vm.editMod") {{vm.newUser.secondName}}
+            input.mdl-textfield__input(
+              ng-show="vm.editMod"
+              type="text"
+              ng-model="vm.newUser.secondName")
+
+        li.mdl-list__item
+          .mdl-list__item-primary-content
+            i.material-icons.mdl-list__item-icon phone
+            span(ng-hide="vm.editMod") {{vm.newUser.phone}}
+            input.mdl-textfield__input(
+              ng-show="vm.editMod"
+              type="text"
+              ng-model="vm.newUser.phone")
+
+        li.mdl-list__item
+          .mdl-list__item-primary-content
+            i.material-icons.mdl-list__item-icon person
+            span(ng-hide="vm.editMod") {{vm.newUser.email}}
+            input.mdl-textfield__input(
+              ng-show="vm.editMod"
+              type="email"
+              ng-model="vm.newUser.email")
+
+    .company-info
+      ul.mdl-list.info-content
+        li.mdl-list__item
+          .mdl-list__item-primary-content Company information
+
+        li.mdl-list__item
+          .mdl-list__item-primary-content
+            i.material-icons.mdl-list__item-icon work
+            span(ng-hide="vm.editMod") {{vm.newUser.companyName}}
+            input.mdl-textfield__input(
+              ng-show="vm.editMod"
+              type="text"
+              ng-model="vm.newUser.companyName")
+
+        li.mdl-list__item
+          .mdl-list__item-primary-content
+            .company-logo(
+              ng-style="{backgroundImage: 'url('+ vm.newUser.companyLogo + ')' }")
+            div
+              label(for="logo")
+                .upload-logo
+                  input.hidden(type="file" id="logo")
+                  i.material-icons.btn file_upload
+
+        li.mdl-list__item
+          .mdl-list__item-primary-content
+            i.material-icons.mdl-list__item-icon work
+            span(ng-hide="vm.editMod") {{vm.newUser.companyPosition}}
+            input.mdl-textfield__input(
+              ng-show="vm.editMod"
+              type="text"
+              ng-model="vm.newUser.companyPosition")

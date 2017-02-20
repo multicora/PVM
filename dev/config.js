@@ -36,6 +36,10 @@
       controller: 'editUserCtrl',
       controllerAs: 'vm',
       templateUrl: 'editUser/tpl.html'
+    }).when('/profile', {
+      controller: 'profileCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'profile/tpl.html'
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });

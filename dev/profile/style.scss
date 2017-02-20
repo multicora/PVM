@@ -1,0 +1,95 @@
+.profile-wrap {
+  width: 100%;
+  min-height: 100%;
+
+  .title-container {
+    text-align: center;
+
+    .button-edit {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      outline: none;
+      border: 2px solid rgba(0, 0, 0, 0.26);
+      vertical-align: middle;
+    }
+
+    .title {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .profile-photo {
+    width: 320px;
+    height: 320px;
+    margin: 0 auto 20px auto;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.26);
+
+    .upload-photo {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      outline: none;
+      border: 2px solid rgba(0, 0, 0, 0.26);
+      bottom: 0;
+      right: 50%;
+      margin-right: -25px;
+      text-align: center;
+      line-height: 50px;
+      background-color: #fff;
+
+      i {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .errorMessage {
+    text-align: center;
+  }
+
+  .personal-info,
+  .company-info {
+    padding: 0 25px;
+  }
+
+  .personal-info {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+  }
+
+  .company-logo {
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.26);
+    margin-right: 10px;
+  }
+}
+
+@media (min-width: 600px) {
+  .profile-wrap {
+    .personal-info,
+    .company-info {
+      padding: 0px;
+      width: 50%;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .info-content {
+      width: 300px;
+      margin-right: auto;
+      margin-left: auto; 
+    }
+
+    .personal-info {
+      box-sizing: border-box;
+      border-bottom: none;
+      border-right: 1px solid rgba(0, 0, 0, 0.26);
+    }
+  }
+}
