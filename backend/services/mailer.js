@@ -1,3 +1,5 @@
+'use strict';
+
 const nodemailer = require('nodemailer');
 const Promise = require('promise');
 // const xoauth2 = require('xoauth2');

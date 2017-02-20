@@ -52,7 +52,7 @@ function setDbVersion(DAL, v, cb) {
           const v = res && res.version;
           cb(v);
         }
-      )
+      );
     }
   );
 }

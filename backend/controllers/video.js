@@ -2,27 +2,27 @@
 
 const uuid = require('node-uuid');
 const config = require('../config.js');
-const Box = require('../services/box.js');
+const box = require('../services/box.js');
 const separator = '_';
 
 module.exports = function (DAL) {
   return {
     saveFile: (name, userId, buffer) => {
-      return Box(config.box).then(function (box) {
+      return box(config.box).then(function (box) {
         const id = uuid.v1();
         const newName = id + separator + name;
 
-        console.log('Start uploading to Box.com');
+        console.log('Start uploading to box.com');
         return box.upload(newName, buffer).then(
           function (fileInfo) {
-            console.log('Finish uploading to Box.com');
+            console.log('Finish uploading to box.com');
             return DAL.videos.add(name, userId, newName, fileInfo.id);
           }
         );
       });
     },
     getFile: (id) => {
-      return Box(config.box).then(function (box) {
+      return box(config.box).then(function (box) {
         return DAL.videos.get(id).then(function (res) {
           return box.download(res.external_file_id);
         });
@@ -31,7 +31,7 @@ module.exports = function (DAL) {
     getThumbnails: (authorId) => {
       let boxActions;
       let videosArr;
-      return Box(config.box).then(function(box) {
+      return box(config.box).then(function(box) {
 
         boxActions = box;
         return DAL.videos.getByAuthor(authorId);

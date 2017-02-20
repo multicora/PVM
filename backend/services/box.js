@@ -15,46 +15,48 @@ module.exports = function (config) {
   return new Promise(function (resolve, reject) {
 
     fs.readFile(sslFilename, 'utf8', function(err, data) {
-      if (err) reject(err);
+      if (err) {
+        reject(err);
+      } else {
+        const privatKey = data;
 
-      const privatKey = data;
+        const sdk = new BoxSDK({
+          clientID: clientID,
+          clientSecret: clientSecret,
+          appAuth: {
+            keyID: authKeyID,
+            privateKey: privatKey,
+            passphrase: authPassphrase
+          }
+        });
 
-      const sdk = new BoxSDK({
-        clientID: clientID,
-        clientSecret: clientSecret,
-        appAuth: {
-          keyID: authKeyID,
-          privateKey: privatKey,
-          passphrase: authPassphrase
-        }
-      });
+        const box = sdk.getAppAuthClient('enterprise', enterpriseId);
 
-      const box = sdk.getAppAuthClient('enterprise', enterpriseId);
-
-      resolve({
-        upload: function (fileName, data) {
-          return new Promise(function (resolve, reject) {
-            box.files.uploadFile('0', fileName, data, function(err, res) {
-              err ? reject(err) : resolve(res.entries[0]);
+        resolve({
+          upload: function (fileName, data) {
+            return new Promise(function (resolve, reject) {
+              box.files.uploadFile('0', fileName, data, function(err, res) {
+                err ? reject(err) : resolve(res.entries[0]);
+              });
             });
-          });
-        },
-        download: function (id) {
-          return new Promise(function (resolve, reject) {
-            box.files.getReadStream(id, null, function(err, file) {
-              err ? reject(err) : resolve(file);
+          },
+          download: function (id) {
+            return new Promise(function (resolve, reject) {
+              box.files.getReadStream(id, null, function(err, file) {
+                err ? reject(err) : resolve(file);
+              });
             });
-          });
-        },
-        getThumbnail: function (id) {
-          return new Promise(function (resolve, reject) {
-            box.files.getThumbnail(id, null, function(err, thumbnail) {
-              err ? reject(err) : resolve(thumbnail);
+          },
+          getThumbnail: function (id) {
+            return new Promise(function (resolve, reject) {
+              box.files.getThumbnail(id, null, function(err, thumbnail) {
+                err ? reject(err) : resolve(thumbnail);
+              });
             });
-          });
-        }
-      });
+          }
+        });
+      }
     });
 
   });
-}
+};

@@ -6,4 +6,4 @@ module.exports = {
   newToken: function() {
     return RandToken.generate(16);
   }
-}
+};

@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 26,
     message: 'Add foreign key "author" in "videos" table',
     script: function (next) {
-      DAL.videos.addForeignKey_author(next);
+      DAL.videos.addForeignKeyAuthor(next);
     }
-  }
+  };
 };

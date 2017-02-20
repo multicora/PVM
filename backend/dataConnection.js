@@ -1,5 +1,7 @@
+'use strict';
+
 const mysql = require('mysql');
-const config = require('./config.js')
+const config = require('./config.js');
 
 const connection = mysql.createConnection({
   host: config.db.host,

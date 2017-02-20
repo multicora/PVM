@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 9,
     message: 'Add "blocked" in "users" table',
     script: function (next) {
-      DAL.users.addColumn_blocked(next);
+      DAL.users.addColumnBlocked(next);
     }
-  }
+  };
 };

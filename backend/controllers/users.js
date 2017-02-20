@@ -1,7 +1,7 @@
 'use strict';
 
 const passwordHash = require('password-hash');
-const Mailer = require('../services/mailer.js');
+const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const utils = require('../utils.js');
 
@@ -21,7 +21,7 @@ module.exports = function (DAL) {
         DAL.users.addResetToken(resetToken, email).then((response) => {
           if (response.affectedRows) {
             const message = [
-              'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken,
+              'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken
             ].join('\n');
 
             const mail = {
@@ -32,7 +32,7 @@ module.exports = function (DAL) {
               html: '<div style="white-space: pre;">' + message + '</div>'
             };
 
-            Mailer(config.mail).send(mail).then(
+            mailer(config.mail).send(mail).then(
               (res) => {
                 resolve({"status": "success"});
               }, (err) => {
@@ -55,7 +55,7 @@ module.exports = function (DAL) {
            return DAL.users.addResetToken(resetToken, email);
         }).then((response) => {
           const message = [
-            'Enter password for your login: ' + config.mailConfig.linkForNewPassword + resetToken,
+            'Enter password for your login: ' + config.mailConfig.linkForNewPassword + resetToken
           ].join('\n');
 
           const mail = {
@@ -66,7 +66,7 @@ module.exports = function (DAL) {
             html: '<div style="white-space: pre;">' + message + '</div>'
           };
 
-          Mailer(config.mail).send(mail).then(
+          mailer(config.mail).send(mail).then(
             (res) => {
               resolve({"status": "success"});
             }, (err) => {
@@ -79,4 +79,4 @@ module.exports = function (DAL) {
       });
     }
   };
-}
+};

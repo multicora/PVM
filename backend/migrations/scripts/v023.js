@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 23,
     message: 'Add "author" in "videos" table',
     script: function (next) {
-      DAL.videos.addColumn_author(next);
+      DAL.videos.addColumnAuthor(next);
     }
-  }
+  };
 };

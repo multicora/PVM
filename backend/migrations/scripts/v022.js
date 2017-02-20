@@ -16,7 +16,7 @@ module.exports = function(DAL) {
         return DAL.actions.addActionToRole(res.id, roleId);
       }).then((res) => {
         next();
-      })
+      });
     }
-  }
+  };
 };

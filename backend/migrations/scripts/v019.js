@@ -13,7 +13,7 @@ module.exports = function(DAL) {
         return DAL.actions.addAction('CAN_INVITE_USERS');
       }).then(() => {
         next();
-      })
+      });
     }
-  }
+  };
 };

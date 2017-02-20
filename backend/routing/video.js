@@ -1,5 +1,7 @@
 'use strict';
 
+const Boom = require('boom');
+
 module.exports = function (server, DAL) {
   const videoCtrl = require('../controllers/video.js')(DAL);
 
@@ -32,8 +34,8 @@ module.exports = function (server, DAL) {
             reply();
           },
           function (err) {
-            console.log('Error:')
-            console.log(new Error(err))
+            console.log('Error:');
+            console.log(new Error(err));
             reply(Boom.badImplementation(500, err));
           }
         );
@@ -59,8 +61,8 @@ module.exports = function (server, DAL) {
             });
           },
           function (err) {
-            console.log('Error:')
-            console.log(new Error(err))
+            console.log('Error:');
+            console.log(new Error(err));
             reply(500, 'Internal error');
           }
         );
@@ -99,15 +101,15 @@ server.route({
       handler: function (request, reply) {
         videoCtrl.getThumbnails(request.auth.credentials.id).then(
           function(res) {
-          reply({'data' : res.map(
-            function(res) {
-              return {
-                'type': 'thumbnail',
-                'id': res.v_id,
-                'attributes': res.thumbnail
-              };
-            }
-          )});
+            reply({'data' : res.map(
+              function(res) {
+                return {
+                  'type': 'thumbnail',
+                  'id': res.v_id,
+                  'attributes': res.thumbnail
+                };
+              }
+            )});
           },
           function(err) {
             reply(Boom.badImplementation(err));

@@ -95,7 +95,7 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
-    addColumn_viewed: (cb) => {
+    addColumnViewed: (cb) => {
       const request = [
         'ALTER TABLE `conversations` ',
         'ADD `viewed` BOOLEAN ',
@@ -105,5 +105,5 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     }
 
-  }
-}
+  };
+};

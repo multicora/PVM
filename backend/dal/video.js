@@ -76,7 +76,7 @@ module.exports = function(connection) {
 
       return connection.query(request, cb);
     },
-    addColumn_externalFileName: function (cb) {
+    addColumnExternalFileName: function (cb) {
       const request = [
         'ALTER TABLE `videos` ',
         'ADD `external_file_name` VARCHAR(255) ',
@@ -86,7 +86,7 @@ module.exports = function(connection) {
 
       return connection.query(request, cb);
     },
-    addColumn_externalFileId: function (cb) {
+    addColumnExternalFileId: function (cb) {
       const request = [
         'ALTER TABLE `videos` ',
         'ADD `external_file_id` VARCHAR(255) ',
@@ -96,7 +96,7 @@ module.exports = function(connection) {
 
       return connection.query(request, cb);
     },
-    addColumn_author: function (cb) {
+    addColumnAuthor: function (cb) {
       const removeRequest = 'ALTER TABLE videos DROP COLUMN author;';
       const request = [
         'ALTER TABLE `videos` ',
@@ -108,7 +108,7 @@ module.exports = function(connection) {
         connection.query(request, cb);
       });
     },
-    changeDataType_author: function (cb) {
+    changeDataTypeAuthor: function (cb) {
       const request = [
         'ALTER TABLE `videos` ',
         'MODIFY `author` int(255);'
@@ -116,7 +116,7 @@ module.exports = function(connection) {
 
       return connection.query(request, cb);
     },
-    addForeignKey_author: function (cb) {
+    addForeignKeyAuthor: function (cb) {
       const request = [
        'ALTER TABLE `videos` ',
        'ADD FOREIGN KEY (author) REFERENCES users(id);'
@@ -124,5 +124,5 @@ module.exports = function(connection) {
 
       return connection.query(request, cb);
     }
-  }
+  };
 };

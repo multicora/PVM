@@ -1,3 +1,5 @@
+'use strict';
+
 var merge = require('merge');
 
 var userConfig;
@@ -13,7 +15,7 @@ const DB = {
     MONGO: 'MONGO',
     MySQL: 'MySQL'
   }
-}
+};
 
 var config = {
   db: {
@@ -27,7 +29,7 @@ var config = {
     port: 443
   },
   box: {
-    sslFilename: '../private_key.pem',
+    sslFilename: './private_key.pem',
     clientID: 'nkf2rekn1n46ix1b212mimin1euge25k',
     clientSecret: 'OxufO25Lvw0hpAclvzoN4xClatYoCStF',
     authKeyID: 'f00trodl',
@@ -41,7 +43,7 @@ var config = {
     host: 'smtp.gmail.com',
     port: 465,
     user: 'bizkonect.project@gmail.com',
-    pass: '2903tujaglvs;kcM',
+    pass: '2903tujaglvs;kcM'
     // clientId:"bizkonect-150216@appspot.gserviceaccount.com",    //for Authx0.2
     // clientSecret:"2eed29a8eaccbe841e384ee3e4b7a081c598c312",
     // refreshToken:"1/X_8O--i8CLIiFB5jwVV7twvdnZPRbMkazd5ZCiGV4Ic"

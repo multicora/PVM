@@ -1,5 +1,5 @@
 'use strict';
-const Mailer = require('../services/mailer.js');
+const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 
 module.exports = function (DAL) {
@@ -24,7 +24,7 @@ module.exports = function (DAL) {
                   html: '<div style="white-space: pre;">' + message + '</div>'
                 };
 
-                Mailer(config.mail).send(mail).then(
+                mailer(config.mail).send(mail).then(
                   (res) => {
                   }, (err) => {
                   }
@@ -38,4 +38,4 @@ module.exports = function (DAL) {
       }
     }
   };
-}
+};

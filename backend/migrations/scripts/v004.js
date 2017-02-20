@@ -7,5 +7,5 @@ module.exports = function(DAL) {
     script: function (next) {
       DAL.users.createTable(next);
     }
-  }
+  };
 };
