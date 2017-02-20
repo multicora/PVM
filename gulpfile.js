@@ -236,3 +236,9 @@ gulp.task('dev', function() {
     return log(' -| Runned');
   });
 });
+
+gulp.task('dev2', function() {
+  return sequence(['clean'], ['install'], ['belint'], buildTasks, ['server'], ['watch'], 'openUrl', function() {
+    return log(' -| Runned');
+  });
+});
