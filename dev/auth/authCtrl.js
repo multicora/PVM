@@ -19,6 +19,16 @@
       });
     }
 
+    vm.register = function(email, password, confirmPassword) {
+      authService.register(email, password, confirmPassword).then(function (res) {
+        if (res.data.error) {
+          vm.errorRegister = res.data.message;
+        } else {
+          $location.path('/login');
+        }
+      });
+    }
+
     vm.sendResetRequest = function (email) {
       authService.reset(email).then(
         function(res) {
