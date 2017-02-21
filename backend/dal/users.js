@@ -201,6 +201,24 @@ module.exports = (connection) => {
       });
     },
 
+    updateUserProfile: (user) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET firstName="' + user.firstName + '", ',
+          'secondName="' + user.secondName + '", ',
+          'email="' + user.email + '" ',
+          'phone="' + user.phone + '" ',
+          'company_position="' + user.company_position + '" ',
+          'WHERE id="' + user.id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     permanentUser: (email) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -235,6 +253,21 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
+    createTableCompany: (cb) => {
+      let request = [
+        'CREATE TABLE ',
+        'IF NOT EXISTS ',
+        'company ',
+        '(',
+          'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
+          'name varchar(255), ',
+          'logo varchar(255)',
+        ') '
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
     addColumnResetToken: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
@@ -259,6 +292,19 @@ module.exports = (connection) => {
         'ALTER TABLE `users` ',
         'ADD `blocked` BOOLEAN ',
         'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnsForProfile: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `phone` VARCHAR(255), ',
+        'ADD `company` int(255), ',
+        'ADD `company_position` VARCHAR(255), ',
+        'ADD `photo` VARCHAR(255), ',
+        'ADD FOREIGN KEY (company) REFERENCES company(id);'
       ].join('');
 
       return connection.query(request, cb);
