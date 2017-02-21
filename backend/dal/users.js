@@ -29,6 +29,18 @@ module.exports = (connection) => {
       });
     },
 
+    getCompanyByName: (company) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `company` WHERE name = "' + company.name + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getUserForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -37,6 +49,18 @@ module.exports = (connection) => {
 
         connection.query(request, (err, response) => {
           (err || !response.length) ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    getUserForEditProfile: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT firstName, secondName, email, company, phone, company_position, id FROM `users` WHERE id = "' + id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
         });
       });
     },
@@ -174,11 +198,11 @@ module.exports = (connection) => {
           let request = [
             'INSERT INTO ',
             '`company` (`id`, `name`) ',
-            'VALUES (NULL, "' + company + '");'
+            'VALUES (NULL, "' + company.name + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
+            err ? reject(err) : resolve(response);
           });
         });
     },
@@ -231,7 +255,7 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE company ',
-          'SET name="' + company.name + '", ',
+          'SET name="' + company.name + '" ',
           'WHERE id="' + company.id + '";'
         ].join('');
 
@@ -247,9 +271,9 @@ module.exports = (connection) => {
           'UPDATE users ',
           'SET firstName="' + user.firstName + '", ',
           'secondName="' + user.secondName + '", ',
-          'email="' + user.email + '" ',
-          'phone="' + user.phone + '" ',
-          'company="' + user.company + '" ',
+          'email="' + user.email + '", ',
+          'phone="' + user.phone + '", ',
+          'company="' + user.company + '", ',
           'company_position="' + user.company_position + '" ',
           'WHERE id="' + user.id + '";'
         ].join('');

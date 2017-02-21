@@ -161,14 +161,23 @@ const usersController = require('../controllers/users.js')(DAL);
    * @apiName GetProfile
    * @apiGroup Users
    *
-   * @apiSuccess {Object[]} users           List of user profiles.
-   * @apiSuccess {String}   profiles.name   User name.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
-   *     [{
-   *       "name": "John"
-   *     }]
+      [{
+         "id":2,
+         "name":"company",
+         "logo":null
+       },
+       {
+         "firstName":"user",
+         "secondName":"user",
+         "email":"user@user.com",
+         "company":2,
+         "phone":"367284634",
+         "company_position":"manager",
+         "id":2
+       }]
    */
   server.route({
     method: 'GET',
@@ -176,14 +185,16 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.getUserById(request.payload).then(res => {
-          let user = res;
-          return user.company;
-        })
-        .then(res => {
-          return DAL.users.getCompanyById(user.company)
+        let user;
+        DAL.users.getUserForEditProfile(request.auth.credentials.id).then(res => {
+          user = res;
+          if (user.company) {
+            return DAL.users.getCompanyById(user.company);
+          } else {
+            return {};
+          }
         }).then(res => {
-          reply(res, user);
+          reply([res, user]);
         }, err => {
           reply(Boom.badImplementation(500, err));
         });
@@ -210,14 +221,7 @@ const usersController = require('../controllers/users.js')(DAL);
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
    *     {
-   *      "fieldCount":0,
-   *      "affectedRows":1,
-   *      "insertId":0,
-   *      "serverStatus":2,
-   *      "warningCount":0,
-   *       "message":"(Rows matched: 1  Changed: 1  Warnings: 0)",
-   *       "protocol41":true,
-   *       "changedRows":1
+   *      "status": "success"
    *     }
    */
   server.route({
@@ -231,7 +235,7 @@ const usersController = require('../controllers/users.js')(DAL);
 
         if (company.id) {
           Promise.all([
-            DAL.users.updateUser(user),
+            DAL.users.updateUserProfile(user),
             DAL.users.updateCompany(company)
           ])
           .then(function(res) {
@@ -241,14 +245,14 @@ const usersController = require('../controllers/users.js')(DAL);
           });
         } else {
           DAL.users.addCompany(company).then(res => {
-            return res;
+            return DAL.users.getCompanyByName(company);
           })
           .then(res => {
-            user.company = res;
-            return DAL.users.updateUser(user);
+            user.company = res.id;
+            return DAL.users.updateUserProfile(user);
           })
           .then(res => {
-            reply(res);
+            reply({"status": "success"});
           }, err => {
             reply(Boom.badImplementation(500, err));
           });
