@@ -5,20 +5,14 @@
   .title-container {
     text-align: center;
 
-    .button-edit {
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      outline: none;
-      border: 2px solid rgba(0, 0, 0, 0.26);
-      vertical-align: middle;
-    }
-
     .title {
       display: inline-block;
       vertical-align: middle;
     }
+  }
+
+  .button-container {
+    text-align: center;
   }
 
   .profile-photo {

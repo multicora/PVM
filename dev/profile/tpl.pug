@@ -1,16 +1,6 @@
 .profile-wrap
   app-header
   .title-container
-    button.button-edit.btn(
-    type="button"
-    ng-hide="vm.editMod"
-    ng-click="vm.editMod = true")
-      i.material-icons edit
-    button.button-edit.btn(
-    type="button"
-    ng-show="vm.editMod"
-    ng-click="vm.save()")
-      i.material-icons save
     h2.title My profile
   .profile-container
     .profile-photo(
@@ -22,6 +12,17 @@
             i.material-icons file_upload
     p.errorMessage(ng-if="vm.fileError"
       ng-bind="vm.fileError")
+    .button-container
+      button.button-edit.btn.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(
+      type="button"
+      ng-hide="vm.editMod"
+      ng-click="vm.editMod = true")
+        |Edit my profile
+      button.button-edit.btn.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(
+      type="button"
+      ng-show="vm.editMod"
+      ng-click="vm.save()")
+        |Save information
     .personal-info
       ul.mdl-list.info-content
         li.mdl-list__item
