@@ -17,6 +17,18 @@ module.exports = (connection) => {
       });
     },
 
+    getCompanyById: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `company` WHERE id = "' + id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getUserForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -157,6 +169,20 @@ module.exports = (connection) => {
         });
     },
 
+    addCompany: (company) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'INSERT INTO ',
+            '`company` (`id`, `name`) ',
+            'VALUES (NULL, "' + company + '");'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
     addUserInvite: (email) => {
         return new Promise((resolve, reject) => {
           let request = [
@@ -201,6 +227,20 @@ module.exports = (connection) => {
       });
     },
 
+    updateCompany: (company) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE company ',
+          'SET name="' + company.name + '", ',
+          'WHERE id="' + company.id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     updateUserProfile: (user) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -209,8 +249,9 @@ module.exports = (connection) => {
           'secondName="' + user.secondName + '", ',
           'email="' + user.email + '" ',
           'phone="' + user.phone + '" ',
+          'company="' + user.company + '" ',
           'company_position="' + user.company_position + '" ',
-          'WHERE id="' + user.id + '"'
+          'WHERE id="' + user.id + '";'
         ].join('');
 
         connection.query(request, (err, response) => {

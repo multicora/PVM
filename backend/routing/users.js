@@ -156,6 +156,107 @@ const usersController = require('../controllers/users.js')(DAL);
     }
   });
 
+  /**
+   * @api {get} /api/profile Request User profile
+   * @apiName GetProfile
+   * @apiGroup Users
+   *
+   * @apiSuccess {Object[]} users           List of user profiles.
+   * @apiSuccess {String}   profiles.name   User name.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     [{
+   *       "name": "John"
+   *     }]
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/profile',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.getUserById(request.payload).then(res => {
+          let user = res;
+          return user.company;
+        })
+        .then(res => {
+          return DAL.users.getCompanyById(user.company)
+        }).then(res => {
+          reply(res, user);
+        }, err => {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/update-profile Apdate User Profile Information
+   * @apiName UpdateProfile
+   * @apiGroup Users
+   *
+   * @apiSuccess {Object[]} user            User profile information.
+   * @apiSuccess {String}   user.firstName   User first name.
+   * @apiSuccess {String}   user.secondName   User second name.
+   * @apiSuccess {String}   user.phone   User phone.
+   * @apiSuccess {String}   user.email   User email.
+   * @apiSuccess {String}   user.company   User company id.
+   * @apiSuccess {String}   user.company_position   User company position.
+
+   * @apiSuccess {Object[]} company         User company.
+   * @apiSuccess {String}   company.name    Company name.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *      "fieldCount":0,
+   *      "affectedRows":1,
+   *      "insertId":0,
+   *      "serverStatus":2,
+   *      "warningCount":0,
+   *       "message":"(Rows matched: 1  Changed: 1  Warnings: 0)",
+   *       "protocol41":true,
+   *       "changedRows":1
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-profile',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        let user = request.payload.user;
+        let company = request.payload.company;
+
+        if (company.id) {
+          Promise.all([
+            DAL.users.updateUser(user),
+            DAL.users.updateCompany(company)
+          ])
+          .then(function(res) {
+            reply(res);
+          }, function(err) {
+            reply(Boom.badImplementation(500, err));
+          });
+        } else {
+          DAL.users.addCompany(company).then(res => {
+            return res;
+          })
+          .then(res => {
+            user.company = res;
+            return DAL.users.updateUser(user);
+          })
+          .then(res => {
+            reply(res);
+          }, err => {
+            reply(Boom.badImplementation(500, err));
+          });
+        }
+      }
+    }
+  });
+
   server.route({
     method: 'POST',
     path: '/api/block-user',
