@@ -9,4 +9,4 @@ header
         ng-if="vm.isAuthenticated"
         ng-click="vm.invalidateSession()")
         | Logout
-    .photo
+    .photo.pointer(ng-click="redirect('/profile')")

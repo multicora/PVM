@@ -31,38 +31,45 @@
         li.mdl-list__item
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon person
-            span(ng-hide="vm.editMod") {{vm.newUser.firstName}}
+            span(ng-hide="vm.editMod",
+              ng-bind="vm.user.firstName")
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
-              ng-model="vm.newUser.firstName")
+              ng-model="vm.user.firstName"
+              placeholder="Name")
 
         li.mdl-list__item
           .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon 
-            span(ng-hide="vm.editMod") {{vm.newUser.secondName}}
-            input.mdl-textfield__input(
+            span.second-name(ng-hide="vm.editMod",
+              ng-bind="vm.user.secondName")
+            input.second-name.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
-              ng-model="vm.newUser.secondName")
+              ng-model="vm.user.secondName"
+              placeholder="Second Name")
 
         li.mdl-list__item
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon phone
-            span(ng-hide="vm.editMod") {{vm.newUser.phone}}
+            span(ng-hide="vm.editMod",
+              ng-bind="vm.user.phone")
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
-              ng-model="vm.newUser.phone")
+              ng-model="vm.user.phone"
+              placeholder="Phone")
 
         li.mdl-list__item
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon mail
-            span(ng-hide="vm.editMod") {{vm.newUser.email}}
+            span(ng-hide="vm.editMod",
+              ng-bind="vm.user.email")
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="email"
-              ng-model="vm.newUser.email")
+              ng-model="vm.user.email"
+              placeholder="Email")
 
     .company-info
       ul.mdl-list.info-content
@@ -72,11 +79,13 @@
         li.mdl-list__item
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon work
-            span(ng-hide="vm.editMod") {{vm.newUser.companyName}}
+            span(ng-hide="vm.editMod",
+              ng-bind="vm.company.name")
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
-              ng-model="vm.newUser.companyName")
+              ng-model="vm.company.name"
+              placeholder="Company Name")
 
         li.mdl-list__item
           .mdl-list__item-primary-content
@@ -91,8 +100,10 @@
         li.mdl-list__item
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon work
-            span(ng-hide="vm.editMod") {{vm.newUser.companyPosition}}
+            span(ng-hide="vm.editMod",
+              ng-bind="vm.user.company_position")
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
-              ng-model="vm.newUser.companyPosition")
+              ng-model="vm.user.company_position"
+              placeholder="Company Position")
