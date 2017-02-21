@@ -4,8 +4,8 @@
 
   app.factory('interseptor', interseptor);
 
-  interseptor.$inject = ['$location', 'loadingService', 'tokenService'];
-  function interseptor($location, loadingService, tokenService) {
+  interseptor.$inject = ['$location', 'loadingService', 'tokenService', '$q'];
+  function interseptor($location, loadingService, tokenService, $q) {
     return {
       request: function(request) {
         loadingService.showSpinner();

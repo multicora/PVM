@@ -3,8 +3,8 @@
 
   app.controller('authCtrl', ctrl);
 
-  ctrl.$inject = ['$location', '$routeParams', 'authService', 'tokenService', '$q', '$scope'];
-  function ctrl($location, $routeParams, authService, tokenService, $q, $scope) {
+  ctrl.$inject = ['$location', '$routeParams', 'authService', 'tokenService', '$scope'];
+  function ctrl($location, $routeParams, authService, tokenService, $scope) {
     var vm = this;
 
     vm.authenticate = function(login, password) {

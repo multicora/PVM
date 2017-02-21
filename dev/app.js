@@ -1,5 +1,5 @@
 'use strict';
 (function (angular) {
-  var app = angular.module('app', ['ngRoute', 'vjs.video']);
+  var app = angular.module('app', ['ngRoute', 'vjs.video', 'ngQuill']);
 
 })(angular);
