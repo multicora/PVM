@@ -3,8 +3,8 @@
 
   app.controller('authCtrl', ctrl);
 
-  ctrl.$inject = ['$location', '$routeParams', 'authService', 'tokenService'];
-  function ctrl($location, $routeParams, authService, tokenService) {
+  ctrl.$inject = ['$location', '$routeParams', 'authService', 'tokenService', '$q', '$scope'];
+  function ctrl($location, $routeParams, authService, tokenService, $q, $scope) {
     var vm = this;
 
     vm.authenticate = function(login, password) {
@@ -20,12 +20,14 @@
     }
 
     vm.register = function(email, password, confirmPassword) {
-      authService.register(email, password, confirmPassword).then(function (res) {
+      authService.register(email, password, confirmPassword).then(function(res) {
         if (res.data.error) {
           vm.errorRegister = res.data.message;
         } else {
           $location.path('/login');
         }
+      }, function(err) {
+        vm.errorRegister = res.data.message;
       });
     }
 
@@ -53,6 +55,14 @@
           }
         }
       );
+    }
+
+    $scope.redirect = function(url, urlParam) {
+      if (urlParam) {
+        return $location.path(url + '/' + urlParam);
+      } else {
+        return $location.path(url);
+      }
     }
   }
 })(angular);

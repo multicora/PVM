@@ -18,8 +18,8 @@
       p.error(ng-if="vm.errorMessage") Login failed: {{vm.errorMessage}}
 
       .button-container
-        a(ng-href="#!/register") Register
-        a(ng-href="#!/reset-password") Forgot password
+        a.pointer(ng-click="redirect('/register')") Register
+        a.pointer(ng-click="redirect('/reset-password')") Forgot password
         button.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--colored(
           ng-click="vm.authenticate(login, password)")
           | login

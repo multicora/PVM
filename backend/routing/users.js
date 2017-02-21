@@ -43,6 +43,23 @@ const usersController = require('../controllers/users.js')(DAL);
     }
   });
 
+  /**
+   * @api {post} /api/register Request For Register User
+   * @apiName RegisterUser
+   * @apiGroup Users
+   *
+   * @apiSuccess {Object[]} users           List of user register data.
+   * @apiSuccess {String}   email           User email.
+   * @apiSuccess {String}   password        User password.
+   * @apiSuccess {String}   confirmPassword User confirm password.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+
   server.route({
     method: 'POST',
     path: '/api/register',
