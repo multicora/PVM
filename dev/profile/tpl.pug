@@ -4,14 +4,17 @@
     h2.title My profile
   .profile-container
     .profile-photo(
-      ng-style="{backgroundImage: 'url('+ vm.newUser.photo + ')' }")
-      div
-        label(for="file")
+      ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+      div(ng-show="vm.editMod")
+        label(for="photo")
           .upload-photo.btn
-            input.hidden(type="file" id="file")
+            input.hidden(
+              type="file"
+              id="photo"
+              onchange="angular.element(this).scope().convertToBase64Photo()")
             i.material-icons file_upload
-    p.errorMessage(ng-if="vm.fileError"
-      ng-bind="vm.fileError")
+    p.errorMessage(ng-if="vm.photoError"
+      ng-bind="vm.photoError")
     .button-container
       button.button-edit.btn.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(
       type="button"
@@ -90,12 +93,18 @@
         li.mdl-list__item
           .mdl-list__item-primary-content
             .company-logo(
-              ng-style="{backgroundImage: 'url('+ vm.newUser.companyLogo + ')' }")
-            div
+              ng-style="{backgroundImage: 'url('+ vm.company.logo + ')' }")
+            div(ng-show="vm.editMod")
               label(for="logo")
                 .upload-logo
-                  input.hidden(type="file" id="logo")
+                  input.hidden(
+                    type="file"
+                    id="logo"
+                    onchange="angular.element(this).scope().convertToBase64Logo()")
                   i.material-icons.btn file_upload
+        li.errorMessage(
+            ng-if="vm.logoError"
+            ng-bind="vm.logoError")
 
         li.mdl-list__item
           .mdl-list__item-primary-content

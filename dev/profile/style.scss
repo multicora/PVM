@@ -21,6 +21,7 @@
     margin: 0 auto 20px auto;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.26);
+    background-size: cover;
 
     .upload-photo {
       position: absolute;
@@ -65,6 +66,7 @@
     height: 50px;
     border: 1px solid rgba(0, 0, 0, 0.26);
     margin-right: 10px;
+    background-size: cover;
   }
 }
 

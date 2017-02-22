@@ -16,5 +16,18 @@
         "company": company
       });
     };
+
+    this.updatePhoto = function (photo) {
+      return $http.post('/api/update-profile-photo', {
+        "photo": photo
+      });
+    };
+
+    this.updateCompanyLogo = function (logo, company) {
+      return $http.post('/api/update-company-logo', {
+        "logo": logo,
+        "company": company
+      });
+    };
   }
 })(angular);

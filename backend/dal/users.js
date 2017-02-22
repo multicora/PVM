@@ -56,7 +56,7 @@ module.exports = (connection) => {
     getUserForEditProfile: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, company, phone, company_position, id FROM `users` WHERE id = "' + id + '"'
+          'SELECT firstName, secondName, email, company, phone, photo, company_position, id FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -255,7 +255,8 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE company ',
-          'SET name="' + company.name + '" ',
+          'SET name="' + company.name + '", ',
+          'logo="' + company.logo + '" ',
           'WHERE id="' + company.id + '";'
         ].join('');
 
@@ -273,9 +274,38 @@ module.exports = (connection) => {
           'secondName="' + user.secondName + '", ',
           'email="' + user.email + '", ',
           'phone="' + user.phone + '", ',
+          'photo="' + user.photo + '", ',
           'company="' + user.company + '", ',
           'company_position="' + user.company_position + '" ',
           'WHERE id="' + user.id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateProfilePhoto: (user, photo) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET photo="' + photo + '" ',
+          'WHERE id="' + user + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err  ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateCompanyLogo: (company, logo) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE company ',
+          'SET logo="' + logo + '" ',
+          'WHERE id="' + company + '";'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -326,7 +356,7 @@ module.exports = (connection) => {
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
           'name varchar(255), ',
-          'logo varchar(255)',
+          'logo varchar(8000)',
         ') '
       ].join('');
 
@@ -368,7 +398,7 @@ module.exports = (connection) => {
         'ADD `phone` VARCHAR(255), ',
         'ADD `company` int(255), ',
         'ADD `company_position` VARCHAR(255), ',
-        'ADD `photo` VARCHAR(255), ',
+        'ADD `photo` VARCHAR(8000), ',
         'ADD FOREIGN KEY (company) REFERENCES company(id);'
       ].join('');
 

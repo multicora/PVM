@@ -157,6 +157,66 @@ const usersController = require('../controllers/users.js')(DAL);
   });
 
   /**
+   * @api {post} /api/update-profile-photo Request for update profile photo
+   * @apiName UpdateProfilePhoto
+   * @apiGroup Users
+
+   * @apiSuccess {Object[]} photo           Profile photo information.
+   * @apiSuccess {String}   photo.photo     Profile photo.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+      {
+        "status": "success"
+      }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-profile-photo',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.updateProfilePhoto(request.auth.credentials.id, request.payload.photo).then(function(res) {
+          reply({"status": "success"});
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/update-company-logo Request for update company logo
+   * @apiName UpdateCompanyLogo
+   * @apiGroup Users
+
+   * @apiSuccess {Object[]} company         Company logo information.
+   * @apiSuccess {String}   company.logo    Company logo.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+      {
+        "status": "success"
+      }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-company-logo',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.updateCompanyLogo(request.payload.company, request.payload.logo).then(function(res) {
+          reply({"status": "success"});
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
    * @api {get} /api/profile Request User profile
    * @apiName GetProfile
    * @apiGroup Users
@@ -175,6 +235,7 @@ const usersController = require('../controllers/users.js')(DAL);
          "email":"user@user.com",
          "company":2,
          "phone":"367284634",
+         "photo": null,
          "company_position":"manager",
          "id":2
        }]
@@ -203,7 +264,7 @@ const usersController = require('../controllers/users.js')(DAL);
   });
 
   /**
-   * @api {post} /api/update-profile Apdate User Profile Information
+   * @api {post} /api/update-profile Apdate User profile information
    * @apiName UpdateProfile
    * @apiGroup Users
    *
