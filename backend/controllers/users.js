@@ -15,13 +15,13 @@ module.exports = function (DAL) {
       }
     },
 
-    resetPassword: (email, dataError, serverError) => {
+    resetPassword: (email, serverUrl, dataError, serverError) => {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();
         DAL.users.addResetToken(resetToken, email).then((response) => {
           if (response.affectedRows) {
             const message = [
-              'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken
+              'Link for reset password: ' + serverUrl + '/new-password/' + resetToken
             ].join('\n');
 
             const mail = {
