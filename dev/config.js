@@ -20,6 +20,10 @@
       controller: 'authCtrl',
       controllerAs: 'vm',
       templateUrl: 'auth/newPassword.html'
+    }).when('/register', {
+      controller: 'authCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'auth/register.html'
     }).when('/library', {
       controller: 'libraryCtrl',
       controllerAs: 'vm',
