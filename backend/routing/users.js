@@ -44,14 +44,11 @@ const usersController = require('../controllers/users.js')(DAL);
   });
 
   /**
-   * @api {post} /api/register Request For Register User
+   * @api {post} /api/register Request for register user
    * @apiName RegisterUser
    * @apiGroup Users
    *
-   * @apiSuccess {Object[]} users           List of user register data.
-   * @apiSuccess {String}   email           User email.
-   * @apiSuccess {String}   password        User password.
-   * @apiSuccess {String}   confirmPassword User confirm password.
+   * @apiSuccess {String} status           Status object.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -59,7 +56,6 @@ const usersController = require('../controllers/users.js')(DAL);
    *       "status": "success"
    *     }
    */
-
   server.route({
     method: 'POST',
     path: '/api/register',
