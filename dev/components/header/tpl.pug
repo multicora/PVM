@@ -2,7 +2,9 @@ header
   .navigation-components
     a.navigation(href='')
       i.fa.fa-bars(aria-hidden="true")
-    img.logo(src='/files/images/logo_bizkonect.png')
+    img.logo.pointer(
+      src='/files/images/logo_bizkonect.png'
+      ng-click="redirect('/library')")
   .navigation-components.right
     div.auth-buttons.inlineBlock
       span.pointer(
