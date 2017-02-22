@@ -4,11 +4,6 @@
 
   .title-container {
     text-align: center;
-
-    .title {
-      display: inline-block;
-      vertical-align: middle;
-    }
   }
 
   .button-container {
@@ -21,7 +16,10 @@
     margin: 0 auto 20px auto;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.26);
-    background-size: cover;
+    background-image: url('/files/images/account_photo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 
     .upload-photo {
       position: absolute;
@@ -66,7 +64,10 @@
     height: 50px;
     border: 1px solid rgba(0, 0, 0, 0.26);
     margin-right: 10px;
-    background-size: cover;
+    background-image: url('/files/images/company_logo.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 }
 

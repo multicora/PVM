@@ -4,7 +4,9 @@
     h2.title My profile
   .profile-container
     .profile-photo(
+      ng-if="vm.user.photo && vm.user.photo != 'null'"
       ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+    .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
       div(ng-show="vm.editMod")
         label(for="photo")
           .upload-photo.btn
@@ -93,7 +95,9 @@
         li.mdl-list__item
           .mdl-list__item-primary-content
             .company-logo(
+              ng-if="vm.company.logo && vm.company.logo != 'null'"
               ng-style="{backgroundImage: 'url('+ vm.company.logo + ')' }")
+            .company-logo(ng-if="!vm.company.logo || vm.company.logo === 'null'")
             div(ng-show="vm.editMod")
               label(for="logo")
                 .upload-logo

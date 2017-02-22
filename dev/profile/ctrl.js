@@ -9,7 +9,7 @@
     vm.photoError = '';
     vm.logoError = '';
 
-    var getProfile = function() {
+    function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.company = res.data[0];
         vm.user = res.data[1];

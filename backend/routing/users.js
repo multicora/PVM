@@ -194,8 +194,7 @@ const usersController = require('../controllers/users.js')(DAL);
    * @apiName UpdateProfilePhoto
    * @apiGroup Users
 
-   * @apiSuccess {Object[]} photo           Profile photo information.
-   * @apiSuccess {String}   photo.photo     Profile photo.
+   * @apiSuccess {String}   status    Status.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -224,8 +223,7 @@ const usersController = require('../controllers/users.js')(DAL);
    * @apiName UpdateCompanyLogo
    * @apiGroup Users
 
-   * @apiSuccess {Object[]} company         Company logo information.
-   * @apiSuccess {String}   company.logo    Company logo.
+   * @apiSuccess {String}   status    Status.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -301,16 +299,8 @@ const usersController = require('../controllers/users.js')(DAL);
    * @apiName UpdateProfile
    * @apiGroup Users
    *
-   * @apiSuccess {Object[]} user            User profile information.
-   * @apiSuccess {String}   user.firstName   User first name.
-   * @apiSuccess {String}   user.secondName   User second name.
-   * @apiSuccess {String}   user.phone   User phone.
-   * @apiSuccess {String}   user.email   User email.
-   * @apiSuccess {String}   user.company   User company id.
-   * @apiSuccess {String}   user.company_position   User company position.
-
-   * @apiSuccess {Object[]} company         User company.
-   * @apiSuccess {String}   company.name    Company name.
+   * @apiSuccess {String}   status    Status.
+   *
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
