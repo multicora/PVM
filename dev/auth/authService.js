@@ -19,6 +19,16 @@
       return $http.post('api/reset-password', data);
     }
 
+    this.register = function (email, password, confirmPassword) {
+      var data = {
+        'email': email,
+        'password': password,
+        'confirmPassword': confirmPassword
+      };
+
+      return $http.post('api/register', data);
+    }
+
     this.setPassword = function (newPassword, confirmPassword, resetToken) {
       var data = {
         'newPassword': passwords.newPassword,

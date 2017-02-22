@@ -1,25 +1,29 @@
 .vertical-aligned-middle.auth.full-page
   .auth-container
     img.logo(src='/files/images/logo_bizkonect.svg')
-    h2.title Login
+    h2.title Register
     form.login-form
       .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
         input.mdl-textfield__input(
-          type="text"
-          id="Login"
-          ng-model="login")
-        label.mdl-textfield__label(for='Login') Login
+          type="email"
+          id="Email"
+          ng-model="email")
+        label.mdl-textfield__label(for='Email') Email
       .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
         input.mdl-textfield__input(
           type="password"
           id="Password"
           ng-model="password")
         label.mdl-textfield__label(for="Password") Password
-      p.error(ng-if="vm.errorMessage") Login failed: {{vm.errorMessage}}
+      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+        input.mdl-textfield__input(
+          type="password"
+          id="confirmPassword"
+          ng-model="confirmPassword")
+        label.mdl-textfield__label(for="confirmPassword") Confirm password
+      p.error(ng-if="vm.errorRegister") Register failed: {{vm.errorRegister}}
 
       .button-container
-        a.pointer(ng-click="redirect('/register')") Register
-        a.pointer(ng-click="redirect('/reset-password')") Forgot password
         button.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--colored(
-          ng-click="vm.authenticate(login, password)")
-          | login
+          ng-click="vm.register(email, password, confirmPassword)")
+          | Register
