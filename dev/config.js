@@ -24,8 +24,7 @@
       controller: 'authCtrl',
       controllerAs: 'vm',
       templateUrl: 'auth/register.html'
-    })
-    .when('/library', {
+    }).when('/library', {
       controller: 'libraryCtrl',
       controllerAs: 'vm',
       templateUrl: 'library/tpl.html'

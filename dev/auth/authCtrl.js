@@ -56,13 +56,5 @@
         }
       );
     }
-
-    $scope.redirect = function(url, urlParam) {
-      if (urlParam) {
-        return $location.path(url + '/' + urlParam);
-      } else {
-        return $location.path(url);
-      }
-    }
   }
 })(angular);
