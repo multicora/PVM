@@ -22,7 +22,7 @@
         tokenService.setToken(res.data.token);
         $location.path('/');
       }, function(err) {
-        vm.errorMessage = err;
+        vm.errorMessage = err.data.message;
       });
     }
 
@@ -30,7 +30,7 @@
       authService.register(email, password, confirmPassword).then(function(res) {
         $location.path('/login');
       }, function(err) {
-        vm.errorRegister = err;
+        vm.errorRegister = err.data.message;
       });
     }
 

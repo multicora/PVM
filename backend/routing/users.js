@@ -66,11 +66,11 @@ const usersController = require('../controllers/users.js')(DAL);
             (res) => {
               reply({"status": "success"});
             }, (err) => {
-              reply( Boom.badImplementation(err.message, err) );
+              reply(Boom.badData('This email already in use!'));
             }
           );
         } else {
-          reply(Boom.badData('Passwords do not match'));
+          reply(Boom.badData('Passwords do not match!'));
         }
       }
     }
