@@ -13,6 +13,9 @@
       profileService.getProfile().then(function(res) {
         vm.company = res.data[0];
         vm.user = res.data[1];
+        console.log(vm.company.logo);
+        vm.company.logo = vm.company.logo.data.toString('utf8');
+        console.log(vm.company.logo);
       });
     };
 

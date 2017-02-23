@@ -379,6 +379,24 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
+    changeCompanyLogoType: function (cb) {
+      const request = [
+        'ALTER TABLE `company` ',
+        'MODIFY COLUMN `logo` BLOB;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    changeUserPhotoType: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'MODIFY COLUMN `photo` BLOB;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
     addColumnResetToken: function (cb) {
       const request = [
         'ALTER TABLE `users` ',

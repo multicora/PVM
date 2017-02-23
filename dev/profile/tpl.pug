@@ -7,14 +7,14 @@
       ng-if="vm.user.photo && vm.user.photo != 'null'"
       ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
     .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
-      div(ng-show="vm.editMod")
-        label(for="photo")
-          .upload-photo.btn
-            input.hidden(
-              type="file"
-              id="photo"
-              onchange="angular.element(this).scope().convertToBase64Photo()")
-            i.material-icons file_upload
+    div(ng-show="vm.editMod")
+      label(for="photo")
+        .upload-photo.btn
+          input.hidden(
+            type="file"
+            id="photo"
+            onchange="angular.element(this).scope().convertToBase64Photo()")
+          i.material-icons file_upload
     p.errorMessage(ng-if="vm.photoError"
       ng-bind="vm.photoError")
     .button-container
