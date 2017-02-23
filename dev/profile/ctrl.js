@@ -13,9 +13,6 @@
       profileService.getProfile().then(function(res) {
         vm.company = res.data[0];
         vm.user = res.data[1];
-        console.log(vm.company.logo);
-        vm.company.logo = vm.company.logo.data.toString('utf8');
-        console.log(vm.company.logo);
       });
     };
 
@@ -31,7 +28,7 @@
     $scope.convertToBase64Photo = function(event) {
       var f = document.getElementById('photo').files[0],
           r = new FileReader(),
-          size = (f.size >= 1048576),
+          size = (f.size >= 524288),
           type = (f.type.indexOf('image') >= 0);
       if (size || !type) {
         vm.photoError = 'File is too large or isn`t image, please choose another file!';
@@ -50,7 +47,7 @@
     $scope.convertToBase64Logo = function(event) {
       var f = document.getElementById('logo').files[0],
           r = new FileReader(),
-          size = (f.size >= 1048576),
+          size = (f.size >= 524288),
           type = (f.type.indexOf('image') >= 0);
       if (size || !type) {
 

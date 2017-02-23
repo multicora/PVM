@@ -279,6 +279,7 @@ const usersController = require('../controllers/users.js')(DAL);
       handler: function (request, reply) {
         let user;
         DAL.users.getUserForEditProfile(request.auth.credentials.id).then(res => {
+          res.photo = res.photo.toString();
           user = res;
           if (user.company) {
             return DAL.users.getCompanyById(user.company);
@@ -286,6 +287,7 @@ const usersController = require('../controllers/users.js')(DAL);
             return {};
           }
         }).then(res => {
+          res.logo = res.logo.toString();
           reply([res, user]);
         }, err => {
           reply(Boom.badImplementation(500, err));

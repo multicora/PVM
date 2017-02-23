@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 30,
     message: 'Chage type of "photo" colamn in "users" table',
     script: function (next) {
-      DAL.users.changeUserPhotoType(next);
+      DAL.users.changeTypeOfColumn('users', 'photo', 'BLOB', next);
     }
   };
 };

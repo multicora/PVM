@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 29,
     message: 'Chage type of "logo" colamn in "company" table',
     script: function (next) {
-      DAL.users.changeCompanyLogoType(next);
+      DAL.users.changeTypeOfColumn('company', 'logo', 'BLOB', next);
     }
   };
 };

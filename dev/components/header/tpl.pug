@@ -17,4 +17,4 @@ header
     .photo.pointer(
       ng-click="vm.redirect('/profile')"
       ng-if="vm.user.photo && vm.user.photo != 'null'"
-      ng-style="{backgroundImage: 'url('+ vm.company.logo + ')' }")
+      ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")

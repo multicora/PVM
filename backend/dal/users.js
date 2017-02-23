@@ -379,10 +379,10 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
-    changeCompanyLogoType: function (cb) {
+    changeTypeOfColumn: function (table, column, type, cb) {
       const request = [
-        'ALTER TABLE `company` ',
-        'MODIFY COLUMN `logo` BLOB;'
+        'ALTER TABLE `' + table + '` ',
+        'MODIFY COLUMN `'+ column + '` ' + type +';'
       ].join('');
 
       return connection.query(request, cb);

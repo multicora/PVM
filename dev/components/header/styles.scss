@@ -42,7 +42,8 @@ header {
   .photo {
     background-image: url('/files/images/account_photo.svg');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+    background-position: center;
     border-radius: 20px;
     display: inline-block;
     height: 40px;
