@@ -10,11 +10,16 @@
       return $http.get('/api/profile');
     };
 
+    this.getCompany = function (id) {
+      return $http.post('/api/company', id);
+    };
+
     this.updateProfile = function (user, company) {
-      return $http.post('/api/update-profile', {
-        "user": user,
-        "company": company
-      });
+      return $http.post('/api/update-profile', user);
+    };
+
+    this.updateCompany = function (company) {
+      return $http.post('/api/update-company', company);
     };
 
     this.updatePhoto = function (photo) {

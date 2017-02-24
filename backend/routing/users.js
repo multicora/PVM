@@ -48,7 +48,9 @@ const usersController = require('../controllers/users.js')(DAL);
    * @apiName RegisterUser
    * @apiGroup Users
    *
-   * @apiSuccess {String} status           Status object.
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -66,6 +68,7 @@ const usersController = require('../controllers/users.js')(DAL);
             reply(Boom.badData('This email already in use!'));
           }, (err) => {
             if (request.payload.confirmPassword === request.payload.password) {
+
               DAL.users.register(request.payload.email, request.payload.password).then(
                 (res) => {
                   reply({"status": "success"});
@@ -73,6 +76,7 @@ const usersController = require('../controllers/users.js')(DAL);
                   reply(Boom.badImplementation(err.message, err));
                 }
               );
+
             } else {
               reply(Boom.badData('Passwords do not match!'));
             }
@@ -197,9 +201,11 @@ const usersController = require('../controllers/users.js')(DAL);
   /**
    * @api {post} /api/update-profile-photo Request for update profile photo
    * @apiName UpdateProfilePhoto
-   * @apiGroup Users
-
-   * @apiSuccess {String}   status    Status.
+   * @apiGroup Profiles
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -226,9 +232,11 @@ const usersController = require('../controllers/users.js')(DAL);
   /**
    * @api {post} /api/update-company-logo Request for update company logo
    * @apiName UpdateCompanyLogo
-   * @apiGroup Users
-
-   * @apiSuccess {String}   status    Status.
+   * @apiGroup Companys
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -255,26 +263,32 @@ const usersController = require('../controllers/users.js')(DAL);
   /**
    * @api {get} /api/profile Request User profile
    * @apiName GetProfile
-   * @apiGroup Users
+   * @apiGroup Profiles
+   *
+   *
+   * @apiSuccess {Object}   profile                      Profile user information.
+   * @apiSuccess {String}   profile.id                   Profile user id.
+   * @apiSuccess {String}   profile.firstName            Profile user firstName.
+   * @apiSuccess {String}   profile.secondName           Profile user secondName.
+   * @apiSuccess {String}   profile.email                Profile user email.
+   * @apiSuccess {String}   profile.company              Profile user company.
+   * @apiSuccess {String}   profile.phone                Profile user phone.
+   * @apiSuccess {String}   profile.photo                Profile user photo.
+   * @apiSuccess {String}   profile.company_position     Profile user company position.
    *
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
-      [{
-         "id":2,
-         "name":"company",
-         "logo":null
-       },
-       {
-         "firstName":"user",
-         "secondName":"user",
-         "email":"user@user.com",
-         "company":2,
-         "phone":"367284634",
-         "photo": null,
-         "company_position":"manager",
-         "id":2
-       }]
+   *  {
+   *    "id": "2"
+   *    "firstName": "user",
+   *    "secondName": "user",
+   *    "email": "user@user.com",
+   *    "company": "2",
+   *    "phone": "367284634",
+   *    "photo": null,
+   *    "company_position": "manager",
+   *  }
    */
   server.route({
     method: 'GET',
@@ -282,22 +296,50 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        let user;
         DAL.users.getUserForEditProfile(request.auth.credentials.id).then(res => {
           if (res.photo && res.photo != null) {
             res.photo = res.photo.toString();
           }
-          user = res;
-          if (user.company) {
-            return DAL.users.getCompanyById(user.company);
-          } else {
-            return {};
-          }
-        }).then(res => {
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+
+  /**
+   * @api {post} /api/company Request Company
+   * @apiName GetCompany
+   * @apiGroup Companys
+   *
+   *
+   * @apiSuccess {Object}   company                   company information.
+   * @apiSuccess {String}   company.id                company id.
+   * @apiSuccess {String}   company.name              company name.
+   * @apiSuccess {String}   company.logo              company logo.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *    {
+   *      "id": 2,
+   *      "name": "company",
+   *      "logo": null
+   *    }
+   */
+  server.route({
+    method: 'post',
+    path: '/api/company',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.getCompanyById(request.payload).then(res => {
           if (res.logo && res.logo != null) {
             res.logo = res.logo.toString();
           }
-          reply([res, user]);
+          reply(res);
         }, err => {
           reply(Boom.badImplementation(500, err));
         });
@@ -306,11 +348,13 @@ const usersController = require('../controllers/users.js')(DAL);
   });
 
   /**
-   * @api {post} /api/update-profile Apdate User profile information
+   * @api {post} /api/update-profile Update User profile information
    * @apiName UpdateProfile
    * @apiGroup Users
    *
-   * @apiSuccess {String}   status    Status.
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -325,33 +369,44 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        let user = request.payload.user;
-        let company = request.payload.company;
+        DAL.users.updateUserProfile(request.payload)
+        .then(res => {
+          reply({"status": "success"});
+        }, err => {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
 
-        if (company.id) {
-          Promise.all([
-            DAL.users.updateUserProfile(user),
-            DAL.users.updateCompany(company)
-          ])
-          .then(function(res) {
-            reply(res);
-          }, function(err) {
-            reply(Boom.badImplementation(500, err));
-          });
-        } else {
-          DAL.users.addCompany(company).then(res => {
-            return DAL.users.getCompanyByName(company);
-          })
-          .then(res => {
-            user.company = res.id;
-            return DAL.users.updateUserProfile(user);
-          })
-          .then(res => {
-            reply({"status": "success"});
-          }, err => {
-            reply(Boom.badImplementation(500, err));
-          });
-        }
+  /**
+   * @api {post} /api/update-company Update company information
+   * @apiName UpdateCompany
+   * @apiGroup Companys
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *      "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-company',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.updateCompany(request.payload)
+        .then(function(res) {
+          reply({"status": "success"});
+        }, err => {
+          reply(Boom.badImplementation(500, err));
+        });
       }
     }
   });

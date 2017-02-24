@@ -9,18 +9,12 @@
     vm.photoError = '';
     vm.logoError = '';
 
-    function getProfile() {
-      profileService.getProfile().then(function(res) {
-        vm.company = res.data[0];
-        vm.user = res.data[1];
-        console.log(vm.user);
-      });
-    };
-
     getProfile();
 
     vm.save = function() {
-      profileService.updateProfile(vm.user, vm.company).then(function(res) {
+      profileService.updateProfile(vm.user).then(function(res) {
+        profileService.updateCompany(vm.company)
+      }).then(function(res) {
         getProfile();
         vm.editMod = false;
       });
@@ -64,5 +58,15 @@
       }
       $scope.$apply();
     }
+
+    function getProfile() {
+      profileService.getProfile().then(function(res) {
+        vm.user = res.data;
+      }).then(function() {
+        return profileService.getCompany(vm.user.company)
+      }).then(function(res) {
+        vm.company = res.data;
+      });
+    };
   }
 })(angular);

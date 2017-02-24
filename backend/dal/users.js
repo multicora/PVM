@@ -6,13 +6,13 @@ const passwordHash = require('password-hash');
 module.exports = (connection) => {
   return {
 
-    register: (email, password) => {
+    register: (email, password, company) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
             'INSERT INTO ',
-            '`users` (`id`, `email`, `password`) ',
-            'VALUES (NULL, "' + email + '","' + password + '");'
+            '`users` (`id`, `email`, `password`, `company`) ',
+            'VALUES (NULL, "' + email + '","' + password + '","' + company +'");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -72,7 +72,8 @@ module.exports = (connection) => {
     getUserForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, id FROM `users` WHERE id = "' + id + '"'
+          'SELECT firstName, secondName, email, id ',
+          'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -84,7 +85,8 @@ module.exports = (connection) => {
     getUserForEditProfile: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, company, phone, photo, company_position, id FROM `users` WHERE id = "' + id + '"'
+          'SELECT firstName, secondName, email, company, phone, photo, company_position, id ',
+          'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -95,7 +97,10 @@ module.exports = (connection) => {
 
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT firstName, secondName, email, blocked, id, permanent FROM `users`;';
+        let request = [
+          'SELECT firstName, secondName, email, blocked, id, permanent ',
+          'FROM `users`;'
+        ].join('');
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
@@ -227,6 +232,19 @@ module.exports = (connection) => {
             'INSERT INTO ',
             '`company` (`id`, `name`) ',
             'VALUES (NULL, "' + company.name + '");'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response);
+          });
+        });
+    },
+
+    addCompanyRegister: () => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'INSERT INTO ',
+            '`company` (`id`, `name`);'
           ].join('');
 
           connection.query(request, (err, response) => {
