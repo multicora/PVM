@@ -13,6 +13,7 @@
       profileService.getProfile().then(function(res) {
         vm.company = res.data[0];
         vm.user = res.data[1];
+        console.log(vm.user);
       });
     };
 

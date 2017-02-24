@@ -37,7 +37,10 @@
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon person
             span(ng-hide="vm.editMod",
-              ng-bind="vm.user.firstName")
+              ng-bind="vm.user.firstName"
+              ng-if="vm.user.firstName && vm.user.firstName != 'null'")
+            span(ng-hide="vm.editMod",
+              ng-if="!vm.user.firstName || vm.user.firstName === 'null'") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
@@ -47,7 +50,10 @@
         li.mdl-list__item
           .mdl-list__item-primary-content
             span.second-name(ng-hide="vm.editMod",
-              ng-bind="vm.user.secondName")
+              ng-bind="vm.user.secondName"
+              ng-if="vm.user.secondName && vm.user.secondName != 'null'")
+            span.second-name(ng-hide="vm.editMod",
+              ng-if="!vm.user.secondName || vm.user.secondName === 'null'") Information is absent
             input.second-name.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
@@ -58,7 +64,10 @@
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon phone
             span(ng-hide="vm.editMod",
-              ng-bind="vm.user.phone")
+              ng-bind="vm.user.phone"
+              ng-if="vm.user.phone && vm.user.phone != 'null'")
+            span(ng-hide="vm.editMod",
+              ng-if="!vm.user.phone || vm.user.phone === 'null'") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
@@ -69,7 +78,10 @@
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon mail
             span(ng-hide="vm.editMod",
-              ng-bind="vm.user.email")
+              ng-bind="vm.user.email"
+              ng-if="vm.user.email && vm.user.email != 'null'")
+            span(ng-hide="vm.editMod",
+              ng-if="!vm.user.email || vm.user.email === 'null'") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="email"
@@ -85,7 +97,10 @@
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon work
             span(ng-hide="vm.editMod",
-              ng-bind="vm.company.name")
+              ng-bind="vm.company.name"
+              ng-if="vm.company.name && vm.company.name != 'null' && vm.company.name != 'undefined'")
+            span(ng-hide="vm.editMod",
+              ng-if="!vm.company.name || vm.company.name === 'null' || vm.company.name === 'undefined'") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
@@ -114,7 +129,10 @@
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon work
             span(ng-hide="vm.editMod",
-              ng-bind="vm.user.company_position")
+              ng-bind="vm.user.company_position"
+              ng-if="vm.user.company_position && vm.user.company_position != 'null'")
+            span(ng-hide="vm.editMod",
+              ng-if="!vm.user.company_position || vm.user.company_position === 'null'") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
