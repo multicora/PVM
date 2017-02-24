@@ -3,6 +3,29 @@
 const Boom = require('boom');
 
 module.exports = function (server, DAL) {
+  /**
+   * @api {get} /api/roles Request Roles list
+   * @apiName GetRoles
+   * @apiGroup Roles
+   *
+   * @apiSuccess {Object[]} roles               List of roles.
+   * @apiSuccess {String}   roles.id            Role id.
+   * @apiSuccess {String}   roles.name          Role name.
+   * @apiSuccess {Object[]}   roles.actions     Role actions.
+   * @apiSuccess {String}   roles.actions.id    Role actions id.
+   * @apiSuccess {String}   roles.actions.name  Role actions name.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     [{
+   *       "id": 1,
+   *       "name": "admin",
+   *       "actions": [{
+   *         "id": 1,
+   *         "name": "CAN_SEE_USERS_PAGE"
+   *       }]
+   *     }]
+   */
   server.route({
     method: 'GET',
     path: '/api/roles',

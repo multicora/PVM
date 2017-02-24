@@ -12,8 +12,6 @@
     $http,
     $location
   ) {
-    var user = null;
-    
     this.login = function (login, password) {
       return $http.post('/api/login', {
         login: login,
@@ -46,7 +44,7 @@
     }
 
     this.setUser = function (newUser) {
-      user = newUser;
+      var user = newUser;
       return user;
     }
 
