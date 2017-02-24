@@ -61,17 +61,22 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/register',
     config: {
       handler: function (request, reply) {
-        if (request.payload.confirmPassword === request.payload.password) {
-          DAL.users.register(request.payload.email, request.payload.password).then(
-            (res) => {
-              reply({"status": "success"});
-            }, (err) => {
-              reply(Boom.badData('This email already in use!'));
+        DAL.users.getUserByEmail(request.payload.email).then(
+          (res) => {
+            reply(Boom.badData('This email already in use!'));
+          }, (err) => {
+            if (request.payload.confirmPassword === request.payload.password) {
+              DAL.users.register(request.payload.email, request.payload.password).then(
+                (res) => {
+                  reply({"status": "success"});
+                }, (err) => {
+                  reply(Boom.badImplementation(err.message, err));
+                }
+              );
+            } else {
+              reply(Boom.badData('Passwords do not match!'));
             }
-          );
-        } else {
-          reply(Boom.badData('Passwords do not match!'));
-        }
+        });
       }
     }
   });

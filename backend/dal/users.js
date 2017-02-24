@@ -33,6 +33,18 @@ module.exports = (connection) => {
       });
     },
 
+    getUserByEmail: (email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `users` WHERE email = "' + email + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getCompanyById: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
