@@ -1,10 +1,23 @@
 'use strict';
 
 const Promise = require('promise');
-const passwordHash = require('password-hash');
 
 module.exports = (connection) => {
   return {
+    getById: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * ',
+          'FROM conversations ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     createConversation: (data) => {
         return new Promise((resolve, reject) => {
           let request = [
@@ -47,7 +60,7 @@ module.exports = (connection) => {
         });
     },
 
-    checkForViewed: (id) => {
+    isViewed: (id) => {
         return new Promise((resolve, reject) => {
           let request = [
             'SELECT viewed ',
