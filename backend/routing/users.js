@@ -109,7 +109,6 @@ const usersController = require('../controllers/users.js')(DAL);
     method: 'POST',
     path: '/api/new-password',
     config: {
-      auth: 'simple',
       handler: function (request, reply) {
         let resetToken = request.payload.resetToken;
         let newPassword = request.payload.newPassword;
