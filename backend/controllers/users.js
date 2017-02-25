@@ -1,7 +1,7 @@
 'use strict';
 
 const passwordHash = require('password-hash');
-const Promise = require('Promise');
+const Promise = require('promise');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const utils = require('../utils.js');
