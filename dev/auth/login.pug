@@ -2,19 +2,18 @@
   .auth-container
     img.logo(src='/files/images/logo_bizkonect.svg')
     h2.title Login
-    form.login-form
-      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-        input.mdl-textfield__input(
-          type="text"
-          id="Login"
-          ng-model="login")
-        label.mdl-textfield__label(for='Login') Login
-      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-        input.mdl-textfield__input(
+    form.login-form(layout="column")
+      md-input-container
+        label Login
+        input(
+          ng-model="login"
+          required)
+      md-input-container
+        label Password
+        input(
           type="password"
-          id="Password"
-          ng-model="password")
-        label.mdl-textfield__label(for="Password") Password
+          ng-model="password"
+          required)
       p.error(ng-if="vm.errorMessage") Login failed: {{vm.errorMessage}}
 
       .button-container
