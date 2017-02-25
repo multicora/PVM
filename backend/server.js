@@ -158,6 +158,8 @@ function run(server) {
 }
 
 function registerAuth(server, DAL) {
+  const usersController = require('./controllers/users.js')(DAL);
+
   return new Promise(function (resolve, reject) {
     const AuthHeader = require('hapi-auth-header');
 
@@ -168,56 +170,15 @@ function registerAuth(server, DAL) {
         server.auth.strategy('simple', 'auth-header', {
           validateFunc: function (tokens, callback) {
             let tokenName = 'x-biz-token';
-            let actionsArr;
-            let rolesArr;
-            let user;
 
-            DAL.users.getUserByToken(tokens[tokenName]).then((res) => {
-              user = res;
-
-              return DAL.roles.getRolesByUserId(user.id);
-            }).then((roles) => {
-              let rolesPromisies = roles.map(function(role) {
-                return DAL.roles.getRoleById(role.id_role);
-              });
-
-              return Promise.all(rolesPromisies);
-            }).then((roles) => {
-              rolesArr = roles.map(function(role) {
-                return role.name;
-              });
-
-              let getActionsPromisies = roles.map(function(role) {
-                return DAL.actions.getActionsByRoleId(role.id);
-              });
-
-              return Promise.all(getActionsPromisies);
-            }).then((actions) => {
-
-              let actionsId = [];
-              if (actions.length > 0) {
-                actionsId = actions[0].map(function(action) {
-                  return action.id_action;
-                });
+            usersController.getUserByToken(tokens[tokenName]).then(
+              (user) => {
+                return callback(null, true, user);
+              },
+              () => {
+                return callback(null, false, null);
               }
-
-              let actionsPromisies = actionsId.map(function(action) {
-                return DAL.actions.getActionById(action);
-              });
-
-              return Promise.all(actionsPromisies);
-            }).then((actions) => {
-              actionsArr = actions.map(function(action) {
-                return action.name;
-              });
-            }).then(() => {
-              user.roles = rolesArr;
-              user.actions = actionsArr;
-
-              return callback(null, true, user);
-            }, () => {
-              return callback(null, false, null);
-            });
+            );
           }
         });
         resolve();
