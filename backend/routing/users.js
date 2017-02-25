@@ -2,8 +2,6 @@
 
 const Boom = require('boom');
 const utils = require('../utils.js');
-const Mailer = require('../services/mailer.js');
-const config = require('../config.js');
 
 module.exports = function (server, DAL) {
 const usersController = require('../controllers/users.js')(DAL);
@@ -17,16 +15,16 @@ const usersController = require('../controllers/users.js')(DAL);
         DAL.users.getUserForLogin(user.login).then((response) => {
           if ( response && usersController.verifyPassword(user, response.password) ) {
             let token = utils.newToken();
-            DAL.users.updateToken(token, user.login).then((response) => {
+            DAL.users.updateToken(token, user.login).then(() => {
               user.token = token;
               reply(user);
-            }, (err) => {
+            }, () => {
               reply(Boom.badImplementation('Server error'));
             });
           } else {
             reply(Boom.unauthorized('The username or password is incorrect'));
           }
-        }, (err) => {
+        }, () => {
           reply(Boom.unauthorized('The username or password is incorrect'));
         });
       }
@@ -38,7 +36,7 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/reset-password',
     config: {
       handler: function (request, reply) {
-        reply (usersController.resetPassword(request.payload.email, Boom.badData('Invalid email'), Boom.badImplementation('Server error')));
+        reply(usersController.resetPassword(request.payload.email, Boom.badData('Invalid email'), Boom.badImplementation('Server error')));
       }
     }
   });
@@ -63,8 +61,8 @@ const usersController = require('../controllers/users.js')(DAL);
       handler: function (request, reply) {
         if (request.payload.confirmPassword === request.payload.password) {
           DAL.users.register(request.payload.email, request.payload.password).then(
-            (res) => {
-              reply({"status": "success"});
+            () => {
+              reply({status: 'success'});
             }, (err) => {
               reply( Boom.badImplementation(err.message, err) );
             }
@@ -87,7 +85,7 @@ const usersController = require('../controllers/users.js')(DAL);
         }
       },
       handler: function (request, reply) {
-        reply (usersController.inviteUser(request.payload.email));
+        reply(usersController.inviteUser(request.payload.email));
       }
     }
   });
@@ -103,8 +101,8 @@ const usersController = require('../controllers/users.js')(DAL);
         let confirmPassword = request.payload.confirmPassword;
         if (newPassword === confirmPassword) {
           DAL.users.newPassword(resetToken, newPassword).then(
-            (res) => {
-              reply({"status": "success"});
+            () => {
+              reply({status: 'success'});
             }, (err) => {
               reply( Boom.badImplementation(err.message, err) );
             });

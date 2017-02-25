@@ -37,7 +37,7 @@ function startServer(tls) {
       // TODO: Need to be investigated
       cors: {
         origin: ['*'],
-        credentials : true
+        credentials: true
       }
     }
   });
@@ -104,7 +104,7 @@ function getTls() {
 
 function migrationsStart(DAL) {
   return new Promise(
-    function (resolve, reject) {
+    function (resolve) {
       console.log('-| Migrations start');
       migrations(DAL, function () {
         console.log('-| Migrations end');
@@ -167,7 +167,6 @@ function registerAuth(server, DAL) {
       } else {
         server.auth.strategy('simple', 'auth-header', {
           validateFunc: function (tokens, callback) {
-            let request = this;
             let tokenName = 'x-biz-token';
             let actionsArr;
             let rolesArr;
@@ -216,7 +215,7 @@ function registerAuth(server, DAL) {
               user.actions = actionsArr;
 
               return callback(null, true, user);
-            }, (err) => {
+            }, () => {
               return callback(null, false, null);
             });
           }

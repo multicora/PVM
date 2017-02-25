@@ -33,8 +33,10 @@ module.exports = function (DAL) {
             };
 
             mailer(config.mail).send(mail).then(
-              (res) => {
-                resolve({"status": "success"});
+              () => {
+                // TODO: need to use 'resolve();' or 'resolve(res);'
+                // because '{status: 'success'}' related to request
+                resolve({status: 'success'});
               }, (err) => {
                 reject(err);
               }
@@ -42,7 +44,7 @@ module.exports = function (DAL) {
           } else {
             reject(dataError);
           }
-        }, (err) => {
+        }, () => {
           reject(serverError);
         });
       });
@@ -53,7 +55,7 @@ module.exports = function (DAL) {
         let resetToken = utils.newToken();
         DAL.users.addUserInvite(email).then(function() {
            return DAL.users.addResetToken(resetToken, email);
-        }).then((response) => {
+        }).then(() => {
           const message = [
             'Enter password for your login: ' + config.mailConfig.linkForNewPassword + resetToken
           ].join('\n');
@@ -67,8 +69,10 @@ module.exports = function (DAL) {
           };
 
           mailer(config.mail).send(mail).then(
-            (res) => {
-              resolve({"status": "success"});
+            () => {
+              // TODO: need to use 'resolve();' or 'resolve(res);'
+              // because '{status: 'success'}' related to request
+              resolve({status: 'success'});
             }, (err) => {
               reject(err);
             }
