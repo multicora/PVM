@@ -1,7 +1,7 @@
 'use strict';
 
 const Boom = require('boom');
-const Promise = require('Promise');
+const Promise = require('promise');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const Template = require('../services/mailTemplate.js');
