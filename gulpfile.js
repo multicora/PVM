@@ -17,7 +17,6 @@ var gulpfilter = require('gulp-filter');
 var openUrl = require('gulp-open');
 var sequence = require('gulp-sequence');
 var modrewrite = require('connect-modrewrite');
-var modrewrite = require('connect-modrewrite');
 var debug = require('gulp-debug'); // e.g .pipe(debug({title: 'unicorn:'}))
 var sourcemaps = require('gulp-sourcemaps');
 var nodemon = require('gulp-nodemon');
@@ -131,6 +130,7 @@ gulp.task('server', function() {
     root: path.dest,
     port: 9000,
     livereload: true,
+    fallback: path.dest + '/index.html',
     middleware: function(connect, o) {
       return [
         modrewrite(
@@ -168,7 +168,7 @@ gulp.task('install', function() {
 gulp.task('backend', function() {
   return nodemon({
     script: path.be + '/index.js',
-    watch: [path.be],
+    watch: [path.be, '!' + path.dest],
     tasks: ['apidoc', 'belint']
   });
 });

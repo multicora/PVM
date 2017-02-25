@@ -22,7 +22,7 @@ module.exports = function (DAL) {
         DAL.users.addResetToken(resetToken, email).then((response) => {
           if (response.affectedRows) {
             const message = [
-              'Link for reset password: ' + 'http://localhost:4200/new-password/' + resetToken
+              'Link for reset password: ' + config.server.url + '/new-password/' + resetToken
             ].join('\n');
 
             const mail = {

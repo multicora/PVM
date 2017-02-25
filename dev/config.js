@@ -4,8 +4,18 @@
 
   app.config(config);
 
-  config.$inject = ['$routeProvider', '$httpProvider'];
-  function config($routeProvider, $httpProvider) {
+  config.$inject = [
+    '$routeProvider',
+    '$httpProvider',
+    '$locationProvider'
+  ];
+  function config(
+    $routeProvider,
+    $httpProvider,
+    $locationProvider
+  ) {
+    $locationProvider.html5Mode(true);
+
     $httpProvider.interceptors.push('interseptor');
 
     $routeProvider.when('/login', {
