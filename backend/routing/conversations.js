@@ -17,37 +17,42 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        console.log(request.payload.data);
         let author = request.auth.credentials;
         let data = request.payload.data.attributes;
         data.author = author.id;
 
-        DAL.conversations.createConversation(request.payload.data.attributes).then(function() {
+          DAL.conversations.createConversation(request.payload.data.attributes).then(function() {
+            try {
+              // TODO: config.mail.link should get server addres from request
+              const message = 'Link: ' + config.mail.link + data.video;
+              const from = [
+                author.firstName + ' ',
+                author.secondName + ' ',
+                config.mail.defaultFrom
+              ].join('');
 
-          const message = [
-            // TODO: config.mail.link should get server addres from request
-            'Link: ' + config.mail.link + data.video
-          ].join('\n');
-
-          const mail = {
-            from: '"' + author.firstName + ' ' + author.secondName + '" <bizkonect.project@gmail.com>', // sender address
-            to: request.payload.data.attributes.email, // list of receivers
-            subject: 'Complaint from ' + author.firstName + ' ' + author.secondName, // Subject line
-            text: message, // plaintext body
-            // TODO: config.mail.link should get server addres from request
-            html: Template.templateForConversation(config.mail.link, data.video)
-          };
-
-          mailer(config.mail).send(mail).then(
-            (res) => {
-              reply(res);
-            }, (err) => {
-              reply( Boom.badImplementation(err.message, err) );
+              const mail = {
+                from: from,
+                to: request.payload.data.attributes.email,
+                // TODO: Complaint???
+                subject: 'Complaint from ' + author.firstName + ' ' + author.secondName, // Subject line
+                text: message,
+                // TODO: config.mail.link should get server addres from request
+                html: Template.templateForConversation(config.mail.link, data.video)
+              };
+              mailer(config).send(mail).then(
+                (res) => {
+                  reply(res);
+                }, (err) => {
+                  reply( Boom.badImplementation(err.message, err) );
+                }
+              );
+            } catch (err) {
+              reply(Boom.badImplementation(err, err));
             }
-          );
-        }, function(err) {
-          reply(Boom.badImplementation(err));
-        });
+          }, function(err) {
+            reply(Boom.badImplementation(err));
+          });
       }
     }
   });

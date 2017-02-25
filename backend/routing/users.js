@@ -85,7 +85,14 @@ const usersController = require('../controllers/users.js')(DAL);
         }
       },
       handler: function (request, reply) {
-        reply(usersController.inviteUser(request.payload.email));
+        usersController.inviteUser(request.payload.email).then(
+          (res) => {
+            reply(res);
+          },
+          (err) => {
+            reply( Boom.badImplementation(err, err) );
+          }
+        );
       }
     }
   });

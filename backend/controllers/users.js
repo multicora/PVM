@@ -26,14 +26,12 @@ module.exports = function (DAL) {
             ].join('\n');
 
             const mail = {
-              from: '<bizkonect.project@gmail.com>', // sender address
-              to: email, // list of receivers
-              subject: 'Reset password', // Subject line
-              text: message, // plaintext body
-              html: '<div style="white-space: pre;">' + message + '</div>'
+              to: email,
+              subject: 'Reset password',
+              text: message
             };
 
-            mailer(config.mail).send(mail).then(
+            mailer(config).send(mail).then(
               () => {
                 // TODO: need to use 'resolve();' or 'resolve(res);'
                 // because '{status: 'success'}' related to request
@@ -63,14 +61,12 @@ module.exports = function (DAL) {
           ].join('\n');
 
           const mail = {
-            from: config.mail.user, // sender address
-            to: email, // list of receivers
-            subject: 'Invitation', // Subject line
-            text: message, // plaintext body
-            html: '<div style="white-space: pre;">' + message + '</div>'
+            to: email,
+            subject: 'Invitation',
+            text: message
           };
 
-          mailer(config.mail).send(mail).then(
+          mailer(config).send(mail).then(
             () => {
               // TODO: need to use 'resolve();' or 'resolve(res);'
               // because '{status: 'success'}' related to request
