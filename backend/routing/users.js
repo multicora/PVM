@@ -36,8 +36,11 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/reset-password',
     config: {
       handler: function (request, reply) {
+        let serverUrl = utils.getServerUrl(request);
+
         usersController.resetPassword(
           request.payload.email,
+          serverUrl,
           Boom.badData('Invalid email'),
           Boom.badImplementation('Server error')
         ).then(() => {

@@ -55,9 +55,6 @@ function startServer(tls) {
         _.bind(registerRouting, null, server, DAL)
       ).then(
         _.bind(run, null, server)
-      ).then(() => {
-        config.server.url = getServerUrl(server);
-      }
       ).then(
         _.bind(showSuccessMessage, null, server),
         function(err) {
@@ -188,18 +185,4 @@ function registerAuth(server, DAL) {
       }
     });
   });
-}
-
-function getServerUrl(server) {
-  let serverUrl = server.info.protocol + '://' + server.info.host;
-  const defaultPorts = {
-    https: 443,
-    http: 80
-  };
-
-  if (defaultPorts[server.info.protocol] !== server.info.port) {
-    serverUrl += server.info.port;
-  }
-
-  return serverUrl;
 }
