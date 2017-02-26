@@ -35,8 +35,7 @@ module.exports = function (server, DAL) {
               const mail = {
                 from: from,
                 to: data.email,
-                // TODO: Complaint???
-                subject: 'Complaint from ' + author.firstName + ' ' + author.secondName, // Subject line
+                subject: 'Video from ' + author.firstName + ' ' + author.secondName, // Subject line
                 text: message,
                 html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId)
               };

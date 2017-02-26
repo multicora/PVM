@@ -6,7 +6,7 @@ module.exports = function (DAL) {
   return {
     conversationOpened: (conversation) => {
       return DAL.users.getUserById(conversation.author).then((user) => {
-        const message = 'Your conversation was viwed!';
+        const message = 'Your conversation was viewed!';
 
         const mail = {
           to: user.email,
