@@ -18,6 +18,7 @@ module.exports = (connection) => {
       });
     },
 
+    // TODO: rename to 'create'
     createConversation: (data) => {
         return new Promise((resolve, reject) => {
           let request = [

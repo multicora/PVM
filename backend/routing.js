@@ -17,7 +17,9 @@ module.exports.init = function (server, DAL) {
         let indexPath = path.resolve(__dirname, './public/index.html');
 
         fs.stat(fileName, function(err) {
-          if (err === null) {
+          let hasExt = path.extname(fileName) !== '';
+
+          if (!err && hasExt) {
             reply.file(fileName);
           } else {
             reply.file(indexPath);

@@ -45,9 +45,7 @@ var config = {
     user: '',
     pass: '',
     defaultSubject: 'BizKonect',
-    defaultFrom: 'No reply <No-reply@bizkonect.com>',
-    link: 'https://159.203.232.30:80/conversation/',
-    linkForNewPassword: 'https://159.203.232.30:80/new-password/'
+    defaultFrom: 'No reply <No-reply@bizkonect.com>'
   },
   mailGun: {
     apiKey: '',

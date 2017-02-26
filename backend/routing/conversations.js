@@ -4,7 +4,8 @@ const Boom = require('boom');
 const Promise = require('promise');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
-const Template = require('../services/mailTemplate.js');
+const template = require('../services/mailTemplate.js');
+const utils = require('../utils.js');
 
 module.exports = function (server, DAL) {
   const videoCtrl = require('../controllers/video.js')(DAL);
@@ -18,13 +19,13 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         let author = request.auth.credentials;
-        let data = request.payload.data.attributes;
+        let data = request.payload;
         data.author = author.id;
 
-          DAL.conversations.createConversation(request.payload.data.attributes).then(function() {
+          DAL.conversations.createConversation(data).then(function(res) {
             try {
-              // TODO: config.mail.link should get server addres from request
-              const message = 'Link: ' + config.mail.link + data.video;
+              let serverUrl = utils.getServerUrl(request);
+              const message = 'Link: ' + serverUrl + '/conversation/' + data.video;
               const from = [
                 author.firstName + ' ',
                 author.secondName + ' ',
@@ -33,12 +34,11 @@ module.exports = function (server, DAL) {
 
               const mail = {
                 from: from,
-                to: request.payload.data.attributes.email,
+                to: data.email,
                 // TODO: Complaint???
                 subject: 'Complaint from ' + author.firstName + ' ' + author.secondName, // Subject line
                 text: message,
-                // TODO: config.mail.link should get server addres from request
-                html: Template.templateForConversation(config.mail.link, data.video)
+                html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId)
               };
               mailer(config).send(mail).then(
                 (res) => {
@@ -102,18 +102,10 @@ module.exports = function (server, DAL) {
             return videoCtrl.getFile(conversation.videoId);
           }).then(
             function (buffer) {
-              reply({
-                data: {
-                  type: 'video',
-                  id: 7,
-                  attributes: {
-                    url: buffer.uri.href
-                  }
-                }
-              });
+              conversation.url = buffer.uri.href;
+              reply(conversation);
             },
             function (err) {
-              console.error(new Error(err));
               reply(Boom.badImplementation(err, err));
             }
           );
