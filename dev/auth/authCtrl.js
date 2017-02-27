@@ -22,7 +22,7 @@
         tokenService.setToken(res.data.token);
         $location.path('/');
       }, function(err) {
-        vm.errorMessage = err;
+        vm.errorMessage = err.data.message;
       });
     }
 
