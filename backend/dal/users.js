@@ -284,21 +284,6 @@ module.exports = (connection) => {
       });
     },
 
-    updateCompany: (company) => {
-      return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE company ',
-          'SET name="' + company.name + '", ',
-          'logo="' + company.logo + '" ',
-          'WHERE id="' + company.id + '";'
-        ].join('');
-
-        connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response);
-        });
-      });
-    },
-
     updateUserProfile: (user) => {
       return new Promise((resolve, reject) => {
         let request = [
