@@ -31,8 +31,8 @@
 
     this.setPassword = function (newPassword, confirmPassword, resetToken) {
       var data = {
-        'newPassword': passwords.newPassword,
-        'confirmPassword': passwords.confirmPassword,
+        'newPassword': newPassword,
+        'confirmPassword': confirmPassword,
         'resetToken': resetToken
       };
 

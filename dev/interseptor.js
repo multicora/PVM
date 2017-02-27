@@ -22,7 +22,7 @@
           tokenService.clearToken();
           $location.path('/login');
         }
-        return $q.reject(response);;
+        return $q.reject(response);
       }
     };
   }

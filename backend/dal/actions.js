@@ -34,7 +34,7 @@ module.exports = function(connection) {
         let request = [
             'INSERT INTO ',
             '`roles_to_actions` (`id_role`, `id_action`) ',
-            'VALUES ("'+ roleId +'", "' + actionId + '");'
+            'VALUES ("' + roleId + '", "' + actionId + '");'
         ].join('');
 
         connection.query(request, (err, response) => {

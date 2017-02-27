@@ -15,7 +15,7 @@ module.exports = function(DAL) {
       }).then((res) => {
         let roleId = res.id;
         return DAL.roles.addRoleToUser(userId, roleId);
-      }).then((res) => {
+      }).then(() => {
         next();
       });
     }

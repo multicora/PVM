@@ -29,8 +29,8 @@
       video.video-js.vjs-default-skin(
         vjs-video
         controls
-        preload="auto")
-        source(ng-src="vm.conversation.url" type="video/mp4")
+        preload="auto"
+        vjs-media="vm.media")
     .videoFooter
       p.reply-text-placeholder(
         ng-click="vm.chatBoxClick()"
