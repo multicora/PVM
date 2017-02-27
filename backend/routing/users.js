@@ -78,12 +78,27 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/register',
     config: {
       handler: function (request, reply) {
-        usersController.register(request.payload.email,
-          request.payload.password,
-          request.payload.confirmPassword).then(res => {
-          reply(res);
+        usersController.isUserExist(request.payload.email).then(res => {
+          let result = null;
+          if (res) {
+            result = Promise.reject({
+              'statusCode': 400,
+              'message': 'This email already in use!'
+            });
+          } else {
+            result = usersController.register(request.payload.email,
+              request.payload.password,
+              request.payload.confirmPassword);
+          }
+          return result;
+        }).then(() => {
+          reply({'status': 'success'});
         }, err => {
-          reply(Boom.serverUnavailable(err, err));
+          if (err.statusCode === 400){
+            reply(Boom.badRequest(err.message, err));
+          } else {
+            reply(Boom.badImplementation(err.message, err));
+          }
         });
       }
     }
@@ -267,7 +282,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.updateCompanyLogo(request.payload.company, request.payload.logo).then(function() {
+        DAL.company.updateCompanyLogo(request.payload.company, request.payload.logo).then(function() {
           reply({'status': 'success'});
         }, function(err) {
           reply(Boom.badImplementation(500, err));
@@ -352,7 +367,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.getCompanyById(request.payload).then(res => {
+        DAL.company.getCompanyById(request.payload).then(res => {
           if (res.logo && res.logo !== null) {
             res.logo = res.logo.toString();
           }
@@ -433,7 +448,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.updateCompany(request.payload)
+        DAL.company.updateCompany(request.payload)
         .then(function() {
           reply({'status': 'success'});
         }, err => {

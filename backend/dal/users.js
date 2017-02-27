@@ -226,20 +226,6 @@ module.exports = (connection) => {
         });
     },
 
-    addCompany: (company) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`company` (`id`, `name`) ',
-            'VALUES (NULL, "' + company.name + '");'
-          ].join('');
-
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
-        });
-    },
-
     addCompanyForRegister: () => {
         return new Promise((resolve, reject) => {
           let request = [

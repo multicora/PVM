@@ -49,26 +49,32 @@ module.exports = function (DAL) {
       });
     },
 
+    isUserExist: (email) => {
+      return new Promise((resolve) => {
+        DAL.users.getUserByEmail(email).then(() => {
+          resolve(true);
+        }, () => {
+          resolve(false);
+        });
+      });
+    },
+
     register: (email, password, confirmPassword) => {
       return new Promise((resolve, reject) => {
-        DAL.users.getUserByEmail(email).then(
-          () => {
-            reject('This email already in use!');
-        }, () => {
-          let result;
-            if (confirmPassword === password) {
-              result = DAL.users.addCompanyForRegister();
-            } else {
-              reject('Passwords do not match!');
-            }
-            return result;
-        }).then((res) => {
-          return DAL.users.register(email, password, res.insertId);
-        }).then(() => {
-          resolve({'status': 'success'});
-        }, (err) => {
-          reject(err);
-        });
+        if (confirmPassword !== password) {
+          reject({
+            'statusCode': 400,
+            'message': 'Passwords do not match!'
+          });
+        } else {
+          DAL.company.addCompanyForRegister().then((res) => {
+            return DAL.users.register(email, password, res.insertId);
+          }).then(() => {
+            resolve();
+          }, (err) => {
+            reject(err);
+          });
+        }
       });
     },
 

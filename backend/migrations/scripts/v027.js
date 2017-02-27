@@ -5,7 +5,7 @@ module.exports = function(DAL) {
     version: 27,
     message: 'Created company table',
     script: function (next) {
-      DAL.users.createTableCompany(next);
+      DAL.company.createTableCompany(next);
     }
   };
 };
