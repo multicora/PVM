@@ -54,6 +54,12 @@ const usersController = require('../controllers/users.js')(DAL);
 
   /**
    * @api {post} /api/register Request for register user
+   *
+   * @apiParam {Object}   newUser                      new user information.
+   * @apiParam {String}   newUser.email                new user email.
+   * @apiParam {String}   newUser.password             new user password.
+   * @apiParam {String}   newUser.confirmPassword      new user confirm password.
+   *
    * @apiName RegisterUser
    * @apiGroup Users
    *
@@ -204,6 +210,9 @@ const usersController = require('../controllers/users.js')(DAL);
 
   /**
    * @api {post} /api/update-profile-photo Request for update profile photo
+   *
+   * @apiParam {String} photo       User new photo
+   *
    * @apiName UpdateProfilePhoto
    * @apiGroup Profiles
    *
@@ -235,6 +244,9 @@ const usersController = require('../controllers/users.js')(DAL);
 
   /**
    * @api {post} /api/update-company-logo Request for update company logo
+   *
+   * @apiParam {String} photo       company new photo
+   *
    * @apiName UpdateCompanyLogo
    * @apiGroup Companys
    *
@@ -315,6 +327,7 @@ const usersController = require('../controllers/users.js')(DAL);
 
   /**
    * @api {post} /api/company Request Company
+   * @apiParam {String} id       company id
    * @apiName GetCompany
    * @apiGroup Companys
    *
@@ -353,8 +366,18 @@ const usersController = require('../controllers/users.js')(DAL);
 
   /**
    * @api {post} /api/update-profile Update User profile information
+   *
+   * @apiParam {Object}   profile                      Profile user new information.
+   * @apiParam {String}   profile.id                   Profile user new id.
+   * @apiParam {String}   profile.firstName            Profile user new firstName.
+   * @apiParam {String}   profile.secondName           Profile user new secondName.
+   * @apiParam {String}   profile.email                Profile user new email.
+   * @apiParam {String}   profile.phone                Profile user new phone.
+   * @apiParam {String}   profile.photo                Profile user new photo.
+   * @apiParam {String}   profile.company_position     Profile user new company position.
+   *
    * @apiName UpdateProfile
-   * @apiGroup Users
+   * @apiGroup Profiles
    *
    *
    * @apiSuccess {Object}   status           Status.
@@ -385,6 +408,11 @@ const usersController = require('../controllers/users.js')(DAL);
 
   /**
    * @api {post} /api/update-company Update company information
+   *
+   * @apiParam {Object}   company                   company new information.
+   * @apiParam {String}   company.name              company new name.
+   * @apiParam {String}   company.logo              company new logo.
+   *
    * @apiName UpdateCompany
    * @apiGroup Companys
    *
