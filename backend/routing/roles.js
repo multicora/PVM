@@ -33,7 +33,6 @@ module.exports = function (server, DAL) {
       let roles;
       let rolesToActions;
       let actions;
-      let result;
 
       DAL.roles.getRoles().then(
         function(res) {
@@ -51,7 +50,7 @@ module.exports = function (server, DAL) {
           roles.map(function(role) {
             role.actions = [];
             rolesToActions.forEach(function(roleToAction) {
-              if (role.id == roleToAction.id_role) {
+              if (role.id === roleToAction.id_role) {
                 role.actions.push(roleToAction.id_action);
               }
             });

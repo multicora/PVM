@@ -281,7 +281,7 @@ const usersController = require('../controllers/users.js')(DAL);
    *       "company_position": "fgdgdfgdf",
    *       "photo": "<Buffer 64 61 74 61 3a 69 6d 61 67 65 2f 6a 70 65 67 3b 62 61 73 65 36 34 2c 2f 39 6a 2f 34 41 41 51 53 6b 5a 4a 52 67 41 42 41 51 41 41 41 51 41 42 41 41 44 ... >",
    *       "roles": [ "admin" ],
-   *       "actions": [ "CAN_SEE_USERS_PAGE", "CAN_EDIT_USERS", "CAN_INVITE_USERS" ] 
+   *       "actions": [ "CAN_SEE_USERS_PAGE", "CAN_EDIT_USERS", "CAN_INVITE_USERS" ]
    *     }
    */
   server.route({

@@ -7,12 +7,14 @@
   config.$inject = [
     '$routeProvider',
     '$httpProvider',
-    '$locationProvider'
+    '$locationProvider',
+    'resolverProvider'
   ];
   function config(
     $routeProvider,
     $httpProvider,
-    $locationProvider
+    $locationProvider,
+    resolverProvider
   ) {
     $locationProvider.html5Mode(true);
 
