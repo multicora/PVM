@@ -7,13 +7,15 @@
   config.$inject = [
     '$routeProvider',
     '$httpProvider',
-    'resolverProvider'
+    '$locationProvider'
   ];
   function config(
     $routeProvider,
     $httpProvider,
-    resolverProvider
+    $locationProvider
   ) {
+    $locationProvider.html5Mode(true);
+
     $httpProvider.interceptors.push('interseptor');
     var resolver = resolverProvider.$get();
 
@@ -29,6 +31,10 @@
       controller: 'authCtrl',
       controllerAs: 'vm',
       templateUrl: 'auth/newPassword.html'
+    }).when('/register', {
+      controller: 'authCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'auth/register.html'
     }).when('/library', {
       controller: 'libraryCtrl',
       controllerAs: 'vm',

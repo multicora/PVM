@@ -1,7 +1,0 @@
-<div class="auth-buttons">
-  {{#if session.isAuthenticated}}
-    <a {{action 'invalidateSession'}}>Logout</a>
-  {{else}}
-    {{#link-to 'auth'}}Login{{/link-to}}
-  {{/if}}
-</div>

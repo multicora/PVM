@@ -8,9 +8,17 @@
     var vm = this;
 
     vm.showChatBox = false;
+    vm.conversation = null;
+    vm.media = null;
 
     conversationsService.get($routeParams.id).then(function (res) {
-      console.log(res.data);
+      vm.conversation = res.data;
+      vm.media = {
+        sources: [{
+          src: vm.conversation.url,
+          type: 'video/mp4'
+        }]
+      };
     });
 
     vm.chatBoxClick = function () {

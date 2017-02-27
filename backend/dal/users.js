@@ -5,6 +5,22 @@ const passwordHash = require('password-hash');
 
 module.exports = (connection) => {
   return {
+
+    register: (email, password) => {
+        return new Promise((resolve, reject) => {
+          password = passwordHash.generate(password);
+          let request = [
+            'INSERT INTO ',
+            '`users` (`id`, `email`, `password`) ',
+            'VALUES (NULL, "' + email + '","' + password + '");'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response[0]);
+          });
+        });
+    },
+
     getUserById: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -142,7 +158,7 @@ module.exports = (connection) => {
       });
     },
 
-    addUser: (firstName, secondName, email, password, permanent) => {
+    addUser: (firstName, secondName, email, password) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
@@ -180,7 +196,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -196,7 +212,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -210,7 +226,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },

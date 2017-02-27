@@ -3,19 +3,34 @@
 
   app.controller('authCtrl', ctrl);
 
-  ctrl.$inject = ['$location', '$routeParams', 'authService', 'tokenService'];
-  function ctrl($location, $routeParams, authService, tokenService) {
+  ctrl.$inject = [
+    '$location',
+    '$routeParams',
+    'authService',
+    'tokenService'
+  ];
+  function ctrl(
+    $location,
+    $routeParams,
+    authService,
+    tokenService
+  ) {
     var vm = this;
 
     vm.authenticate = function(login, password) {
       authService.login(login, password).then(function (res) {
-        if (res.data.error) {
-          vm.errorMessage = res.data.message;
-        } else {
-          tokenService.setToken(res.data.token);
-          $location.path('/');
-          // TODO: browser should ask to store password
-        }
+        tokenService.setToken(res.data.token);
+        $location.path('/');
+      }, function(err) {
+        vm.errorMessage = err;
+      });
+    }
+
+    vm.register = function(email, password, confirmPassword) {
+      authService.register(email, password, confirmPassword).then(function(res) {
+        $location.path('/login');
+      }, function(err) {
+        vm.errorRegister = err;
       });
     }
 

@@ -70,7 +70,7 @@ module.exports = function(connection) {
         let request = [
             'INSERT INTO ',
             '`roles_to_user` (`id_role`, `id_user`) ',
-            'VALUES ("'+ roleId +'", "' + userId + '");'
+            'VALUES ("' + roleId + '", "' + userId + '");'
         ].join('');
 
         connection.query(request, (err, response) => {
