@@ -6,13 +6,13 @@ const passwordHash = require('password-hash');
 module.exports = (connection) => {
   return {
 
-    register: (email, password) => {
+    register: (email, password, company) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
             'INSERT INTO ',
-            '`users` (`id`, `email`, `password`) ',
-            'VALUES (NULL, "' + email + '","' + password + '");'
+            '`users` (`id`, `email`, `password`, `company`) ',
+            'VALUES (NULL, "' + email + '","' + password + '","' + company + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -33,10 +33,47 @@ module.exports = (connection) => {
       });
     },
 
+    getUserByEmail: (email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `users` WHERE email = "' + email + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
+    getCompanyById: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `company` WHERE id = "' + id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
+    getCompanyByName: (company) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `company` WHERE name = "' + company.name + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getUserForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, id FROM `users` WHERE id = "' + id + '"'
+          'SELECT firstName, secondName, email, id ',
+          'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -45,9 +82,25 @@ module.exports = (connection) => {
       });
     },
 
+    getUserForEditProfile: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT firstName, secondName, email, company, phone, photo, company_position, id ',
+          'FROM `users` WHERE id = "' + id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT firstName, secondName, email, blocked, id, permanent FROM `users`;';
+        let request = [
+          'SELECT firstName, secondName, email, blocked, id, permanent ',
+          'FROM `users`;'
+        ].join('');
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
@@ -173,6 +226,20 @@ module.exports = (connection) => {
         });
     },
 
+    addCompanyForRegister: () => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'INSERT INTO ',
+            '`company` (`id`, `name`) ',
+            'VALUES (NULL, "' + null + '");'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response);
+          });
+        });
+    },
+
     addUserInvite: (email) => {
         return new Promise((resolve, reject) => {
           let request = [
@@ -217,6 +284,54 @@ module.exports = (connection) => {
       });
     },
 
+    updateUserProfile: (user) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET firstName="' + user.firstName + '", ',
+          'secondName="' + user.secondName + '", ',
+          'email="' + user.email + '", ',
+          'phone="' + user.phone + '", ',
+          'photo="' + user.photo + '", ',
+          'company="' + user.company + '", ',
+          'company_position="' + user.company_position + '" ',
+          'WHERE id="' + user.id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateProfilePhoto: (user, photo) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE users ',
+          'SET photo="' + photo + '" ',
+          'WHERE id="' + user + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateCompanyLogo: (company, logo) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE company ',
+          'SET logo="' + logo + '" ',
+          'WHERE id="' + company + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     permanentUser: (email) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -251,6 +366,39 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
+    createTableCompany: (cb) => {
+      let request = [
+        'CREATE TABLE ',
+        'IF NOT EXISTS ',
+        'company ',
+        '(',
+          'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
+          'name varchar(255), ',
+          'logo varchar(8000)',
+        ') '
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    changeTypeOfColumn: function (table, column, type, cb) {
+      const request = [
+        'ALTER TABLE `' + table + '` ',
+        'MODIFY COLUMN `' + column + '` ' + type + ';'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    changeUserPhotoType: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'MODIFY COLUMN `photo` BLOB;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
     addColumnResetToken: function (cb) {
       const request = [
         'ALTER TABLE `users` ',
@@ -275,6 +423,19 @@ module.exports = (connection) => {
         'ALTER TABLE `users` ',
         'ADD `blocked` BOOLEAN ',
         'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnsForProfile: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `phone` VARCHAR(255), ',
+        'ADD `company` int(255), ',
+        'ADD `company_position` VARCHAR(255), ',
+        'ADD `photo` VARCHAR(8000), ',
+        'ADD FOREIGN KEY (company) REFERENCES company(id);'
       ].join('');
 
       return connection.query(request, cb);

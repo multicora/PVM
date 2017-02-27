@@ -2,11 +2,19 @@ header
   .navigation-components
     a.navigation(href='')
       i.fa.fa-bars(aria-hidden="true")
-    img.logo(src='/files/images/logo_bizkonect.png')
+    img.logo.pointer(
+      src='/files/images/logo_bizkonect.png'
+      ng-click="vm.redirect('/library')")
   .navigation-components.right
     div.auth-buttons.inlineBlock
       span.pointer(
         ng-if="vm.isAuthenticated"
         ng-click="vm.invalidateSession()")
         | Logout
-    .photo
+    .photo.pointer(
+      ng-click="vm.redirect('/profile')"
+      ng-if="!vm.user.photo || vm.user.photo === 'null'")
+    .photo.pointer(
+      ng-click="vm.redirect('/profile')"
+      ng-if="vm.user.photo && vm.user.photo != 'null'"
+      ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")

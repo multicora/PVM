@@ -49,6 +49,35 @@ module.exports = function (DAL) {
       });
     },
 
+    isUserExist: (email) => {
+      return new Promise((resolve) => {
+        DAL.users.getUserByEmail(email).then(() => {
+          resolve(true);
+        }, () => {
+          resolve(false);
+        });
+      });
+    },
+
+    register: (email, password, confirmPassword) => {
+      return new Promise((resolve, reject) => {
+        if (confirmPassword !== password) {
+          reject({
+            'statusCode': 400,
+            'message': 'Passwords do not match!'
+          });
+        } else {
+          DAL.company.add().then((res) => {
+            return DAL.users.register(email, password, res.insertId);
+          }).then(() => {
+            resolve();
+          }, (err) => {
+            reject(err);
+          });
+        }
+      });
+    },
+
     inviteUser: (email) => {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();
