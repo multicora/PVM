@@ -54,10 +54,18 @@ const usersController = require('../controllers/users.js')(DAL);
 
   /**
    * @api {post} /api/register Request for register user
+   *
+   * @apiParam {Object}   newUser                      new user information.
+   * @apiParam {String}   newUser.email                new user email.
+   * @apiParam {String}   newUser.password             new user password.
+   * @apiParam {String}   newUser.confirmPassword      new user confirm password.
+   *
    * @apiName RegisterUser
    * @apiGroup Users
    *
-   * @apiSuccess {String} status           Status object.
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -70,17 +78,28 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/register',
     config: {
       handler: function (request, reply) {
-        if (request.payload.confirmPassword === request.payload.password) {
-          DAL.users.register(request.payload.email, request.payload.password).then(
-            () => {
-              reply({status: 'success'});
-            }, (err) => {
-              reply( Boom.badImplementation(err.message, err) );
-            }
-          );
-        } else {
-          reply(Boom.badData('Passwords do not match'));
-        }
+        usersController.isUserExist(request.payload.email).then(res => {
+          let result = null;
+          if (res) {
+            result = Promise.reject({
+              'statusCode': 400,
+              'message': 'This email already in use!'
+            });
+          } else {
+            result = usersController.register(request.payload.email,
+              request.payload.password,
+              request.payload.confirmPassword);
+          }
+          return result;
+        }).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          if (err.statusCode === 400){
+            reply(Boom.badRequest(err.message, err));
+          } else {
+            reply(Boom.badImplementation(err.message, err));
+          }
+        });
       }
     }
   });
@@ -198,6 +217,241 @@ const usersController = require('../controllers/users.js')(DAL);
         DAL.users.updateUser(request.payload).then(function(res) {
           reply(res);
         }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/update-profile-photo Request for update profile photo
+   *
+   * @apiParam {String} photo       User new photo
+   *
+   * @apiName UpdateProfilePhoto
+   * @apiGroup Profiles
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+      {
+        "status": "success"
+      }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-profile-photo',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.updateProfilePhoto(request.auth.credentials.id, request.payload.photo).then(function() {
+          reply({'status': 'success'});
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/update-company-logo Request for update company logo
+   *
+   * @apiParam {String} photo       company new photo
+   *
+   * @apiName UpdateCompanyLogo
+   * @apiGroup Companys
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+      {
+        "status": "success"
+      }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-company-logo',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.company.updateLogo(request.payload.company, request.payload.logo).then(function() {
+          reply({'status': 'success'});
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {get} /api/profile Request User profile
+   * @apiName GetProfile
+   * @apiGroup Profiles
+   *
+   *
+   * @apiSuccess {Object}   profile                      Profile user information.
+   * @apiSuccess {String}   profile.id                   Profile user id.
+   * @apiSuccess {String}   profile.firstName            Profile user firstName.
+   * @apiSuccess {String}   profile.secondName           Profile user secondName.
+   * @apiSuccess {String}   profile.email                Profile user email.
+   * @apiSuccess {String}   profile.company              Profile user company.
+   * @apiSuccess {String}   profile.phone                Profile user phone.
+   * @apiSuccess {String}   profile.photo                Profile user photo.
+   * @apiSuccess {String}   profile.company_position     Profile user company position.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *  {
+   *    "id": "2"
+   *    "firstName": "user",
+   *    "secondName": "user",
+   *    "email": "user@user.com",
+   *    "company": "2",
+   *    "phone": "367284634",
+   *    "photo": null,
+   *    "company_position": "manager",
+   *  }
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/profile',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.getUserForEditProfile(request.auth.credentials.id).then(res => {
+          if (res.photo && res.photo !== null) {
+            res.photo = res.photo.toString();
+          }
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+
+  /**
+   * @api {post} /api/company Request Company
+   * @apiParam {String} id       company id
+   * @apiName GetCompany
+   * @apiGroup Companys
+   *
+   *
+   * @apiSuccess {Object}   company                   company information.
+   * @apiSuccess {String}   company.id                company id.
+   * @apiSuccess {String}   company.name              company name.
+   * @apiSuccess {String}   company.logo              company logo.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *    {
+   *      "id": 2,
+   *      "name": "company",
+   *      "logo": null
+   *    }
+   */
+  server.route({
+    method: 'post',
+    path: '/api/company',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.company.getById(request.payload).then(res => {
+          if (res.logo && res.logo !== null) {
+            res.logo = res.logo.toString();
+          }
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/update-profile Update User profile information
+   *
+   * @apiParam {Object}   profile                      Profile user new information.
+   * @apiParam {String}   profile.id                   Profile user new id.
+   * @apiParam {String}   profile.firstName            Profile user new firstName.
+   * @apiParam {String}   profile.secondName           Profile user new secondName.
+   * @apiParam {String}   profile.email                Profile user new email.
+   * @apiParam {String}   profile.phone                Profile user new phone.
+   * @apiParam {String}   profile.photo                Profile user new photo.
+   * @apiParam {String}   profile.company_position     Profile user new company position.
+   *
+   * @apiName UpdateProfile
+   * @apiGroup Profiles
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *      "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-profile',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.updateUserProfile(request.payload)
+        .then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/update-company Update company information
+   *
+   * @apiParam {Object}   company                   company new information.
+   * @apiParam {String}   company.name              company new name.
+   * @apiParam {String}   company.logo              company new logo.
+   *
+   * @apiName UpdateCompany
+   * @apiGroup Companys
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *      "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-company',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.company.update(request.payload)
+        .then(function() {
+          reply({'status': 'success'});
+        }, err => {
           reply(Boom.badImplementation(500, err));
         });
       }

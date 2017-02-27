@@ -30,7 +30,7 @@
       authService.register(email, password, confirmPassword).then(function(res) {
         $location.path('/login');
       }, function(err) {
-        vm.errorRegister = err;
+        vm.errorRegister = err.data.message;
       });
     }
 

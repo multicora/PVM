@@ -8,15 +8,30 @@
     }
   });
 
-  ctrl.$inject = ['$location', 'tokenService'];
-  function ctrl($location, tokenService) {
+  ctrl.$inject = ['$location', 'tokenService', 'profileService'];
+  function ctrl($location, tokenService, profileService) {
     var vm = this;
 
     vm.isAuthenticated = !!tokenService.getToken();
+    getProfile();
+
+    vm.redirect = function(url, urlParam) {
+      if (urlParam) {
+        return $location.path(url + '/' + urlParam);
+      } else {
+        return $location.path(url);
+      }
+    }
 
     vm.invalidateSession = function () {
       tokenService.clearToken();
       $location.path('/login');
+    };
+
+    function getProfile() {
+      profileService.getProfile().then(function(res) {
+        vm.user = res.data;
+      });
     };
   }
 })(angular);

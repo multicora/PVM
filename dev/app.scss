@@ -89,6 +89,10 @@ body {
   width: 100%;
 }
 
+.btn {
+  cursor: pointer;
+}
+
 .vertical-aligned-middle:before {
   content:'';
   display: inline-block;

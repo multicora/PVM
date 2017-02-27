@@ -59,6 +59,10 @@
       resolve: {
         resolver: resolver.get('SEE_ADMIN_PAGE', /^\/admin\/use\/[a-zA-Z-0-9]+/)
       }
+    }).when('/profile', {
+      controller: 'profileCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'profile/tpl.html'
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });
