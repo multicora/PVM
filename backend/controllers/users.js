@@ -48,6 +48,27 @@ module.exports = function (DAL) {
       });
     },
 
+    register: (email, password, confirmPassword) => {
+      return new Promise((resolve, reject) => {
+        DAL.users.getUserByEmail(email).then(
+          (res) => {
+            reject('This email already in use!');
+        }, (err) => {
+            if (confirmPassword === password) {
+              return DAL.users.addCompanyForRegister();
+            } else {
+              reject('Passwords do not match!');
+            }
+        }).then((res) => {
+          return DAL.users.register(email, password, res.insertId);
+        }).then((res) => {
+          resolve({"status": "success"});
+        }, (err) => {
+          reject(err);
+        });
+      });
+    },
+
     inviteUser: (email) => {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();

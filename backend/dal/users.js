@@ -235,16 +235,17 @@ module.exports = (connection) => {
           ].join('');
 
           connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
+            err ? reject(err) : resolve(response[0]);
           });
         });
     },
 
-    addCompanyRegister: () => {
+    addCompanyForRegister: () => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
-            '`company` (`id`, `name`);'
+            '`company` (`id`, `name`) ',
+            'VALUES (NULL, "' + null + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
