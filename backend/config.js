@@ -37,20 +37,19 @@ var config = {
     enterpriseId: '5924343'
   },
   google: {
-    APIkey: 'AIzaSyBrdvFI8tYGlK1nkjUTWkF6BLUPvm7i4IY' 
+    APIkey: ''
   },
   mail: {
     host: 'smtp.gmail.com',
     port: 465,
-    user: 'bizkonect.project@gmail.com',
-    pass: '2903tujaglvs;kcM'
-    // clientId:"bizkonect-150216@appspot.gserviceaccount.com",    //for Authx0.2
-    // clientSecret:"2eed29a8eaccbe841e384ee3e4b7a081c598c312",
-    // refreshToken:"1/X_8O--i8CLIiFB5jwVV7twvdnZPRbMkazd5ZCiGV4Ic"
+    user: '',
+    pass: '',
+    defaultSubject: 'BizKonect',
+    defaultFrom: 'No reply <No-reply@bizkonect.com>'
   },
-  mailConfig: {
-    link: 'https://159.203.232.30:80/conversation/',
-    linkForNewPassword: 'https://159.203.232.30:80/new-password/'
+  mailGun: {
+    apiKey: '',
+    domain: ''
   }
 };
 

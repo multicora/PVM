@@ -8,12 +8,8 @@
   function service($http) {
     this.create = function (email, video) {
       var data = {
-        "data": {
-          "attributes": {
-            "email": email,
-            "video": video.id
-          }
-        }
+        "email": email,
+        "video": video.id
       };
 
       return $http.post('/api/conversations', data);

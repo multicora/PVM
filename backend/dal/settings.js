@@ -35,8 +35,8 @@ module.exports = function(connection) {
       return connection.query(request, cb);
     },
     update: (setting, cb) => {
-      let request = 
-        'UPDATE dbinfo' + 
+      let request =
+        'UPDATE dbinfo' +
         ' SET' +
         ' value = "' + setting.value + '"' +
         ' WHERE name = "' + setting.name + '"';

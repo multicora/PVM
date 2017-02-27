@@ -12,13 +12,6 @@
   function ctrl($location, tokenService, profileService) {
     var vm = this;
 
-    function getProfile() {
-      profileService.getProfile().then(function(res) {
-        vm.company = res.data[0];
-        vm.user = res.data[1];
-      });
-    };
-
     vm.isAuthenticated = !!tokenService.getToken();
     getProfile();
 
@@ -33,6 +26,12 @@
     vm.invalidateSession = function () {
       tokenService.clearToken();
       $location.path('/login');
+    };
+
+    function getProfile() {
+      profileService.getProfile().then(function(res) {
+        vm.user = res.data;
+      });
     };
   }
 })(angular);

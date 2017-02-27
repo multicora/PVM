@@ -48,6 +48,14 @@
     }
   }
 
+  .info-content {
+    @media (min-width: 600px) {
+      width: 300px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
   .second-name {
     margin-left: 56px;
   }
@@ -59,42 +67,29 @@
   .personal-info,
   .company-info {
     padding: 0 25px;
-  }
-
-  .personal-info {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.26);
-  }
-
-  .company-logo {
-    display: inline-block;
-    width: 250px;
-    height: 50px;
-    margin-right: 10px;
-    background-image: url('/files/images/company_logo.svg');
-    background-size: contain;
-  }
-}
-
-@media (min-width: 600px) {
-  .profile-wrap {
-    .personal-info,
-    .company-info {
+    @media (min-width: 600px) {
       padding: 0px;
       width: 50%;
       display: inline-block;
       vertical-align: top;
     }
+  }
 
-    .info-content {
-      width: 300px;
-      margin-right: auto;
-      margin-left: auto; 
-    }
-
-    .personal-info {
+  .personal-info {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+    @media (min-width: 600px) {
       box-sizing: border-box;
       border-bottom: none;
       border-right: 1px solid rgba(0, 0, 0, 0.26);
     }
+  }
+
+  .company-logo {
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    margin-right: 10px;
+    background-image: url('/files/images/company_logo.svg');
+    background-size: contain;
   }
 }

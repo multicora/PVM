@@ -6,13 +6,13 @@ const passwordHash = require('password-hash');
 module.exports = (connection) => {
   return {
 
-    register: (email, password) => {
+    register: (email, password, company) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
             'INSERT INTO ',
-            '`users` (`id`, `email`, `password`) ',
-            'VALUES (NULL, "' + email + '","' + password + '");'
+            '`users` (`id`, `email`, `password`, `company`) ',
+            'VALUES (NULL, "' + email + '","' + password + '","' + company + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -25,6 +25,18 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'SELECT * FROM `users` WHERE id = "' + id + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
+    getUserByEmail: (email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `users` WHERE email = "' + email + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -60,7 +72,8 @@ module.exports = (connection) => {
     getUserForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, id FROM `users` WHERE id = "' + id + '"'
+          'SELECT firstName, secondName, email, id ',
+          'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -72,7 +85,8 @@ module.exports = (connection) => {
     getUserForEditProfile: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, company, phone, photo, company_position, id FROM `users` WHERE id = "' + id + '"'
+          'SELECT firstName, secondName, email, company, phone, photo, company_position, id ',
+          'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -83,7 +97,10 @@ module.exports = (connection) => {
 
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT firstName, secondName, email, blocked, id, permanent FROM `users`;';
+        let request = [
+          'SELECT firstName, secondName, email, blocked, id, permanent ',
+          'FROM `users`;'
+        ].join('');
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
@@ -194,7 +211,7 @@ module.exports = (connection) => {
       });
     },
 
-    addUser: (firstName, secondName, email, password, permanent) => {
+    addUser: (firstName, secondName, email, password) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
           let request = [
@@ -209,12 +226,12 @@ module.exports = (connection) => {
         });
     },
 
-    addCompany: (company) => {
+    addCompanyForRegister: () => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
             '`company` (`id`, `name`) ',
-            'VALUES (NULL, "' + company.name + '");'
+            'VALUES (NULL, "' + null + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -246,7 +263,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -262,22 +279,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
-        });
-      });
-    },
-
-    updateCompany: (company) => {
-      return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE company ',
-          'SET name="' + company.name + '", ',
-          'logo="' + company.logo + '" ',
-          'WHERE id="' + company.id + '";'
-        ].join('');
-
-        connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -297,7 +299,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -311,7 +313,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -325,7 +327,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -339,7 +341,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -382,7 +384,7 @@ module.exports = (connection) => {
     changeTypeOfColumn: function (table, column, type, cb) {
       const request = [
         'ALTER TABLE `' + table + '` ',
-        'MODIFY COLUMN `'+ column + '` ' + type +';'
+        'MODIFY COLUMN `' + column + '` ' + type + ';'
       ].join('');
 
       return connection.query(request, cb);

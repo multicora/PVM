@@ -12,12 +12,14 @@ module.exports.init = function (server, DAL) {
         parse: true,
         failAction: 'log'
       },
-      handler:  function (request, reply) {
+      handler: function (request, reply) {
         let fileName = path.resolve(__dirname, './public/' + request.params.param);
         let indexPath = path.resolve(__dirname, './public/index.html');
 
-        fs.stat(fileName, function(err, stat) {
-          if(err == null) {
+        fs.stat(fileName, function(err) {
+          let hasExt = path.extname(fileName) !== '';
+
+          if (!err && hasExt) {
             reply.file(fileName);
           } else {
             reply.file(indexPath);
@@ -29,5 +31,6 @@ module.exports.init = function (server, DAL) {
 
   require('./routing/video.js')(server, DAL);
   require('./routing/users.js')(server, DAL);
+  require('./routing/roles.js')(server, DAL);
   require('./routing/conversations.js')(server, DAL);
 };

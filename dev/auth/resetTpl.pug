@@ -1,13 +1,13 @@
 .vertical-aligned-middle.auth.full-page
   .container
     h2.title Reset Password
-    form.form
-      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-        input.mdl-textfield__input(
+    form.form(layout="column")
+      md-input-container
+        label Email
+        input(
           type="email"
-          id="email"
-          ng-model="email")
-        label.mdl-textfield__label(for='email') Email
+          ng-model="email"
+          required)
       p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
       p.success(ng-if="vm.successMessage") {{vm.successMessage}}
       .button-container

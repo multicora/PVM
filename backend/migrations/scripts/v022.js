@@ -14,7 +14,7 @@ module.exports = function(DAL) {
         return DAL.actions.getActionByName('CAN_INVITE_USERS');
       }).then((res) => {
         return DAL.actions.addActionToRole(res.id, roleId);
-      }).then((res) => {
+      }).then(() => {
         next();
       });
     }

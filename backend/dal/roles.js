@@ -5,6 +5,30 @@ const Promise = require('promise');
 module.exports = function(connection) {
   return {
 
+    getRoles: () => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `roles`;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    getRolesToActions: () => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `roles_to_actions`;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getRoleByName: (name) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -46,7 +70,7 @@ module.exports = function(connection) {
         let request = [
             'INSERT INTO ',
             '`roles_to_user` (`id_role`, `id_user`) ',
-            'VALUES ("'+ roleId +'", "' + userId + '");'
+            'VALUES ("' + roleId + '", "' + userId + '");'
         ].join('');
 
         connection.query(request, (err, response) => {

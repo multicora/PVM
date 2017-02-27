@@ -21,5 +21,8 @@ module.exports = function(connection){
   // Actions
   DAL.actions = require('./actions.js')(connection);
 
+  // Company
+  DAL.company = require('./company.js')(connection);
+
   return DAL;
 };
