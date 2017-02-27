@@ -282,7 +282,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.company.updateCompanyLogo(request.payload.company, request.payload.logo).then(function() {
+        DAL.company.updateLogo(request.payload.company, request.payload.logo).then(function() {
           reply({'status': 'success'});
         }, function(err) {
           reply(Boom.badImplementation(500, err));
@@ -367,7 +367,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.company.getCompanyById(request.payload).then(res => {
+        DAL.company.getById(request.payload).then(res => {
           if (res.logo && res.logo !== null) {
             res.logo = res.logo.toString();
           }
@@ -448,7 +448,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.company.updateCompany(request.payload)
+        DAL.company.update(request.payload)
         .then(function() {
           reply({'status': 'success'});
         }, err => {

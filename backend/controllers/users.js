@@ -67,7 +67,7 @@ module.exports = function (DAL) {
             'message': 'Passwords do not match!'
           });
         } else {
-          DAL.company.addCompanyForRegister().then((res) => {
+          DAL.company.add().then((res) => {
             return DAL.users.register(email, password, res.insertId);
           }).then(() => {
             resolve();

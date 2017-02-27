@@ -4,7 +4,7 @@ const Promise = require('promise');
 
 module.exports = (connection) => {
   return {
-    getCompanyById: (id) => {
+    getById: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
           'SELECT * FROM `company` WHERE id = "' + id + '"'
@@ -16,7 +16,7 @@ module.exports = (connection) => {
       });
     },
 
-    getCompanyByName: (company) => {
+    getByName: (company) => {
       return new Promise((resolve, reject) => {
         let request = [
           'SELECT * FROM `company` WHERE name = "' + company.name + '"'
@@ -28,7 +28,7 @@ module.exports = (connection) => {
       });
     },
 
-    addCompanyForRegister: () => {
+    add: () => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
@@ -42,7 +42,7 @@ module.exports = (connection) => {
         });
     },
 
-    updateCompany: (company) => {
+    update: (company) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE company ',
@@ -57,7 +57,7 @@ module.exports = (connection) => {
       });
     },
 
-    updateCompanyLogo: (company, logo) => {
+    updateLogo: (company, logo) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE company ',
@@ -72,7 +72,7 @@ module.exports = (connection) => {
     },
 
     // For migrations
-    createTableCompany: (cb) => {
+    createTable: (cb) => {
       let request = [
         'CREATE TABLE ',
         'IF NOT EXISTS ',
