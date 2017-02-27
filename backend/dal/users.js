@@ -12,7 +12,7 @@ module.exports = (connection) => {
           let request = [
             'INSERT INTO ',
             '`users` (`id`, `email`, `password`, `company`) ',
-            'VALUES (NULL, "' + email + '","' + password + '","' + company +'");'
+            'VALUES (NULL, "' + email + '","' + password + '","' + company + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -308,7 +308,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -328,7 +328,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -342,7 +342,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -356,7 +356,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err  ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -413,7 +413,7 @@ module.exports = (connection) => {
     changeTypeOfColumn: function (table, column, type, cb) {
       const request = [
         'ALTER TABLE `' + table + '` ',
-        'MODIFY COLUMN `'+ column + '` ' + type +';'
+        'MODIFY COLUMN `' + column + '` ' + type + ';'
       ].join('');
 
       return connection.query(request, cb);

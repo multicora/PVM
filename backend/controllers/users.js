@@ -52,18 +52,20 @@ module.exports = function (DAL) {
     register: (email, password, confirmPassword) => {
       return new Promise((resolve, reject) => {
         DAL.users.getUserByEmail(email).then(
-          (res) => {
+          () => {
             reject('This email already in use!');
-        }, (err) => {
+        }, () => {
+          let result;
             if (confirmPassword === password) {
-              return DAL.users.addCompanyForRegister();
+              result = DAL.users.addCompanyForRegister();
             } else {
               reject('Passwords do not match!');
             }
+            return result;
         }).then((res) => {
           return DAL.users.register(email, password, res.insertId);
-        }).then((res) => {
-          resolve({"status": "success"});
+        }).then(() => {
+          resolve({'status': 'success'});
         }, (err) => {
           reject(err);
         });

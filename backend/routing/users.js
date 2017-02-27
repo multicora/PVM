@@ -72,7 +72,6 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/register',
     config: {
       handler: function (request, reply) {
-
         usersController.register(request.payload.email,
           request.payload.password,
           request.payload.confirmPassword).then(res => {
@@ -225,8 +224,8 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.updateProfilePhoto(request.auth.credentials.id, request.payload.photo).then(function(res) {
-          reply({"status": "success"});
+        DAL.users.updateProfilePhoto(request.auth.credentials.id, request.payload.photo).then(function() {
+          reply({'status': 'success'});
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });
@@ -256,8 +255,8 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.updateCompanyLogo(request.payload.company, request.payload.logo).then(function(res) {
-          reply({"status": "success"});
+        DAL.users.updateCompanyLogo(request.payload.company, request.payload.logo).then(function() {
+          reply({'status': 'success'});
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });
@@ -302,7 +301,7 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       handler: function (request, reply) {
         DAL.users.getUserForEditProfile(request.auth.credentials.id).then(res => {
-          if (res.photo && res.photo != null) {
+          if (res.photo && res.photo !== null) {
             res.photo = res.photo.toString();
           }
           reply(res);
@@ -341,7 +340,7 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       handler: function (request, reply) {
         DAL.users.getCompanyById(request.payload).then(res => {
-          if (res.logo && res.logo != null) {
+          if (res.logo && res.logo !== null) {
             res.logo = res.logo.toString();
           }
           reply(res);
@@ -375,8 +374,8 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       handler: function (request, reply) {
         DAL.users.updateUserProfile(request.payload)
-        .then(res => {
-          reply({"status": "success"});
+        .then(() => {
+          reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(500, err));
         });
@@ -407,8 +406,8 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       handler: function (request, reply) {
         DAL.users.updateCompany(request.payload)
-        .then(function(res) {
-          reply({"status": "success"});
+        .then(function() {
+          reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(500, err));
         });
