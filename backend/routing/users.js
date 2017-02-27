@@ -497,4 +497,55 @@ const usersController = require('../controllers/users.js')(DAL);
       }
     }
   });
+
+  /**
+   * @api {get} /api/currentUser Request curresnt User
+   * @apiName GetCurrentUser
+   * @apiGroup Users
+   *
+   * @apiSuccess {String}       id   Current User id.
+   * @apiSuccess {String}       firstName   Current User first name.
+   * @apiSuccess {String}       secondName   Current User second name.
+   * @apiSuccess {String}       email   Current User email.
+   * @apiSuccess {String}       token   Current User token.
+   * @apiSuccess {String}       resetToken   Current User reset token.
+   * @apiSuccess {Boolean}      blocked   Current User blocked.
+   * @apiSuccess {Boolean}      permanent   Current User permanent.
+   * @apiSuccess {String}       firstName   Current User first name.
+   * @apiSuccess {String}       phone   Current User phone.
+   * @apiSuccess {String}       company   Current User company.
+   * @apiSuccess {String}       company_position   Current User company position.
+   * @apiSuccess {String}       photo   Current User photo.
+   * @apiSuccess {String[]}     roles   Current User roles.
+   * @apiSuccess {String[]}     actions   Current User actions.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "id": "2",
+   *       "firstName": "admin",
+   *       "secondName": "admin",
+   *       "email": "admin@admin.com",
+   *       "token": "5XnJIwNJSnYUNfaR",
+   *       "resetToken": "dsfsfsdf5Tjsd",
+   *       "blocked": "0",
+   *       "permanent": "1",
+   *       "phone": "766567565657",
+   *       "company": "1",
+   *       "company_position": "fgdgdfgdf",
+   *       "photo": "<Buffer 64 61 74 61 3a 69 6d 61 67 65 2f 6a 70 65 67 3b 62 61 73 65 36 34 2c 2f 39 6a 2f 34 41 41 51 53 6b 5a 4a 52 67 41 42 41 51 41 41 41 51 41 42 41 41 44 ... >",
+   *       "roles": [ "admin" ],
+   *       "actions": [ "CAN_SEE_USERS_PAGE", "CAN_EDIT_USERS", "CAN_INVITE_USERS" ]
+   *     }
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/currentUser',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        reply(request.auth.credentials);
+      }
+    }
+  });
 };

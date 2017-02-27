@@ -5,6 +5,30 @@ const Promise = require('promise');
 module.exports = function(connection) {
   return {
 
+    getRoles: () => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `roles`;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    getRolesToActions: () => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `roles_to_actions`;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getRoleByName: (name) => {
       return new Promise((resolve, reject) => {
         let request = [
