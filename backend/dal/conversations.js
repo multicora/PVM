@@ -33,6 +33,24 @@ module.exports = (connection) => {
         });
     },
 
+    update: (data) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE conversations ',
+          'SET =videoId"' + data.videoId + '", ',
+          'logo="' + data.logo + '", ',
+          'title="' + data.title + '", ',
+          'company_role="' + data.companyRole + '", ',
+          'message="' + data.message + '" ',
+          'WHERE id="' + data.id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     selectVideoById: (id) => {
         return new Promise((resolve, reject) => {
           let request = [
@@ -114,6 +132,42 @@ module.exports = (connection) => {
         'ALTER TABLE `conversations` ',
         'ADD `viewed` BOOLEAN ',
         'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnTitle: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `title` int(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnMessage: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `message` varchar(8000);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnCompanyRole: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `company_role` int(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnLogo: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `logo` MEDIUMBLOB;'
       ].join('');
 
       return connection.query(request, cb);
