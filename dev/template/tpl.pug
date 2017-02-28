@@ -24,29 +24,38 @@
           p {{vm.user.email}}
   .title-container
     p.title
-      span.placeholder(ng-if="!vm.editMode") Add conversation topic here
-      input(
+      span.placeholder(ng-hide="vm.title.editMode || vm.title.editMode") Add conversation topic here
+      input.mdl-textfield__input(
         type="text"
-        ng-if="vm.editMode")
-    button.edit-button.btn.btn-circle
+        ng-if="vm.title.editMode")
+    button.edit-button.btn.btn-circle(
+      type="button"
+      ng-click="vm.edit(vm.title)")
       i.material-icons mode_edit
   .video
     .videoHeader
       .photo
       .text
         p.user-name
-          span.placeholder Add your name
-          input(
+          span.placeholder(ng-hide="vm.name.editMode || vm.name.editMode") Add your name
+          span(ng-if="vm.name.name") {{vm.user.name}}
+          input.mdl-textfield__input(
             type="text"
-            ng-if="vm.editMode")
-          button.edit-button.btn.btn-circle
+            ng-if="vm.name.editMode"
+            ng-modal="vm.name.name")
+          button.edit-button.btn.btn-circle(
+            type="button"
+            ng-click="vm.edit(vm.name)")
             i.material-icons mode_edit
         p.user-role
-          span.placeholder Add your role
-          input(
+          span.placeholder(ng-hide="vm.companyRole.editMode || vm.companyRole.role") Add your company role
+          span(ng-if="vm.companyRole.role") {{vm.companyRole.role}}
+          input.mdl-textfield__input(
             type="text"
-            ng-if="vm.editMode")
-          button.edit-button.btn.btn-circle
+            ng-if="vm.companyRole.editMode")
+          button.edit-button.btn.btn-circle(
+            type="button"
+            ng-click="vm.edit(vm.companyRole)")
             i.material-icons mode_edit
     .videoContent
       video.video-js.vjs-default-skin(
@@ -67,3 +76,26 @@
             button.edit-button.btn.upload
               i.material-icons file_upload
               span.placeholder Upload files
+  .snackbar-container(class="{{vm.snackbarClass}}")
+    .save-snackbar
+      button.btn.mdl-button.mdl-js-button.mdl-button--raised(
+        type="button")
+          | Save
+      button.btn.mdl-button.mdl-js-button.mdl-button--raised(
+        type="button"
+ 
+        ng-click="vm.showSendPopup = true")
+          | Send
+
+  //- Send popup
+  popup.send-popup-container(ng-if="vm.showSendPopup")
+    form.send-form({{action='', on='submit', }}='')
+      p.popupTitle send
+      input.email(
+        type="email"
+        placeholder="email"
+        ng-model="email")
+      .button-container
+        button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.closeSendPopup()") close
+        button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.sendVideo(email)") send
+

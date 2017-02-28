@@ -4,7 +4,7 @@
     border: none;
     background: none;
     vertical-align: middle;
-    visibility: hidden;
+    // visibility: hidden;
   }
 
   .placeholder {
@@ -28,7 +28,7 @@
   }
 
   .message:hover,
-  .title:hover,
+  .title-container:hover,
   .logo:hover,
   .user-name:hover,
   .user-role:hover {
@@ -44,11 +44,39 @@
   }
 
   .chat-text-box {
-    width: 500px;
+    width: 100%;
     padding: 0;
     font-family: Helvetica;
     resize: none;
     min-height: 100px;
     border: 1px solid rgba(0, 0, 0, 0.54);
+  }
+
+
+  .snackbar-container {
+    position: absolute;
+    width: 100%;
+    background-color: #f5f5f5;
+    .save-snackbar {
+      width: 845px;
+      background-color: #fff;
+      padding: 10px 0;
+      margin: 0 auto;
+      text-align: right;
+
+      button {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .hidden-bar {
+    transition: 1s;
+    bottom: -60px;
+  }
+
+  .shown-bar {
+    bottom: 0;
+    transition: 1s;
   }
 }
