@@ -98,7 +98,7 @@ module.exports = (connection) => {
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
         let request = [
-          'SELECT firstName, secondName, email, blocked, id, permanent ',
+          'SELECT firstName, secondName, email, blocked, id, permanent, company, company_position, phone ',
           'FROM `users`;'
         ].join('');
 
@@ -318,14 +318,15 @@ module.exports = (connection) => {
       });
     },
 
-    updateCompanyLogo: (company, logo) => {
+    updateUserCompany: (user) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'UPDATE company ',
-          'SET logo="' + logo + '" ',
-          'WHERE id="' + company + '";'
+          'UPDATE users ',
+          'SET company="' + user.company + '" ',
+          'WHERE id="' + user.id + '";'
         ].join('');
 
+        console.log(request);
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
         });
