@@ -91,6 +91,12 @@ body {
 
 .btn {
   cursor: pointer;
+  outline: none;
+}
+
+.btn-circle {
+  border: 2px solid;
+  border-radius: 50%;
 }
 
 .vertical-aligned-middle:before {

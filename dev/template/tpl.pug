@@ -1,9 +1,12 @@
-.watchVideoContainer
+.watchVideoContainer.template
   header
     .logoContainer
       .logo
         img(src='/files/images/logo.png', alt='logo')
         span.logoText CommerceFocused
+        button.edit-button.btn.upload
+          i.material-icons file_upload
+          span.placeholder Upload logo
     .socialContainer
       .social
         a.linkedin(href='')
@@ -19,12 +22,32 @@
         .email
           img(src='/files/images/email.png', alt='email')
           p {{vm.user.email}}
+  .title-container
+    p.title
+      span.placeholder(ng-if="!vm.editMode") Add conversation topic here
+      input(
+        type="text"
+        ng-if="vm.editMode")
+    button.edit-button.btn.btn-circle
+      i.material-icons mode_edit
   .video
     .videoHeader
       .photo
       .text
-        p.userName xcfsdfsdfsdfsd
-        p.userMessage asdasdasdasdasdasd
+        p.user-name
+          span.placeholder Add your name
+          input(
+            type="text"
+            ng-if="vm.editMode")
+          button.edit-button.btn.btn-circle
+            i.material-icons mode_edit
+        p.user-role
+          span.placeholder Add your role
+          input(
+            type="text"
+            ng-if="vm.editMode")
+          button.edit-button.btn.btn-circle
+            i.material-icons mode_edit
     .videoContent
       video.video-js.vjs-default-skin(
         vjs-video
@@ -32,17 +55,15 @@
         preload="auto"
         vjs-media="vm.media")
     .videoFooter
-      p.reply-text-placeholder(
-        ng-click="vm.chatBoxClick()"
-        ng-if="!vm.showChatBox")
-        | Type here to reply or hit the button 
-        i.fa.fa-video-camera(aria-hidden="true") 
-        | &nbsp;to reply with the video
-      chat-box(ng-if="vm.showChatBox")
-
-      video-fab-buttons
-  footer
-    .logo-container
-      span.powered Powered by
-      img.logo(src='/files/images/logo_bizkonect.png', alt='Bizkonect')
-    .rights 2016 All rights reserved
+      .chat-container
+        .photo
+        .chat-box
+          p.message
+            span.placeholder Add your message
+            textarea.chat-text-box(ng-if="vm.editMode")
+            button.edit-button.btn.btn-circle
+              i.material-icons mode_edit
+          .files
+            button.edit-button.btn.upload
+              i.material-icons file_upload
+              span.placeholder Upload files

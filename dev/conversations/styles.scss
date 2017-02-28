@@ -107,6 +107,17 @@
     }
   }
 
+  .title-container {
+    margin-top: 20px;
+    text-align: center;
+
+    .title {
+      font-size: 24px;
+      font-weight: 500;
+      display: inline-block;
+    }
+  }
+
   //VIDEO PLAYER CONTAINER
   .video {
     margin: 20px auto 0 auto;
@@ -114,40 +125,48 @@
     border-radius: 2px;
     background-color:  #fff;
     box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
+    position: relative;
     @media (max-width: 845px) {
       width: 100%;
     }
 
+    .photo {
+      display: inline-block;
+      margin-left: 10px;
+      width: 38px;
+      height: 40px;
+      border-radius: 20px;
+      background-image: url('/files/images/user.png');
+    }
+
     .videoHeader {
       padding-top: 10px;
-      height: 54px;
-
-      .photo {
-        display: inline-block;
-        margin-left: 10px;
-        width: 38px;
-        height: 40px;
-        border-radius: 20px;
-        background-image: url('/files/images/user.png');
-      }
+      width: 100%;
+      height: 64px;
+      background-color: rgba(255, 255, 255, 0.7);
+      position: absolute;
+      top: 0;
+      z-index: 999;
 
       .text {
         display: inline-block;
         margin-left: 10px;
       }
 
-      .userName,
-      .userMessage {
+      .user-name,
+      .user-role {
         margin-bottom: 0;
+        height: 20px;
         color:  rgba(0, 0, 0, 0.87);
         font-weight: 500;
       }
 
-      .userName {
+      .user-name {
         font-size: 20px;
+        margin-bottom: 10px;
       }
 
-      .userMessage {
+      .user-role {
         font-size: 16px
       }
 
@@ -189,10 +208,41 @@
 
   .reply-text-placeholder {
     margin: 22px 0 20px 71px;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.54);;
     font-weight: 400;
     font-size: 16px;
     font-family: Helvetica;
+  }
+
+  .chat-container {
+    padding-top: 10px;
+    position: relative;
+
+    .photo {
+      position: absolute;
+    }
+
+    .chat-box {
+      width: 500px;
+      padding: 15px;
+      margin-left: 60px;
+      background-color: #fff;
+      box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
+
+      @media (max-width: 600px) {
+        width: 300px;
+      }
+
+      @media (max-width: 450px) {
+        width: 200px;
+      }
+    }
+
+    .files {
+      padding: 10px;
+      text-align: right;
+    }
+
   }
 
   //FOOTER

@@ -1,0 +1,54 @@
+.template {
+  .edit-button {
+    margin-left: 10px;
+    border: none;
+    background: none;
+    vertical-align: middle;
+    visibility: hidden;
+  }
+
+  .placeholder {
+    font-style: italic;
+    cursor: default;
+    color: rgba(0, 0, 0, 0.54)
+  }
+
+  .upload {
+    border: none;
+
+    i {
+      vertical-align: middle;
+    }
+  }
+
+  .title {
+    .placeholder {
+      color: rgba(0, 0, 0, 0.24)
+    }
+  }
+
+  .message:hover,
+  .title:hover,
+  .logo:hover,
+  .user-name:hover,
+  .user-role:hover {
+    .edit-button {
+      visibility: visible;
+    }
+  }
+
+  .files {
+    .edit-button {
+      visibility: visible;
+    }
+  }
+
+  .chat-text-box {
+    width: 500px;
+    padding: 0;
+    font-family: Helvetica;
+    resize: none;
+    min-height: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.54);
+  }
+}
