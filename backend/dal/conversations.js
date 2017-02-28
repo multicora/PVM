@@ -117,6 +117,16 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
+    },
+
+    addColumnIsTemplate: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `is_template` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
     }
 
   };

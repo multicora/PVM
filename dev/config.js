@@ -63,6 +63,10 @@
       controller: 'profileCtrl',
       controllerAs: 'vm',
       templateUrl: 'profile/tpl.html'
+    }).when('/template/:id', {
+      controller: 'templateCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'template/tpl.html'
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });
