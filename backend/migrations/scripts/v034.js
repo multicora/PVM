@@ -24,7 +24,6 @@ module.exports = function(DAL) {
         }
 
         let usersPromises = usersArr.map(user => {
-          console.log(user);
           return DAL.users.updateUserCompany(user);
         });
         return Promise.all(usersPromises);

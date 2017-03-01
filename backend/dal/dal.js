@@ -6,6 +6,9 @@ module.exports = function(connection){
   // Conversations
   DAL.conversations = require('./conversations.js')(connection);
 
+  // Templates
+  DAL.templates = require('./templates.js')(connection);
+
   // Users
   DAL.users = require('./users.js')(connection);
 

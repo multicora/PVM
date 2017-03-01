@@ -113,4 +113,114 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {get} /api/template/:id Request template
+   * @apiName GetTemplate
+   * @apiGroup Templates
+   *
+   * @apiParam {string}   id                              Template id.
+   *
+   * @apiSuccess {Object}   template                      Template information.
+   * @apiSuccess {String}   template.id                   Template id.
+   * @apiSuccess {String}   template.videoId              Template video id.
+   * @apiSuccess {String}   template.author               Template author id.
+   * @apiSuccess {String}   template.name                 Template author name.
+   * @apiSuccess {String}   template.companyRole          Template author company role.
+   * @apiSuccess {String}   template.title                Template title.
+   * @apiSuccess {String}   template.message              Template message.
+   * @apiSuccess {String}   template.videoUrl             Template video url.
+   * @apiSuccess {String}   template.logo                 Template company logo.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {
+   *   id: 1,
+   *   videoId: 4,
+   *   author: 4,
+   *   name: null,
+   *   ompanyRole: null,
+   *   title: null,
+   *   message: null,
+   *   logo: null,
+   *   videoUrl: 'https://dl.boxcloud.com/d/1/Iu3ZkIwjP6VYkw90
+   * }
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/template/{id}',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        let data = {};
+        DAL.templates.getById(request.params.id).then(res => {
+          data.id = res.id;
+          data.videoId = res.videoId;
+          data.author = res.author;
+          data.name = res.name;
+          data.companyRole = res.company_role;
+          data.title = res.title;
+          data.message = res.message;
+          if (res.logo){
+            data.logo = res.logo.toString();
+          } else {
+            data.logo = null;
+          }
+
+          return videoCtrl.getFile(data.videoId);
+        }).then(buffer => {
+          data.videoUrl = buffer.uri.href;
+          reply(data);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/update-template Request for update template
+   *
+   * @apiParam {Object}   newTemplate                  new template information.
+   * @apiParam {String}   newTemplate.id               template id.
+   * @apiParam {String}   newTemplate.title            new template title.
+   * @apiParam {String}   newTemplate.name             new template user name.
+   * @apiParam {String}   newTemplate.company_role     new template user company role.
+   * @apiParam {String}   newTemplate.message          new template message.
+   * @apiParam {String}   newTemplate.logo             new template company logo.
+   * @apiParam {String}   newTemplate.videoId          new template video id.
+   *
+   * @apiName UpdateTemplate
+   * @apiGroup Templates
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/update-template',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        let data = request.payload;
+        DAL.templates.getById(data.id).then(() => {
+          return DAL.templates.update(data);
+        }, () => {
+          return DAL.templates.create(data);
+        }).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };

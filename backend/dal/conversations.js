@@ -140,7 +140,7 @@ module.exports = (connection) => {
     addColumnTitle: (cb) => {
       const request = [
         'ALTER TABLE `conversations` ',
-        'ADD `title` int(255);'
+        'ADD `title` varchar(255);'
       ].join('');
 
       return connection.query(request, cb);
@@ -155,10 +155,19 @@ module.exports = (connection) => {
       return connection.query(request, cb);
     },
 
+    addColumnName: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `name` varchar(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
     addColumnCompanyRole: (cb) => {
       const request = [
         'ALTER TABLE `conversations` ',
-        'ADD `company_role` int(255);'
+        'ADD `company_role` varchar(255);'
       ].join('');
 
       return connection.query(request, cb);

@@ -2,19 +2,30 @@
   header
     .logoContainer
       .logo
-        img(src='/files/images/logo.png', alt='logo')
-        span.logoText CommerceFocused
-        button.edit-button.btn.upload
-          i.material-icons file_upload
-          span.placeholder Upload logo
+        .defoult-logo(ng-if="!vm.logo || vm.logo === 'null'")
+          span.logoText Powered by
+          img(src='/files/images/logo_bizkonect.svg'
+            alt='logo')
+        .logo-user(
+          ng-if="vm.logo && vm.logo != 'null'"
+          ng-style="{backgroundImage: 'url('+ vm.logo + ')' }")
+        .edit-button.btn.upload
+          label(for="logo").btn
+            input.hidden(
+              type="file"
+              id="logo"
+              onchange="angular.element(this).scope().convertToBase64LogoTemplate()")
+            i.material-icons file_upload
+            span.placeholder Upload logo
+
     .socialContainer
-      .social
-        a.linkedin(href='')
-          img(src='/files/images/linkedin.png', alt='linkedin')
-        a.twitter(href='')
-          img(src='/files/images/twitter.png', alt='twitter')
-        a.facebook(href='')
-          img(src='files/images/facebook.png', alt='facebook')
+      //- .social
+      //-   a.linkedin(href='')
+      //-     img(src='/files/images/linkedin.png', alt='linkedin')
+      //-   a.twitter(href='')
+      //-     img(src='/files/images/twitter.png', alt='twitter')
+      //-   a.facebook(href='')
+      //-     img(src='files/images/facebook.png', alt='facebook')
       .contacts
         .phone
           img(src='/files/images/phone.png', alt='phone')
@@ -24,35 +35,42 @@
           p {{vm.user.email}}
   .title-container
     p.title
-      span.placeholder(ng-hide="vm.title.editMode || vm.title.editMode") Add conversation topic here
+      span.placeholder(ng-hide="vm.title.editMode || vm.title.title") Add conversation topic here
+      span(ng-if="vm.title.title && !vm.title.editMode && vm.title.title != 'null'") {{vm.title.title}}
       input.mdl-textfield__input(
         type="text"
-        ng-if="vm.title.editMode")
+        ng-if="vm.title.editMode"
+        ng-model="vm.title.title")
     button.edit-button.btn.btn-circle(
       type="button"
       ng-click="vm.edit(vm.title)")
       i.material-icons mode_edit
   .video
     .videoHeader
-      .photo
+      .photo(
+        ng-if="vm.user.photo && vm.user.photo != 'null'"
+        ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
       .text
         p.user-name
-          span.placeholder(ng-hide="vm.name.editMode || vm.name.editMode") Add your name
-          span(ng-if="vm.name.name") {{vm.user.name}}
+          span.placeholder(ng-hide="vm.name.editMode || vm.name.name || vm.user.firstName") Add your name
+          span(ng-if="vm.name.name && !vm.name.editMode && vm.name.name != 'null'") {{vm.name.name}}
+          span(ng-if="vm.user.firstName && !vm.name.editMode && !vm.name.name") {{vm.user.firstName}}
           input.mdl-textfield__input(
             type="text"
             ng-if="vm.name.editMode"
-            ng-modal="vm.name.name")
+            ng-model="vm.name.name")
           button.edit-button.btn.btn-circle(
             type="button"
             ng-click="vm.edit(vm.name)")
             i.material-icons mode_edit
         p.user-role
-          span.placeholder(ng-hide="vm.companyRole.editMode || vm.companyRole.role") Add your company role
-          span(ng-if="vm.companyRole.role") {{vm.companyRole.role}}
+          span.placeholder(ng-hide="vm.companyRole.editMode || vm.companyRole.role || vm.user.company_position") Add your company role
+          span(ng-if="vm.companyRole.role && !vm.companyRole.editMode && vm.companyRole.role != 'null'") {{vm.companyRole.role}}
+          span(ng-if="vm.user.company_position && !vm.companyRole.editMode && !vm.companyRole.role") {{vm.user.company_position}}
           input.mdl-textfield__input(
             type="text"
-            ng-if="vm.companyRole.editMode")
+            ng-if="vm.companyRole.editMode"
+            ng-model="vm.companyRole.role")
           button.edit-button.btn.btn-circle(
             type="button"
             ng-click="vm.edit(vm.companyRole)")
@@ -65,25 +83,32 @@
         vjs-media="vm.media")
     .videoFooter
       .chat-container
-        .photo
+        .photo(
+          ng-if="vm.user.photo && vm.user.photo != 'null'"
+          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .chat-box
           p.message
-            span.placeholder Add your message
-            textarea.chat-text-box(ng-if="vm.editMode")
-            button.edit-button.btn.btn-circle
+            span.placeholder(ng-hide="vm.message.editMode || vm.message.message") Add your message
+            span(ng-if="vm.message.message && !vm.message.editMode && vm.message.message != 'null'") {{vm.message.message}}
+            textarea.mdl-textfield__input.chat-text-box(
+              ng-if="vm.message.editMode"
+              ng-model="vm.message.message")
+            button.edit-button.btn.btn-circle(
+              type="button"
+              ng-click="vm.edit(vm.message)")
               i.material-icons mode_edit
           .files
             button.edit-button.btn.upload
               i.material-icons file_upload
               span.placeholder Upload files
-  .snackbar-container(class="{{vm.snackbarClass}}")
+  .snackbar-container
     .save-snackbar
       button.btn.mdl-button.mdl-js-button.mdl-button--raised(
-        type="button")
+        type="button"
+        ng-click="vm.save()")
           | Save
       button.btn.mdl-button.mdl-js-button.mdl-button--raised(
         type="button"
- 
         ng-click="vm.showSendPopup = true")
           | Send
 
@@ -98,4 +123,12 @@
       .button-container
         button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.closeSendPopup()") close
         button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.sendVideo(email)") send
+
+  //- Videos popup
+  popup.select-video-container(ng-if="!vm.showSelectPopup")
+      video-list(
+      list="vm.list"
+      on-upload-click="vm.uploadBtnClick()"
+      on-record-click="vm.recordBtnClick()"
+      on-send-click="vm.sendClickHandler($data)")
 
