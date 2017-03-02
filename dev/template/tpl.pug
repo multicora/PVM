@@ -1,14 +1,21 @@
 .watchVideoContainer.template
+
+  //- HEADER
   header
     .logoContainer
       .logo
-        .defoult-logo(ng-if="!vm.logo || vm.logo === 'null'")
+        //- DEFAULT LOGO
+        .default-logo(ng-if="!vm.logo || vm.logo === 'null' || vm.logo === 'undefined'")
           span.logoText Powered by
           img(src='/files/images/logo_bizkonect.svg'
             alt='logo')
+
+        //- USER LOGO
         .logo-user(
           ng-if="vm.logo && vm.logo != 'null'"
           ng-style="{backgroundImage: 'url('+ vm.logo + ')' }")
+
+        //- EDIT LOGO BUTTON
         .edit-button.btn.upload
           label(for="logo").btn
             input.hidden(
@@ -18,6 +25,7 @@
             i.material-icons file_upload
             span.placeholder Upload logo
 
+    //- SOCIAL
     .socialContainer
       //- .social
       //-   a.linkedin(href='')
@@ -33,10 +41,12 @@
         .email
           img(src='/files/images/email.png', alt='email')
           p {{vm.user.email}}
+
+  //- TITLE
   .title-container
     p.title
-      span.placeholder(ng-hide="vm.title.editMode || vm.title.title") Add conversation topic here
-      span(ng-if="vm.title.title && !vm.title.editMode && vm.title.title != 'null'") {{vm.title.title}}
+      span.placeholder(ng-hide="vm.title.editMode || vm.title.title || vm.title.title === 'null' || vm.title.title === 'undefined'") Add conversation topic here
+      span(ng-if="vm.title.title && !vm.title.editMode && vm.title.title != 'null' && vm.title.title != 'undefined'") {{vm.title.title}}
       input.mdl-textfield__input(
         type="text"
         ng-if="vm.title.editMode"
@@ -45,12 +55,18 @@
       type="button"
       ng-click="vm.edit(vm.title)")
       i.material-icons mode_edit
+
+  //- VIDEO CONTENT
   .video
+
+    //- VIDEO HEADER
     .videoHeader
       .photo(
         ng-if="vm.user.photo && vm.user.photo != 'null'"
         ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
       .text
+
+        //- USER NAME
         p.user-name
           span.placeholder(ng-hide="vm.name.editMode || vm.name.name || vm.user.firstName") Add your name
           span(ng-if="vm.name.name && !vm.name.editMode && vm.name.name != 'null'") {{vm.name.name}}
@@ -63,6 +79,8 @@
             type="button"
             ng-click="vm.edit(vm.name)")
             i.material-icons mode_edit
+
+        //- USER ROLE
         p.user-role
           span.placeholder(ng-hide="vm.companyRole.editMode || vm.companyRole.role || vm.user.company_position") Add your company role
           span(ng-if="vm.companyRole.role && !vm.companyRole.editMode && vm.companyRole.role != 'null'") {{vm.companyRole.role}}
@@ -75,12 +93,20 @@
             type="button"
             ng-click="vm.edit(vm.companyRole)")
             i.material-icons mode_edit
+
+    //- VIDEO CONTENT
     .videoContent
       video.video-js.vjs-default-skin(
         vjs-video
         controls
         preload="auto"
         vjs-media="vm.media")
+      button.edit-button.btn.btn-circle(
+        type="button"
+        ng-click="vm.showSelectPopup = true")
+        i.material-icons mode_edit
+
+    //- VIDEO FOOTER
     .videoFooter
       .chat-container
         .photo(
@@ -88,8 +114,8 @@
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .chat-box
           p.message
-            span.placeholder(ng-hide="vm.message.editMode || vm.message.message") Add your message
-            span(ng-if="vm.message.message && !vm.message.editMode && vm.message.message != 'null'") {{vm.message.message}}
+            span.placeholder(ng-hide="vm.message.editMode || vm.message.message || vm.title.title === 'null' || vm.message.message === 'undefined'") Add your message
+            span(ng-if="vm.message.message && !vm.message.editMode && vm.message.message != 'null' && vm.message.message != 'undefined'") {{vm.message.message}}
             textarea.mdl-textfield__input.chat-text-box(
               ng-if="vm.message.editMode"
               ng-model="vm.message.message")
@@ -101,6 +127,8 @@
             button.edit-button.btn.upload
               i.material-icons file_upload
               span.placeholder Upload files
+
+  //- SNACKBAR
   .snackbar-container
     .save-snackbar
       button.btn.mdl-button.mdl-js-button.mdl-button--raised(
@@ -112,7 +140,7 @@
         ng-click="vm.showSendPopup = true")
           | Send
 
-  //- Send popup
+  //- SEND POPUP
   popup.send-popup-container(ng-if="vm.showSendPopup")
     form.send-form({{action='', on='submit', }}='')
       p.popupTitle send
@@ -124,11 +152,15 @@
         button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.closeSendPopup()") close
         button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.sendVideo(email)") send
 
-  //- Videos popup
-  popup.select-video-container(ng-if="!vm.showSelectPopup")
-      video-list(
-      list="vm.list"
-      on-upload-click="vm.uploadBtnClick()"
-      on-record-click="vm.recordBtnClick()"
-      on-send-click="vm.sendClickHandler($data)")
+  //- SELECT VIDEO POPUP
+  popup.select-video-container(ng-if="vm.showSelectPopup")
+    video-list(
+    list="vm.list"
+    on-upload-click="vm.uploadBtnClick()"
+    on-record-click="vm.recordBtnClick()"
+    show-send-handler="vm.showSendHandler"
+    on-send-click="vm.sendClickHandler($data)"
+    on-thumbnail-click="vm.onThumbnailClick($data)")
+    .button-container
+      button.btn.mdl-button.mdl-js-button.mdl-button--raised.close-select-popup(ng-click="vm.closeSelectPopup()") close
 

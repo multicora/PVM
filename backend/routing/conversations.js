@@ -25,7 +25,7 @@ module.exports = function (server, DAL) {
           DAL.conversations.createConversation(data).then(function(res) {
             try {
               let serverUrl = utils.getServerUrl(request);
-              const message = 'Link: ' + serverUrl + '/conversation/' + data.video;
+              const message = 'Link: ' + serverUrl + '/conversation/' + data.videoId;
               const from = [
                 author.firstName + ' ',
                 author.secondName + ' ',
@@ -40,8 +40,8 @@ module.exports = function (server, DAL) {
                 html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId)
               };
               mailer(config).send(mail).then(
-                (res) => {
-                  reply(res);
+                () => {
+                  reply({'status': 'success'});
                 }, (err) => {
                   reply( Boom.badImplementation(err.message, err) );
                 }
@@ -162,12 +162,11 @@ module.exports = function (server, DAL) {
           data.companyRole = res.company_role;
           data.title = res.title;
           data.message = res.message;
-          if (res.logo){
+          if (res.logo) {
             data.logo = res.logo.toString();
           } else {
             data.logo = null;
           }
-
           return videoCtrl.getFile(data.videoId);
         }).then(buffer => {
           data.videoUrl = buffer.uri.href;
@@ -211,12 +210,48 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         let data = request.payload;
-        DAL.templates.getById(data.id).then(() => {
-          return DAL.templates.update(data);
-        }, () => {
-          return DAL.templates.create(data);
-        }).then(() => {
+        DAL.templates.update(data).then(() => {
           reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/template Request for create template
+   *
+   * @apiParam {Object}   Template                  template information.
+   * @apiParam {String}   Template.title            template title.
+   * @apiParam {String}   Template.name             template user name.
+   * @apiParam {String}   Template.company_role     template user company role.
+   * @apiParam {String}   Template.message          template message.
+   * @apiParam {String}   Template.logo             template company logo.
+   * @apiParam {String}   Template.videoId          template video id.
+   *
+   * @apiName CreateTemplate
+   * @apiGroup Templates
+   *
+   *
+   * @apiSuccess {Object}   template         Template.
+   * @apiSuccess {String}   template.id    Template id.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "templateId": "12"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/template',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        let data = request.payload;
+        DAL.templates.create(data).then((res) => {
+          reply({'templateId': res.insertId});
         }, err => {
           reply(Boom.badImplementation(err, err));
         });

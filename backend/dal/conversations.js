@@ -23,8 +23,12 @@ module.exports = (connection) => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
-            '`conversations` (`id`, `videoId`, `email`, `author`) ',
-            'VALUES (NULL, "' + data.video + '" ,"' + data.email + '" ,"' + data.author + '");'
+            '`conversations` (`id`, `videoId`, `email`, `logo`, `author`, `name`,',
+            ' `title`, `company_role`, `message`, `is_template`) ',
+            'VALUES (NULL, "' + data.videoId + '" ,"' + data.email + '" ,"'
+            + data.logo + '" ,"' + data.author + '" ,"' + data.name + '" ,"'
+            + data.title + '" ,"' + data.company_role + '" ,"' + data.message
+            + '" ,"' + 0 + '");'
           ].join('');
 
           connection.query(request, (err, response) => {

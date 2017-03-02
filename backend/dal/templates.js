@@ -23,10 +23,11 @@ module.exports = (connection) => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
-            '`conversations` (`id`, `videoId`, `email`, `author`, `logo`,',
+            '`conversations` (`id`, `videoId`, `logo`, `author`, `name`,',
             ' `title`, `company_role`, `message`, `is_template`) ',
-            'VALUES (NULL, "' + data.video + '" ,"' + data.email + '" ,"' + data.author + '" ,"' +
-              data.logo + '" ,"' + data.company_role + '" ,"' + data.message + '" ,"' + true + '");'
+            'VALUES (NULL, "' + data.videoId + '" ,"' + data.logo + '" ,"' + data.author
+            + '" ,"' + data.name + '" ,"' + data.title + '" ,"'
+            + data.company_role + '" ,"' + data.message + '" ,"' + 1 + '");'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -42,6 +43,7 @@ module.exports = (connection) => {
           'SET videoId="' + data.videoId + '", ',
           'logo="' + data.logo + '", ',
           'title="' + data.title + '", ',
+          'name="' + data.name + '", ',
           'company_role="' + data.company_role + '", ',
           'message="' + data.message + '" ',
           'WHERE id="' + data.id + '";'

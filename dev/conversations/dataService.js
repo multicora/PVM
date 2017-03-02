@@ -6,17 +6,16 @@
 
   service.$inject = ['$http'];
   function service($http) {
-    this.create = function (email, video) {
-      var data = {
-        "email": email,
-        "video": video.id
-      };
-
+    this.create = function (data) {
       return $http.post('/api/conversations', data);
     };
 
     this.get = function (id) {
       return $http.get('/api/conversations/' + id);
+    };
+
+    this.getVideo = function (id) {
+      return $http.get('/api/videos/' + id);
     };
 
     this.getTemplate = function (id) {
@@ -25,6 +24,10 @@
 
     this.updateTemplate = function (data) {
       return $http.post('/api/update-template', data);
+    };
+
+    this.createTemplate = function (data) {
+      return $http.post('/api/template', data);
     };
   }
 })(angular);

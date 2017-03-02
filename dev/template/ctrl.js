@@ -23,47 +23,83 @@
     vm.message = {};
     vm.title = {};
     vm.showSendPopup = false;
-    vm.media = null;
+    vm.showSelectPopup = false;
+    vm.showSendHandler = false;
 
-    getTemplate();
+    vm.videoId = $routeParams.id;
+    getVideo(vm.videoId);
+
     getProfile();
     getVideos();
+
+    libraryService.getThumbnails().then(function (res) {
+      for (let i = 0; i < res.data.data.length; i++) {
+        vm.list[i].attributes.thumbnail = res.data.data[i].attributes;
+      }
+    });
 
     vm.edit = function(element) {
       element.editMode = true;
     }
 
     vm.save = function() {
-      if (!vm.name.name) {
-        vm.name.name = vm.user.firstName;
-      }
-      if (!vm.companyRole.role) {
-        vm.companyRole.role = vm.user.company_position;
-      }
-      console.log(vm.name.name, vm.companyRole.role);
-      conversationsService.updateTemplate({
-        'id': $routeParams.id,
+      checkName();
+      vm.sendData ={
         'name': vm.name.name,
         'company_role': vm.companyRole.role,
         'message': vm.message.message,
         'title': vm.title.title,
         'logo': vm.logo,
-        'videoId': vm.videoId
-      }).then(function() {
-        vm.name.editMode = false;
-        vm.companyRole.editMode = false;
-        vm.title.editMode = false;
-        vm.message.editMode = false;
-      });
+        'videoId': vm.videoId,
+        'author': vm.user.id
+      }
+
+      if (vm.templateId) {
+        vm.sendData.id = vm.templateId;
+        conversationsService.updateTemplate(vm.sendData).then(function() {
+          closeAllEditButton();
+          getTemplate();
+        });
+      } else {
+        if (!vm.name.name) {
+          vm.name.name = vm.user.firstName;
+        }
+        if (!vm.companyRole.role) {
+          vm.companyRole.role = vm.user.company_position;
+        }
+        conversationsService.createTemplate(vm.sendData).then(function(res) {
+          closeAllEditButton();
+          vm.templateId = res.data.templateId;
+        });
+      }
     }
 
-    // Send
-    vm.closeSendPopup = function () {
+    vm.onThumbnailClick = function(video) {
+      vm.videoId = video.id;
+      vm.showSelectPopup = false;
+      getVideo(vm.videoId);
+    }
+
+    vm.closeSelectPopup = function() {
+      vm.showSelectPopup = false;
+    }
+
+    vm.closeSendPopup = function() {
       vm.showSendPopup = false;
     }
 
-    vm.sendVideo = function (email) {
-      conversationsService.create(email, vm.video).then(function () {
+    vm.sendVideo = function(email) {
+      checkName();
+      vm.sendData ={
+        'name': vm.name.name,
+        'company_role': vm.companyRole.role,
+        'message': vm.message.message,
+        'title': vm.title.title,
+        'logo': vm.logo,
+        'videoId': vm.videoId,
+        'email': email
+      }
+      conversationsService.create(vm.sendData).then(function () {
         vm.showSendPopup = false;
       });
     }
@@ -89,7 +125,7 @@
     }
 
     function getTemplate() {
-      conversationsService.getTemplate($routeParams.id).then(function(res) {
+      conversationsService.getTemplate(vm.templateId).then(function(res) {
         vm.name.name = res.data.name;
         vm.companyRole.role = res.data.companyRole;
         vm.message.message = res.data.message;
@@ -105,6 +141,13 @@
       })
     }
 
+    function closeAllEditButton() {
+      vm.name.editMode = false;
+      vm.companyRole.editMode = false;
+      vm.title.editMode = false;
+      vm.message.editMode = false;
+    }
+
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
@@ -116,5 +159,25 @@
         vm.list = res.data.data;
       });
     };
+
+    function getVideo(id) {
+      conversationsService.getVideo(id).then(function(res) {
+        vm.media = {
+          sources: [{
+            src: res.data.data.attributes.url,
+            type: 'video/mp4'
+          }]
+        };
+      });
+    }
+
+    function checkName() {
+      if (!vm.name.name || vm.name.name === 'undefined' || vm.name.name === 'null') {
+        vm.name.name = vm.user.firstName;
+      }
+      if (!vm.companyRole.role || vm.companyRole.role === 'undefined' || vm.companyRole.role === 'null') {
+        vm.companyRole.role = vm.user.company_position;
+      }
+    }
   }
 })(angular);

@@ -24,19 +24,8 @@
     list="vm.list"
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
+    show-send-handler="vm.showSendHandler"
     on-send-click="vm.sendClickHandler($data)")
-
-  //- Send popup
-  popup.send-popup-container(ng-if="vm.showSendPopup")
-    form.send-form({{action='', on='submit', }}='')
-      p.popupTitle send
-      input.email(
-        type="email"
-        placeholder="email"
-        ng-model="email")
-      .button-container
-        button.close(ng-click="vm.closeSendPopup()") close
-        button.save(ng-click="vm.sendVideo(email, vm.videoForSending)") send
 
   //- Record popup
   popup(ng-if="vm.showRecordPopup")
