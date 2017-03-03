@@ -8,8 +8,8 @@ module.exports = (connection) => {
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT * ',
-          'FROM conversations ',
+          'SELECT title, message, id ',
+          'FROM `conversations` ',
           'WHERE author=' + author + ' AND ',
           'is_template = 1;'
         ].join('');
@@ -50,6 +50,20 @@ module.exports = (connection) => {
             err ? reject(err) : resolve(response);
           });
         });
+    },
+
+    delete: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'DELETE ',
+          'FROM conversations ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
     },
 
     update: (data) => {

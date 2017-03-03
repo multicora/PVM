@@ -260,7 +260,7 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/template Request templates
+   * @api {get} /api/templates Request templates
    * @apiName GetTemplates
    * @apiGroup Templates
    *
@@ -280,14 +280,8 @@ module.exports = function (server, DAL) {
    *     HTTP/1.1 200 OK
    * {[
    *   id: 1,
-   *   videoId: 4,
-   *   author: 4,
-   *   name: null,
-   *   ompanyRole: null,
    *   title: null,
-   *   message: null,
-   *   logo: null,
-   *   videoUrl: 'https://dl.boxcloud.com/d/1/Iu3ZkIwjP6VYkw90
+   *   message: null
    * ]}
    */
   server.route({
@@ -298,6 +292,39 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         DAL.templates.getByAuthor(request.auth.credentials.id).then(res => {
           reply(res);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/template Request for delete template
+   *
+   * @apiParam {string}   id                              Template id.
+   *
+   * @apiName DeleteTemplate
+   * @apiGroup Templates
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/delete-template',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.templates.delete(request.payload).then(() => {
+          reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(err, err));
         });

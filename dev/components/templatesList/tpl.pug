@@ -14,5 +14,5 @@
       .button-container
         button.btn.mdl-button.mdl-js-button.use(ng-click="vm.edit()") 
           | Use
-        button.btn.mdl-button.delete(ng-click="vm.delete()")
+        button.btn.mdl-button.delete(ng-click="vm.delete({$data: item.id})")
           i.material-icons delete

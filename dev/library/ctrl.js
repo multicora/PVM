@@ -89,6 +89,12 @@
       vm.showTemplates = true;
     }
 
+    vm.deleteTemplate = function (id) {
+      libraryService.deleteTemplate(id).then(function() {
+        getTemplates();
+      });
+    }
+
     function getVideos() {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data.data;
