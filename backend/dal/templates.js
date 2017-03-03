@@ -4,6 +4,22 @@ const Promise = require('promise');
 
 module.exports = (connection) => {
   return {
+
+    getByAuthor: (author) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * ',
+          'FROM conversations ',
+          'WHERE author=' + author + ' AND ',
+          'is_template = 1;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getById: (id) => {
       return new Promise((resolve, reject) => {
         let request = [

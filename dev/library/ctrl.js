@@ -22,19 +22,15 @@
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendHandler = true;
-
-    var getVideos = function () {
-      libraryService.getVideos().then(function (res) {
-        vm.list = res.data.data;
-      });
-    };
+    vm.showVideos = true;
+    vm.showTemplates = false;
 
     getVideos();
-
+    getTemplates();
 
     libraryService.getThumbnails().then(function (res) {
       for (let i = 0; i < res.data.data.length; i++) {
-        vm.list[i].attributes.thumbnail = res.data.data[i].attributes;
+        vm.videosList[i].attributes.thumbnail = res.data.data[i].attributes;
       }
     });
 
@@ -81,5 +77,29 @@
     vm.sendClickHandler = function (video) {
       $location.path('template/' + video.id);
     }
+
+    // Tabs
+    vm.tabBtnVideosClick = function (tab) {
+      vm.showTemplates = false;
+      vm.showVideos = true;
+    }
+
+    vm.tabBtnTemplatesClick = function (tab) {
+      vm.showVideos = false;
+      vm.showTemplates = true;
+    }
+
+    function getVideos() {
+      libraryService.getVideos().then(function (res) {
+        vm.videosList = res.data.data;
+      });
+    };
+
+    function getTemplates() {
+      libraryService.getTemplates().then(function (res) {
+        vm.templatesList = res.data;
+        console.log(vm.templatesList);
+      });
+    };
   }
 })(angular);

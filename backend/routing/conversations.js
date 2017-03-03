@@ -258,4 +258,50 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {get} /api/template Request templates
+   * @apiName GetTemplates
+   * @apiGroup Templates
+   *
+   * @apiSuccess {Object[]} templates                     List of templates.
+   * @apiSuccess {String}   template.id                   Template id.
+   * @apiSuccess {String}   template.videoId              Template video id.
+   * @apiSuccess {String}   template.author               Template author id.
+   * @apiSuccess {String}   template.name                 Template author name.
+   * @apiSuccess {String}   template.companyRole          Template author company role.
+   * @apiSuccess {String}   template.title                Template title.
+   * @apiSuccess {String}   template.message              Template message.
+   * @apiSuccess {String}   template.videoUrl             Template video url.
+   * @apiSuccess {String}   template.logo                 Template company logo.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {[
+   *   id: 1,
+   *   videoId: 4,
+   *   author: 4,
+   *   name: null,
+   *   ompanyRole: null,
+   *   title: null,
+   *   message: null,
+   *   logo: null,
+   *   videoUrl: 'https://dl.boxcloud.com/d/1/Iu3ZkIwjP6VYkw90
+   * ]}
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/templates',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.templates.getByAuthor(request.auth.credentials.id).then(res => {
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };
