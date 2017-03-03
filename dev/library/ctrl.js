@@ -75,7 +75,7 @@
 
     // Send
     vm.sendClickHandler = function (video) {
-      $location.path('template/' + video.id);
+      $location.path('template/' + video.id + '/null');
     }
 
     // Tabs
@@ -89,10 +89,15 @@
       vm.showTemplates = true;
     }
 
+    // Templates
     vm.deleteTemplate = function (id) {
       libraryService.deleteTemplate(id).then(function() {
         getTemplates();
       });
+    }
+
+    vm.useTemplate = function (id) {
+      $location.path('template/null/' + id);
     }
 
     function getVideos() {

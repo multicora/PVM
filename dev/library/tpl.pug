@@ -27,7 +27,7 @@
   template-list(
     ng-if="vm.showTemplates"
     list="vm.templatesList"
-    edit=""
+    use="vm.useTemplate($data)"
     delete="vm.deleteTemplate($data)")
 
   //- Record popup

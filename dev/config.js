@@ -63,7 +63,7 @@
       controller: 'profileCtrl',
       controllerAs: 'vm',
       templateUrl: 'profile/tpl.html'
-    }).when('/template/:id', {
+    }).when('/template/:id/:templateId', {
       controller: 'templateCtrl',
       controllerAs: 'vm',
       templateUrl: 'template/tpl.html'

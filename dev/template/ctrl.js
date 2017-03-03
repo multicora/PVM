@@ -26,8 +26,14 @@
     vm.showSelectPopup = false;
     vm.showSendHandler = false;
 
-    vm.videoId = $routeParams.id;
-    getVideo(vm.videoId);
+    if ($routeParams.templateId === 'null') {
+      vm.videoId = $routeParams.id;
+      getVideo(vm.videoId);
+    } else {
+      vm.templateId = $routeParams.templateId;
+      getTemplate();
+    }
+
 
     getProfile();
     getVideos();

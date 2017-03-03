@@ -12,7 +12,7 @@
         ng-bind="item.message")
         span(ng-if="!item.message || item.message === 'null' || item.message === 'undefined'") No message
       .button-container
-        button.btn.mdl-button.mdl-js-button.use(ng-click="vm.edit()") 
+        button.btn.mdl-button.mdl-js-button.use(ng-click="vm.use({$data: item.id})") 
           | Use
         button.btn.mdl-button.delete(ng-click="vm.delete({$data: item.id})")
           i.material-icons delete
