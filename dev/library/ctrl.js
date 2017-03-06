@@ -28,6 +28,7 @@
 
     getVideos();
     getTemplates();
+    getConversations();
 
     libraryService.getThumbnails().then(function (res) {
       for (let i = 0; i < res.data.data.length; i++) {
@@ -84,18 +85,27 @@
       vm.showTemplates = false;
       vm.showConversations = false;
       vm.showVideos = true;
+      vm.templatesClass = '';
+      vm.conversationsClass = '';
+      vm.videosClass = 'active';
     }
 
     vm.tabBtnTemplatesClick = function (tab) {
       vm.showVideos = false;
       vm.showConversations = false;
       vm.showTemplates = true;
+      vm.videosClass = '';
+      vm.templatesClass = 'active';
+      vm.conversationsClass = '';
     }
 
     vm.tabBtnConversationsClick = function (tab) {
       vm.showVideos = false;
       vm.showTemplates = false;
       vm.showConversations = true;
+      vm.videosClass = '';
+      vm.templatesClass = '';
+      vm.conversationsClass = 'active';
     }
 
     // Templates
@@ -109,6 +119,10 @@
       $location.path('template/null/' + id);
     }
 
+    vm.vieweConversation = function (id) {
+      $location.path('conversation/' + id);
+    }
+
     function getVideos() {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data.data;
@@ -118,7 +132,12 @@
     function getTemplates() {
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
-        console.log(vm.templatesList);
+      });
+    };
+
+    function getConversations() {
+      libraryService.getConversations().then(function (res) {
+        vm.conversationsList = res.data;
       });
     };
   }

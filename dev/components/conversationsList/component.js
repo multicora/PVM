@@ -5,7 +5,7 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      delete: '&',
+      viewe: '&',
       list: '<',
     }
   });

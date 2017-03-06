@@ -18,6 +18,10 @@
       return $http.get('/api/templates');
     };
 
+    this.getConversations = function () {
+      return $http.get('/api/conversations');
+    };
+
     this.deleteTemplate = function (id) {
       return $http.post('/api/delete-template', id);
     };

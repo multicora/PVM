@@ -4,9 +4,15 @@
     img.tab-icon(src='/files/images/video-tab-icon.png', alt='')
     .navigation-bar-container
       ul.navigation-bar
-        li(ng-click="vm.tabBtnVideosClick()") VIDEOS
-        li(ng-click="vm.tabBtnTemplatesClick()") TEMPLATES
-        li(ng-click="vm.tabBtnConversationsClick()") CONVERSATIONS
+        li(
+          ng-class="vm.videosClass"
+          ng-click="vm.tabBtnVideosClick()") VIDEOS
+        li(
+          ng-class="vm.templatesClass"
+          ng-click="vm.tabBtnTemplatesClick()") TEMPLATES
+        li(
+          ng-class="vm.conversationsClass"
+          ng-click="vm.tabBtnConversationsClick()") CONVERSATIONS
         li ANALYTICS
         li CONTACTS
 
@@ -30,9 +36,10 @@
     use="vm.useTemplate($data)"
     delete="vm.deleteTemplate($data)")
 
-  conversations-list(
+  conversation-list(
     ng-if="vm.showConversations"
-    list="vm.conversationsList")
+    list="vm.conversationsList"
+    viewe="vm.vieweConversation($data)")
 
   //- Record popup
   popup(ng-if="vm.showRecordPopup")

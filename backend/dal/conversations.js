@@ -21,7 +21,7 @@ module.exports = (connection) => {
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT title, message, id, email, viewed',
+          'SELECT title, message, id, email, viewed ',
           'FROM `conversations` ',
           'WHERE author=' + author + ' AND ',
           'is_template = 0;'

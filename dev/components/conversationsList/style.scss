@@ -1,61 +1,23 @@
-//CONTENT
 .content {
-  //VIDEOS
-  .templates-container {
-    margin: 0 auto;
-    max-width: 920px;
-    width: 100%;
-  }
+  .conversations-container {
+    .conversation {
+      .indicators {
+        float: left;
+        height: 100%;
+        width: 30px;
+      }
 
-  .template {
-    padding: 16px 16px 24px 16px;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
-    position: relative;
+      .viewed {
+        color: green;
+      }
 
-    .title,
-    .message {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 0;
-      display: inline-block;
-      vertical-align: middle;
-      width: 100%;
-    }
+      .message {
+        margin-top: 15px;
+      }
 
-    .title {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .message {
-      font-size: 16px;
-    }
-
-    .button-container {
-      position: absolute;
-      right: 16px;
-      bottom: 25px;
-      text-align: right;
-    }
-
-    .btn {
-      font-weight: bold;
-      outline: none;
-      border: none;
-    }
-  }
-
-  .template {
-    .button-container {
-      display: none;
-    }
-  }
-
-  .template:hover {
-    .button-container {
-      display: inline-block;
+      .button-container {
+        bottom: 45px;
+      }
     }
   }
 }
