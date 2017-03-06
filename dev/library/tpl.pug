@@ -6,7 +6,7 @@
       ul.navigation-bar
         li(ng-click="vm.tabBtnVideosClick()") VIDEOS
         li(ng-click="vm.tabBtnTemplatesClick()") TEMPLATES
-        li EMAILS
+        li(ng-click="vm.tabBtnConversationsClick()") CONVERSATIONS
         li ANALYTICS
         li CONTACTS
 
@@ -29,6 +29,10 @@
     list="vm.templatesList"
     use="vm.useTemplate($data)"
     delete="vm.deleteTemplate($data)")
+
+  conversations-list(
+    ng-if="vm.showConversations"
+    list="vm.conversationsList")
 
   //- Record popup
   popup(ng-if="vm.showRecordPopup")

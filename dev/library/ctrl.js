@@ -24,6 +24,7 @@
     vm.showSendHandler = true;
     vm.showVideos = true;
     vm.showTemplates = false;
+    vm.showConversations = false;
 
     getVideos();
     getTemplates();
@@ -81,12 +82,20 @@
     // Tabs
     vm.tabBtnVideosClick = function (tab) {
       vm.showTemplates = false;
+      vm.showConversations = false;
       vm.showVideos = true;
     }
 
     vm.tabBtnTemplatesClick = function (tab) {
       vm.showVideos = false;
+      vm.showConversations = false;
       vm.showTemplates = true;
+    }
+
+    vm.tabBtnConversationsClick = function (tab) {
+      vm.showVideos = false;
+      vm.showTemplates = false;
+      vm.showConversations = true;
     }
 
     // Templates
