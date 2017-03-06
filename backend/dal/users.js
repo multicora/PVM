@@ -326,7 +326,6 @@ module.exports = (connection) => {
           'WHERE id="' + user.id + '";'
         ].join('');
 
-        console.log(request);
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
         });
