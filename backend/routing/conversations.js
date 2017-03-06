@@ -266,14 +266,8 @@ module.exports = function (server, DAL) {
    *
    * @apiSuccess {Object[]} templates                     List of templates.
    * @apiSuccess {String}   template.id                   Template id.
-   * @apiSuccess {String}   template.videoId              Template video id.
-   * @apiSuccess {String}   template.author               Template author id.
-   * @apiSuccess {String}   template.name                 Template author name.
-   * @apiSuccess {String}   template.companyRole          Template author company role.
    * @apiSuccess {String}   template.title                Template title.
    * @apiSuccess {String}   template.message              Template message.
-   * @apiSuccess {String}   template.videoUrl             Template video url.
-   * @apiSuccess {String}   template.logo                 Template company logo.
    *
    *
    * @apiSuccessExample Success-Response:
