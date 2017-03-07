@@ -45,15 +45,15 @@
   //- TITLE
   .title-container
     p.title
-      span.placeholder(ng-hide="vm.title.editMode || vm.title.title || vm.title.title === 'null' || vm.title.title === 'undefined'") Add conversation topic here
-      span(ng-if="vm.title.title && !vm.title.editMode && vm.title.title != 'null' && vm.title.title != 'undefined'") {{vm.title.title}}
+      span.placeholder(ng-hide="vm.titleObj.editMode || vm.titleObj.title || vm.titleObj.title === 'null' || vm.titleObj.title === 'undefined'") Add conversation topic here
+      span(ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != 'null' && vm.titleObj.title != 'undefined'") {{vm.titleObj.title}}
       input.mdl-textfield__input(
         type="text"
-        ng-if="vm.title.editMode"
-        ng-model="vm.title.title")
+        ng-if="vm.titleObj.editMode"
+        ng-model="vm.titleObj.title")
     button.edit-button.btn.btn-circle(
       type="button"
-      ng-click="vm.edit(vm.title)")
+      ng-click="vm.edit(vm.titleObj)")
       i.material-icons mode_edit
 
   //- VIDEO CONTENT
@@ -68,16 +68,16 @@
 
         //- USER NAME
         p.user-name
-          span.placeholder(ng-hide="vm.name.editMode || vm.name.name || vm.user.firstName") Add your name
-          span(ng-if="vm.name.name && !vm.name.editMode && vm.name.name != 'null'") {{vm.name.name}}
-          span(ng-if="vm.user.firstName && !vm.name.editMode && !vm.name.name") {{vm.user.firstName}}
+          span.placeholder(ng-hide="vm.nameObj.editMode || vm.nameObj.name || vm.user.firstName") Add your name
+          span(ng-if="vm.nameObj.name && !vm.nameObj.editMode && vm.nameObj.name != 'null'") {{vm.nameObj.name}}
+          span(ng-if="vm.user.firstName && !vm.nameObj.editMode && !vm.nameObj.name") {{vm.user.firstName}}
           input.mdl-textfield__input(
             type="text"
-            ng-if="vm.name.editMode"
-            ng-model="vm.name.name")
+            ng-if="vm.nameObj.editMode"
+            ng-model="vm.nameObj.name")
           button.edit-button.btn.btn-circle(
             type="button"
-            ng-click="vm.edit(vm.name)")
+            ng-click="vm.edit(vm.nameObj)")
             i.material-icons mode_edit
 
         //- USER ROLE
@@ -114,14 +114,14 @@
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .chat-box
           p.message
-            span.placeholder(ng-hide="vm.message.editMode || vm.message.message || vm.title.title === 'null' || vm.message.message === 'undefined'") Add your message
-            span(ng-if="vm.message.message && !vm.message.editMode && vm.message.message != 'null' && vm.message.message != 'undefined'") {{vm.message.message}}
+            span.placeholder(ng-hide="vm.messageObj.editMode || vm.messageObj.message || vm.titleObj.title === 'null' || vm.messageObj.message === 'undefined'") Add your message
+            span(ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != 'null' && vm.messageObj.message != 'undefined'") {{vm.messageObj.message}}
             textarea.mdl-textfield__input.chat-text-box(
-              ng-if="vm.message.editMode"
-              ng-model="vm.message.message")
+              ng-if="vm.messageObj.editMode"
+              ng-model="vm.messageObj.message")
             button.edit-button.btn.btn-circle(
               type="button"
-              ng-click="vm.edit(vm.message)")
+              ng-click="vm.edit(vm.messageObj)")
               i.material-icons mode_edit
           .files
             button.edit-button.btn.upload

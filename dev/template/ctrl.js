@@ -18,10 +18,10 @@
     libraryService
   ) {
     var vm = this;
-    vm.name = {};
+    vm.nameObj = {};
     vm.companyRole = {};
-    vm.message = {};
-    vm.title = {};
+    vm.messageObj = {};
+    vm.titleObj = {};
     vm.showSendPopup = false;
     vm.showSelectPopup = false;
     vm.showSendHandler = false;
@@ -45,10 +45,10 @@
     vm.save = function() {
       checkName();
       vm.sendData ={
-        'name': vm.name.name,
+        'name': vm.nameObj.name,
         'company_role': vm.companyRole.role,
-        'message': vm.message.message,
-        'title': vm.title.title,
+        'message': vm.messageObj.message,
+        'title': vm.titleObj.title,
         'logo': vm.logo,
         'videoId': vm.videoId,
         'author': vm.user.id
@@ -61,8 +61,8 @@
           getTemplate();
         });
       } else {
-        if (!vm.name.name) {
-          vm.name.name = vm.user.firstName;
+        if (!vm.nameObj.name) {
+          vm.nameObj.name = vm.user.firstName;
         }
         if (!vm.companyRole.role) {
           vm.companyRole.role = vm.user.company_position;
@@ -91,10 +91,10 @@
     vm.sendVideo = function(email) {
       checkName();
       vm.sendData ={
-        'name': vm.name.name,
+        'name': vm.nameObj.name,
         'company_role': vm.companyRole.role,
-        'message': vm.message.message,
-        'title': vm.title.title,
+        'message': vm.messageObj.message,
+        'title': vm.titleObj.title,
         'logo': vm.logo,
         'videoId': vm.videoId,
         'email': email
@@ -126,10 +126,10 @@
 
     function getTemplate() {
       conversationsService.getTemplate(vm.templateId).then(function(res) {
-        vm.name.name = res.data.name;
+        vm.nameObj.name = res.data.name;
         vm.companyRole.role = res.data.companyRole;
-        vm.message.message = res.data.message;
-        vm.title.title = res.data.title;
+        vm.messageObj.message = res.data.message;
+        vm.titleObj.title = res.data.title;
         vm.logo = res.data.logo;
         vm.videoId = res.data.videoId;
         vm.media = {
@@ -142,10 +142,10 @@
     }
 
     function closeAllEditButton() {
-      vm.name.editMode = false;
+      vm.nameObj.editMode = false;
       vm.companyRole.editMode = false;
-      vm.title.editMode = false;
-      vm.message.editMode = false;
+      vm.titleObj.editMode = false;
+      vm.messageObj.editMode = false;
     }
 
     function getProfile() {
@@ -172,10 +172,10 @@
     }
 
     function checkName() {
-      if (!vm.name.name || vm.name.name === 'undefined' || vm.name.name === 'null') {
-        vm.name.name = vm.user.firstName;
+      if (!vm.nameObj.name || vm.nameObj.name === 'undefined' || vm.nameObj.name === null) {
+        vm.nameObj.name = vm.user.firstName;
       }
-      if (!vm.companyRole.role || vm.companyRole.role === 'undefined' || vm.companyRole.role === 'null') {
+      if (!vm.companyRole.role || vm.companyRole.role === 'undefined' || vm.companyRole.role === null) {
         vm.companyRole.role = vm.user.company_position;
       }
     }
