@@ -3,14 +3,14 @@
     .logoContainer
       .logo
         //- DEFAULT LOGO
-        .default-logo(ng-if="!vm.conversation.logo || vm.conversation.logo === 'null' || vm.conversation.logo === 'undefined'")
+        .default-logo(ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === 'undefined'")
           span.logoText Powered by
           img(src='/files/images/logo_bizkonect.svg'
             alt='logo')
 
         //- USER LOGO
         .logo-user(
-          ng-if="vm.conversation.logo && vm.conversation.logo != 'null' && vm.conversation.logo != 'undefined'"
+          ng-if="vm.conversation.logo && vm.conversation.logo != null && vm.conversation.logo != 'undefined'"
           ng-style="{backgroundImage: 'url('+ vm.conversation.logo + ')' }")
 
     .socialContainer
@@ -38,15 +38,15 @@
     .video
       .videoHeader
         .photo(
-          ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != 'null'"
+          ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
           ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
         //- USER NAME
         .text
           p.user-name
-            span(ng-if="vm.conversation.name && vm.conversation.name != 'null'") {{vm.conversation.name}}
+            span(ng-if="vm.conversation.name && vm.conversation.name != null") {{vm.conversation.name}}
           //- USER ROLE
           p.user-role
-            span(ng-if="vm.conversation.company_role && vm.conversation.company_role != 'null'") {{vm.conversation.company_role}}
+            span(ng-if="vm.conversation.company_role && vm.conversation.company_role != null") {{vm.conversation.company_role}}
       .videoContent
         video.video-js.vjs-default-skin(
           vjs-video
@@ -56,9 +56,9 @@
       .videoFooter
         .chat-container
           .photo(
-            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != 'null'"
+            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
             ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
-          .chat-box(ng-if="vm.conversation.message && vm.conversation.message != 'null' && vm.conversation.message != 'undefined'")
+          .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'")
             p.message
               span {{vm.conversation.message}}
 
