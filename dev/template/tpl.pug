@@ -1,3 +1,4 @@
+
 .watchVideoContainer.template
 
   //- HEADER
@@ -5,14 +6,14 @@
     .logoContainer
       .logo
         //- DEFAULT LOGO
-        .default-logo(ng-if="!vm.logo || vm.logo === 'null' || vm.logo === 'undefined'")
+        .default-logo(ng-if="!vm.logo || vm.logo === null || vm.logo === 'undefined'")
           span.logoText Powered by
           img(src='/files/images/logo_bizkonect.svg'
             alt='logo')
 
         //- USER LOGO
         .logo-user(
-          ng-if="vm.logo && vm.logo != 'null'"
+          ng-if="vm.logo && vm.logo != null"
           ng-style="{backgroundImage: 'url('+ vm.logo + ')' }")
 
         //- EDIT LOGO BUTTON
@@ -45,8 +46,8 @@
   //- TITLE
   .title-container
     p.title
-      span.placeholder(ng-hide="vm.titleObj.editMode || vm.titleObj.title || vm.titleObj.title === 'null' || vm.titleObj.title === 'undefined'") Add conversation topic here
-      span(ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != 'null' && vm.titleObj.title != 'undefined'") {{vm.titleObj.title}}
+      span.placeholder(ng-hide="vm.titleObj.editMode || vm.titleObj.title || vm.titleObj.title === null || vm.titleObj.title === 'undefined'") Add conversation topic here
+      span(ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != null && vm.titleObj.title != 'undefined'") {{vm.titleObj.title}}
       input.mdl-textfield__input(
         type="text"
         ng-if="vm.titleObj.editMode"
@@ -62,14 +63,14 @@
     //- VIDEO HEADER
     .videoHeader
       .photo(
-        ng-if="vm.user.photo && vm.user.photo != 'null'"
+        ng-if="vm.user.photo && vm.user.photo != null"
         ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
       .text
 
         //- USER NAME
         p.user-name
           span.placeholder(ng-hide="vm.nameObj.editMode || vm.nameObj.name || vm.user.firstName") Add your name
-          span(ng-if="vm.nameObj.name && !vm.nameObj.editMode && vm.nameObj.name != 'null'") {{vm.nameObj.name}}
+          span(ng-if="vm.nameObj.name && !vm.nameObj.editMode && vm.nameObj.name != null") {{vm.nameObj.name}}
           span(ng-if="vm.user.firstName && !vm.nameObj.editMode && !vm.nameObj.name") {{vm.user.firstName}}
           input.mdl-textfield__input(
             type="text"
@@ -83,7 +84,7 @@
         //- USER ROLE
         p.user-role
           span.placeholder(ng-hide="vm.companyRole.editMode || vm.companyRole.role || vm.user.company_position") Add your company role
-          span(ng-if="vm.companyRole.role && !vm.companyRole.editMode && vm.companyRole.role != 'null'") {{vm.companyRole.role}}
+          span(ng-if="vm.companyRole.role && !vm.companyRole.editMode && vm.companyRole.role != null") {{vm.companyRole.role}}
           span(ng-if="vm.user.company_position && !vm.companyRole.editMode && !vm.companyRole.role") {{vm.user.company_position}}
           input.mdl-textfield__input(
             type="text"
@@ -110,12 +111,12 @@
     .videoFooter
       .chat-container
         .photo(
-          ng-if="vm.user.photo && vm.user.photo != 'null'"
+          ng-if="vm.user.photo && vm.user.photo != null"
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .chat-box
           p.message
-            span.placeholder(ng-hide="vm.messageObj.editMode || vm.messageObj.message || vm.titleObj.title === 'null' || vm.messageObj.message === 'undefined'") Add your message
-            span(ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != 'null' && vm.messageObj.message != 'undefined'") {{vm.messageObj.message}}
+            span.placeholder(ng-hide="vm.messageObj.editMode || vm.messageObj.message || vm.titleObj.title === null || vm.messageObj.message === 'undefined'") Add your message
+            span(ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null && vm.messageObj.message != 'undefined'") {{vm.messageObj.message}}
             textarea.mdl-textfield__input.chat-text-box(
               ng-if="vm.messageObj.editMode"
               ng-model="vm.messageObj.message")
