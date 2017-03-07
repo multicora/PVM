@@ -33,7 +33,7 @@
     //- TITLE
     .title-container
       p.title
-        span(ng-if="vm.conversation.title && vm.conversation.title != 'null' && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
+        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
 
     .video
       .videoHeader
