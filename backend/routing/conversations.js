@@ -147,11 +147,16 @@ module.exports = function (server, DAL) {
               return Promise.resolve();
             }
           }).then(() => {
+            // Get author information
             return DAL.users.getUserById(conversation.author);
           }).then((user) => {
             conversation.authorEmail = user.email;
             conversation.authorPhone = user.phone;
-            conversation.authorPhoto = user.photo.toString();
+            if (user.photo) {
+              conversation.authorPhoto = user.photo.toString();
+            } else {
+              conversation.authorPhoto = null;
+            }
             return videoCtrl.getFile(conversation.videoId);
           }).then(
             function (buffer) {
