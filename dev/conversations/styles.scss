@@ -47,6 +47,12 @@
         vertical-align: middle;
         background-size: cover;
       }
+
+      @media (max-width: 570px) {
+        .default-logo span {
+          display: none;
+        }
+      }
     }
 
     .socialContainer {
@@ -116,8 +122,20 @@
             height: 16px;
           }
         }
+
+        @media (max-width: 370px) {
+          .phone p,
+          .email p{
+            display: none;
+          }
+        }
       }
     }
+  }
+
+
+  .content {
+    min-height: 840px;
   }
 
   .title-container {
@@ -144,7 +162,7 @@
     .photo {
       display: inline-block;
       margin-left: 10px;
-      width: 38px;
+      width: 40px;
       height: 40px;
       border-radius: 20px;
       background-image: url('/files/images/account_photo.svg');
@@ -225,6 +243,8 @@
     font-weight: 400;
     font-size: 16px;
     font-family: Helvetica;
+    cursor: pointer;
+    outline: none;
   }
 
   .chat-container {
@@ -237,7 +257,7 @@
 
     .chat-box {
       width: 500px;
-      padding: 15px;
+      padding: 6px 6px 14px 6px;
       margin: 10px 0 0 70px;
       word-wrap: break-word;
       background-color: #fff;
@@ -245,7 +265,7 @@
       border: 10px solid transparent;
       position: relative;
 
-      @media (max-width: 600px) {
+      @media (max-width: 650px) {
         width: 300px;
       }
 
@@ -274,7 +294,6 @@
   //FOOTER
   footer {
     position: absolute;
-    bottom: 0;
     padding: 10px 0;
     width: 100%;
     box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.87);
@@ -290,7 +309,6 @@
       .logo {
         margin-left: 10px;
         height: 46px;
-        widows: 190px;
       }
     }
 
@@ -299,5 +317,18 @@
       padding-right: 20px;
       vertical-align: middle;
     }
+
+      @media (max-width: 470px) {
+        .logo-container {
+          .powered {
+            display: none;
+          }
+
+          .logo {
+            height: 30px;
+          }
+
+        }
+      }
   }
 }

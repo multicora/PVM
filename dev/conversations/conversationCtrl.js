@@ -7,7 +7,6 @@
   function ctrl($routeParams, conversationsService) {
     var vm = this;
 
-    vm.showChatBox = false;
     vm.conversation = null;
     vm.media = null;
 
@@ -20,9 +19,5 @@
         }]
       };
     });
-
-    vm.chatBoxClick = function () {
-      vm.showChatBox = true;
-    };
   }
 })(angular);

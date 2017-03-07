@@ -56,6 +56,50 @@ module.exports = function (server, DAL) {
     }
   });
 
+  /**
+   * @api {get} /api/conversation Request conversation
+   * @apiName GetConversation
+   * @apiGroup Conversations
+   *
+   * @apiParam {string}   id                              Conversation id.
+   *
+   * @apiSuccess {Object}   conversation                      Conversation.
+   * @apiSuccess {String}   conversation.author               Conversation author.
+   * @apiSuccess {String}   conversation.company_role         Conversation author company role.
+   * @apiSuccess {String}   conversation.email                Conversation email.
+   * @apiSuccess {String}   conversation.id                   Conversation id.
+   * @apiSuccess {String}   conversation.is_template          Conversation is template.
+   * @apiSuccess {String}   conversation.logo                 Conversation logo.
+   * @apiSuccess {String}   conversation.message              Conversation message.
+   * @apiSuccess {String}   conversation.title                Conversation title.
+   * @apiSuccess {String}   conversation.url                  Conversation video url.
+   * @apiSuccess {String}   conversation.authorEmail          Conversation author email.
+   * @apiSuccess {String}   conversation.authorPhone          Conversation author phone.
+   * @apiSuccess {String}   conversation.authorPhoto          Conversation author photo.
+   * @apiSuccess {String}   conversation.videoId              Conversation video id.
+   * @apiSuccess {String}   conversation.viwed                Conversation viewed.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {
+   *   author: 4,
+   *   company_role: "manager",
+   *   email: "manager@gmail.com"
+   *   id: 36,
+   *   is_template: 0,
+   *   logo: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//",
+   *   message: "hello world",
+   *   name: "Jon",
+   *   title: "hello world",
+   *   url: "https://dl.boxcloud.com/d/1/ZNibCR5XsT6uQv5JHXN4WCk93aIi",
+   *   authorEmail: "user@gmail.com"
+   *   authorPhone: "43434343445",
+   *   authorPhoto: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD",
+   *   videoId: 7,
+   *   viewed: 0
+   * }
+   */
   server.route({
     method: 'GET',
     path: '/api/conversations/{id}',
@@ -66,6 +110,11 @@ module.exports = function (server, DAL) {
 
         // Finding conversation
         DAL.conversations.getById(conversationId).then((conversation) => {
+          if (conversation.logo) {
+            conversation.logo = conversation.logo.toString();
+          } else {
+            conversation.logo = null;
+          }
           // Deciding if we need to mark conversation as viewed
           let needToMarkPromise = new Promise((resolve) => {
             let isViwed;
@@ -98,6 +147,11 @@ module.exports = function (server, DAL) {
               return Promise.resolve();
             }
           }).then(() => {
+            return DAL.users.getUserById(conversation.author);
+          }).then((user) => {
+            conversation.authorEmail = user.email;
+            conversation.authorPhone = user.phone;
+            conversation.authorPhoto = user.photo.toString();
             return videoCtrl.getFile(conversation.videoId);
           }).then(
             function (buffer) {
