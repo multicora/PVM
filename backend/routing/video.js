@@ -43,6 +43,32 @@ module.exports = function (server, DAL) {
     }
   });
 
+  /**
+   * @api {get} /api/videos/{id} Request video
+   * @apiName GetVideo
+   * @apiGroup Videos
+   *
+   * @apiParam {String} id                             Video id.
+   *
+   * @apiSuccess {Object}  video                       Video obj.
+   * @apiSuccess {Object}  video.data                  Video data obj.
+   * @apiSuccess {Object}  video.data.attributes       Video attributes obj.
+   * @apiSuccess {String}  video.data.attributes.url   Video url.
+   * @apiSuccess {String}  video.data.id               Video id.
+   * @apiSuccess {String}  video.data.type             Video type.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *  {
+   *    "data": {
+   *      "type": "video",
+   *      "id": "10",
+   *      "attributes": {
+   *        "url": "https://dl.boxcloud.com/d/1/A0nI9YwUM_Dfmt4WGLzSXS/download"
+   *      }
+   *    }
+   *  }
+   */
   server.route({
     method: 'GET',
     path: '/api/videos/{id}',
@@ -53,7 +79,7 @@ module.exports = function (server, DAL) {
             reply({
               data: {
                 type: 'video',
-                id: 7,
+                id: request.params.id,
                 attributes: {
                   url: buffer.uri.href
                 }
