@@ -1,7 +1,6 @@
 .library-wrapper
   app-header
   .navigation
-    img.tab-icon(src='/files/images/video-tab-icon.png', alt='')
     .navigation-bar-container
       ul.navigation-bar
         li(
@@ -13,8 +12,8 @@
         li(
           ng-class="vm.conversationsClass"
           ng-click="vm.tabBtnConversationsClick()") CONVERSATIONS
-        li ANALYTICS
-        li CONTACTS
+        //- li ANALYTICS
+        //- li CONTACTS
 
   video-fab-buttons(
     ng-if="vm.showVideos"

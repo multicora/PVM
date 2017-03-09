@@ -25,6 +25,10 @@ header {
     display: inline-block;
     margin-left: 10px;
     outline: none;
+
+    @media (max-width: 380px) {
+      width: 100px;
+    }
   }
 
   .auth-buttons {

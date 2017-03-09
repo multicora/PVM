@@ -8,12 +8,12 @@
   .navigation {
     margin-bottom: 20px;
 
-    .tab-icon {
-      float: left;
-      height: 40px;
-      margin: 25px 0 0 25px;
-      width: 40px;
-    }
+    // .tab-icon {
+    //   float: left;
+    //   height: 40px;
+    //   margin: 25px 0 0 25px;
+    //   width: 40px;
+    // }
 
     .navigation-bar-container {
       text-align: center;
@@ -21,7 +21,6 @@
 
       .navigation-bar {
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        display: inline-block;
         list-style: none;
         margin: 58px 0 0 -65px;
 
