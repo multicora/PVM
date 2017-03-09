@@ -141,7 +141,9 @@
           | Send
 
   //- SEND POPUP
-  popup.send-popup-container(ng-if="vm.showSendPopup")
+  popup.send-popup-container(
+    ng-if="vm.showSendPopup"
+    close-popup="vm.closeSendPopup()")
     form.send-form({{action='', on='submit', }}='')
       p.popupTitle send
       input.email(
@@ -153,7 +155,9 @@
         button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.sendVideo(email)") send
 
   //- SELECT VIDEO POPUP
-  popup.select-video-container(ng-if="vm.showSelectPopup")
+  popup.select-video-container(
+    ng-if="vm.showSelectPopup"
+    close-popup="vm.closeSelectPopup()")
     video-list(
     list="vm.list"
     on-upload-click="vm.uploadBtnClick()"

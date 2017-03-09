@@ -64,6 +64,10 @@
       });
     };
 
+    vm.stopPropagation = function($event) {
+      $event.stopPropagation();
+    }
+
     // Upload popup
     vm.uploadBtnClick = function () {
       vm.showUploadPopup = true;

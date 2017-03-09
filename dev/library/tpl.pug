@@ -42,7 +42,9 @@
     viewe="vm.vieweConversation($data)")
 
   //- Record popup
-  popup(ng-if="vm.showRecordPopup")
+  popup(
+    ng-if="vm.showRecordPopup"
+    close-popup="vm.closeRecordPopup()")
     .video-record-container
       form.recordForm
         p.popupTitle Record your video
@@ -58,7 +60,9 @@
             ng-disabled="!vm.recordedData") save
 
   //- Upload popup
-  popup.uploadForm(ng-if="vm.showUploadPopup")
+  popup.uploadForm(
+    ng-if="vm.showUploadPopup"
+    close-popup="vm.closeUploadPopup()")
     form
       .uploadIconContainer
         label.uploadIcon(for='upload-video')
@@ -76,7 +80,9 @@
         button.closeButton(ng-click="vm.closeUploadPopup()") close
 
   //- Preview popup
-  popup(ng-if="vm.showPreviewPopup")
+  popup(
+    ng-if="vm.showPreviewPopup"
+    close-popup="vm.closePreviewPopup()")
     .video-preview-container
       p.title.ellipsis {{vm.previewVideo.attributes.name}}
       .video-container

@@ -1,5 +1,8 @@
 .popup-overlay(
-  tabindex='0'
-  ng-keydown="vm.onkeyDown($event)")
+    tabindex='0'
+    ng-click="vm.closePopup()"
+    ng-keydown="vm.onkeyDown($event)")
   .zero-width-block
-  .popup(ng-transclude='ng-transclude')
+  .popup(
+    ng-transclude='ng-transclude'
+    ng-click="vm.stopPropagation($event)")
