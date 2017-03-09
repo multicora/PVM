@@ -25,6 +25,7 @@
     vm.showVideos = true;
     vm.showTemplates = false;
     vm.showConversations = false;
+    vm.showPreviewPopup = false;
 
     getVideos();
     getTemplates();
@@ -50,12 +51,14 @@
     };
 
     vm.sendRecordClick = function (name) {
+      console.log(name);
       name = name || '';
       uploadService.sendFile(
         "/api/video",
         vm.recordedData.video,
         {name: name + '.wmv'}
       ).then(function () {
+        vm.videoName = '';
         vm.closeRecordPopup();
         getVideos();
       });
@@ -73,6 +76,26 @@
     vm.uploadEnd = function () {
       vm.closeUploadPopup();
       getVideos();
+    }
+
+    //Preview popup
+    vm.showPreview = function (video) {
+      vm.previewVideo = video;
+      conversationsService.getVideo(video.id).then(function (res) {
+        vm.previewVideoUrl = {
+          sources: [{
+            src: res.data.data.attributes.url,
+            type: 'video/mp4'
+          }]
+        };
+      })
+      vm.showPreviewPopup = true;
+    }
+
+    vm.closePreviewPopup = function () {
+      vm.showPreviewPopup = false;
+      vm.previewVideo = null;
+      vm.previewVideoUrl = null;
     }
 
     // Send

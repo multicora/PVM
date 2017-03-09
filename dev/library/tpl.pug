@@ -28,6 +28,7 @@
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
     show-send-handler="vm.showSendHandler"
+    on-thumbnail-click="vm.showPreview($data)"
     on-send-click="vm.sendClickHandler($data)")
 
   template-list(
@@ -49,7 +50,7 @@
         .record-video
           record-video(finish="vm.finishRecord($data)")
         .videoNameContainer
-          input(type="text" value="vm.videoName" placeholder="Enter video name")
+          input(type="text" ng-model="vm.videoName" placeholder="Enter video name")
         p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
         .button-container
           button.cancel(ng-click="vm.closeRecordPopup()") cancel
@@ -74,3 +75,17 @@
       p.error(ng-if="errorMessage") Error: {{errorMessage}}
       .buttonContainer
         button.closeButton(ng-click="vm.closeUploadPopup()") close
+
+  //- Preview popup
+  popup(ng-if="vm.showPreviewPopup")
+    .video-preview-container
+      p.title.ellipsis {{vm.previewVideo.attributes.name}}
+      .video-container
+        video.video-js.vjs-default-skin(
+          vjs-video
+          controls
+          preload="auto"
+          vjs-media="vm.previewVideoUrl")
+      .button-container
+        button.close(ng-click="vm.closePreviewPopup()") close
+        button.send(ng-click="vm.sendClickHandler(vm.previewVideo)") send

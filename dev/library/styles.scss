@@ -56,7 +56,8 @@
   }
 
   // Record
-  .video-record-container {
+  .video-record-container,
+  .video-preview-container {
     max-width: 725px;
     width: 100%;
     border-radius: 2px;
@@ -105,6 +106,7 @@
         color: rgba(0, 0, 0, 0.50);
         text-transform: uppercase;
         font-weight: 500;
+        margin-right: 5px;
       }
 
       button:last-child {
@@ -122,6 +124,26 @@
 
     .record-video {
       margin: 0 40px;
+    }
+  }
+
+  // Preview
+  .video-preview-container {
+    padding: 16px 16px 24px 16px;
+    width: 500px;
+    .title {
+      margin: 0 auto;
+      font-size: 18px;
+      width: 300px;
+    }
+
+    .video-container {
+      width: 100%;
+      .vjs-video-wrap,
+      .video-js {
+        max-width: 100%;
+        max-height: 100%;
+      }
     }
   }
 
@@ -278,12 +300,6 @@
       }
     }
   }
-
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
 .inlineBlock {
   display: inline-block;
