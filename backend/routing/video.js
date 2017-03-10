@@ -51,12 +51,10 @@ module.exports = function (server, DAL) {
         videoCtrl.getFile(request.params.id).then(
           function (buffer) {
             reply({
-              data: {
-                type: 'video',
-                id: 7,
-                attributes: {
-                  url: buffer.uri.href
-                }
+              type: 'video',
+              id: 7,
+              attributes: {
+                url: buffer.uri.href
               }
             });
           },

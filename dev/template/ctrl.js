@@ -27,7 +27,7 @@
     vm.showSendButton = false;
 
     if ($routeParams.templateId === 'null') {
-      vm.videoId = $routeParams.id;
+      vm.videoId = $routeParams.videoId;
       getVideo(vm.videoId);
     } else {
       vm.templateId = $routeParams.templateId;
@@ -170,7 +170,7 @@
       conversationsService.getVideo(id).then(function(res) {
         vm.media = {
           sources: [{
-            src: res.data.data.attributes.url,
+            src: res.data.attributes.url,
             type: 'video/mp4'
           }]
         };
