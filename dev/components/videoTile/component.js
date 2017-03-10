@@ -6,8 +6,8 @@
     controllerAs: 'vm',
     bindings: {
       onSendClick: '&',
-      showSendButton: '=',
       onThumbnailClick: '&',
+      showSendButton: '<',
       video: '<'
     }
   });
