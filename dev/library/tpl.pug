@@ -21,14 +21,14 @@
     list="vm.videosList"
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
-    show-send-handler="vm.showSendHandler"
+    show-send-handler="vm.showSendButton"
     on-send-click="vm.sendClickHandler($data)")
 
   template-list(
     ng-if="vm.showTemplates"
     list="vm.templatesList"
-    use="vm.useTemplate($data)"
-    delete="vm.deleteTemplate($data)")
+    on-use-click="vm.useTemplate($data)"
+    on-delete="vm.deleteTemplate($data)")
 
   //- Record popup
   popup(ng-if="vm.showRecordPopup")

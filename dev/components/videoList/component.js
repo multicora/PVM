@@ -8,7 +8,7 @@
       onUploadClick: '&',
       onRecordClick: '&',
       onSendClick: '&',
-      showSendHandler: '&',
+      showSendButton: '=',
       onThumbnailClick: '&',
       list: '<',
     }

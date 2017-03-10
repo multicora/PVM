@@ -21,7 +21,7 @@
     vm.showUploadPopup = false;
     vm.showSendPopup = false;
     vm.recordedData = null;
-    vm.showSendHandler = true;
+    vm.showSendButton = true;
     vm.showVideos = true;
     vm.showTemplates = false;
 
@@ -109,7 +109,6 @@
     function getTemplates() {
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
-        console.log(vm.templatesList);
       });
     };
   }

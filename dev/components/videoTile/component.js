@@ -6,7 +6,7 @@
     controllerAs: 'vm',
     bindings: {
       onSendClick: '&',
-      showSendHandler: '&',
+      showSendButton: '=',
       onThumbnailClick: '&',
       video: '<'
     }
