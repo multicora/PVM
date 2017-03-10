@@ -95,6 +95,19 @@ module.exports = (connection) => {
       });
     },
 
+    getAll: function () {
+      return new Promise(function (resolve, reject) {
+        let request = [
+          'SELECT * ',
+          'FROM `users`;'
+        ].join('');
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
         let request = [

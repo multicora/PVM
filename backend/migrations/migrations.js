@@ -40,7 +40,13 @@ module.exports = function (DAL, cb) {
       require('./scripts/v031.js')(DAL),
       require('./scripts/v032.js')(DAL),
       require('./scripts/v033.js')(DAL),
-      require('./scripts/v034.js')(DAL)
+      require('./scripts/v034.js')(DAL),
+      require('./scripts/v035.js')(DAL),
+      require('./scripts/v036.js')(DAL),
+      require('./scripts/v037.js')(DAL),
+      require('./scripts/v038.js')(DAL),
+      require('./scripts/v039.js')(DAL),
+      require('./scripts/v040.js')(DAL)
     ],
     done: cb
   };

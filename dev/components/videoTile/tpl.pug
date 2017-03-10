@@ -1,9 +1,14 @@
 .video-tile
-  img.photo(src='data:image/png;base64,{{vm.video.attributes.thumbnail}}', alt='')
+  img.photo(
+    src='data:image/png;base64,{{vm.video.attributes.thumbnail}}',
+    alt=''
+    ng-click="vm.onThumbnailClick()")
   p.text.ellipsis(title='{{vm.video.attributes.name}}') {{vm.video.attributes.name}}
   .buttons-container
     a.menu
       img(src='/files/images/dots.png', alt='')
-    .inlineBlock(ng-click="vm.onSendClick()")
+    .inlineBlock(
+      ng-if="vm.showSendHandler"
+      ng-click="vm.onSendClick()")
       .send
         .fa.fa-paper-plane(aria-hidden="true")

@@ -9,7 +9,7 @@ module.exports = function(DAL) {
 
       DAL.users.getAllUsers().then((users) => {
         users.map((user) => {
-          if (!user.company || user.company === 'null') {
+          if (!user.company || user.company === null) {
             usersId.push(user.id);
           }
         });
@@ -24,7 +24,6 @@ module.exports = function(DAL) {
         }
 
         let usersPromises = usersArr.map(user => {
-          console.log(user);
           return DAL.users.updateUserCompany(user);
         });
         return Promise.all(usersPromises);

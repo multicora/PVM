@@ -7,7 +7,7 @@ module.exports = function(DAL) {
     script: function (next) {
       let userId;
 
-      DAL.users.getAllUsers().then((users) => {
+      DAL.users.getAll().then((users) => {
         userId = users[0].id;
       }).then(() => {
         return DAL.videos.getAll();
