@@ -52,10 +52,11 @@
       uploadService.sendFile(
         "/api/video",
         vm.recordedData.video,
-        {name: name + '.wmv'}
+        vm.videoName + '.wmv'
       ).then(function () {
         vm.closeRecordPopup();
         getVideos();
+        vm.videoName = null;
       });
     };
 

@@ -20,8 +20,8 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         let user = request.auth.credentials;
         let name;
-        if (request.payload.videoName) {
-          name = request.payload.videoName;
+        if (request.payload.data) {
+          name = request.payload.data;
         } else {
           name = request.payload.file.hapi.filename;
         }
