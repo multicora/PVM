@@ -26,7 +26,7 @@
     vm.showSelectPopup = false;
     vm.showSendButton = false;
 
-    if ($routeParams.templateId === null) {
+    if ($routeParams.templateId === 'null') {
       vm.videoId = $routeParams.id;
       getVideo(vm.videoId);
     } else {
