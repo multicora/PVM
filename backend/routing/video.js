@@ -75,7 +75,7 @@ server.route({
       auth: 'simple',
       handler: function (request, reply) {
         DAL.videos.getByAuthor(request.auth.credentials.id).then(function(res) {
-          reply({'data': res.map(
+          reply(res.map(
             function(res) {
               return {
                 'type': 'video',
@@ -83,7 +83,7 @@ server.route({
                 'attributes': res
               };
             }
-          )});
+          ));
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });
@@ -99,7 +99,7 @@ server.route({
       handler: function (request, reply) {
         videoCtrl.getThumbnails(request.auth.credentials.id).then(
           function(res) {
-            reply({'data': res.map(
+            reply(res.map(
               function(res) {
                 return {
                   'type': 'thumbnail',
@@ -107,7 +107,7 @@ server.route({
                   'attributes': res.thumbnail
                 };
               }
-            )});
+            ));
           },
           function(err) {
             reply(Boom.badImplementation(err));
