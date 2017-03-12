@@ -76,7 +76,7 @@
 
     // Send
     vm.sendClickHandler = function (video) {
-      $location.path('template/' + video.id + '/null');
+      $location.path('template/' + video.id);
     }
 
     // Tabs
@@ -98,7 +98,7 @@
     }
 
     vm.useTemplate = function (id) {
-      $location.path('template/null/' + id);
+      $location.path('template-edit/' + id);
     }
 
     function getVideos() {
