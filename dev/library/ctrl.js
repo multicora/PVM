@@ -29,8 +29,8 @@
     getTemplates();
 
     libraryService.getThumbnails().then(function (res) {
-      for (let i = 0; i < res.data.data.length; i++) {
-        vm.videosList[i].attributes.thumbnail = res.data.data[i].attributes;
+      for (let i = 0; i < res.data.length; i++) {
+        vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
       }
     });
 
@@ -103,7 +103,7 @@
 
     function getVideos() {
       libraryService.getVideos().then(function (res) {
-        vm.videosList = res.data.data;
+        vm.videosList = res.data;
       });
     };
 
