@@ -122,7 +122,7 @@
       $location.path('template-edit/' + id);
     }
 
-    vm.vieweConversation = function (id) {
+    vm.viewConversation = function (id) {
       $location.path('conversation/' + id);
     }
 
