@@ -384,4 +384,40 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {get} /api/conversations Request conversations
+   * @apiName GetConversations
+   * @apiGroup Conversations
+   *
+   * @apiSuccess {Object[]} conversations                     List of conversations.
+   * @apiSuccess {String}   conversation.id                   Conversation id.
+   * @apiSuccess {String}   conversation.title                Conversation title.
+   * @apiSuccess {String}   conversation.message              Conversation message.
+   * @apiSuccess {String}   conversation.viwed                Conversation video url.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {[
+   *   id: 1,
+   *   title: null,
+   *   message: null,
+   *   viewed: 1
+   * ]}
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/conversations',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.conversations.getByAuthor(request.auth.credentials.id).then(res => {
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };

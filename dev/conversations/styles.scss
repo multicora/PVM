@@ -1,5 +1,5 @@
 .watchVideoContainer {
-  min-height: 100vh;
+  min-height: 100%;
   width: 100%;
   background-color: #f5f5f5;
   background-size: cover;
@@ -131,11 +131,6 @@
         }
       }
     }
-  }
-
-
-  .content {
-    min-height: 840px;
   }
 
   .title-container {
@@ -293,13 +288,15 @@
 
   //FOOTER
   footer {
-    position: absolute;
+    position: fixed;
+    bottom: 0;
     padding: 10px 0;
     width: 100%;
     box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.87);
     color: rgba(0, 0, 0, 0.54);
     font-size: 12px;
     line-height: 46px;
+    background-color: #f5f5f5;
 
     .logo-container {
       float: left;

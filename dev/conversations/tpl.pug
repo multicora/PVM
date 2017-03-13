@@ -27,27 +27,13 @@
           p {{vm.conversation.authorPhone}}
         .email
           img(src='/files/images/email.png', alt='email')
-          p {{vm.user.email}}
-  .video
-    .videoHeader
-      .photo
-      .text
-        p.user-name {{vm.user.name}}
-        p.user-role {{vm.user.company_position}}
-    .videoContent
-      video.video-js.vjs-default-skin(
-        vjs-video
-        controls
-        preload="auto"
-        vjs-media="vm.media")
-    .videoFooter
-      p.reply-text-placeholder(
-        ng-click="vm.chatBoxClick()"
-        ng-if="!vm.showChatBox")
-        | Type here to reply or hit the button 
-        i.fa.fa-video-camera(aria-hidden="true") 
-        | &nbsp;to reply with the video
-      chat-box(ng-if="vm.showChatBox")
+          p {{vm.conversation.authorEmail}}
+  
+  .content
+    //- TITLE
+    .title-container
+      p.title
+        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
 
     .video
       .videoHeader
