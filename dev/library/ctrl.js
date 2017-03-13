@@ -122,7 +122,7 @@
       $location.path('template-edit/' + id);
     }
 
-    vm.vieweConversation = function (id) {
+    vm.viewConversation = function (id) {
       $location.path('conversation/' + id);
     }
 
@@ -140,7 +140,6 @@
 
     function getConversations() {
       libraryService.getConversations().then(function (res) {
-        console.log(res);
         vm.conversationsList = res.data;
       });
     };

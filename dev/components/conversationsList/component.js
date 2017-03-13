@@ -5,7 +5,7 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      onVieweClick: '&',
+      onViewClick: '&',
       list: '<',
     }
   });
