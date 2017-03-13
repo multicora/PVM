@@ -30,6 +30,7 @@
 
     vm.videoId = $routeParams.videoId;
     getVideo(vm.videoId);
+
     getProfile();
     getVideos();
 
