@@ -46,8 +46,8 @@
   //- TITLE
   .title-container
     p.title
-      span.placeholder(ng-hide="vm.titleObj.editMode || vm.titleObj.title || vm.titleObj.title === null || vm.titleObj.title === 'undefined'") Add conversation topic here
-      span(ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != null && vm.titleObj.title != 'undefined'") {{vm.titleObj.title}}
+      span.placeholder(ng-hide="vm.titleObj.editMode || vm.titleObj.title || vm.titleObj.title != null") Add conversation topic here
+      span(ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != null") {{vm.titleObj.title}}
       input.mdl-textfield__input.title-input(
         type="text"
         ng-if="vm.titleObj.editMode"
@@ -115,8 +115,8 @@
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .chat-box
           p.message
-            span.placeholder(ng-hide="vm.messageObj.editMode || vm.messageObj.message || vm.titleObj.title === null || vm.messageObj.message === 'undefined'") Add your message
-            span(ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null && vm.messageObj.message != 'undefined'") {{vm.messageObj.message}}
+            span.placeholder(ng-hide="vm.messageObj.editMode || vm.messageObj.message || vm.titleObj.title != null") Add your message
+            span(ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null") {{vm.messageObj.message}}
             textarea.mdl-textfield__input.chat-text-box(
               ng-if="vm.messageObj.editMode"
               ng-model="vm.messageObj.message")

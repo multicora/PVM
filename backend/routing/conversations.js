@@ -155,6 +155,11 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         let data = {};
         DAL.templates.getById(request.params.id).then(res => {
+          for (let key in res) {
+            if (res[key] === 'undefined') {
+              res[key] = null;
+            }
+          }
           data.id = res.id;
           data.videoId = res.videoId;
           data.author = res.author;
