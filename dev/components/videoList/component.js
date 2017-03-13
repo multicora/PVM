@@ -8,8 +8,8 @@
       onUploadClick: '&',
       onRecordClick: '&',
       onSendClick: '&',
-      showSendHandler: '&',
       onThumbnailClick: '&',
+      showSendButton: '<',
       list: '<',
     }
   });

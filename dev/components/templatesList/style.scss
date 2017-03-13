@@ -1,30 +1,27 @@
 //CONTENT
-.content {
+.templates-content {
   //VIDEOS
-  .templates-container,
-  .conversations-container {
+  .templates-container {
     margin: 0 auto;
     max-width: 920px;
     width: 100%;
   }
 
-  .template,
-  .conversation {
+  .template {
     padding: 16px 16px 24px 16px;
     background-color: #fff;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
     position: relative;
 
     .title,
-    .message,
-    .email {
+    .message {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin: 0;
+      margin-bottom: 0;
       display: inline-block;
       vertical-align: middle;
-      display: block;
+      width: 100%;
     }
 
     .title {
@@ -50,15 +47,13 @@
     }
   }
 
-  .template,
-  .conversation {
+  .template {
     .button-container {
       display: none;
     }
   }
 
-  .template:hover,
-  .conversation:hover {
+  .template:hover {
     .button-container {
       display: inline-block;
     }

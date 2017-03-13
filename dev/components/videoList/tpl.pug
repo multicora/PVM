@@ -21,6 +21,6 @@
     .video-container(ng-repeat="item in vm.list")
       video-tile(
         video="item"
+        show-send-button="vm.showSendButton"
         on-send-click="vm.onSendClick({$data: item})"
-        show-send-handler="vm.showSendHandler"
-        on-thumbnail-click="vm.onThumbnailClick({$data: item})")
+        on-thumbnail-click="vm.onThumbnailClick({$data: item})")      }
