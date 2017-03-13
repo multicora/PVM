@@ -26,5 +26,5 @@
         ng-bind="item.message")
         span(ng-if="!item.message || item.message === null || item.message === 'undefined'") No message
       .button-container
-        button.btn.mdl-button.mdl-js-button.view(ng-click="vm.viewe({$data: item.id})") 
+        button.btn.mdl-button.mdl-js-button.view(ng-click="vm.onVieweClick({$data: item.id})") 
           | view
