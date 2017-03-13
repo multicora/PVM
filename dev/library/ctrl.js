@@ -21,7 +21,9 @@
     vm.showUploadPopup = false;
     vm.showSendPopup = false;
     vm.recordedData = null;
-    vm.showSendHandler = true;
+    vm.showSendButton = true;
+    vm.showVideos = true;
+    vm.showTemplates = false;
     vm.showVideos = true;
     vm.showTemplates = false;
     vm.showConversations = false;
@@ -31,8 +33,8 @@
     getConversations();
 
     libraryService.getThumbnails().then(function (res) {
-      for (let i = 0; i < res.data.data.length; i++) {
-        vm.videosList[i].attributes.thumbnail = res.data.data[i].attributes;
+      for (let i = 0; i < res.data.length; i++) {
+        vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
       }
     });
 
@@ -54,10 +56,11 @@
       uploadService.sendFile(
         "/api/video",
         vm.recordedData.video,
-        {name: name + '.wmv'}
+        vm.videoName + '.wmv'
       ).then(function () {
         vm.closeRecordPopup();
         getVideos();
+        vm.videoName = null;
       });
     };
 

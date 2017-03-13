@@ -27,14 +27,14 @@
     list="vm.videosList"
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
-    show-send-handler="vm.showSendHandler"
+    show-send-button="vm.showSendButton"
     on-send-click="vm.sendClickHandler($data)")
 
   template-list(
     ng-if="vm.showTemplates"
     list="vm.templatesList"
-    use="vm.useTemplate($data)"
-    delete="vm.deleteTemplate($data)")
+    on-use-click="vm.useTemplate($data)"
+    on-delete="vm.deleteTemplate($data)")
 
   conversation-list(
     ng-if="vm.showConversations"
@@ -49,7 +49,10 @@
         .record-video
           record-video(finish="vm.finishRecord($data)")
         .videoNameContainer
-          input(type="text" value="vm.videoName" placeholder="Enter video name")
+          input(
+            type="text"
+            ng-model="vm.videoName"
+            placeholder="Enter video name")
         p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
         .button-container
           button.cancel(ng-click="vm.closeRecordPopup()") cancel
