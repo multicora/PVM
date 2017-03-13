@@ -140,7 +140,6 @@
 
     function getConversations() {
       libraryService.getConversations().then(function (res) {
-        console.log(res);
         vm.conversationsList = res.data;
       });
     };
