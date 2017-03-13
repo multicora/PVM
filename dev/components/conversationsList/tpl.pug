@@ -1,4 +1,4 @@
-.content
+.conversations-content
   .conversations-container
     .conversation(ng-repeat="item in vm.list")
       .indicators
@@ -17,14 +17,14 @@
         span(ng-bind="item.email")
       p.title
         span(
-        ng-if="item.title && item.title != 'null' && item.title != 'undefined'"
+        ng-if="item.title && item.title != null && item.title != 'undefined'"
         ng-bind="item.title")
-        span(ng-if="!item.title || item.title === 'null' || item.title === 'undefined'") Untitle
+        span(ng-if="!item.title || item.title === null || item.title === 'undefined'") Untitle
       p.message
         span(
-        ng-if="item.message && item.message != 'null' && item.message != 'undefined'"
+        ng-if="item.message && item.message != null && item.message != 'undefined'"
         ng-bind="item.message")
-        span(ng-if="!item.message || item.message === 'null' || item.message === 'undefined'") No message
+        span(ng-if="!item.message || item.message === null || item.message === 'undefined'") No message
       .button-container
         button.btn.mdl-button.mdl-js-button.view(ng-click="vm.viewe({$data: item.id})") 
           | view

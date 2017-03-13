@@ -1,23 +1,71 @@
-.content {
+//CONTENT
+.conversations-content {
   .conversations-container {
-    .conversation {
-      .indicators {
-        float: left;
-        height: 100%;
-        width: 30px;
-      }
+    margin: 0 auto;
+    max-width: 920px;
+    width: 100%;
+  }
 
-      .viewed {
-        color: green;
-      }
+  .conversation {
+    padding: 16px 16px 24px 16px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+    position: relative;
 
-      .message {
-        margin-top: 15px;
-      }
+    .email {
+      margin-bottom: 10px;
+    }
 
-      .button-container {
-        bottom: 45px;
-      }
+    .title,
+    .message {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .message {
+      font-size: 16px;
+    }
+
+    .button-container {
+      position: absolute;
+      right: 16px;
+      bottom: 45px;
+      text-align: right;
+    }
+
+    .indicators {
+      float: left;
+      height: 100%;
+      width: 30px;
+    }
+
+    .viewed {
+      color: green;
+    }
+
+    .btn {
+      font-weight: bold;
+      outline: none;
+      border: none;
+    }
+  }
+
+  .conversation {
+    .button-container {
+      display: none;
+    }
+  }
+
+  .conversation:hover {
+    .button-container {
+      display: inline-block;
     }
   }
 }

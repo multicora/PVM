@@ -33,8 +33,8 @@
   template-list(
     ng-if="vm.showTemplates"
     list="vm.templatesList"
-    use="vm.useTemplate($data)"
-    delete="vm.deleteTemplate($data)")
+    on-use-click="vm.useTemplate($data)"
+    on-delete="vm.deleteTemplate($data)")
 
   conversation-list(
     ng-if="vm.showConversations"
