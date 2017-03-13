@@ -1,0 +1,331 @@
+.watchVideoContainer {
+  min-height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+  background-size: cover;
+
+  //HEADER
+  header {
+    width: 100%;
+    background-color:  #fff;
+    box-shadow: 0px 0px 4.05px 0.95px rgba(0, 0, 0, 0.28);
+
+    .logoContainer {
+      display: inline-block;
+      width: 50%;
+      text-align: left;
+
+      .logo{
+        display: inline-block;
+      }
+
+      .default-logo,
+      .logo-user {
+        display: inline-block;
+      }
+
+      .default-logo {
+        img {
+          margin-left: 5px;
+          width: 135px;
+          height: 40px;
+          line-height: 63px;
+        }
+
+        .logoText {
+          color:  rgba(0, 0, 0, 0.87);
+          font-family: 'Roboto Thin';
+          font-size: 20px;
+          line-height: 63px;
+        }
+      }
+
+      .logo-user {
+        width: 150px;
+        height: 40px;
+        line-height: 63px;
+        vertical-align: middle;
+        background-size: cover;
+      }
+
+      @media (max-width: 570px) {
+        .default-logo span {
+          display: none;
+        }
+      }
+    }
+
+    .socialContainer {
+      display: inline-block;
+      width: 49%;
+      text-align: right;
+
+      .social {
+        display: inline-block;
+        margin-right: 20px;
+        vertical-align: middle;
+        line-height: 64px;
+
+        a {
+          margin-right: 8px;
+          width: 27px;
+          height: 27px;
+          text-decoration: none;
+
+          img {
+            width: 27px;
+            height: 27px;
+          }
+        }
+
+        a:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .contacts {
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: middle;
+        line-height: 64px;
+
+        .phone,
+        .email {
+          vertical-align: middle;
+          text-align: left;
+          line-height: 32px;
+
+          img {
+            display: inline-block;
+            margin-right: 16px;
+          }
+
+          p {
+            display: inline-block;
+            margin: 0;
+            color:  rgba(0, 0, 0, 0.87);
+            font-size: 14px;
+            font-family: 'Roboto Regular';
+          }
+        }
+
+        .phone {
+          img {
+            width: 18px;
+            height: 18px;
+          }
+        }
+
+        .email {
+          img {
+            width: 20px;
+            height: 16px;
+          }
+        }
+
+        @media (max-width: 370px) {
+          .phone p,
+          .email p{
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .title-container {
+    margin-top: 20px;
+    text-align: center;
+
+    .title {
+      font-size: 24px;
+      font-weight: 500;
+      display: inline-block;
+    }
+  }
+
+  //VIDEO PLAYER CONTAINER
+  .video {
+    margin: 20px auto 55px auto;
+    width: 845px;
+    border-radius: 2px;
+    position: relative;
+    @media (max-width: 845px) {
+      width: 100%;
+    }
+
+    .photo {
+      display: inline-block;
+      margin-left: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      background-image: url('/files/images/account_photo.svg');
+      background-size: cover;
+    }
+
+    .videoHeader {
+      padding-top: 10px;
+      width: 100%;
+      height: 64px;
+      background-color: rgba(255, 255, 255, 0.9);
+      position: absolute;
+      top: 0;
+      z-index: 9;
+
+      .text {
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      .user-name,
+      .user-role {
+        margin-bottom: 0;
+        height: 20px;
+        color:  rgba(0, 0, 0, 0.87);
+        font-weight: 500;
+      }
+
+      .user-name {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      .user-role {
+        font-size: 16px
+      }
+
+    }
+
+    .videoContent {
+      min-height: 400px;
+      width: 100%;
+      box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
+      background-color: #010001;
+    }
+
+    .vjs-video-wrap,
+    .video-js {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .video-js .vjs-big-play-button {
+      width: 50px;
+      height: 50px;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      margin: -25px 0 0 -25px;
+    }
+
+    .videoFooter {
+      position: relative;
+      padding-bottom: 10px;
+
+      .replyContainer {
+        display: inline-block;
+        padding-top: 20px;
+        width: 9%;
+        vertical-align: top;
+      }
+    }
+  }
+
+  .reply-text-placeholder {
+    margin: 22px 0 20px 71px;
+    color: rgba(0, 0, 0, 0.54);;
+    font-weight: 400;
+    font-size: 16px;
+    font-family: Helvetica;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .chat-container {
+    padding-top: 20px;
+    position: relative;
+
+    .photo {
+      position: absolute;
+    }
+
+    .chat-box {
+      width: 500px;
+      padding: 6px 6px 14px 6px;
+      margin: 10px 0 0 70px;
+      word-wrap: break-word;
+      background-color: #fff;
+      box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
+      border: 10px solid transparent;
+      position: relative;
+
+      @media (max-width: 650px) {
+        width: 300px;
+      }
+
+      @media (max-width: 450px) {
+        width: 200px;
+      }
+    }
+
+    .chat-box:after {
+      content: '';
+      border: 10px solid transparent;
+      border-right: 10px solid #fff;
+      border-top: 10px solid #fff;
+      position: absolute;
+      top: -10px;
+      left: -28px;
+    }
+
+    .files {
+      padding: 10px;
+      text-align: right;
+    }
+
+  }
+
+  //FOOTER
+  footer {
+    position: fixed;
+    bottom: 0;
+    padding: 10px 0;
+    width: 100%;
+    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.87);
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    line-height: 46px;
+    background-color: #f5f5f5;
+
+    .logo-container {
+      float: left;
+      padding-left: 20px;
+      vertical-align: middle;
+
+      .logo {
+        margin-left: 10px;
+        height: 46px;
+      }
+    }
+
+    .rights {
+      float: right;
+      padding-right: 20px;
+      vertical-align: middle;
+    }
+
+      @media (max-width: 470px) {
+        .logo-container {
+          .powered {
+            display: none;
+          }
+
+          .logo {
+            height: 30px;
+          }
+
+        }
+      }
+  }
+}
