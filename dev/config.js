@@ -63,8 +63,12 @@
       controller: 'profileCtrl',
       controllerAs: 'vm',
       templateUrl: 'profile/tpl.html'
-    }).when('/template/:id', {
+    }).when('/template/:videoId', {
       controller: 'templateCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'template/tpl.html'
+    }).when('/template-edit/:templateId', {
+      controller: 'templateEditCtrl',
       controllerAs: 'vm',
       templateUrl: 'template/tpl.html'
     }).when('/', {

@@ -13,5 +13,13 @@
     this.getThumbnails = function () {
       return $http.get('/api/thumbnails');
     }
+
+    this.getTemplates = function () {
+      return $http.get('/api/templates');
+    };
+
+    this.deleteTemplate = function (id) {
+      return $http.post('/api/delete-template', id);
+    };
   }
 })(angular);

@@ -258,4 +258,71 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {get} /api/templates Request templates
+   * @apiName GetTemplates
+   * @apiGroup Templates
+   *
+   * @apiSuccess {Object[]} templates                     List of templates.
+   * @apiSuccess {String}   template.id                   Template id.
+   * @apiSuccess {String}   template.title                Template title.
+   * @apiSuccess {String}   template.message              Template message.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {[
+   *   id: 1,
+   *   title: null,
+   *   message: null
+   * ]}
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/templates',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.templates.getByAuthor(request.auth.credentials.id).then(res => {
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/template Request for delete template
+   *
+   * @apiParam {string}   id                              Template id.
+   *
+   * @apiName DeleteTemplate
+   * @apiGroup Templates
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/delete-template',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.templates.delete(request.payload).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };

@@ -28,28 +28,28 @@
 
         li {
           display: inline-block;
-
-          a {
-            font-family: 'Roboto Medium';
-            font-size: 16px;
-            font-weight: 500;
-            padding: 0 37px;
-            text-decoration: none;
-          }
-
-          a {
-            border-bottom: 5px solid #f5f5f5;
-            color: rgba(0, 0, 0, 0.54);
-            transition: 0.3s;
-          }
+          font-family: 'Roboto Medium';
+          font-size: 16px;
+          font-weight: 500;
+          padding: 0 37px;
+          text-decoration: none;
+          cursor: pointer;
+          outline: none;
         }
 
-        .active {
+        li {
+          border-bottom: 5px solid #f5f5f5;
+          color: rgba(0, 0, 0, 0.54);
+          transition: 0.3s;
+        }
+
+
+        li:focus {
           border-bottom: 5px solid $navigation-hovered-color;
           color: $navigation-hovered-color;
         }
 
-        a:hover {
+        li:hover {
           color: $navigation-hovered-color;
           transition: 0.3s;
         }

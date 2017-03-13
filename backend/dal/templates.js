@@ -4,6 +4,22 @@ const Promise = require('promise');
 
 module.exports = (connection) => {
   return {
+
+    getByAuthor: (author) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT title, message, id ',
+          'FROM `conversations` ',
+          'WHERE author=' + author + ' AND ',
+          'is_template = 1;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getById: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -34,6 +50,20 @@ module.exports = (connection) => {
             err ? reject(err) : resolve(response);
           });
         });
+    },
+
+    delete: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'DELETE ',
+          'FROM conversations ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
     },
 
     update: (data) => {

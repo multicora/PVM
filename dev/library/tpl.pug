@@ -4,28 +4,31 @@
     img.tab-icon(src='/files/images/video-tab-icon.png', alt='')
     .navigation-bar-container
       ul.navigation-bar
-        li
-          a.active(href='') VIDEOS
-        li
-          a(href='') LANDINGS
-        li
-          a(href='') EMAILS
-        li
-          a(href='') ANALYTICS
-        li
-          a(href='') CONTACTS
+        li(ng-click="vm.tabBtnVideosClick()") VIDEOS
+        li(ng-click="vm.tabBtnTemplatesClick()") TEMPLATES
+        li EMAILS
+        li ANALYTICS
+        li CONTACTS
 
   video-fab-buttons(
+    ng-if="vm.showVideos"
     upload-btn-click="vm.uploadBtnClick()"
     record-btn-click="vm.recordBtnClick()")
 
   //- TODO: handlers
   video-list(
-    list="vm.list"
+    ng-if="vm.showVideos"
+    list="vm.videosList"
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
-    show-send-handler="vm.showSendHandler"
+    show-send-button="vm.showSendButton"
     on-send-click="vm.sendClickHandler($data)")
+
+  template-list(
+    ng-if="vm.showTemplates"
+    list="vm.templatesList"
+    on-use-click="vm.useTemplate($data)"
+    on-delete="vm.deleteTemplate($data)")
 
   //- Record popup
   popup(ng-if="vm.showRecordPopup")
@@ -35,7 +38,10 @@
         .record-video
           record-video(finish="vm.finishRecord($data)")
         .videoNameContainer
-          input(type="text" value="vm.videoName" placeholder="Enter video name")
+          input(
+            type="text"
+            ng-model="vm.videoName"
+            placeholder="Enter video name")
         p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
         .button-container
           button.cancel(ng-click="vm.closeRecordPopup()") cancel

@@ -13,7 +13,7 @@
 
         //- USER LOGO
         .logo-user(
-          ng-if="vm.logo && vm.logo != null"
+          ng-if="vm.logo && vm.logo != null && vm.logo != 'undefined'"
           ng-style="{backgroundImage: 'url('+ vm.logo + ')' }")
 
         //- EDIT LOGO BUTTON
@@ -159,7 +159,7 @@
     list="vm.list"
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
-    show-send-handler="vm.showSendHandler"
+    show-send-button="vm.showSendButton"
     on-send-click="vm.sendClickHandler($data)"
     on-thumbnail-click="vm.onThumbnailClick($data)")
     .button-container
