@@ -39,7 +39,7 @@
   conversation-list(
     ng-if="vm.showConversations"
     list="vm.conversationsList"
-    viewe="vm.vieweConversation($data)")
+    on-viewe-click="vm.vieweConversation($data)")
 
   //- Record popup
   popup(ng-if="vm.showRecordPopup")

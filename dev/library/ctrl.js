@@ -80,7 +80,7 @@
 
     // Send
     vm.sendClickHandler = function (video) {
-      $location.path('template/' + video.id + '/null');
+      $location.path('template/' + video.id);
     }
 
     // Tabs
@@ -119,7 +119,7 @@
     }
 
     vm.useTemplate = function (id) {
-      $location.path('template/null/' + id);
+      $location.path('template-edit/' + id);
     }
 
     vm.vieweConversation = function (id) {
@@ -128,7 +128,7 @@
 
     function getVideos() {
       libraryService.getVideos().then(function (res) {
-        vm.videosList = res.data.data;
+        vm.videosList = res.data;
       });
     };
 
@@ -140,6 +140,7 @@
 
     function getConversations() {
       libraryService.getConversations().then(function (res) {
+        console.log(res);
         vm.conversationsList = res.data;
       });
     };
