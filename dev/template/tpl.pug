@@ -46,8 +46,12 @@
   //- TITLE
   .title-container
     p.title
-      span.placeholder(ng-hide="vm.titleObj.editMode || vm.titleObj.title || vm.titleObj.title != null") Add conversation topic here
-      span(ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != null") {{vm.titleObj.title}}
+      span.placeholder.btn(
+        ng-hide="vm.titleObj.editMode || vm.titleObj.title || (vm.titleObj.title != null && vm.titleObj.title != 'undefined')"
+        ng-click="vm.edit(vm.titleObj)") Add conversation topic here
+      span.btn(
+        ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != null && vm.titleObj.title != 'undefined'"
+        ng-click="vm.edit(vm.titleObj)") {{vm.titleObj.title}}
       input.mdl-textfield__input.title-input(
         type="text"
         ng-if="vm.titleObj.editMode"
@@ -69,9 +73,15 @@
 
         //- USER NAME
         p.user-name
-          span.placeholder(ng-hide="vm.nameObj.editMode || vm.nameObj.name || vm.user.name") Add your name
-          span(ng-if="vm.nameObj.name && !vm.nameObj.editMode && vm.nameObj.name != null") {{vm.nameObj.name}}
-          span(ng-if="vm.user.name && !vm.nameObj.editMode && !vm.nameObj.name") {{vm.user.name}}
+          span.placeholder.btn(
+            ng-hide="vm.nameObj.editMode || vm.nameObj.name || vm.user.name"
+            ng-click="vm.edit(vm.nameObj)") Add your name
+          span.btn(
+            ng-if="vm.nameObj.name && !vm.nameObj.editMode && vm.nameObj.name != null"
+            ng-click="vm.edit(vm.nameObj)") {{vm.nameObj.name}}
+          span.btn(
+            ng-if="vm.user.name && !vm.nameObj.editMode && !vm.nameObj.name"
+            ng-click="vm.edit(vm.nameObj)") {{vm.user.name}}
           input.mdl-textfield__input.name-input(
             type="text"
             ng-if="vm.nameObj.editMode"
@@ -83,9 +93,15 @@
 
         //- USER ROLE
         p.user-role
-          span.placeholder(ng-hide="vm.companyRole.editMode || vm.companyRole.role || vm.user.company_position") Add your company role
-          span(ng-if="vm.companyRole.role && !vm.companyRole.editMode && vm.companyRole.role != null") {{vm.companyRole.role}}
-          span(ng-if="vm.user.company_position && !vm.companyRole.editMode && !vm.companyRole.role") {{vm.user.company_position}}
+          span.placeholder.btn(
+            ng-hide="vm.companyRole.editMode || vm.companyRole.role || vm.user.company_position"
+            ng-click="vm.edit(vm.companyRole)") Add your company role
+          span.btn(
+            ng-if="vm.companyRole.role && !vm.companyRole.editMode && vm.companyRole.role != null"
+            ng-click="vm.edit(vm.companyRole)") {{vm.companyRole.role}}
+          span.btn(
+            ng-if="vm.user.company_position && !vm.companyRole.editMode && !vm.companyRole.role"
+            ng-click="vm.edit(vm.companyRole)") {{vm.user.company_position}}
           input.mdl-textfield__input.role-input(
             type="text"
             ng-if="vm.companyRole.editMode"
@@ -115,8 +131,12 @@
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .chat-box
           p.message
-            span.placeholder(ng-hide="vm.messageObj.editMode || vm.messageObj.message || vm.titleObj.title != null") Add your message
-            span(ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null") {{vm.messageObj.message}}
+            span.placeholder.btn(
+              ng-hide="vm.messageObj.editMode || vm.messageObj.message || (vm.messageObj.message != null && vm.messageObj.message != 'undefined')"
+              ng-click="vm.edit(vm.messageObj)") Add your message
+            span.btn(
+              ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null && vm.messageObj.message != 'undefined'"
+              ng-click="vm.edit(vm.messageObj)") {{vm.messageObj.message}}
             textarea.mdl-textfield__input.chat-text-box(
               ng-if="vm.messageObj.editMode"
               ng-model="vm.messageObj.message")
