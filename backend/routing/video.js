@@ -77,6 +77,9 @@ server.route({
         DAL.videos.getByAuthor(request.auth.credentials.id).then(function(res) {
           reply(res.map(
             function(res) {
+
+              // Remove extension from video
+              res.name = res.name.replace(/\.([0-9a-z]+)(?:[\?#]|$)/, '');
               return {
                 'type': 'video',
                 'id': res.v_id,
