@@ -91,7 +91,7 @@
       conversationsService.getVideo(video.id).then(function (res) {
         vm.previewVideoUrl = {
           sources: [{
-            src: res.data.data.attributes.url,
+            src: res.data.attributes.url,
             type: 'video/mp4'
           }]
         };
