@@ -1,5 +1,5 @@
 .watchVideoContainer
-  header
+  header.user-header(ng-if="vm.showUserHeader")
     .logoContainer
       .logo
         //- DEFAULT LOGO
@@ -28,7 +28,11 @@
         .email
           img(src='/files/images/email.png', alt='email')
           p {{vm.conversation.authorEmail}}
-  
+  header.default-header(ng-if="!vm.showUserHeader")
+    button.btn.mdl-button.mdl-js-button.mdl-button--raised.back(ng-click="vm.back()")
+      |Back
+    p.title Conversation with 
+      span.email {{vm.conversation.email}}
   .content
     //- TITLE
     .title-container

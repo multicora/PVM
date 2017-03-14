@@ -4,8 +4,20 @@
 
   app.factory('interseptor', interseptor);
 
-  interseptor.$inject = ['$location', 'loadingService', 'tokenService', '$q'];
-  function interseptor($location, loadingService, tokenService, $q) {
+  interseptor.$inject = [
+    '$location',
+    '$q',
+    'loadingService',
+    'tokenService',
+    'routingCheckingService'
+    ];
+  function interseptor(
+    $location,
+    $q,
+    loadingService,
+    tokenService,
+    routingCheckingService
+  ) {
     return {
       request: function(request) {
         loadingService.showSpinner();
@@ -19,8 +31,11 @@
       responseError: function(response) {
         loadingService.hideSpinner();
         if (response.status == 401) {
-          tokenService.clearToken();
-          $location.path('/login');
+          var url = $location.url();
+          if (!routingCheckingService.checkRouting(url)) {
+            tokenService.clearToken();
+            $location.path('/login');
+          }
         }
         return $q.reject(response);
       }
