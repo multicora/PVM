@@ -81,46 +81,23 @@
       }
     }
 
-    .popupTitle {
-      padding-top: 25px;
+    .popupTitle,
+    .title {
       color: rgba(0, 0, 0, 0.87);
       text-align: center;
       font-weight: 300;
       font-size: 30px;
-      font-family: 'Roboto-Thin', Arial, sans-serif;
     }
 
     .button-container {
       display: inline-block;
       width: 100%;
       text-align: right;
-      margin-top: 40px;
+      margin-top: 24px;
+      box-sizing: border-box;
 
-      button {
-        border-radius: 2px;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        background-color:  #f1f1f1;
-        width: 85px;
-        height: 36px;
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.50);
-        text-transform: uppercase;
-        font-weight: 500;
-        margin-right: 5px;
-      }
-
-      button:last-child {
-        margin-right: 15px;
-      }
-
-      button:hover {
-        color: rgba(0, 0, 0, 0.87);
-      }
-
-      .save:disabled {
-        cursor: default;
+      .close {
+        margin-right: 10px;
       }
     }
 
