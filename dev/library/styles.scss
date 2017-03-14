@@ -157,12 +157,12 @@
     }
 
     .uploadIcon {
-      background-image: url('/files/images/upload.svg');
       transition: 1s;
+      background-image: url('/files/images/uploadHover.svg');
     }
 
     .uploadIcon:hover {
-      background-image: url('/files/images/uploadHover.svg');
+      background-image: url('/files/images/upload.svg');
       transition: 1s;
     }
 
