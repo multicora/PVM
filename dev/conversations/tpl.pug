@@ -3,14 +3,14 @@
     .logoContainer
       .logo
         //- DEFAULT LOGO
-        .default-logo(ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === 'undefined'")
+        .default-logo(ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === undefined")
           span.logoText Powered by
           img(src='/files/images/logo_bizkonect.svg'
             alt='logo')
 
         //- USER LOGO
         .logo-user(
-          ng-if="vm.conversation.logo && vm.conversation.logo != null && vm.conversation.logo != 'undefined'"
+          ng-if="vm.conversation.logo && vm.conversation.logo != null && vm.conversation.logo != undefined"
           ng-style="{backgroundImage: 'url('+ vm.conversation.logo + ')' }")
 
     .socialContainer
@@ -33,7 +33,7 @@
     //- TITLE
     .title-container
       p.title
-        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
+        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != undefined") {{vm.conversation.title}}
 
     .video
       .videoHeader
@@ -58,7 +58,7 @@
           .photo(
             ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
             ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
-          .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'")
+          .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != undefined")
             p.message
               span {{vm.conversation.message}}
 
