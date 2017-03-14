@@ -153,10 +153,10 @@
     }
 
     function checkName() {
-      if (!vm.nameObj.name || vm.nameObj.name === undefined || vm.nameObj.name === null) {
+      if (!vm.nameObj.name || vm.nameObj.name === 'undefined' || vm.nameObj.name === null) {
         vm.nameObj.name = vm.user.name;
       }
-      if (!vm.companyRole.role || vm.companyRole.role === undefined || vm.companyRole.role === null) {
+      if (!vm.companyRole.role || vm.companyRole.role === 'undefined' || vm.companyRole.role === null) {
         vm.companyRole.role = vm.user.company_position;
       }
     }
