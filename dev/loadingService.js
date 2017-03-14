@@ -7,19 +7,18 @@
   service.$inject = [];
   function service() {
     var count = 0;
+    var spinner = document.getElementById('spinner');
 
     this.showSpinner = function () {
-      // usSpinnerService.spin('loading-spinner');
       count++;
-      console.log('Spinner show ' + count);
+      spinner.classList.remove('hidden');
     };
 
     this.hideSpinner = function () {
       count--;
 
       if (count === 0) {
-        // usSpinnerService.stop('loading-spinner');
-        console.log('Spinner hide');
+        spinner.classList.add('hidden');
       }
     };
   }

@@ -9,7 +9,6 @@
 
   .placeholder {
     font-style: italic;
-    cursor: default;
     color: rgba(0, 0, 0, 0.54)
   }
 
@@ -23,15 +22,31 @@
   }
 
   .title {
+    margin: 0;
     .placeholder {
       color: rgba(0, 0, 0, 0.24)
     }
+  }
+
+  .title-input {
+    font-size: 24px;
+    text-align: center;
+    padding: 0;
   }
 
   .user-name input,
   .user-role input {
     display: inline-block;
     width: 160px;
+    padding: 0;
+  }
+
+  .name-input {
+    font-size: 20px;
+  }
+
+  .role-input {
+    font-size: 16px;
   }
 
   .videoContent {
@@ -61,23 +76,49 @@
     }
   }
 
+  .message {
+    margin: 0;
+    position: relative;
+
+    .edit-button {
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+    }
+  }
+
   .chat-text-box {
     width: 100%;
     resize: none;
     outline: none;
+    border-bottom: none;
+    font-size: 14px;
   }
 
   .snackbar-container {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #f5f5f5;
+    box-shadow: 0px -1px 8px rgba(0,0,0,.4);
+    background-color: #fff;
     .save-snackbar {
       width: 845px;
-      background-color: #fff;
       padding: 10px 0;
       margin: 0 auto;
-      text-align: right;
+
+      .use-buttons-container {
+        display: inline-block;
+        width: 60%;
+        text-align: right;
+      }
+
+      .back-button-container {
+        display: inline-block;
+        width: 40%;
+        text-align: left;
+        padding-left: 10px;
+        box-sizing: border-box;
+      }
 
       button {
         margin-right: 20px;
