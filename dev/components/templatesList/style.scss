@@ -21,12 +21,12 @@
       margin-bottom: 0;
       display: inline-block;
       vertical-align: middle;
-      width: 100%;
+      width: 55%;
     }
 
     .title {
       font-size: 18px;
-      font-weight: bold;
+      font-family: 'Roboto Medium';
     }
 
     .message {
@@ -41,9 +41,15 @@
     }
 
     .btn {
-      font-weight: bold;
       outline: none;
       border: none;
+    }
+
+    .delete {
+      min-width: 36px;
+      width: 36px;
+      height: 36px;
+      margin-left: 10px;
     }
   }
 
