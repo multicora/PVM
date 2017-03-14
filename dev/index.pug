@@ -18,6 +18,9 @@ html(ng-app="app")
       ga('create', 'UA-89625506-1', 'auto');
       ga('send', 'pageview');
   body(ng-controller="mainCtrl as vm")
+    .loader.hidden#spinner
+      .loader-content
+        .mdl-spinner.mdl-js-spinner.is-active.spinner-icon
     div(ng-view)
     script(src='libs.js')
     script(src='app.js')

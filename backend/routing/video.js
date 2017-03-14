@@ -20,8 +20,8 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         let user = request.auth.credentials;
         let name;
-        if (request.payload.videoName) {
-          name = request.payload.videoName;
+        if (request.payload.data) {
+          name = request.payload.data;
         } else {
           name = request.payload.file.hapi.filename;
         }
@@ -77,12 +77,10 @@ module.exports = function (server, DAL) {
         videoCtrl.getFile(request.params.id).then(
           function (buffer) {
             reply({
-              data: {
-                type: 'video',
-                id: request.params.id,
-                attributes: {
-                  url: buffer.uri.href
-                }
+              type: 'video',
+              id: 7,
+              attributes: {
+                url: buffer.uri.href
               }
             });
           },
@@ -103,15 +101,18 @@ server.route({
       auth: 'simple',
       handler: function (request, reply) {
         DAL.videos.getByAuthor(request.auth.credentials.id).then(function(res) {
-          reply({'data': res.map(
+          reply(res.map(
             function(res) {
+
+              // Remove extension from video
+              res.name = res.name.replace(/\.([0-9a-z]+)(?:[\?#]|$)/, '');
               return {
                 'type': 'video',
                 'id': res.v_id,
                 'attributes': res
               };
             }
-          )});
+          ));
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });
@@ -127,7 +128,7 @@ server.route({
       handler: function (request, reply) {
         videoCtrl.getThumbnails(request.auth.credentials.id).then(
           function(res) {
-            reply({'data': res.map(
+            reply(res.map(
               function(res) {
                 return {
                   'type': 'thumbnail',
@@ -135,7 +136,7 @@ server.route({
                   'attributes': res.thumbnail
                 };
               }
-            )});
+            ));
           },
           function(err) {
             reply(Boom.badImplementation(err));

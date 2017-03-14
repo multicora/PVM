@@ -1,7 +1,7 @@
 (function (angular) {
   var app = angular.module('app');
 
-  app.controller('templateCtrl', ctrl);
+  app.controller('templateEditCtrl', ctrl);
 
   ctrl.$inject = [
     '$routeParams',
@@ -28,9 +28,8 @@
     vm.showSelectPopup = false;
     vm.showSendButton = false;
 
-    vm.videoId = $routeParams.videoId;
-    getVideo(vm.videoId);
-
+    vm.templateId = $routeParams.templateId;
+    getTemplate();
     getProfile();
     getVideos();
 
@@ -56,14 +55,10 @@
         'author': vm.user.id
       }
 
-      if (!vm.nameObj.name) {
-        vm.nameObj.name = vm.user.name;
-      }
-      if (!vm.companyRole.role) {
-        vm.companyRole.role = vm.user.company_position;
-      }
-      conversationsService.createTemplate(vm.sendData).then(function(res) {
-        $location.path('template-edit/' + res.data.templateId);
+      vm.sendData.id = vm.templateId;
+      conversationsService.updateTemplate(vm.sendData).then(function() {
+        closeAllEditButton();
+          getTemplate();
       });
     }
 
@@ -119,6 +114,23 @@
         r.readAsDataURL(f);
       }
       $scope.$apply();
+    }
+
+    function getTemplate() {
+      conversationsService.getTemplate(vm.templateId).then(function(res) {
+        vm.nameObj.name = res.data.name;
+        vm.companyRole.role = res.data.companyRole;
+        vm.messageObj.message = res.data.message;
+        vm.titleObj.title = res.data.title;
+        vm.logo = res.data.logo;
+        vm.videoId = res.data.videoId;
+        vm.media = {
+          sources: [{
+            src: res.data.videoUrl,
+            type: 'video/mp4'
+          }]
+        };
+      })
     }
 
     function closeAllEditButton() {

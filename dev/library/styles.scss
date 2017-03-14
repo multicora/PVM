@@ -48,7 +48,8 @@
           transition: 0.3s;
         }
 
-        .active {
+
+        li:focus {
           border-bottom: 5px solid $navigation-hovered-color;
           color: $navigation-hovered-color;
         }

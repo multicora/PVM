@@ -5,8 +5,8 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      use: '&',
-      delete: '&',
+      onUseClick: '&',
+      onDelete: '&',
       list: '<',
     }
   });

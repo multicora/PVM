@@ -45,7 +45,9 @@
         height: 40px;
         line-height: 63px;
         vertical-align: middle;
-        background-size: cover;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
       }
 
       @media (max-width: 570px) {
@@ -151,7 +153,7 @@
 
   //VIDEO PLAYER CONTAINER
   .video {
-    margin: 20px auto 0 auto;
+    margin: 20px auto 55px auto;
     width: 845px;
     border-radius: 2px;
     position: relative;
