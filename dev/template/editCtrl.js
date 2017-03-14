@@ -6,6 +6,7 @@
   ctrl.$inject = [
     '$routeParams',
     '$scope',
+    '$location',
     'conversationsService',
     'profileService',
     'libraryService'
@@ -13,6 +14,7 @@
   function ctrl(
     $routeParams,
     $scope,
+    $location,
     conversationsService,
     profileService,
     libraryService
@@ -90,6 +92,10 @@
       });
     }
 
+    vm.back = function () {
+      $location.path('library');
+    }
+
     $scope.convertToBase64LogoTemplate = function(event) {
       var f = document.getElementById('logo').files[0],
           r = new FileReader(),
@@ -137,6 +143,7 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
+        vm.user.name = res.data.firstName + ' ' +res.data.secondName;
       });
     };
 
@@ -159,7 +166,7 @@
 
     function checkName() {
       if (!vm.nameObj.name || vm.nameObj.name === undefined || vm.nameObj.name === null) {
-        vm.nameObj.name = vm.user.firstName;
+        vm.nameObj.name = vm.user.name;
       }
       if (!vm.companyRole.role || vm.companyRole.role === undefined || vm.companyRole.role === null) {
         vm.companyRole.role = vm.user.company_position;

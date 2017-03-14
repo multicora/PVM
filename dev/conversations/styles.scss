@@ -45,7 +45,9 @@
         height: 40px;
         line-height: 63px;
         vertical-align: middle;
-        background-size: cover;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
       }
 
       @media (max-width: 570px) {
