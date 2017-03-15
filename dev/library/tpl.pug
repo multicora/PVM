@@ -55,8 +55,8 @@
             placeholder="Enter video name")
         p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
         .button-container
-          button.cancel(ng-click="vm.closeRecordPopup()") cancel
-          button.save(
+          button.btn.mdl-button.mdl-js-button.mdl-button--raised.cancel(ng-click="vm.closeRecordPopup()") cancel
+          button.btn.mdl-button.mdl-js-button.mdl-button--raised.save(
             ng-click="vm.sendRecordClick(vm.videoName)"
             ng-disabled="!vm.recordedData") save
 
