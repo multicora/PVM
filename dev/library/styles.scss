@@ -49,7 +49,7 @@
         }
 
 
-        li:focus {
+        .active {
           border-bottom: 5px solid $navigation-hovered-color;
           color: $navigation-hovered-color;
         }
