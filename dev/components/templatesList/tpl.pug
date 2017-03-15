@@ -1,6 +1,8 @@
 .templates-content
   .templates-container
-    .template(ng-repeat="item in vm.list")
+    .template(
+      ng-repeat="item in vm.list"
+      ng-click="vm.onUseClick({$data: item.id})")
       p.title
         span(
         ng-if="item.title && item.title != null && item.title != 'undefined'"
