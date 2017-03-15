@@ -158,10 +158,18 @@
           ng-click="vm.back()")
             | Back
       .use-buttons-container
-        button.btn.mdl-button.mdl-js-button(
+        button.btn.mdl-button.mdl-js-button.mdl-button--icon.save(
           type="button"
           ng-click="vm.save()")
-            | Save
+          i.material-icons save
+
+        //- WE WILL USE THIS WHEN WILL BE 'SAVE AS NEW' FUNCTIONALITY
+        //- button.btn.mdl-button.mdl-js-button.mdl-button--icon.save#demo-menu-top-right(
+        //-   type="button")
+        //-   i.material-icons save
+        //- ul.mdl-menu.mdl-menu--top-right.mdl-js-menu.mdl-js-ripple-effect(data-mdl-for="demo-menu-top-right")
+        //-   li.mdl-menu__item(ng-click="vm.save()") SAVE
+        //-   li.mdl-menu__item(ng-click="vm.save()") SAVE AS NEW
         button.btn.mdl-button.mdl-js-button.mdl-button--raised(
           type="button"
           ng-click="vm.showSendPopup = true")
