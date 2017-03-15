@@ -44,11 +44,17 @@
       float: left;
       height: 100%;
       width: 30px;
-      color: rgba(0, 0, 0, .87);;
+      color: rgba(0, 0, 0, .87);
     }
 
     .viewed {
       color: green;
+    }
+
+    .not-viewed,
+    .mail,
+    .files {
+      color: rgba(0, 0, 0, .24);
     }
 
     .btn {

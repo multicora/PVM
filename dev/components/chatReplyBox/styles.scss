@@ -7,7 +7,7 @@
   .text-container {
     background-color: #fff;
     box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.35);
-
+    
   }
 
   .chat-reply-text {
@@ -20,7 +20,7 @@
   }
 
   .chat-reply-text::placeholder {
-    font-size: 18px;
+    font-size: 14px;
   }
 
   .active {
@@ -28,10 +28,15 @@
     transition: 0.5s;
   }
 
+  .send {
+    margin-top: 10px;
+  }
+
   @media (max-width: 650px) {
     width: 90%;
 
     .send {
+      margin-top: 0;
       position: absolute;
       right: 10px;
       bottom: 10px;

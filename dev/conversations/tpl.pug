@@ -60,7 +60,7 @@
       .videoFooter
         .chat-container
           .photo(
-            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
+            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null && vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'"
             ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
           .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'")
             p.message

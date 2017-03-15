@@ -2,9 +2,9 @@
   .conversations-container
     .conversation(ng-repeat="item in vm.list")
       .indicators
-        .not-viewed(ng-if="!item.viewed")
+        .not-viewed(ng-if="!item.viwatching")
           i.material-icons remove_red_eye
-        .viewed(ng-if="item.viewed")
+        .viewed(ng-if="item.watching")
           i.material-icons remove_red_eye
         .mail(ng-if="!item.viewed")
           i.material-icons email
