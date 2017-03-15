@@ -35,8 +35,18 @@
       };
     });
 
-    vm.back = function () {
+    vm.back = function (event) {
+      event.stopPropagation();
       $location.path('library');
+    }
+
+    vm.contentClick = function (event) {
+      vm.headerClass = 'showHeader';
+    }
+
+    vm.videoContentClick = function (event) {
+      event.stopPropagation();
+      vm.headerClass = 'hideHeader';
     }
 
     function getProfile() {

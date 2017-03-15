@@ -3,6 +3,7 @@
   width: 100%;
   background-color: #f5f5f5;
   background-size: cover;
+  outline: none;
 
   //HEADER
   header {
@@ -219,12 +220,24 @@
 
     }
 
+    .showHeader {
+      transition: .3s;
+      opacity: 1;
+    }
+
+    .hideHeader {
+      transition: .3s;
+      opacity: 0;
+    }
+
     .videoContent {
       min-height: 400px;
       width: 100%;
       box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.35);
       background-color: #010001;
+      outline: none;
     }
+
 
     .vjs-video-wrap,
     .video-js {

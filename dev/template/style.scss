@@ -5,19 +5,25 @@
     background: none;
     vertical-align: middle;
     visibility: hidden;
+    color: rgba(0, 0, 0, 0.54);
   }
 
   .placeholder {
     font-style: italic;
-    color: rgba(0, 0, 0, 0.54)
+    color: rgba(0, 0, 0, 0.54);
   }
 
   .upload {
     border: none;
+    color: rgba(0, 0, 0, 0.54);
     display: inline-block;
 
     i {
       vertical-align: middle;
+    }
+
+    .placeholder {
+      font-style: inherit;
     }
   }
 
