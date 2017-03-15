@@ -59,6 +59,7 @@
       conversationsService.updateTemplate(vm.sendData).then(function() {
         closeAllEditButton();
           getTemplate();
+          openSnackBar('saved');
       });
     }
 
