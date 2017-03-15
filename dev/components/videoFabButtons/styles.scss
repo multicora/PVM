@@ -5,7 +5,7 @@
     border: none;
     border-radius: 50%;
     box-shadow: 2px 4px 11px 0px rgba(0, 0, 0, 0.35);
-    color: rgba(255, 255, 255, 0.87);
+    color: #fff;
     cursor: pointer;
     display: block;
     font-size: 20px;
@@ -59,7 +59,7 @@
       transition: 0.35s;
 
       .video-icon {
-        transform: rotate(720deg);
+        transform: rotate(360deg);
         transition: 0.5s;
       }
     }

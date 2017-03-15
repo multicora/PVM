@@ -64,10 +64,10 @@
     width: 100%;
     border-radius: 2px;
     background-color:  #f8f8f8;
-    box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
 
     .error {
       margin-bottom: -30px;
+      text-align: center;
     }
 
     .videoNameContainer {
@@ -77,55 +77,34 @@
         border: 1px solid #f6f6f6;
         background: none;
         font-size: 18px;
-        margin: 10px 0 -10px 0;
+        margin: 16px 0 -10px 0;
+        text-align: center;
+        width: 80%;
       }
     }
 
     .popupTitle {
-      padding-top: 25px;
+      padding-top: 16px;
       color: rgba(0, 0, 0, 0.87);
       text-align: center;
-      font-weight: 300;
-      font-size: 30px;
-      font-family: 'Roboto-Thin', Arial, sans-serif;
+      font-size: 24px;
     }
 
     .button-container {
       display: inline-block;
       width: 100%;
       text-align: right;
-      margin-top: 40px;
-
-      button {
-        border-radius: 2px;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        background-color:  #f1f1f1;
-        width: 85px;
-        height: 36px;
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.50);
-        text-transform: uppercase;
-        font-weight: 500;
-        margin-right: 5px;
-      }
-
-      button:last-child {
-        margin-right: 15px;
-      }
-
-      button:hover {
-        color: rgba(0, 0, 0, 0.87);
-      }
-
-      .save:disabled {
-        cursor: default;
+      margin-top: 24px;
+      padding: 0 16px 24px 0;
+      box-sizing: border-box;
+      
+      .save {
+        margin-left: 10px;
       }
     }
 
     .record-video {
-      margin: 0 40px;
+      margin: 0 16px;
     }
   }
 
@@ -201,12 +180,12 @@
     }
 
     .uploadIcon {
-      background-image: url('/files/images/upload.svg');
       transition: 1s;
+      background-image: url('/files/images/uploadHover.svg');
     }
 
     .uploadIcon:hover {
-      background-image: url('/files/images/uploadHover.svg');
+      background-image: url('/files/images/upload.svg');
       transition: 1s;
     }
 
