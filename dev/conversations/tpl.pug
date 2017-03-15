@@ -1,46 +1,73 @@
 .watchVideoContainer
-  header
+  header.user-header(ng-if="vm.showUserHeader")
     .logoContainer
       .logo
-        img(src='/files/images/logo.png', alt='logo')
-        span.logoText CommerceFocused
+        //- DEFAULT LOGO
+        .default-logo(ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === 'undefined'")
+          span.logoText Powered by
+          img(src='/files/images/logo_bizkonect.svg'
+            alt='logo')
+
+        //- USER LOGO
+        .logo-user(
+          ng-if="vm.conversation.logo && vm.conversation.logo != null && vm.conversation.logo != 'undefined'"
+          ng-style="{backgroundImage: 'url('+ vm.conversation.logo + ')' }")
+
     .socialContainer
-      .social
-        a.linkedin(href='')
-          img(src='/files/images/linkedin.png', alt='linkedin')
-        a.twitter(href='')
-          img(src='/files/images/twitter.png', alt='twitter')
-        a.facebook(href='')
-          img(src='files/images/facebook.png', alt='facebook')
+      //- .social
+      //-   a.linkedin(href='')
+      //-     img(src='/files/images/linkedin.png', alt='linkedin')
+      //-   a.twitter(href='')
+      //-     img(src='/files/images/twitter.png', alt='twitter')
+      //-   a.facebook(href='')
+      //-     img(src='files/images/facebook.png', alt='facebook')
       .contacts
         .phone
           img(src='/files/images/phone.png', alt='phone')
-          p {{vm.user.phone}}
+          p {{vm.conversation.authorPhone}}
         .email
           img(src='/files/images/email.png', alt='email')
-          p {{vm.user.email}}
-  .video
-    .videoHeader
-      .photo
-      .text
-        p.user-name {{vm.user.name}}
-        p.user-role {{vm.user.company_position}}
-    .videoContent
-      video.video-js.vjs-default-skin(
-        vjs-video
-        controls
-        preload="auto"
-        vjs-media="vm.media")
-    .videoFooter
-      p.reply-text-placeholder(
-        ng-click="vm.chatBoxClick()"
-        ng-if="!vm.showChatBox")
-        | Type here to reply or hit the button 
-        i.fa.fa-video-camera(aria-hidden="true") 
-        | &nbsp;to reply with the video
-      chat-box(ng-if="vm.showChatBox")
+          p {{vm.conversation.authorEmail}}
+  header.default-header(ng-if="!vm.showUserHeader")
+    button.btn.mdl-button.mdl-js-button.mdl-button--raised.back(ng-click="vm.back()")
+      |Back
+    p.title Conversation with 
+      span.email {{vm.conversation.email}}
+  .content
+    //- TITLE
+    .title-container
+      p.title
+        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
 
-      video-fab-buttons
+    .video
+      .videoHeader
+        .photo(
+          ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
+          ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
+        //- USER NAME
+        .text
+          p.user-name
+            span(ng-if="vm.conversation.name && vm.conversation.name != null") {{vm.conversation.name}}
+          //- USER ROLE
+          p.user-role
+            span(ng-if="vm.conversation.company_role && vm.conversation.company_role != null") {{vm.conversation.company_role}}
+      .videoContent
+        video.video-js.vjs-default-skin(
+          vjs-video
+          controls
+          preload="auto"
+          vjs-media="vm.media")
+      .videoFooter
+        .chat-container
+          .photo(
+            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
+            ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
+          .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'")
+            p.message
+              span {{vm.conversation.message}}
+
+        chat-reply-box
+
   footer
     .logo-container
       span.powered Powered by

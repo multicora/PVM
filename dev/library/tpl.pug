@@ -1,7 +1,6 @@
 .library-wrapper
   app-header
   .navigation
-    img.tab-icon(src='/files/images/video-tab-icon.png', alt='')
     .navigation-bar-container
       ul.navigation-bar
         li(
@@ -13,8 +12,8 @@
         li(
           ng-class="vm.conversationsClass"
           ng-click="vm.tabBtnConversationsClick()") CONVERSATIONS
-        li ANALYTICS
-        li CONTACTS
+        //- li ANALYTICS
+        //- li CONTACTS
 
   video-fab-buttons(
     ng-if="vm.showVideos"
@@ -28,6 +27,7 @@
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
     show-send-button="vm.showSendButton"
+    on-thumbnail-click="vm.showPreview($data)"
     on-send-click="vm.sendClickHandler($data)")
 
   template-list(
@@ -42,7 +42,9 @@
     on-view-click="vm.viewConversation($data)")
 
   //- Record popup
-  popup(ng-if="vm.showRecordPopup")
+  popup(
+    ng-if="vm.showRecordPopup"
+    close-popup="vm.closeRecordPopup()")
     .video-record-container
       form.recordForm
         p.popupTitle Record your video
@@ -61,7 +63,9 @@
             ng-disabled="!vm.recordedData") save
 
   //- Upload popup
-  popup.uploadForm(ng-if="vm.showUploadPopup")
+  popup.uploadForm(
+    ng-if="vm.showUploadPopup"
+    close-popup="vm.closeUploadPopup()")
     form
       .uploadIconContainer
         label.uploadIcon(for='upload-video')
@@ -77,3 +81,19 @@
       p.error(ng-if="errorMessage") Error: {{errorMessage}}
       .buttonContainer
         button.closeButton(ng-click="vm.closeUploadPopup()") close
+
+  //- Preview popup
+  popup(
+    ng-if="vm.showPreviewPopup"
+    close-popup="vm.closePreviewPopup()")
+    .video-preview-container
+      p.title.ellipsis {{vm.previewVideo.attributes.name}}
+      .video-container
+        video.video-js.vjs-default-skin(
+          vjs-video
+          controls
+          preload="auto"
+          vjs-media="vm.previewVideoUrl")
+      .button-container
+        button.close(ng-click="vm.closePreviewPopup()") close
+        button.send(ng-click="vm.sendClickHandler(vm.previewVideo)") send

@@ -8,12 +8,12 @@
   .navigation {
     margin-bottom: 20px;
 
-    .tab-icon {
-      float: left;
-      height: 40px;
-      margin: 25px 0 0 25px;
-      width: 40px;
-    }
+    // .tab-icon {
+    //   float: left;
+    //   height: 40px;
+    //   margin: 25px 0 0 25px;
+    //   width: 40px;
+    // }
 
     .navigation-bar-container {
       text-align: center;
@@ -21,9 +21,11 @@
 
       .navigation-bar {
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        display: inline-block;
         list-style: none;
-        margin: 58px 0 0 -65px;
+        margin: 58px auto 0 auto;
+        max-width: 950px;
+        width: 100%;
+        padding: 0;
 
         li {
           display: inline-block;
@@ -52,12 +54,12 @@
           color: $navigation-hovered-color;
         }
       }
-
     }
   }
 
   // Record
-  .video-record-container {
+  .video-record-container,
+  .video-preview-container {
     max-width: 725px;
     width: 100%;
     border-radius: 2px;
@@ -103,6 +105,27 @@
 
     .record-video {
       margin: 0 16px;
+    }
+  }
+
+  // Preview
+  .video-preview-container {
+    padding: 16px 16px 24px 16px;
+    max-width: 600px;
+    width: 100%;
+    .title {
+      margin: 0 auto;
+      font-size: 18px;
+      width: 300px;
+    }
+
+    .video-container {
+      width: 100%;
+      .vjs-video-wrap,
+      .video-js {
+        max-width: 100%;
+        max-height: 100%;
+      }
     }
   }
 
@@ -259,12 +282,6 @@
       }
     }
   }
-
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
 .inlineBlock {
   display: inline-block;

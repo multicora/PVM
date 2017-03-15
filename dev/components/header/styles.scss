@@ -24,6 +24,11 @@ header {
   .logo {
     display: inline-block;
     margin-left: 10px;
+    outline: none;
+
+    @media (max-width: 380px) {
+      width: 100px;
+    }
   }
 
   .auth-buttons {
@@ -50,6 +55,7 @@ header {
     line-height: 64px;
     margin-right: 10px;
     vertical-align: middle;
-    width: 38px;
+    width: 40px;
+    outline: none;
   }
 }

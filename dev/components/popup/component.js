@@ -8,12 +8,17 @@
     bindings: {
       onEsc: '&',
       onEnter: '&',
+      closePopup: '&',
     }
   });
 
   ctrl.$inject = ['$timeout', '$window'];
   function ctrl($timeout, $window) {
     var vm = this;
+
+    vm.stopPropagation = function($event) {
+      $event.stopPropagation();
+    }
 
     vm.onkeyDown = function(event) {
       var keyCode = event.which || event.keyCode;

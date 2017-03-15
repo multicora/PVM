@@ -3,16 +3,30 @@
 
   app.controller('conversationCtrl', ctrl);
 
-  ctrl.$inject = ['$routeParams', 'conversationsService'];
-  function ctrl($routeParams, conversationsService) {
+  ctrl.$inject = [
+    '$routeParams',
+    '$location',
+    'conversationsService',
+    'profileService'
+  ];
+  function ctrl(
+    $routeParams,
+    $location,
+    conversationsService,
+    profileService
+  ) {
     var vm = this;
 
-    vm.showChatBox = false;
     vm.conversation = null;
     vm.media = null;
+    vm.showUserHeader = true;
+    getProfile();
 
     conversationsService.get($routeParams.id).then(function (res) {
       vm.conversation = res.data;
+      if (vm.conversation.author === vm.user.id) {
+        vm.showUserHeader = false;
+      }
       vm.media = {
         sources: [{
           src: vm.conversation.url,
@@ -21,8 +35,16 @@
       };
     });
 
-    vm.chatBoxClick = function () {
-      vm.showChatBox = true;
+    vm.back = function () {
+      $location.path('library');
+    }
+
+    function getProfile() {
+      profileService.getProfile().then(function(res) {
+        vm.user = res.data;
+      }, function(err) {
+        vm.user.id = null;
+      });
     };
   }
 })(angular);

@@ -1,0 +1,40 @@
+.chat-reply-box {
+  max-width: 600px;
+  width: 100%;
+  margin: 24px auto;
+  position: relative;
+
+  .text-container {
+    background-color: #fff;
+    box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.35);
+
+  }
+
+  .chat-reply-text {
+    outline: none;
+    resize: none;
+    padding: 16px 16px 0 16px;
+    word-wrap: break-word;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .chat-reply-text::placeholder {
+    font-size: 18px;
+  }
+
+  .active {
+    height: 80px;
+    transition: 0.5s;
+  }
+
+  @media (max-width: 650px) {
+    width: 90%;
+
+    .send {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+    }
+  }
+}

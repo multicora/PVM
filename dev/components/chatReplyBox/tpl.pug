@@ -1,0 +1,11 @@
+.chat-reply-box
+  .text-container
+    textarea.mdl-textfield__input.chat-reply-text(
+      placeholder="Type here to reply"
+      ng-class="vm.class"
+      ng-model="vm.replyMessage"
+      ng-click="vm.activateTextArea()")
+  button.btn.mdl-button.send(
+    ng-click="vm.send"
+    ng-if="vm.replyMessage")
+    |save
