@@ -13,6 +13,7 @@
     background-color: #fff;
     position: relative;
     outline: none;
+    cursor: pointer;
 
     .title,
     .message {
@@ -47,9 +48,6 @@
     }
 
     .delete {
-      min-width: 36px;
-      width: 36px;
-      height: 36px;
       margin-left: 10px;
     }
   }

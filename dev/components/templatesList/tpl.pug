@@ -7,14 +7,14 @@
         span(
         ng-if="item.title && item.title != null && item.title != 'undefined'"
         ng-bind="item.title")
-        span(ng-if="!item.title || item.title === null || item.title === 'undefined'") Untitle
+        span(ng-if="!item.title || item.title === null || item.title === 'undefined'") Untitled
       p.message
         span(
         ng-if="item.message && item.message != null && item.message != 'undefined'"
         ng-bind="item.message")
         span(ng-if="!item.message || item.message === null || item.message === 'undefined'") No message
       .button-container
-        button.btn.mdl-button.mdl-js-button.mdl-button--raised.use(ng-click="vm.onUseClick({$data: item.id})") 
+        button.btn.mdl-button.mdl-js-button.use(ng-click="vm.onUseClick({$data: item.id})")
           | Use
-        button.btn.mdl-button.mdl-js-button.mdl-button--fab.delete(ng-click="vm.onDelete({$data: item.id})")
+        button.btn.mdl-button.mdl-js-button.mdl-button--icon.delete(ng-click="vm.onDelete({$data: item.id})")
           i.material-icons delete

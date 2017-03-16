@@ -28,6 +28,7 @@
     vm.showTemplates = false;
     vm.showConversations = false;
     vm.showPreviewPopup = false;
+    vm.videosClass = 'active';
 
     getVideos();
     getTemplates();
@@ -140,6 +141,7 @@
 
     // Templates
     vm.deleteTemplate = function (id) {
+      // event.stopPropagation();
       libraryService.deleteTemplate(id).then(function() {
         getTemplates();
       });

@@ -18,7 +18,7 @@
     }
 
     .add-button {
-      border: 3px dashed #757575;
+      border: 2px dashed #757575;
       box-sizing: border-box;
       color: #757575;
       display: inline-block;
@@ -30,6 +30,10 @@
       vertical-align: top;
       width: 215px;
 
+      @media (max-width: 566px) {
+        display: none;
+      }
+      
       .icon {
         height: 48px;
         margin: 65px auto 0 auto;
@@ -92,6 +96,57 @@
         .upload {
           margin-right: -30px;
         }
+      }
+    }
+
+    .add-button-mobile {
+      border: 2px dashed #757575;
+      box-sizing: border-box;
+      color: #757575;
+      display: none;
+      height: 204px;
+      margin: 0 0 10px 10px;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      vertical-align: top;
+      width: 215px;
+
+      @media (max-width: 567px) {
+        display: inline-block;
+      }
+
+      .buttons {
+        margin-top: 60px;
+        .record,
+        .upload {
+          font-size: 38px;
+          display: inline-block;
+          cursor: pointer;
+          outline: none;
+        }
+
+        .record {
+          margin-left: 10px;
+        }
+
+        .upload {
+          margin-right: 10px;
+        }
+
+        .record:hover {
+          color: $record-buttons-color;
+          transition: 0.5s;
+        }
+
+        .upload:hover {
+          color: $upload-buttons-color;
+          transition: 0.5s;
+        }
+      }
+
+      .text {
+        font-size: 24px;
       }
     }
     @keyframes left-plus {

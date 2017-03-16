@@ -1,6 +1,8 @@
 .conversations-content
   .conversations-container
-    .conversation(ng-repeat="item in vm.list")
+    .conversation(
+      ng-repeat="item in vm.list"
+      ng-click="vm.onViewClick({$data: item.id})")
       .indicators
         .mail(ng-if="!item.viewed")
           i.material-icons email
