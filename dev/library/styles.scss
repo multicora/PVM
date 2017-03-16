@@ -98,7 +98,8 @@
       padding: 0 16px 24px 0;
       box-sizing: border-box;
       
-      .save {
+      .save,
+      .send {
         margin-left: 10px;
       }
     }
@@ -224,19 +225,20 @@
     .popup {
       background-color:  #f8f8f8;
       border-radius: 2px;
-      box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
       max-width: 300px;
       width: 100%;
-      padding: 10px;
+      padding: 16px 16px 24px 16px;
+      outline: none;
     }
 
     .popupTitle {
       color: rgba(0, 0, 0, 0.87);
-      font-family: 'Roboto-Thin', Arial, sans-serif;
-      font-size: 30px;
+      font-family: 'Roboto Thin', Arial, sans-serif;
+      font-size: 24px;
       font-weight: 300;
       padding-top: 25px;
       text-align: center;
+      padding: 0;
     }
 
     .send-form {
@@ -244,41 +246,20 @@
       width: 100%;
 
       input {
+        margin-top: 16px;
         display: inline-block;
-        width: 200px;
+        width: 90%;
       }
     }
 
     .button-container {
       display: inline-block;
-      margin-top: 40px;
+      margin-top: 24px;
       text-align: right;
       width: 100%;
 
-      button {
-        background-color:  #f1f1f1;
-        border: none;
-        border-radius: 2px;
-        color: rgba(0, 0, 0, 0.50);
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        height: 36px;
-        outline: none;
-        text-transform: uppercase;
-        width: 85px;
-      }
-
       button:last-child {
-        margin-right: 15px;
-      }
-
-      button:hover {
-        color: rgba(0, 0, 0, 0.87);
-      }
-
-      .save:disabled {
-        cursor: default;
+        margin-left: 10px;
       }
     }
   }

@@ -6,11 +6,28 @@
   margin: 0 0 12px 10px;
   width: 215px;
 
+  .video-placeholder {
+    width: 100%;
+    padding-top: 16px;
+    display: inline-block;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+
+    img {
+      width: 80px;
+    }
+
+     p {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.54);
+     }
+  }
   .photo {
     height: 143px;
     width: 100%;
-    background-image: url('/files/images/videoPlaceholder.png');
-    background-size: 215px 143px;
     cursor: pointer;
     outline: none;
   }

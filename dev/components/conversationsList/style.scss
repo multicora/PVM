@@ -14,6 +14,10 @@
 
     .email {
       margin-bottom: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 80%;
     }
 
     .title,
@@ -22,6 +26,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       margin-bottom: 0;
+      max-width: 55%;
     }
 
     .title {
@@ -42,9 +47,23 @@
 
     .indicators {
       float: left;
-      height: 100%;
-      width: 30px;
+      width: 20px;
+      padding-right: 16px;
       color: rgba(0, 0, 0, .87);
+      border-right: 1px solid rgba(0, 0, 0, .14);
+      margin-right: 16px;
+
+      i {
+        font-size: 20px;
+      }
+    }
+
+    .indicators > div {
+      margin-top: 6px;
+    }
+
+    .indicators div:first-child {
+      margin-top: 0;
     }
 
     .viewed {
@@ -77,17 +96,11 @@
     transition: .3s;
     z-index: 1;
     box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.35);
-    .button-container {
-      opacity: 0;
-    }
   }
 
   .conversation:hover {
     transition: .3s;
     z-index: 2;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
-    .button-container {
-      opacity: 1;
-    }
   }
 }

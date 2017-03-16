@@ -27,6 +27,12 @@
     }
   }
 
+  .logo-upload {
+    @media (max-width: 385px) {
+      display: none;
+    }
+  } 
+
   .title {
     margin: 0;
     .placeholder {
