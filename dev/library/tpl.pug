@@ -34,7 +34,7 @@
     ng-if="vm.showTemplates"
     list="vm.templatesList"
     on-use-click="vm.useTemplate($data)"
-    on-delete="vm.deleteTemplate($data)")
+    on-delete="vm.deleteTemplate($data, $event)")
 
   conversation-list(
     ng-if="vm.showConversations"

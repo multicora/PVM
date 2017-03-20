@@ -7,6 +7,7 @@
     '$routeParams',
     '$scope',
     '$location',
+    '$mdToast',
     'conversationsService',
     'profileService',
     'libraryService'
@@ -15,6 +16,7 @@
     $routeParams,
     $scope,
     $location,
+    $mdToast,
     conversationsService,
     profileService,
     libraryService
@@ -63,6 +65,7 @@
         vm.companyRole.role = vm.user.company_position;
       }
       conversationsService.createTemplate(vm.sendData).then(function(res) {
+        $mdToast.showSimple('Saved successfully!');
         $location.path('template-edit/' + res.data.templateId);
       });
     }
@@ -93,6 +96,7 @@
         'email': email
       }
       conversationsService.create(vm.sendData).then(function () {
+        $mdToast.showSimple('Sended successfully!');
         vm.showSendPopup = false;
       });
     }

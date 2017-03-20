@@ -19,12 +19,13 @@
 
     vm.conversation = null;
     vm.media = null;
+    vm.user = null;
     vm.showUserHeader = true;
     getProfile();
 
     conversationsService.get($routeParams.id).then(function (res) {
       vm.conversation = res.data;
-      if (vm.conversation.author === vm.user.id) {
+      if (vm.user && vm.conversation.author === vm.user.id) {
         vm.showUserHeader = false;
       }
       vm.media = {
@@ -52,8 +53,6 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
-      }, function(err) {
-        vm.user.id = null;
       });
     };
   }

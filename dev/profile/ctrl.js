@@ -3,8 +3,16 @@
 
   app.controller('profileCtrl', ctrl);
 
-  ctrl.$inject = ['profileService', '$scope'];
-  function ctrl(profileService, $scope) {
+  ctrl.$inject = [
+    '$scope',
+    '$mdToast',
+    'profileService'
+  ];
+  function ctrl(
+    $scope,
+    $mdToast,
+    profileService
+  ) {
     var vm = this;
     vm.photoError = '';
     vm.logoError = '';
@@ -15,8 +23,9 @@
       profileService.updateProfile(vm.user).then(function(res) {
         profileService.updateCompany(vm.company)
       }).then(function(res) {
-        getProfile();
         vm.editMod = false;
+        $mdToast.showSimple('Saved successfully!');
+        getProfile();
       });
     }
 

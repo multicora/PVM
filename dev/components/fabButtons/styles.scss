@@ -6,4 +6,9 @@
   right: 65px;
   text-align: center;
   z-index: 2;
+
+  @media (max-width: 567px) {
+    bottom: 16px;
+    right: 16px;
+  }
 }

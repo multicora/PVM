@@ -2,8 +2,14 @@
 (function (angular) {
   angular.module('app').directive('fileUploader', directive);
 
-  directive.$inject = ['uploadService'];
-  function directive(uploadService) {
+  directive.$inject = [
+    'uploadService',
+    '$mdToast'
+  ];
+  function directive(
+    uploadService,
+    $mdToast
+  ) {
     return {
       templateUrl: 'components/fileUploader/tpl.html',
       link: link,
@@ -29,6 +35,7 @@
 
       function uploadEnd() {
         scope.uploadEnd();
+        $mdToast.showSimple('Uploaded successfully!');
       }
 
       function onError(err) {

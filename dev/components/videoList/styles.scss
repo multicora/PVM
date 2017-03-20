@@ -14,7 +14,7 @@
     }
 
     @media (max-width: 470px) {
-      max-width: 245px;
+      text-align: center;
     }
 
     .add-button {
@@ -112,10 +112,6 @@
       vertical-align: top;
       width: 215px;
 
-      @media (max-width: 567px) {
-        display: inline-block;
-      }
-
       .buttons {
         margin-top: 60px;
         .record,
@@ -147,6 +143,31 @@
 
       .text {
         font-size: 24px;
+      }
+
+      @media (max-width: 567px) {
+        display: inline-block;
+      }
+
+      @media (max-width: 470px) {
+        width: 310px;
+        height: 270px;
+        margin-right: 0;
+        margin-left: 0;
+
+        .buttons {
+          margin-top: 90px;
+
+          .upload {
+            margin-right: 25px;
+            font-size: 60px;
+          }
+
+          .record {
+            margin-left: 25px;
+            font-size: 60px;
+          }
+        }
       }
     }
     @keyframes left-plus {

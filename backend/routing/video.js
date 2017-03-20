@@ -20,7 +20,7 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         let user = request.auth.credentials;
         let name;
-        if (request.payload.data) {
+        if (request.payload.data && request.payload.data !== 'undefined') {
           name = request.payload.data;
         } else {
           name = request.payload.file.hapi.filename;
