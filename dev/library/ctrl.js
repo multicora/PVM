@@ -157,6 +157,13 @@
       $location.path('conversation/' + id);
     }
 
+    vm.videoSwipeRight = function () {
+      vm.videosClass = false;
+      vm.templatesClass = true;
+      vm.showVideos = false;
+      vm.showTemplates = true;
+    }
+
     function showConfirm(id) {
       var confirm = $mdDialog.confirm({
         textContent: 'Are you shure?',

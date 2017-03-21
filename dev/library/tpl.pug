@@ -3,20 +3,21 @@
   .navigation
     .navigation-bar-container
       ul.navigation-bar
-        li(
+        li.tub(
           ng-class="vm.videosClass"
-          ng-click="vm.tabBtnVideosClick()") VIDEOS
-        li(
+          ng-click="vm.tabBtnVideosClick()") videos
+        li.tub(
           ng-class="vm.templatesClass"
-          ng-click="vm.tabBtnTemplatesClick()") TEMPLATES
-        li(
+          ng-click="vm.tabBtnTemplatesClick()") templates
+        li.tub(
           ng-class="vm.conversationsClass"
-          ng-click="vm.tabBtnConversationsClick()") CONVERSATIONS
+          ng-click="vm.tabBtnConversationsClick()") conversations
         //- li ANALYTICS
         //- li CONTACTS
 
   video-fab-buttons(
     ng-if="vm.showVideos"
+    ng-swipe-right="vm.videoSwipeRight()"
     upload-btn-click="vm.uploadBtnClick()"
     record-btn-click="vm.recordBtnClick()")
 
