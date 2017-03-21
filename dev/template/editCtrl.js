@@ -65,13 +65,6 @@
       });
     }
 
-    vm.showSnackbar = function() {
-      window['counter'] = 0;
-      var snackbarContainer = document.querySelector('#demo-toast-example');
-      var data = {message: 'Example Message # ' + ++counter};
-      snackbarContainer.MaterialSnackbar.showSnackbar(data);
-    }
-
     vm.onThumbnailClick = function(video) {
       vm.videoId = video.id;
       vm.showSelectPopup = false;

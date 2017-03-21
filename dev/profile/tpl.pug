@@ -20,14 +20,9 @@
     .button-container
       button.button-edit.btn.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(
       type="button"
-      ng-hide="vm.editMod"
-      ng-click="vm.editMod = true")
-        |Edit my profile
-      button.button-edit.btn.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(
-      type="button"
-      ng-show="vm.editMod"
       ng-click="vm.save()")
-        |Save information
+        span(ng-if="vm.editMod") Save information
+        span(ng-if="!vm.editMod") Edit my profile
     .personal-info
       ul.mdl-list.info-content
         li.mdl-list__item

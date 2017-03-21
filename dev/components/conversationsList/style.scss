@@ -60,8 +60,10 @@
       }
     }
 
-    .indicators > div {
-      margin-top: 6px;
+    .indicators {
+      div {
+        margin-top: 6px;
+      }
     }
 
     .indicators div:first-child {

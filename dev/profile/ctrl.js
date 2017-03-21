@@ -20,13 +20,17 @@
     getProfile();
 
     vm.save = function() {
-      profileService.updateProfile(vm.user).then(function(res) {
-        profileService.updateCompany(vm.company)
-      }).then(function(res) {
-        vm.editMod = false;
-        $mdToast.showSimple('Saved successfully!');
-        getProfile();
-      });
+      if(vm.editMod) {
+        profileService.updateProfile(vm.user).then(function(res) {
+          profileService.updateCompany(vm.company)
+        }).then(function(res) {
+          vm.editMod = false;
+          $mdToast.showSimple('Saved successfully!');
+          getProfile();
+        });
+      } else {
+        vm.editMod = true;
+      }
     }
 
     $scope.convertToBase64Photo = function(event) {

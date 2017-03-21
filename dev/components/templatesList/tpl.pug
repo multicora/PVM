@@ -1,20 +1,19 @@
 .templates-content
   .templates-container
-    .template(
-      ng-repeat="item in vm.list"
-      ng-click="vm.onUseClick({$data: item.id})")
-      p.title
-        span(
-        ng-if="item.title && item.title != null && item.title != 'undefined'"
-        ng-bind="item.title")
-        span(ng-if="!item.title || item.title === null || item.title === 'undefined'") Untitled
-      p.message
-        span(
-        ng-if="item.message && item.message != null && item.message != 'undefined'"
-        ng-bind="item.message")
-        span(ng-if="!item.message || item.message === null || item.message === 'undefined'") No message
-      .button-container
-        button.btn.mdl-button.mdl-js-button.use(ng-click="vm.onUseClick({$data: item.id})")
-          | Use
-        button.btn.mdl-button.mdl-js-button.mdl-button--icon.delete(ng-click="vm.onDelete({$data: item.id, $event: $event})")
-          i.material-icons delete
+    .template-container(ng-repeat="item in vm.list")
+      .template(ng-click="vm.onUseClick({$data: item.id})")
+        p.title
+          span(
+          ng-if="item.title && item.title != null && item.title != 'undefined'"
+          ng-bind="item.title")
+          span(ng-if="!item.title || item.title === null || item.title === 'undefined'") Untitled
+        p.message
+          span(
+          ng-if="item.message && item.message != null && item.message != 'undefined'"
+          ng-bind="item.message")
+          span(ng-if="!item.message || item.message === null || item.message === 'undefined'") No message
+        .button-container
+          button.btn.mdl-button.mdl-js-button.use(ng-click="vm.onUseClick({$data: item.id})")
+            | Use
+          button.btn.mdl-button.mdl-js-button.mdl-button--icon.delete(ng-click="vm.onDelete({$data: item.id, $event: $event})")
+            i.material-icons delete
