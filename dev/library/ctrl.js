@@ -40,11 +40,6 @@
       }
     });
 
-    $scope.selectedIndex = 0;
-    $scope.changeTab = function(tab_){
-        $scope.selectedIndex = tab_;
-    }
-
     // Rocord popup
     vm.recordBtnClick = function () {
       vm.showRecordPopup = true;
@@ -163,5 +158,11 @@
         vm.conversationsList = res.data;
       });
     };
+
+    // For swiping
+    $scope.selectedIndex = 0;
+    $scope.changeTab = function (tab) {
+        $scope.selectedIndex = tab;
+    }
   }
 })(angular);

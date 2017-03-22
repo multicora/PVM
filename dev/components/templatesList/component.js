@@ -7,8 +7,6 @@
     bindings: {
       onUseClick: '&',
       onDelete: '&',
-      onSwipeRight: '&',
-      onSwipeLeft: '&',
       list: '<',
     }
   });
