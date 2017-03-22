@@ -157,13 +157,36 @@
       $location.path('conversation/' + id);
     }
 
-    vm.videoSwipeRight = function () {
-      vm.videosClass = false;
-      vm.templatesClass = true;
+    // Swipes events
+    vm.videosSwipeRight = function () {
+      vm.videosClass = '';
+      vm.templatesClass = 'active';
       vm.showVideos = false;
       vm.showTemplates = true;
     }
 
+    vm.templatesSwipeRight = function () {
+      vm.templatesClass = '';
+      vm.conversationsClass = 'active';
+      vm.showTemplates = false;
+      vm.showConversations = true;
+    }
+
+    vm.templatesSwipeLeft = function () {
+      vm.templatesClass = 'active';
+      vm.conversationsClass = '';
+      vm.showTemplates = true;
+      vm.showConversations = false;
+    }
+
+    vm.conversationsSwipeRight = function () {
+      vm.templatesClass = 'active';
+      vm.conversationsClass = '';
+      vm.showTemplates = true;
+      vm.showConversations = false;
+    }
+
+    // Confirm popup for delete template
     function showConfirm(id) {
       var confirm = $mdDialog.confirm({
         textContent: 'Are you shure?',

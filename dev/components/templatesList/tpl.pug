@@ -1,4 +1,4 @@
-.templates-content(ng-swipe-right="vm.onSwipeRight()")
+.templates-content(hm-swipe="vm.onSwipeRight({$event: $hmEvent})")
   .templates-container
     .template-container(ng-repeat="item in vm.list")
       .template(ng-click="vm.onUseClick({$data: item.id})")

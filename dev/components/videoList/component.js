@@ -8,6 +8,8 @@
       onUploadClick: '&',
       onRecordClick: '&',
       onSendClick: '&',
+      onSwipeRight: '&',
+      onSwipeLeft: '&',
       onThumbnailClick: '&',
       showSendButton: '<',
       list: '<',

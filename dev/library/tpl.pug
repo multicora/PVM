@@ -17,7 +17,6 @@
 
   video-fab-buttons(
     ng-if="vm.showVideos"
-    ng-swipe-right="vm.videoSwipeRight()"
     upload-btn-click="vm.uploadBtnClick()"
     record-btn-click="vm.recordBtnClick()")
 
@@ -25,6 +24,7 @@
   video-list(
     ng-if="vm.showVideos"
     list="vm.videosList"
+    on-swipe-right="vm.videosSwipeRight($event)"
     on-upload-click="vm.uploadBtnClick()"
     on-record-click="vm.recordBtnClick()"
     show-send-button="vm.showSendButton"
@@ -33,6 +33,7 @@
 
   template-list(
     ng-if="vm.showTemplates"
+    on-swipe-right="vm.templatesSwipeRight($event)"
     list="vm.templatesList"
     on-use-click="vm.useTemplate($data)"
     on-delete="vm.deleteTemplate($data, $event)")
