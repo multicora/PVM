@@ -7,6 +7,7 @@
     '$location',
     '$mdToast',
     '$mdDialog',
+    '$scope',
     'libraryService',
     'uploadService',
     'conversationsService'
@@ -15,6 +16,7 @@
     $location,
     $mdToast,
     $mdDialog,
+    $scope,
     libraryService,
     uploadService,
     conversationsService
@@ -26,13 +28,7 @@
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendButton = true;
-    vm.showVideos = true;
-    vm.showTemplates = false;
-    vm.showVideos = true;
-    vm.showTemplates = false;
-    vm.showConversations = false;
     vm.showPreviewPopup = false;
-    vm.videosClass = 'active';
 
     getVideos();
     getTemplates();
@@ -115,34 +111,6 @@
       $location.path('template/' + video.id);
     }
 
-    // Tabs
-    vm.tabBtnVideosClick = function (tab) {
-      vm.showTemplates = false;
-      vm.showConversations = false;
-      vm.showVideos = true;
-      vm.templatesClass = '';
-      vm.conversationsClass = '';
-      vm.videosClass = 'active';
-    }
-
-    vm.tabBtnTemplatesClick = function (tab) {
-      vm.showVideos = false;
-      vm.showConversations = false;
-      vm.showTemplates = true;
-      vm.videosClass = '';
-      vm.templatesClass = 'active';
-      vm.conversationsClass = '';
-    }
-
-    vm.tabBtnConversationsClick = function (tab) {
-      vm.showVideos = false;
-      vm.showTemplates = false;
-      vm.showConversations = true;
-      vm.videosClass = '';
-      vm.templatesClass = '';
-      vm.conversationsClass = 'active';
-    }
-
     // Templates
     vm.deleteTemplate = function (id, event) {
       event.stopPropagation();
@@ -157,13 +125,7 @@
       $location.path('conversation/' + id);
     }
 
-    vm.videoSwipeRight = function () {
-      vm.videosClass = false;
-      vm.templatesClass = true;
-      vm.showVideos = false;
-      vm.showTemplates = true;
-    }
-
+    // Confirm popup for delete template
     function showConfirm(id) {
       var confirm = $mdDialog.confirm({
         textContent: 'Are you shure?',
@@ -196,5 +158,11 @@
         vm.conversationsList = res.data;
       });
     };
+
+    // For swiping
+    $scope.selectedIndex = 0;
+    $scope.changeTab = function (tab) {
+        $scope.selectedIndex = tab;
+    }
   }
 })(angular);

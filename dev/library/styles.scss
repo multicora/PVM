@@ -4,67 +4,17 @@
   padding-bottom: 40px;
   width: 100%;
 
-//NAVIGATION
-  .navigation {
-    margin-bottom: 20px;
+  .library-content {
+    width: 100%;
+    background: none;
+  }
 
-    // .tab-icon {
-    //   float: left;
-    //   height: 40px;
-    //   margin: 25px 0 0 25px;
-    //   width: 40px;
-    // }
+  .tubs-content {
+    background: none;
+  }
 
-    .navigation-bar-container {
-      text-align: center;
-      width: 100%;
-
-      .navigation-bar {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        list-style: none;
-        margin: 58px auto 0 auto;
-        max-width: 950px;
-        width: 100%;
-        padding: 0;
-
-        .tub {
-          display: inline-block;
-          font-family: 'Roboto Medium';
-          font-size: 16px;
-          font-weight: 500;
-          padding: 0 37px;
-          text-decoration: none;
-          text-transform: uppercase;
-          cursor: pointer;
-          outline: none;
-
-          @media(max-width: 567px) {
-            display: none;
-            font-size: 24px;
-          }
-        }
-
-        .tub {
-          border-bottom: 5px solid #f5f5f5;
-          color: rgba(0, 0, 0, 0.54);
-        }
-
-        .tub:hover {
-          color: $navigation-hovered-color;
-          transition: 0.3s;
-        }
-
-
-        .active {
-          border-bottom: 5px solid $navigation-hovered-color;
-          color: $navigation-hovered-color;
-
-          @media(max-width: 567px) {
-            display: inline-block;
-          }
-        }
-      }
-    }
+  md-tab-item {
+    font-size: 16px;
   }
 
   // Record

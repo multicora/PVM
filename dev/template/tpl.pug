@@ -47,7 +47,7 @@
   .title-container
     p.title
       span.placeholder.btn(
-        ng-hide="vm.titleObj.editMode || vm.titleObj.title || (vm.titleObj.title != null && vm.titleObj.title != 'undefined')"
+        ng-hide="vm.titleObj.editMode || (vm.titleObj.title && vm.titleObj.title != 'null' && vm.titleObj.title != 'undefined')"
         ng-click="vm.edit(vm.titleObj)") Add conversation topic here
       span.btn(
         ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != null && vm.titleObj.title != 'undefined'"
@@ -132,7 +132,7 @@
         .chat-box
           p.message
             span.placeholder.btn(
-              ng-hide="vm.messageObj.editMode || vm.messageObj.message || (vm.messageObj.message != null && vm.messageObj.message != 'undefined')"
+              ng-hide="vm.messageObj.editMode || (vm.messageObj.message && vm.messageObj.message != null && vm.messageObj.message != 'undefined')"
               ng-click="vm.edit(vm.messageObj)") Add your message
             span.btn(
               ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null && vm.messageObj.message != 'undefined'"
