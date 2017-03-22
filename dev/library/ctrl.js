@@ -7,6 +7,7 @@
     '$location',
     '$mdToast',
     '$mdDialog',
+    '$scope',
     'libraryService',
     'uploadService',
     'conversationsService'
@@ -15,6 +16,7 @@
     $location,
     $mdToast,
     $mdDialog,
+    $scope,
     libraryService,
     uploadService,
     conversationsService
@@ -26,13 +28,7 @@
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendButton = true;
-    vm.showVideos = true;
-    vm.showTemplates = false;
-    vm.showVideos = true;
-    vm.showTemplates = false;
-    vm.showConversations = false;
     vm.showPreviewPopup = false;
-    vm.videosClass = 'active';
 
     getVideos();
     getTemplates();
@@ -43,6 +39,11 @@
         vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
       }
     });
+
+    $scope.selectedIndex = 0;
+    $scope.changeTab = function(tab_){
+        $scope.selectedIndex = tab_;
+    }
 
     // Rocord popup
     vm.recordBtnClick = function () {
@@ -115,34 +116,6 @@
       $location.path('template/' + video.id);
     }
 
-    // Tabs
-    vm.tabBtnVideosClick = function (tab) {
-      vm.showTemplates = false;
-      vm.showConversations = false;
-      vm.showVideos = true;
-      vm.templatesClass = '';
-      vm.conversationsClass = '';
-      vm.videosClass = 'active';
-    }
-
-    vm.tabBtnTemplatesClick = function (tab) {
-      vm.showVideos = false;
-      vm.showConversations = false;
-      vm.showTemplates = true;
-      vm.videosClass = '';
-      vm.templatesClass = 'active';
-      vm.conversationsClass = '';
-    }
-
-    vm.tabBtnConversationsClick = function (tab) {
-      vm.showVideos = false;
-      vm.showTemplates = false;
-      vm.showConversations = true;
-      vm.videosClass = '';
-      vm.templatesClass = '';
-      vm.conversationsClass = 'active';
-    }
-
     // Templates
     vm.deleteTemplate = function (id, event) {
       event.stopPropagation();
@@ -155,35 +128,6 @@
 
     vm.viewConversation = function (id) {
       $location.path('conversation/' + id);
-    }
-
-    // Swipes events
-    vm.videosSwipeRight = function () {
-      vm.videosClass = '';
-      vm.templatesClass = 'active';
-      vm.showVideos = false;
-      vm.showTemplates = true;
-    }
-
-    vm.templatesSwipeRight = function () {
-      vm.templatesClass = '';
-      vm.conversationsClass = 'active';
-      vm.showTemplates = false;
-      vm.showConversations = true;
-    }
-
-    vm.templatesSwipeLeft = function () {
-      vm.templatesClass = 'active';
-      vm.conversationsClass = '';
-      vm.showTemplates = true;
-      vm.showConversations = false;
-    }
-
-    vm.conversationsSwipeRight = function () {
-      vm.templatesClass = 'active';
-      vm.conversationsClass = '';
-      vm.showTemplates = true;
-      vm.showConversations = false;
     }
 
     // Confirm popup for delete template

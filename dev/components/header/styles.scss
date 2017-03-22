@@ -36,7 +36,9 @@ header {
     line-height: 64px;
     vertical-align: middle;
     margin-right: 12px;
-    color: $font-color-buttons;
+    color: rgb(63,81,181);
+    font-size: 14px;
+    font-weight: 700;
 
     a {
       cursor: pointer;
