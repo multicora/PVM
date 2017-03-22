@@ -17,7 +17,7 @@
           ng-style="{backgroundImage: 'url('+ vm.logo + ')' }")
 
         //- EDIT LOGO BUTTON
-        .edit-button.btn.upload
+        .edit-button.btn.upload.logo-upload
           label(for="logo").btn
             input.hidden(
               type="file"
@@ -158,28 +158,44 @@
           ng-click="vm.back()")
             | Back
       .use-buttons-container
-        button.btn.mdl-button.mdl-js-button.mdl-button--raised(
+        button.btn.mdl-button.mdl-js-button.mdl-button--icon.save(
           type="button"
           ng-click="vm.save()")
-            | Save
+          i.material-icons save
+
+        //- WE WILL USE THIS WHEN WILL BE 'SAVE AS NEW' FUNCTIONALITY
+        //- button.btn.mdl-button.mdl-js-button.mdl-button--icon.save#demo-menu-top-right(
+        //-   type="button")
+        //-   i.material-icons save
+        //- ul.mdl-menu.mdl-menu--top-right.mdl-js-menu.mdl-js-ripple-effect(data-mdl-for="demo-menu-top-right")
+        //-   li.mdl-menu__item(ng-click="vm.save()") SAVE
+        //-   li.mdl-menu__item(ng-click="vm.save()") SAVE AS NEW
+
         button.btn.mdl-button.mdl-js-button.mdl-button--raised(
           type="button"
           ng-click="vm.showSendPopup = true")
             | Send
+
+        //- button#demo-show-toast.mdl-button.mdl-js-button(ng-click="openSnackBar('hello')") show
+        //- #demo-toast-example.mdl-js-snackbar.mdl-snackbar
+        //-   .mdl-snackbar__text
+        //-   button.mdl-snackbar__action
 
   //- SEND POPUP
   popup.send-popup-container(
     ng-if="vm.showSendPopup"
     close-popup="vm.closeSendPopup()")
     form.send-form({{action='', on='submit', }}='')
-      p.popupTitle send
-      input.email(
+      p.popupTitle Send your message
+      input.mdl-textfield__input(
         type="email"
-        placeholder="email"
-        ng-model="email")
+        ng-model="email"
+        placeholder="Type recipient email here")
       .button-container
-        button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.closeSendPopup()") close
-        button.btn.mdl-button.mdl-js-button.mdl-button--raised(ng-click="vm.sendVideo(email)") send
+        button.btn.mdl-button.mdl-js-button(ng-click="vm.closeSendPopup()") close
+        button.btn.mdl-button.mdl-js-button(
+          ng-click="vm.sendVideo(email)"
+          ng-disabled="!email") send
 
   //- SELECT VIDEO POPUP
   popup.select-video-container(

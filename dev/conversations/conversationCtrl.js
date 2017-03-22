@@ -19,12 +19,13 @@
 
     vm.conversation = null;
     vm.media = null;
+    vm.user = null;
     vm.showUserHeader = true;
     getProfile();
 
     conversationsService.get($routeParams.id).then(function (res) {
       vm.conversation = res.data;
-      if (vm.conversation.author === vm.user.id) {
+      if (vm.user && vm.conversation.author === vm.user.id) {
         vm.showUserHeader = false;
       }
       vm.media = {
@@ -35,15 +36,23 @@
       };
     });
 
-    vm.back = function () {
+    vm.back = function (event) {
+      event.stopPropagation();
       $location.path('library');
+    }
+
+    vm.contentClick = function (event) {
+      vm.headerClass = 'showHeader';
+    }
+
+    vm.videoContentClick = function (event) {
+      event.stopPropagation();
+      vm.headerClass = 'hideHeader';
     }
 
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
-      }, function(err) {
-        vm.user.id = null;
       });
     };
   }

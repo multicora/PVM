@@ -5,12 +5,16 @@
 
   ctrl.$inject = [
     '$location',
+    '$mdToast',
+    '$mdDialog',
     'libraryService',
     'uploadService',
     'conversationsService'
   ];
   function ctrl(
     $location,
+    $mdToast,
+    $mdDialog,
     libraryService,
     uploadService,
     conversationsService
@@ -28,6 +32,7 @@
     vm.showTemplates = false;
     vm.showConversations = false;
     vm.showPreviewPopup = false;
+    vm.videosClass = 'active';
 
     getVideos();
     getTemplates();
@@ -139,10 +144,9 @@
     }
 
     // Templates
-    vm.deleteTemplate = function (id) {
-      libraryService.deleteTemplate(id).then(function() {
-        getTemplates();
-      });
+    vm.deleteTemplate = function (id, event) {
+      event.stopPropagation();
+      showConfirm(id);
     }
 
     vm.useTemplate = function (id) {
@@ -151,6 +155,28 @@
 
     vm.viewConversation = function (id) {
       $location.path('conversation/' + id);
+    }
+
+    vm.videoSwipeRight = function () {
+      vm.videosClass = false;
+      vm.templatesClass = true;
+      vm.showVideos = false;
+      vm.showTemplates = true;
+    }
+
+    function showConfirm(id) {
+      var confirm = $mdDialog.confirm({
+        textContent: 'Are you shure?',
+        ok: 'Yes',
+        cancel: 'No'
+      });
+
+      $mdDialog
+        .show( confirm ).then(function() {
+          libraryService.deleteTemplate(id).then(function() {
+            getTemplates();
+          });
+        })
     }
 
     function getVideos() {

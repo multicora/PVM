@@ -1,20 +1,22 @@
 .conversations-content
   .conversations-container
-    .conversation(ng-repeat="item in vm.list")
+    .conversation(
+      ng-repeat="item in vm.list"
+      ng-click="vm.onViewClick({$data: item.id})")
       .indicators
-        .not-viewed(ng-if="!item.viewed")
-          i.material-icons remove_red_eye
-        .viewed(ng-if="item.viewed")
-          i.material-icons remove_red_eye
         .mail(ng-if="!item.viewed")
           i.material-icons email
         .mail-opend(ng-if="item.viewed")
           i.material-icons drafts
+        .not-viewed(ng-if="!item.viwatching")
+          i.material-icons remove_red_eye
+        .viewed(ng-if="item.watching")
+          i.material-icons remove_red_eye
         .files
-          i.material-icons archive
+          i.material-icons insert_drive_file
 
-      p.email
-        span(ng-bind="item.email")
+      p.email 
+        span to: {{item.email}}
       p.title
         span(
         ng-if="item.title && item.title != null && item.title != 'undefined'"
@@ -26,5 +28,5 @@
         ng-bind="item.message")
         span(ng-if="!item.message || item.message === null || item.message === 'undefined'") No message
       .button-container
-        button.btn.mdl-button.mdl-js-button.mdl-button--raised.view(ng-click="vm.onViewClick({$data: item.id})") 
+        button.btn.mdl-button.mdl-js-button.view(ng-click="vm.onViewClick({$data: item.id})") 
           | view

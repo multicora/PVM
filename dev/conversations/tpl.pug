@@ -1,4 +1,4 @@
-.watchVideoContainer
+.watchVideoContainer(ng-click="vm.contentClick()")
   header.user-header(ng-if="vm.showUserHeader")
     .logoContainer
       .logo
@@ -29,7 +29,7 @@
           img(src='/files/images/email.png', alt='email')
           p {{vm.conversation.authorEmail}}
   header.default-header(ng-if="!vm.showUserHeader")
-    button.btn.mdl-button.mdl-js-button.mdl-button--raised.back(ng-click="vm.back()")
+    button.btn.mdl-button.mdl-js-button.mdl-button--raised.back(ng-click="vm.back($event)")
       |Back
     p.title Conversation with 
       span.email {{vm.conversation.email}}
@@ -40,7 +40,7 @@
         span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
 
     .video
-      .videoHeader
+      .videoHeader.showHeader(ng-class="vm.headerClass")
         .photo(
           ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
           ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
@@ -51,7 +51,7 @@
           //- USER ROLE
           p.user-role
             span(ng-if="vm.conversation.company_role && vm.conversation.company_role != null") {{vm.conversation.company_role}}
-      .videoContent
+      .videoContent(ng-click="vm.videoContentClick($event)")
         video.video-js.vjs-default-skin(
           vjs-video
           controls
@@ -60,7 +60,7 @@
       .videoFooter
         .chat-container
           .photo(
-            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
+            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null && vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'"
             ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
           .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'")
             p.message

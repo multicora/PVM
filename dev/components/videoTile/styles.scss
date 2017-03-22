@@ -2,15 +2,33 @@
   background-color: #fff;
   border-radius: 2px;
   display: inline-block;
-  height: 204px;
+  height: 205px;
   margin: 0 0 12px 10px;
   width: 215px;
 
+  .video-placeholder {
+    width: 100%;
+    padding-top: 58px;
+    display: inline-block;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+
+    img {
+      width: 60px;
+      opacity: .54;
+    }
+
+     p {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.54);
+     }
+  }
   .photo {
     height: 143px;
     width: 100%;
-    background-image: url('/files/images/videoPlaceholder.png');
-    background-size: 215px 143px;
     cursor: pointer;
     outline: none;
   }
@@ -41,6 +59,25 @@
     .menu {
       margin-right: 10px;
       visibility: hidden;
+    }
+  }
+
+
+  @media (max-width: 470px) {
+    width: 310px;
+    height: 270px;
+    margin: 0 0 12px 0;
+
+    .video-placeholder {
+      padding-top: 80px;
+      
+      img {
+        margin-bottom: 35px;
+      }
+    }
+
+    .photo {
+      height: 200px;
     }
   }
 }

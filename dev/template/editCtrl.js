@@ -7,6 +7,7 @@
     '$routeParams',
     '$scope',
     '$location',
+    '$mdToast',
     'conversationsService',
     'profileService',
     'libraryService'
@@ -15,6 +16,7 @@
     $routeParams,
     $scope,
     $location,
+    $mdToast,
     conversationsService,
     profileService,
     libraryService
@@ -59,6 +61,7 @@
       conversationsService.updateTemplate(vm.sendData).then(function() {
         closeAllEditButton();
           getTemplate();
+          $mdToast.showSimple('Saved successfully!');
       });
     }
 
@@ -89,6 +92,7 @@
       }
       conversationsService.create(vm.sendData).then(function () {
         vm.showSendPopup = false;
+        $mdToast.showSimple('Sended successfully!');
       });
     }
 

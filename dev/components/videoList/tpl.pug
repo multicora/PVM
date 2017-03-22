@@ -17,10 +17,19 @@
             .record(ng-click="vm.onRecordClick()")
               .fa.fa-video-camera(aria-hidden="true")
               p Record
-
+    .add-button-mobile
+      .content
+        .buttons
+          .upload(ng-click="vm.onUploadClick()")
+            .fa.fa-cloud-upload(aria-hidden="true")
+            p Upload
+          .record(ng-click="vm.onRecordClick()")
+            .fa.fa-video-camera(aria-hidden="true")
+            p Record
+        p.text New video
     .video-container(ng-repeat="item in vm.list")
       video-tile(
         video="item"
         show-send-button="vm.showSendButton"
         on-send-click="vm.onSendClick({$data: item})"
-        on-thumbnail-click="vm.onThumbnailClick({$data: item})")      }
+        on-thumbnail-click="vm.onThumbnailClick({$data: item})")
