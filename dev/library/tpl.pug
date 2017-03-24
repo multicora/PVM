@@ -1,4 +1,6 @@
-.library-wrapper
+.library-wrapper(
+  md-swipe-left="vm.changeTab(1)"
+  md-swipe-right="vm.changeTab(-1)")
   app-header
     .navigation
       //- .navigation-bar-container
@@ -18,15 +20,13 @@
     md-tabs(
       md-dynamic-height=""
       md-border-bottom=""
-      md-selected="selectedIndex"
+      md-selected="vm.selectedIndex"
       md-center-tabs="true")
 
       //- TODO: handlers
       md-tab(label='videos')
         md-content.md-padding.tubs-content(
-          md-swipe-left="changeTab(1)"
-          md-swipe-right="changeTab(2)"
-          md-selected="selectedIndex")
+          md-selected="vm.selectedIndex")
           video-list(
             list="vm.videosList"
             on-upload-click="vm.uploadBtnClick()"
@@ -35,11 +35,10 @@
             on-thumbnail-click="vm.showPreview($data)"
             on-send-click="vm.sendClickHandler($data)")
 
+      //- Templates
       md-tab(label='templates')
         md-content.md-padding.tubs-content(
-          md-swipe-left="changeTab(2)"
-          md-swipe-right="changeTab(0)"
-          md-selected="selectedIndex")
+          md-selected="vm.selectedIndex")
           template-list(
             list="vm.templatesList"
             on-use-click="vm.useTemplate($data)"
@@ -47,9 +46,7 @@
 
       md-tab(label='conversations')
         md-content.md-padding.tubs-content(
-          md-swipe-left="changeTab(0)"
-          md-swipe-right="changeTab(1)"
-          md-selected="selectedIndex")
+          md-selected="vm.selectedIndex")
           conversation-list(
             list="vm.conversationsList"
             on-view-click="vm.viewConversation($data)")

@@ -7,7 +7,6 @@
     '$location',
     '$mdToast',
     '$mdDialog',
-    '$scope',
     'libraryService',
     'uploadService',
     'conversationsService'
@@ -16,7 +15,6 @@
     $location,
     $mdToast,
     $mdDialog,
-    $scope,
     libraryService,
     uploadService,
     conversationsService
@@ -160,9 +158,14 @@
     };
 
     // For swiping
-    $scope.selectedIndex = 0;
-    $scope.changeTab = function (tab) {
-        $scope.selectedIndex = tab;
+    vm.selectedIndex = 0;
+    vm.changeTab = function (offset) {
+      var tabs = 3;
+      var newIndex = vm.selectedIndex + offset;
+
+      newIndex = newIndex >= tabs ? tabs - 1 : newIndex;
+      newIndex = newIndex < 0 ? 0 : newIndex;
+      vm.selectedIndex = newIndex;
     }
   }
 })(angular);
