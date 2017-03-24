@@ -54,6 +54,7 @@
       color: rgba(0, 0, 0, .87);
       border-right: 1px solid rgba(0, 0, 0, .14);
       margin-right: 16px;
+      outline: none;
 
       i {
         font-size: 20px;
@@ -70,7 +71,7 @@
       margin-top: 0;
     }
 
-    .viewed {
+    .is-watching {
       color: green;
     }
 
