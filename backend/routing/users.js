@@ -80,6 +80,7 @@ const usersController = require('../controllers/users.js')(DAL);
       handler: function (request, reply) {
         usersController.isUserExist(request.payload.email).then(res => {
           let result = null;
+          let serverUrl = utils.getServerUrl(request);
           if (res) {
             result = Promise.reject({
               'statusCode': 400,
@@ -88,7 +89,8 @@ const usersController = require('../controllers/users.js')(DAL);
           } else {
             result = usersController.register(request.payload.email,
               request.payload.password,
-              request.payload.confirmPassword);
+              request.payload.confirmPassword,
+              serverUrl);
           }
           return result;
         }).then(() => {

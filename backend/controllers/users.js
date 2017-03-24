@@ -61,7 +61,7 @@ module.exports = function (DAL) {
       });
     },
 
-    register: (email, password, confirmPassword) => {
+    register: (email, password, confirmPassword, link) => {
       return new Promise((resolve, reject) => {
         if (confirmPassword !== password) {
           reject({
@@ -72,7 +72,26 @@ module.exports = function (DAL) {
           DAL.company.add().then((res) => {
             return DAL.users.register(email, password, res.insertId);
           }).then(() => {
-            resolve();
+            const message = [
+              'Welcome to BizKonect App!'
+            ].join('\n');
+
+            const mail = {
+              to: email,
+              subject: 'Register',
+              text: message,
+              html: template.templateForWelcome(link)
+            };
+
+            mailer(config).send(mail).then(
+              () => {
+                // TODO: need to use 'resolve();' or 'resolve(res);'
+                // because '{status: 'success'}' related to request
+                resolve({status: 'success'});
+              }, (err) => {
+                reject(err);
+              }
+            );
           }, (err) => {
             reject(err);
           });
