@@ -37,7 +37,7 @@ module.exports = function (server, DAL) {
                 to: data.email,
                 subject: 'Video from ' + author.firstName + ' ' + author.secondName, // Subject line
                 text: message,
-                html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId)
+                html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId, data.name, data.title, data.message)
               };
               mailer(config).send(mail).then(
                 () => {

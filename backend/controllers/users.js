@@ -5,6 +5,7 @@ const Promise = require('promise');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const utils = require('../utils.js');
+const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
   return {
@@ -28,7 +29,8 @@ module.exports = function (DAL) {
             const mail = {
               to: email,
               subject: 'Reset password',
-              text: message
+              text: message,
+              html: template.templateForResetPassword(serverUrl + '/new-password/' + resetToken)
             };
 
             mailer(config).send(mail).then(
