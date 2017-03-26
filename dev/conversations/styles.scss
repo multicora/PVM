@@ -10,11 +10,14 @@
     width: 100%;
     background-color:  #fff;
     box-shadow: 0px 0px 4.05px 0.95px rgba(0, 0, 0, 0.28);
+    padding-top: 16px;
 
     .logoContainer {
       display: inline-block;
       width: 50%;
       text-align: left;
+      box-sizing: border-box;
+      padding-left: 10px;
 
       .logo{
         display: inline-block;
@@ -27,16 +30,15 @@
 
       .default-logo {
         img {
-          margin-left: 5px;
           width: 135px;
           height: 40px;
           line-height: 63px;
         }
 
         .logoText {
-          color:  rgba(0, 0, 0, 0.87);
-          font-family: 'Roboto Thin';
-          font-size: 20px;
+          color:  rgba(0, 0, 0, 0.54);
+          font-size: 12px;
+          vertical-align: middle;
           line-height: 63px;
         }
       }

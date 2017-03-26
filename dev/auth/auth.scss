@@ -7,6 +7,10 @@
     vertical-align: middle;
     width: 300px;
 
+    .logo {
+      max-width: 300px;
+    }
+
     .title {
       color: $font-color-titles;
       font-family: 'Roboto Thin';
