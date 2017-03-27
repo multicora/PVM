@@ -5,6 +5,7 @@ const Promise = require('promise');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const utils = require('../utils.js');
+const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
   return {
@@ -28,14 +29,13 @@ module.exports = function (DAL) {
             const mail = {
               to: email,
               subject: 'Reset password',
-              text: message
+              text: message,
+              html: template.templateForResetPassword(serverUrl + '/new-password/' + resetToken)
             };
 
             mailer(config).send(mail).then(
               () => {
-                // TODO: need to use 'resolve();' or 'resolve(res);'
-                // because '{status: 'success'}' related to request
-                resolve({status: 'success'});
+                resolve();
               }, (err) => {
                 reject(err);
               }
@@ -59,7 +59,7 @@ module.exports = function (DAL) {
       });
     },
 
-    register: (email, password, confirmPassword) => {
+    register: (email, password, confirmPassword, link) => {
       return new Promise((resolve, reject) => {
         if (confirmPassword !== password) {
           reject({
@@ -70,7 +70,24 @@ module.exports = function (DAL) {
           DAL.company.add().then((res) => {
             return DAL.users.register(email, password, res.insertId);
           }).then(() => {
-            resolve();
+            const message = [
+              'Welcome to BizKonect App!'
+            ].join('\n');
+
+            const mail = {
+              to: email,
+              subject: 'Register',
+              text: message,
+              html: template.templateForWelcome(link)
+            };
+
+            mailer(config).send(mail).then(
+              () => {
+                resolve();
+              }, (err) => {
+                reject(err);
+              }
+            );
           }, (err) => {
             reject(err);
           });
@@ -97,9 +114,7 @@ module.exports = function (DAL) {
 
           mailer(config).send(mail).then(
             () => {
-              // TODO: need to use 'resolve();' or 'resolve(res);'
-              // because '{status: 'success'}' related to request
-              resolve({status: 'success'});
+              resolve();
             }, (err) => {
               reject(err);
             }

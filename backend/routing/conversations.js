@@ -37,7 +37,7 @@ module.exports = function (server, DAL) {
                 to: data.email,
                 subject: 'Video from ' + author.firstName + ' ' + author.secondName, // Subject line
                 text: message,
-                html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId)
+                html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId, data.name, data.title, data.message)
               };
               mailer(config).send(mail).then(
                 () => {
@@ -107,6 +107,7 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         let conversationId = request.params.id;
         let token = usersCtrl.parseToken(request.headers.authorization);
+        let serverUrl = utils.getServerUrl(request);
 
         // Finding conversation
         DAL.conversations.getById(conversationId).then((conversation) => {
@@ -141,7 +142,7 @@ module.exports = function (server, DAL) {
             if (result) {
               // Mark as viewed and notify author
               return DAL.conversations.markAsViewed(conversation.id).then(() => {
-                return notificationsCtrl.conversationOpened(conversation);
+                return notificationsCtrl.conversationOpened(conversation, serverUrl + '/conversation/' + conversation.id);
               });
             } else {
               return Promise.resolve();
