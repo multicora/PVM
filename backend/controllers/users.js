@@ -83,9 +83,7 @@ module.exports = function (DAL) {
 
             mailer(config).send(mail).then(
               () => {
-                // TODO: need to use 'resolve();' or 'resolve(res);'
-                // because '{status: 'success'}' related to request
-                resolve({status: 'success'});
+                resolve();
               }, (err) => {
                 reject(err);
               }
@@ -116,9 +114,7 @@ module.exports = function (DAL) {
 
           mailer(config).send(mail).then(
             () => {
-              // TODO: need to use 'resolve();' or 'resolve(res);'
-              // because '{status: 'success'}' related to request
-              resolve({status: 'success'});
+              resolve();
             }, (err) => {
               reject(err);
             }
