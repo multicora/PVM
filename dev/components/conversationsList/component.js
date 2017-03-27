@@ -14,10 +14,5 @@
   ctrl.$inject = ['$scope'];
   function ctrl($scope) {
     var vm = this;
-
-    $scope.demo = {
-      showTooltip: true,
-      tipDirection: 'right'
-    };
   }
 })(angular);
