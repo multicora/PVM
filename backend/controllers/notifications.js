@@ -7,9 +7,7 @@ module.exports = function (DAL) {
   return {
     conversationOpened: (conversation, link) => {
       return DAL.users.getUserById(conversation.author).then((user) => {
-        if (!user.firstName) {
-          user.firstName = '';
-        }
+        user.firstName = user.firstName || '';
         const message = 'Your conversation was viewed!';
 
         const mail = {
