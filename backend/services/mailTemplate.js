@@ -2,6 +2,17 @@
 
 module.exports = {
   templateForConversation: (link, authorName, title, message) => {
+    // Should use for user testing
+    if (title = 'undefined' || title = 'null') {
+      title = '';
+    }
+
+    if (message = 'undefined' || message = 'null') {
+      message = '';
+    }
+    // Should use after reworking db
+    // title = title || '';
+    // message = message || '';
     return [
       '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
       '<html style="margin: 0;padding: 0;" xmlns="http://www.w3.org/1999/xhtml"><head><!--[if gte mso 9]><xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml><![endif]-->',
