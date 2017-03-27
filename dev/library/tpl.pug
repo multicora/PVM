@@ -49,6 +49,7 @@
           md-selected="vm.selectedIndex")
           conversation-list(
             list="vm.conversationsList"
+            on-indicator-click="vm.stopPropagation($event)"
             on-view-click="vm.viewConversation($data)")
 
   //- Video record & upload fab button

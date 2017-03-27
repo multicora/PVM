@@ -3,16 +3,24 @@
     .conversation(
       ng-repeat="item in vm.list"
       ng-click="vm.onViewClick({$data: item.id})")
-      .indicators
+      .indicators(ng-click="vm.onIndicatorClick({$event: $event})")
         .mail(ng-if="!item.viewed")
+          md-tooltip(md-direction="right") Conversation hasn't been opened yet
           i.material-icons email
         .mail-opend(ng-if="item.viewed")
+          md-tooltip(md-direction="right") Conversation has been opened
           i.material-icons drafts
-        .not-viewed(ng-if="!item.viwatching")
+        .is-watching(ng-if="item.viwatching")
+          md-tooltip(md-direction="right") Video is watching now
           i.material-icons remove_red_eye
-        .viewed(ng-if="item.watching")
+        .not-viewed(ng-if="!item.viewed")
+          md-tooltip(md-direction="right") Video hasn't been watched
+          i.material-icons remove_red_eye
+        .viewed(ng-if="item.viewed")
+          md-tooltip(md-direction="right") Video has been watched
           i.material-icons remove_red_eye
         .files
+          md-tooltip(md-direction="right") Files haven't been downloaded yet
           i.material-icons insert_drive_file
 
       p.email 

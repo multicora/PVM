@@ -6,12 +6,13 @@
     controllerAs: 'vm',
     bindings: {
       onViewClick: '&',
+      onIndicatorClick: '&',
       list: '<',
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = ['$scope'];
+  function ctrl($scope) {
     var vm = this;
   }
 })(angular);

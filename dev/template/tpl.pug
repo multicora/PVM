@@ -187,10 +187,11 @@
     close-popup="vm.closeSendPopup()")
     form.send-form({{action='', on='submit', }}='')
       p.popupTitle Send your message
-      input.mdl-textfield__input(
-        type="email"
-        ng-model="email"
-        placeholder="Type recipient email here")
+      md-input-container.email-container(md-no-float="true")
+        input(
+          type="email"
+          ng-model="email"
+          placeholder="Type recipient email here")
       .button-container
         button.btn.mdl-button.mdl-js-button(ng-click="vm.closeSendPopup()") close
         button.btn.mdl-button.mdl-js-button(
