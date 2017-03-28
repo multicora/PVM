@@ -28,6 +28,19 @@ module.exports = function(connection) {
         });
       });
     },
+    delete: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'DELETE ',
+          'FROM videos ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
     getByAuthor: function (author) {
       return new Promise(function (resolve, reject) {
         let request = 'SELECT * FROM `videos` WHERE author = ' + author + ';';
