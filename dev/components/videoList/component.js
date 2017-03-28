@@ -8,6 +8,7 @@
       onUploadClick: '&',
       onRecordClick: '&',
       onSendClick: '&',
+      onDeleteVideo: '&',
       onThumbnailClick: '&',
       showSendButton: '<',
       list: '<',

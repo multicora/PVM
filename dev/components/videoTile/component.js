@@ -7,6 +7,7 @@
     bindings: {
       onSendClick: '&',
       onThumbnailClick: '&',
+      onDeleteVideo: '&',
       showSendButton: '<',
       video: '<'
     }

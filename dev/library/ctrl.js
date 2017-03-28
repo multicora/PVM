@@ -38,6 +38,12 @@
       }
     });
 
+    vm.deleteVideo = function (id) {
+      libraryService.deleteVideo(id).then(function () {
+        getVideos();
+      });
+    }
+
     // Rocord popup
     vm.recordBtnClick = function () {
       vm.showRecordPopup = true;

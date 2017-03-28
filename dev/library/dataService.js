@@ -25,5 +25,9 @@
     this.deleteTemplate = function (id) {
       return $http.post('/api/delete-template', id);
     };
+
+    this.deleteVideo = function (id) {
+      return $http.post('/api/delete-video', id);
+    };
   }
 })(angular);
