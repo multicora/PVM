@@ -9,8 +9,14 @@
     ng-click="vm.onThumbnailClick()")
   p.text.ellipsis(title='{{vm.video.attributes.name}}') {{vm.video.attributes.name}}
   .buttons-container
-    a.menu
-      img(src='/files/images/dots.png', alt='')
+    md-menu.menu(ng-if="vm.showSendButton")
+      md-button.menu-button(
+        ng-mouseenter="$mdMenu.open()"
+        aria-label="Open menu")
+        img(src='/files/images/dots.png', alt='')
+      md-menu-content(ng-mouseleave="$mdMenu.close()")
+        md-menu-item
+          md-button(ng-click="vm.onDeleteVideo()") Delete
     .inlineBlock(
       ng-if="vm.showSendButton"
       ng-click="vm.onSendClick()")

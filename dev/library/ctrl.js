@@ -38,10 +38,10 @@
       }
     });
 
+    // Delete video
     vm.deleteVideo = function (id) {
-      libraryService.deleteVideo(id).then(function () {
-        getVideos();
-      });
+      console.log(id);
+      showConfirmDeleteVideo(id);
     }
 
     // Rocord popup
@@ -118,7 +118,7 @@
     // Templates
     vm.deleteTemplate = function (id, event) {
       event.stopPropagation();
-      showConfirm(id);
+      showConfirmDeleteTemplate(id);
     }
 
     vm.useTemplate = function (id) {
@@ -130,7 +130,7 @@
     }
 
     // Confirm popup for delete template
-    function showConfirm(id) {
+    function showConfirmDeleteTemplate(id) {
       var confirm = $mdDialog.confirm({
         textContent: 'Are you shure?',
         ok: 'Yes',
@@ -141,6 +141,22 @@
         .show( confirm ).then(function() {
           libraryService.deleteTemplate(id).then(function() {
             getTemplates();
+          });
+        })
+    }
+
+    // Confirm popup for delete template
+    function showConfirmDeleteVideo(id) {
+      var confirm = $mdDialog.confirm({
+        textContent: 'Are you shure?',
+        ok: 'Yes',
+        cancel: 'No'
+      });
+
+      $mdDialog
+        .show( confirm ).then(function() {
+          libraryService.deleteVideo(id).then(function() {
+            getVideos();
           });
         })
     }
