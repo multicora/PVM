@@ -37,7 +37,7 @@
     vm.deleteVideo = function (id) {
       console.log(id);
       showConfirmDeleteVideo(id);
-    }
+    };
 
     // Rocord popup
     vm.recordBtnClick = function () {
@@ -69,7 +69,7 @@
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
-    }
+    };
 
     // Upload popup
     vm.uploadBtnClick = function () {
@@ -83,7 +83,7 @@
     vm.uploadEnd = function () {
       vm.closeUploadPopup();
       getVideos();
-    }
+    };
 
     //Preview popup
     vm.showPreview = function (video) {
@@ -97,32 +97,32 @@
         };
       })
       vm.showPreviewPopup = true;
-    }
+    };
 
     vm.closePreviewPopup = function () {
       vm.showPreviewPopup = false;
       vm.previewVideo = null;
       vm.previewVideoUrl = null;
-    }
+    };
 
     // Send
     vm.sendClickHandler = function (video) {
       $location.path('template/' + video.id);
-    }
+    };
 
     // Templates
     vm.deleteTemplate = function (id, event) {
       event.stopPropagation();
       showConfirmDeleteTemplate(id);
-    }
+    };
 
     vm.useTemplate = function (id) {
       $location.path('template-edit/' + id);
-    }
+    };
 
     vm.viewConversation = function (id) {
       $location.path('conversation/' + id);
-    }
+    };
 
     // Confirm popup for delete template
     function showConfirmDeleteTemplate(id) {
@@ -138,7 +138,7 @@
             getTemplates();
           });
         })
-    }
+    };
 
     // Confirm popup for delete template
     function showConfirmDeleteVideo(id) {
@@ -155,7 +155,7 @@
             getThumbnails();
           });
         })
-    }
+    };
 
     function getVideos() {
       libraryService.getVideos().then(function (res) {
@@ -192,6 +192,6 @@
       newIndex = newIndex >= tabs ? tabs - 1 : newIndex;
       newIndex = newIndex < 0 ? 0 : newIndex;
       vm.selectedIndex = newIndex;
-    }
+    };
   }
 })(angular);

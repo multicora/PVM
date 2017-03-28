@@ -12,7 +12,7 @@
 
     this.getThumbnails = function () {
       return $http.get('/api/thumbnails');
-    }
+    };
 
     this.getTemplates = function () {
       return $http.get('/api/templates');
