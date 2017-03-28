@@ -29,14 +29,9 @@
     vm.showPreviewPopup = false;
 
     getVideos();
+    getThumbnails();
     getTemplates();
     getConversations();
-
-    libraryService.getThumbnails().then(function (res) {
-      for (let i = 0; i < res.data.length; i++) {
-        vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
-      }
-    });
 
     // Delete video
     vm.deleteVideo = function (id) {
@@ -157,6 +152,7 @@
         .show( confirm ).then(function() {
           libraryService.deleteVideo(id).then(function() {
             getVideos();
+            getThumbnails();
           });
         })
     }
@@ -164,6 +160,14 @@
     function getVideos() {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data;
+      });
+    };
+
+    function getThumbnails() {
+      libraryService.getThumbnails().then(function (res) {
+        for (let i = 0; i < res.data.length; i++) {
+          vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
+        }
       });
     };
 

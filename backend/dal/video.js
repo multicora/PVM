@@ -33,7 +33,7 @@ module.exports = function(connection) {
         let request = [
           'DELETE ',
           'FROM videos ',
-          'WHERE id=' + id + ';'
+          'WHERE v_id=' + id + ';'
         ].join('');
 
         connection.query(request, (err, response) => {
