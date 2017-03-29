@@ -1,20 +1,39 @@
 header.main-header
   .navigation-components
-    a.navigation(href='')
-      i.fa.fa-bars(aria-hidden="true")
-    img.logo.pointer(
-      src='/files/images/logo_bizkonect.svg'
-      ng-click="vm.redirect('/library')")
-  .navigation-components.right
-    div.auth-buttons.inlineBlock
-      span.pointer(
-        ng-if="vm.isAuthenticated"
-        ng-click="vm.invalidateSession()")
-        | Logout
-    .photo.pointer(
-      ng-click="vm.redirect('/profile')"
-      ng-if="!vm.user.photo || vm.user.photo === 'null'")
-    .photo.pointer(
-      ng-click="vm.redirect('/profile')"
-      ng-if="vm.user.photo && vm.user.photo != 'null'"
-      ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+    md-button.md-icon-button(
+      aria-label="Open menu"
+      ng-click="vm.openMenu()")
+      i.material-icons menu
+    img.logo.pointer(src='/files/images/logo_bizkonect.svg')
+  md-sidenav.md-sidenav-left(
+    md-component-id="left"
+    md-whiteframe="4"
+  )
+    .photo-container
+      .desctop-photos
+        .photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+        .photo(
+          ng-if="vm.user.photo && vm.user.photo != 'null'"
+          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+        p.name.ellipsis {{vm.user.firstName + ' ' + vm.user.secondName}}
+        .gradient-photo
+      md-list-item.md-2-line.mobile-photos
+        .md-avatar.photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+        .md-avatar.photo(
+          ng-if="vm.user.photo && vm.user.photo != 'null'"
+          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+        .md-list-item-text
+          h3 {{vm.user.firstName + ' ' + vm.user.secondName}}
+          p {{vm.user.email}}
+    md-list-item(ng-click="vm.redirect('/dashboard')")
+      md-icon dashboard
+      p Dashbord
+    md-list-item(ng-click="vm.redirect('/library')")
+      md-icon video_library
+      p Library
+    md-list-item(ng-click="vm.redirect('/profile')")
+      md-icon account_circle
+      p Profile
+    md-list-item.logout-list-item(ng-click="vm.invalidateSession()")
+      md-icon exit_to_app
+      p Logout
