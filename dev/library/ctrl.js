@@ -21,6 +21,12 @@
   ) {
     var vm = this;
 
+    var confirm = $mdDialog.confirm({
+      textContent: 'Are you shure?',
+      ok: 'Yes',
+      cancel: 'No'
+    });
+
     vm.showRecordPopup = false;
     vm.showUploadPopup = false;
     vm.showSendPopup = false;
@@ -35,7 +41,6 @@
 
     // Delete video
     vm.deleteVideo = function (id) {
-      console.log(id);
       showConfirmDeleteVideo(id);
     };
 
@@ -53,7 +58,6 @@
     };
 
     vm.sendRecordClick = function (name) {
-      console.log(name);
       name = name || '';
       uploadService.sendFile(
         "/api/video",
@@ -126,12 +130,6 @@
 
     // Confirm popup for delete template
     function showConfirmDeleteTemplate(id) {
-      var confirm = $mdDialog.confirm({
-        textContent: 'Are you shure?',
-        ok: 'Yes',
-        cancel: 'No'
-      });
-
       $mdDialog
         .show( confirm ).then(function() {
           libraryService.deleteTemplate(id).then(function() {
@@ -142,10 +140,9 @@
 
     // Confirm popup for delete template
     function showConfirmDeleteVideo(id) {
-      var confirm = $mdDialog.confirm({
-        textContent: 'Are you shure?',
-        ok: 'Yes',
-        cancel: 'No'
+      var alertVideo = $mdDialog.alert({
+        textContent: 'This video can not be deleted.',
+        ok: 'Ok'
       });
 
       $mdDialog
@@ -153,6 +150,8 @@
           libraryService.deleteVideo(id).then(function() {
             getVideos();
             getThumbnails();
+          }, function(err) {
+          $mdDialog.show( alertVideo );
           });
         })
     };
