@@ -1,0 +1,35 @@
+.dashboard-wrapper
+  app-header
+  h2.title Dashboard
+  .performance-container
+    p.content-title Your weekly performance
+    .content
+      .info-container
+        .info
+          p.name Messages sent
+          p.number 0
+        .info
+          p.name Messages opened
+          p.number 0
+        .info
+          p.name Videos watched
+          p.number 0
+        .info
+          p.name Replies received
+          p.number 0
+        .info
+          p.name Files downloaded
+          p.number 0
+      .diagram
+  .messages-container
+    p.content-title Recent activities
+    .message-content(ng-repeat="item in [1, 2, 3 , 4, 5]")
+      p.time 5 min
+      p.message.ellipsis Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate inventore soluta reiciendis est suscipit, deleniti possimus optio adipisci, obcaecati cum consectetur dolore ad dolores, culpa delectus quam aliquam. Commodi, vel.
+      .button-container
+        md-button.message-button reply
+        //- md-button.message-button view
+
+  video-fab-buttons(
+  upload-btn-click="vm.uploadBtnClick()"
+  record-btn-click="vm.recordBtnClick()")
