@@ -4,10 +4,12 @@
   app.controller('dashboardCtrl', ctrl);
 
   ctrl.$inject = [
+    '$scope',
     'conversationsService',
     'uploadService',
   ];
   function ctrl(
+    $scope,
     conversationsService,
     uploadService
   ) {
@@ -18,6 +20,21 @@
     vm.openedConversation = 0;
 
     getConversation();
+
+    vm.configMessage = {
+      "labels": false,
+      "title": '',
+      "innerRadius": '45',
+      "colors" : ['#2196F3', '#E3F2FD']
+    }
+
+    // Will be using when will be implemented video watched notificatio
+    // vm.configVideo = {
+    //   "labels": false,
+    //   "title": '',
+    //   "innerRadius": '39',
+    //   "colors" : ['#8BC34A', '#F1F8E9']
+    // }
 
     // Rocord popup
     vm.recordBtnClick = function () {
@@ -68,30 +85,23 @@
           }
         });
 
-      vm.config = {
-        "labels": false,
-        "title": '',
-        "innerRadius": "",
-        "lineLegend": "lineEnd"
-      }
-      vm.data = {
-        series: ["Sent", "Opened"],
-        data: [{
-          "x": "Sent",
-          "y": [
-            vm.sentConversation
-          ],
-          "tooltip": "Sent"
-        },
-        {
-          "x": "Opened",
-          "y": [
-            vm.openedConversation
-          ],
-          "tooltip": "Opened"
-        }
-        ]
-      };
+        vm.data = {
+          series: ["Sent", "Opened"],
+          data: [{
+            "x": "Sent",
+            "y": [
+              50
+            ],
+            "tooltip": "Sent"
+          },
+          {
+            "x": "Opened",
+            "y": [
+              10
+            ],
+            "tooltip": "Opened"
+          }]
+        };
       });
     }
   }

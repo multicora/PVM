@@ -21,8 +21,9 @@
           p.name Files downloaded
           p.number 0
       .diagram-content
-        .chart#chart(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.config")
-        .diagram
+        .chart-message(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configMessage")
+        //- Will be using when will be implemented video watched notificatio
+        //- .chart-video(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configVideo")
   .messages-container
     p.content-title Recent activities
     .message-content(ng-repeat="item in [1, 2, 3 , 4, 5]")

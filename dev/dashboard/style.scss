@@ -57,23 +57,7 @@
 
   .diagram-content {
     display: inline-block;
-    
-    // .diagram,
-    // .diagram:after {
-    //   border-radius: 50%;
-    //   width: 10em;
-    //   height: 10em;
-    // }
-    // .diagram {
-    //   margin: 0 0 0 20px;
-    //   font-size: 10px;
-    //   position: relative;
-    //   text-indent: -9999em;
-    //   border-left: 1.1em solid rgba(0, 0, 0, 0.24);
-    //   border-right: 1.1em solid rgba(0, 0, 0, 0.24);
-    //   border-bottom: 1.1em solid rgba(0, 0, 0, 0.24);
-    //   border-top: 1.1em solid rgba(0, 0, 0, 0.54);
-    // }
+    position: relative;
   }
 
   .messages-container {
@@ -118,9 +102,17 @@
   }
 }
 
-#chart {
+.chart-message {
   width: 160px;
   height: 154px;
   box-sizing: border-box;
   padding-left: 10px;
 }
+
+// .chart-video {
+//   width: 144px;
+//   height: 125px;
+//   position: absolute;
+//   top: 15px;
+//   left: 16px;
+// }
