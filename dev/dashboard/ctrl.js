@@ -4,16 +4,59 @@
   app.controller('dashboardCtrl', ctrl);
 
   ctrl.$inject = [
-    'conversationsService'
+    'conversationsService',
+    'uploadService',
   ];
   function ctrl(
-    conversationsService
+    conversationsService,
+    uploadService
   ) {
     var vm = this;
+    vm.showRecordPopup = false;
+    vm.showUploadPopup = false;
     vm.sentConversation = 0;
     vm.openedConversation = 0;
 
     getConversation();
+
+    // Rocord popup
+    vm.recordBtnClick = function () {
+      vm.showRecordPopup = true;
+    };
+
+    vm.closeRecordPopup = function () {
+      vm.showRecordPopup = false;
+    };
+
+    vm.finishRecord = function (data) {
+      vm.recordedData = data;
+    };
+
+    vm.sendRecordClick = function (name) {
+      name = name || '';
+      uploadService.sendFile(
+        "/api/video",
+        vm.recordedData.video,
+        vm.videoName + '.wmv'
+      ).then(function () {
+        vm.videoName = '';
+        vm.closeRecordPopup();
+        vm.videoName = null;
+      });
+    };
+
+    // Upload popup
+    vm.uploadBtnClick = function () {
+      vm.showUploadPopup = true;
+    };
+
+    vm.closeUploadPopup = function () {
+      vm.showUploadPopup = false;
+    };
+
+    vm.uploadEnd = function () {
+      vm.closeUploadPopup();
+    }
 
     function getConversation() {
       conversationsService.getByAuthor().then(function (res) {
