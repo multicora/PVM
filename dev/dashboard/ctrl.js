@@ -33,13 +33,12 @@
     };
 
     vm.sendRecordClick = function (name) {
-      name = name || '';
+      name = name || 'no name';
       uploadService.sendFile(
         "/api/video",
         vm.recordedData.video,
-        vm.videoName + '.wmv'
+        name + '.wmv'
       ).then(function () {
-        vm.videoName = '';
         vm.closeRecordPopup();
         vm.videoName = null;
       });
