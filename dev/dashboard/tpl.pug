@@ -7,10 +7,10 @@
       .info-container
         .info
           p.name Messages sent
-          p.number 0
+          p.number(ng-bind="vm.sentConversation")
         .info
           p.name Messages opened
-          p.number 0
+          p.number(ng-bind="vm.openedConversation")
         .info
           p.name Videos watched
           p.number 0
@@ -20,7 +20,8 @@
         .info
           p.name Files downloaded
           p.number 0
-      .diagram
+      .diagram-content
+        .diagram
   .messages-container
     p.content-title Recent activities
     .message-content(ng-repeat="item in [1, 2, 3 , 4, 5]")

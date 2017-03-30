@@ -44,6 +44,7 @@
     "pug": "^2.0.0-beta6"
   },
   "dependencies": {
+    "angular-chart.js": "^1.1.1",
     "boom": "^4.2.0",
     "box-node-sdk": "^1.1.0",
     "hapi": "^15.2.0",
