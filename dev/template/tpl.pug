@@ -45,7 +45,7 @@
 
   //- TITLE
   .title-container
-    p.title
+    p.title.ellipsis
       span.placeholder.btn(
         ng-hide="vm.titleObj.editMode || (vm.titleObj.title && vm.titleObj.title != 'null' && vm.titleObj.title != 'undefined')"
         ng-click="vm.edit(vm.titleObj)") Add conversation topic here
@@ -137,13 +137,15 @@
             span.btn(
               ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null && vm.messageObj.message != 'undefined'"
               ng-click="vm.edit(vm.messageObj)") {{vm.messageObj.message}}
-            textarea.mdl-textfield__input.chat-text-box(
-              ng-if="vm.messageObj.editMode"
-              ng-model="vm.messageObj.message")
-            button.edit-button.btn.btn-circle(
-              type="button"
-              ng-click="vm.edit(vm.messageObj)")
-              i.material-icons mode_edit
+            md-input-container.chat-text-box-container(aria-label="text input")
+              textarea.chat-text-box(
+                aria-label="text input"
+                ng-if="vm.messageObj.editMode"
+                ng-model="vm.messageObj.message")
+              button.edit-button.btn.btn-circle(
+                type="button"
+                ng-click="vm.edit(vm.messageObj)")
+                i.material-icons mode_edit
           .files
             button.edit-button.btn.upload
               i.material-icons file_upload
