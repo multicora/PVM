@@ -25,6 +25,31 @@
             vm.openedConversation++;
           }
         });
+
+      vm.config = {
+        "labels": false,
+        "title": '',
+        "innerRadius": "",
+        "lineLegend": "lineEnd"
+      }
+      vm.data = {
+        series: ["Sent", "Opened"],
+        data: [{
+          "x": "Sent",
+          "y": [
+            vm.sentConversation
+          ],
+          "tooltip": "Sent"
+        },
+        {
+          "x": "Opened",
+          "y": [
+            vm.openedConversation
+          ],
+          "tooltip": "Opened"
+        }
+        ]
+      };
       });
     }
   }
