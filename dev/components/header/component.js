@@ -10,15 +10,15 @@
 
   ctrl.$inject = [
     '$location',
+    '$mdSidenav',
     'tokenService',
-    'profileService',
-    '$mdSidenav'
+    'profileService'
   ];
   function ctrl(
     $location,
+    $mdSidenav,
     tokenService,
-    profileService,
-    $mdSidenav
+    profileService
   ) {
     var vm = this;
 

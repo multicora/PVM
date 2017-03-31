@@ -1,3 +1,5 @@
+$mobile-width: 567px;
+
 .main-header {
   background-color: #fff;
   box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
@@ -53,7 +55,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, .14);
   }
 
-  .desctop-photos {
+  .desktop-photos {
     position: relative;
     .name {
       font-size: 24px;
@@ -79,14 +81,14 @@
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66000000', endColorstr='#66000000',GradientType=0 ); /* IE6-9 */
     }
 
-    @media (max-width: 567px) {
+    @media (max-width: $mobile-width) {
       display: none;
     }
   }
 
   .mobile-photos {
     display: none;
-    @media (max-width: 567px) {
+    @media (max-width: $mobile-width) {
       display: flex;
     }
   }
