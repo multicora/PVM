@@ -24,8 +24,8 @@
               id="logo"
               onchange="angular.element(this).scope().convertToBase64LogoTemplate()")
             i.material-icons file_upload
-            span.placeholder(ng-if="!vm.logo || vm.logo === null || vm.logo === 'undefined'") Upload logo
-            span.placeholder(ng-if="vm.logo && vm.logo != null && vm.logo != 'undefined'") Change logo
+            span.upload-button-text(ng-if="!vm.logo || vm.logo === null || vm.logo === 'undefined'") Upload logo
+            span.upload-button-text(ng-if="vm.logo && vm.logo != null && vm.logo != 'undefined'") Change logo
 
     //- SOCIAL
     .socialContainer

@@ -14,16 +14,20 @@
 
   .upload {
     border: none;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.24);
     display: inline-block;
 
     i {
       vertical-align: middle;
     }
 
-    .placeholder {
+    .upload-button-text {
       font-style: inherit;
     }
+  }
+
+  .upload:hover {
+    color: rgba(0, 0, 0, 0.54);
   }
 
   .logo-upload {
