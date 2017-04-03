@@ -12,7 +12,7 @@
 
     this.getThumbnails = function () {
       return $http.get('/api/thumbnails');
-    }
+    };
 
     this.getTemplates = function () {
       return $http.get('/api/templates');
@@ -24,6 +24,10 @@
 
     this.deleteTemplate = function (id) {
       return $http.post('/api/delete-template', id);
+    };
+
+    this.deleteVideo = function (id) {
+      return $http.post('/api/delete-video', id);
     };
   }
 })(angular);

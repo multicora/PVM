@@ -145,4 +145,37 @@ server.route({
       }
     }
   });
+
+  /**
+   * @api {post} /api/delete-video Request for delete video
+   *
+   * @apiParam {string}   id                 Video id.
+   *
+   * @apiName DeleteVideo
+   * @apiGroup Videos
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/delete-video',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.videos.delete(request.payload).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };
