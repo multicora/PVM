@@ -99,9 +99,13 @@
     }
   }
 
+  .chat-text-box-container {
+    width: 100%;
+    margin: 0;
+  }
+
   .chat-text-box {
     width: 100%;
-    resize: none;
     outline: none;
     border-bottom: none;
     font-size: 14px;

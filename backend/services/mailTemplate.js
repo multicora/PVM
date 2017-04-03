@@ -3,11 +3,11 @@
 module.exports = {
   templateForConversation: (link, authorName, title, message) => {
     // Should use for user testing
-    if (title === 'undefined' || 'null') {
+    if (title === ('undefined' || 'null')) {
       title = '';
     }
 
-    if (message === 'undefined' || 'null') {
+    if (message === ('undefined' || 'null')) {
       message = '';
     }
     // Should use after reworking db
