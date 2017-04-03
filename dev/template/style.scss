@@ -4,8 +4,7 @@
     border: none;
     background: none;
     vertical-align: middle;
-    visibility: hidden;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.24);
   }
 
   .placeholder {
@@ -74,17 +73,16 @@
   .message:hover,
   .title-container:hover,
   .logo:hover,
-  .videoContent:hover,
   .user-name:hover,
   .user-role:hover {
     .edit-button {
-      visibility: visible;
+      color: rgba(0, 0, 0, .54);
     }
   }
 
   .files {
     .edit-button {
-      visibility: visible;
+      color: rgba(0, 0, 0, .54);
     }
   }
 
