@@ -79,24 +79,9 @@
             ng-disabled="!vm.recordedData") save
 
   //- Upload popup
-  popup.uploadForm(
-    ng-if="vm.showUploadPopup"
-    close-popup="vm.closeUploadPopup()")
-    form
-      .uploadIconContainer
-        label.uploadIcon(for='upload-video')
-          div(
-            file-uploader
-            url="/video"
-            input-id="upload-video"
-            upload-end="vm.uploadEnd()"
-            upload-start=""
-            on-error="")
-      p.popupTitle Select files to upload
-      p.popupSubTitle Or drag and drop video files
-      p.error(ng-if="errorMessage") Error: {{errorMessage}}
-      .buttonContainer
-        button.closeButton(ng-click="vm.closeUploadPopup()") close
+  uploadPopup(
+    get-videos="vm.getVideos()"
+    show-upload-popup="vm.showUploadPopup")
 
   //- Preview popup
   popup(

@@ -22,13 +22,18 @@
     var vm = this;
 
     vm.showRecordPopup = false;
-    vm.showUploadPopup = false;
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
 
-    getVideos();
+    vm.getVideos = function () {
+      libraryService.getVideos().then(function (res) {
+        vm.videosList = res.data;
+      });
+    };
+
+    vm.getVideos();
     getTemplates();
     getConversations();
 
@@ -37,6 +42,10 @@
         vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
       }
     });
+
+    vm.uploadBtnClick = function () {
+      vm.showUploadPopup = true;
+    }
 
     // Rocord popup
     vm.recordBtnClick = function () {
@@ -61,27 +70,13 @@
       ).then(function () {
         vm.videoName = '';
         vm.closeRecordPopup();
-        getVideos();
+        vm.getVideos();
         vm.videoName = null;
       });
     };
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
-    }
-
-    // Upload popup
-    vm.uploadBtnClick = function () {
-      vm.showUploadPopup = true;
-    };
-
-    vm.closeUploadPopup = function () {
-      vm.showUploadPopup = false;
-    };
-
-    vm.uploadEnd = function () {
-      vm.closeUploadPopup();
-      getVideos();
     }
 
     //Preview popup
@@ -139,11 +134,6 @@
         })
     }
 
-    function getVideos() {
-      libraryService.getVideos().then(function (res) {
-        vm.videosList = res.data;
-      });
-    };
 
     function getTemplates() {
       libraryService.getTemplates().then(function (res) {
