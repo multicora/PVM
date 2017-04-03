@@ -1,5 +1,7 @@
 .video-tile
-  .video-placeholder(ng-if="!vm.video.attributes.thumbnail")
+  .video-placeholder(
+    ng-if="!vm.video.attributes.thumbnail"
+    ng-click="vm.onThumbnailClick()")
     img(src="/files/images/videoPlaceholder.svg")
     p Preview is not available.
   img.photo(
