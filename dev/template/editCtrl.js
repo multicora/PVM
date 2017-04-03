@@ -10,7 +10,8 @@
     '$mdToast',
     'conversationsService',
     'profileService',
-    'libraryService'
+    'libraryService',
+    'Socialshare'
   ];
   function ctrl(
     $routeParams,
@@ -19,7 +20,8 @@
     $mdToast,
     conversationsService,
     profileService,
-    libraryService
+    libraryService,
+    Socialshare
   ) {
     var vm = this;
     vm.nameObj = {};
@@ -98,6 +100,42 @@
 
     vm.back = function () {
       $location.path('library');
+    }
+
+    vm.shareFacebook = function () {
+      Socialshare.share({
+        'provider': 'facebook',
+        'attrs': {
+          'socialshareUrl': 'http://720kb.net'
+        }
+      });
+    }
+
+    vm.shareLinkedin = function () {
+      Socialshare.share({
+        'provider': 'linkedin',
+        'attrs': {
+          'socialshareUrl': 'http://720kb.net'
+        }
+      });
+    }
+
+    vm.shareTwitter = function () {
+      Socialshare.share({
+        'provider': 'twitter',
+        'attrs': {
+          'socialshareUrl': 'http://720kb.net'
+        }
+      });
+    }
+
+    vm.shareViber = function () {
+      Socialshare.share({
+        'provider': 'whatsapp',
+        'attrs': {
+          'socialshareUrl': 'http://720kb.net'
+        }
+      });
     }
 
     $scope.convertToBase64LogoTemplate = function(event) {

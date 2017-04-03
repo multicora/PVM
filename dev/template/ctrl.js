@@ -10,7 +10,8 @@
     '$mdToast',
     'conversationsService',
     'profileService',
-    'libraryService'
+    'libraryService',
+    'Socialshare'
   ];
   function ctrl(
     $routeParams,
@@ -19,7 +20,8 @@
     $mdToast,
     conversationsService,
     profileService,
-    libraryService
+    libraryService,
+    Socialshare
   ) {
     var vm = this;
     vm.nameObj = {};
@@ -103,6 +105,11 @@
 
     vm.back = function () {
       $location.path('library');
+    }
+
+
+    vm.shareFacebook = function () {
+      console.log(111111)
     }
 
     $scope.convertToBase64LogoTemplate = function(event) {
