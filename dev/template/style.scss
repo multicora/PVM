@@ -1,6 +1,6 @@
 .template {
   .edit-button {
-    margin-left: 10px;
+    margin-left: 16px;
     border: none;
     background: none;
     vertical-align: middle;
@@ -82,6 +82,7 @@
 
   .files {
     .edit-button {
+      display: none;
       color: rgba(0, 0, 0, .54);
     }
   }
