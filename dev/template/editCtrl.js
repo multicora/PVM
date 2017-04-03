@@ -103,29 +103,35 @@
     }
 
     vm.shareFacebook = function () {
-      Socialshare.share({
-        'provider': 'facebook',
-        'attrs': {
-          'socialshareUrl': 'http://720kb.net'
-        }
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'facebook',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
       });
     }
 
     vm.shareLinkedin = function () {
-      Socialshare.share({
-        'provider': 'linkedin',
-        'attrs': {
-          'socialshareUrl': 'http://720kb.net'
-        }
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'linkedin',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
       });
     }
 
     vm.shareTwitter = function () {
-      Socialshare.share({
-        'provider': 'twitter',
-        'attrs': {
-          'socialshareUrl': 'http://720kb.net'
-        }
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'twitter',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
       });
     }
 
@@ -156,6 +162,26 @@
         r.readAsDataURL(f);
       }
       $scope.$apply();
+    }
+
+    function createPublicConversation() {
+      return new Promise(function (resolve, reject) {
+        vm.sendData ={
+          'name': vm.nameObj.name,
+          'company_role': vm.companyRole.role,
+          'message': vm.messageObj.message,
+          'title': vm.titleObj.title,
+          'logo': vm.logo,
+          'videoId': vm.videoId,
+          'email': null
+        }
+
+        conversationsService.createPublic(vm.sendData).then(function (res) {
+          resolve(res);
+        }, function (err) {
+          reject(err);
+        });
+      });
     }
 
     function getTemplate() {

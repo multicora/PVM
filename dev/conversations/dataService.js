@@ -10,6 +10,10 @@
       return $http.post('/api/conversations', data);
     };
 
+    this.createPublic = function (data) {
+      return $http.post('/api/conversations-public', data);
+    };
+
     this.get = function (id) {
       return $http.get('/api/conversations/' + id);
     };
