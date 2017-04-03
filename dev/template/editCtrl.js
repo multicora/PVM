@@ -136,11 +136,13 @@
     }
 
     vm.shareViber = function () {
-      Socialshare.share({
-        'provider': 'whatsapp',
-        'attrs': {
-          'socialshareUrl': 'http://720kb.net'
-        }
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'whatsapp',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
       });
     }
 

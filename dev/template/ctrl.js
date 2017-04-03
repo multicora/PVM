@@ -107,9 +107,48 @@
       $location.path('library');
     }
 
-
     vm.shareFacebook = function () {
-      console.log(111111)
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'facebook',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
+      });
+    }
+
+    vm.shareLinkedin = function () {
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'linkedin',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
+      });
+    }
+
+    vm.shareTwitter = function () {
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'twitter',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
+      });
+    }
+
+    vm.shareViber = function () {
+      createPublicConversation().then(function(res) {
+        Socialshare.share({
+          'provider': 'whatsapp',
+          'attrs': {
+            'socialshareUrl': res.data.link
+          }
+        });
+      });
     }
 
     $scope.convertToBase64LogoTemplate = function(event) {
@@ -130,6 +169,26 @@
         r.readAsDataURL(f);
       }
       $scope.$apply();
+    }
+
+    function createPublicConversation() {
+      return new Promise(function (resolve, reject) {
+        vm.sendData ={
+          'name': vm.nameObj.name,
+          'company_role': vm.companyRole.role,
+          'message': vm.messageObj.message,
+          'title': vm.titleObj.title,
+          'logo': vm.logo,
+          'videoId': vm.videoId,
+          'email': null
+        }
+
+        conversationsService.createPublic(vm.sendData).then(function (res) {
+          resolve(res);
+        }, function (err) {
+          reject(err);
+        });
+      });
     }
 
     function closeAllEditButton() {
