@@ -1,9 +1,7 @@
 //- Upload popup
 popup.uploadForm(
   ng-if="vm.showUploadPopup"
-  close-popup="vm.closeUploadPopup()"
-  show-upload-popup="vm.showUploadPopup"
-  get-videos="vm.getVideos()")
+  on-esc = "vm.closeUploadPopup()")
   form
     .uploadIconContainer
       label.uploadIcon(for='upload-video')
