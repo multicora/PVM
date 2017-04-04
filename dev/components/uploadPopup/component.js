@@ -8,10 +8,10 @@
     }
   });
 
-  ctrl.$inject = ['fabButtonService'];
-  function ctrl(fabButtonService) {
+  ctrl.$inject = ['fabButtonsService'];
+  function ctrl(fabButtonsService) {
     vm.closeUploadPopup = function () {
-      vm.showUploadPopup = false;
+      fabButtonsService.hideUploadPopup();
     };
 
     vm.uploadEnd = function () {

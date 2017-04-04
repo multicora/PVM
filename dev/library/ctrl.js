@@ -9,7 +9,8 @@
     '$mdDialog',
     'libraryService',
     'uploadService',
-    'conversationsService'
+    'conversationsService',
+    'fabButtonsService'
   ];
   function ctrl(
     $location,
@@ -17,7 +18,8 @@
     $mdDialog,
     libraryService,
     uploadService,
-    conversationsService
+    conversationsService,
+    fabButtonsService
   ) {
     var vm = this;
     vm.showUploadPopup = true;
@@ -50,12 +52,11 @@
     };
 
     vm.uploadBtnClick = function () {
-      vm.showUploadPopup = true;
+      fabButtonsService.showUploadPopup();
     }
 
-    // Rocord popup
     vm.recordBtnClick = function () {
-      vm.showRecordPopup = true;
+      fabButtonsService.showRecordPopup();
     };
 
     vm.closeRecordPopup = function () {
