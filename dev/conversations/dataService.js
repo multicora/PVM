@@ -14,6 +14,10 @@
       return $http.get('/api/conversations/' + id);
     };
 
+    this.getByAuthor = function () {
+      return $http.get('/api/conversations');
+    };
+
     this.getVideo = function (id) {
       return $http.get('/api/videos/' + id);
     };
