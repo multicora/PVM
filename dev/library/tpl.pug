@@ -2,20 +2,6 @@
   md-swipe-left="vm.changeTab(1)"
   md-swipe-right="vm.changeTab(-1)")
   app-header
-    .navigation
-      //- .navigation-bar-container
-      //-   ul.navigation-bar
-      //-     li.tub(
-      //-       ng-class="vm.videosClass"
-      //-       ng-click="vm.tabBtnVideosClick()") videos
-      //-     li.tub(
-      //-       ng-class="vm.templatesClass"
-      //-       ng-click="vm.tabBtnTemplatesClick()") templates
-      //-     li.tub(
-      //-       ng-class="vm.conversationsClass"
-      //-       ng-click="vm.tabBtnConversationsClick()") conversations
-      //-     //- li ANALYTICS
-      //-     //- li CONTACTS
   md-content.library-content
     md-tabs(
       md-dynamic-height=""
@@ -33,7 +19,8 @@
             on-record-click="vm.recordBtnClick()"
             show-send-button="vm.showSendButton"
             on-thumbnail-click="vm.showPreview($data)"
-            on-send-click="vm.sendClickHandler($data)")
+            on-send-click="vm.sendClickHandler($data)"
+            on-delete-video="vm.deleteVideo($data)")
 
       //- Templates
       md-tab(label='templates')

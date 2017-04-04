@@ -58,7 +58,15 @@
 
     .menu {
       margin-right: 10px;
-      visibility: hidden;
+      // visibility: hidden;
+    }
+
+    .menu-button {
+      margin: 0;
+      padding: 0;
+      min-height: 0px;
+      min-width: 0px;
+      line-height: 0;
     }
   }
 

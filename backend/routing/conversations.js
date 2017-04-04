@@ -392,7 +392,7 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {post} /api/template Request for delete template
+   * @api {post} /api/delete-template Request for delete template
    *
    * @apiParam {string}   id                              Template id.
    *
