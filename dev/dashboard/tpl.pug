@@ -1,0 +1,79 @@
+.dashboard-wrapper
+  app-header
+  h2.title Dashboard
+  .performance-container
+    p.content-title Your weekly performance
+    .content
+      .info-container
+        .info
+          p.name Messages sent
+          p.number(ng-bind="vm.sentConversation")
+        .info
+          p.name Messages opened
+          p.number(ng-bind="vm.openedConversation")
+        .info
+          p.name Videos watched
+          p.number 0
+        .info
+          p.name Replies received
+          p.number 0
+        .info
+          p.name Files downloaded
+          p.number 0
+      .diagram-content
+        .chart-message(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configMessage")
+        //- Will be using when will be implemented video watched notificatio
+        //- .chart-video(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configVideo")
+  .messages-container
+    p.content-title Recent activities
+    .message-content(ng-repeat="item in [1, 2, 3 , 4, 5]")
+      p.time 5 min
+      p.message.ellipsis Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate inventore soluta reiciendis est suscipit, deleniti possimus optio adipisci, obcaecati cum consectetur dolore ad dolores, culpa delectus quam aliquam. Commodi, vel.
+      .button-container
+        md-button.message-button reply
+        //- md-button.message-button view
+
+  video-fab-buttons(
+  upload-btn-click="vm.uploadBtnClick()"
+  record-btn-click="vm.recordBtnClick()")
+
+  //- Record popup
+  popup(
+    ng-if="vm.showRecordPopup"
+    close-popup="vm.closeRecordPopup()")
+    .video-record-container
+      form.recordForm
+        p.popupTitle Record your video
+        .record-video
+          record-video(finish="vm.finishRecord($data)")
+        .videoNameContainer
+          input(
+            type="text"
+            ng-model="vm.videoName"
+            placeholder="Enter video name")
+        p.error(ng-if="vm.errorMessage") Error: {{vm.errorMessage}}
+        .button-container
+          button.btn.mdl-button.mdl-js-button.mdl-button--raised.cancel(ng-click="vm.closeRecordPopup()") cancel
+          button.btn.mdl-button.mdl-js-button.mdl-button--raised.save(
+            ng-click="vm.sendRecordClick(vm.videoName)"
+            ng-disabled="!vm.recordedData") save
+
+  //- Upload popup
+  popup.uploadForm(
+    ng-if="vm.showUploadPopup"
+    close-popup="vm.closeUploadPopup()")
+    form
+      .uploadIconContainer
+        label.uploadIcon(for='upload-video')
+          div(
+            file-uploader
+            url="/video"
+            input-id="upload-video"
+            upload-end="vm.uploadEnd()"
+            upload-start=""
+            on-error="")
+      p.popupTitle Select files to upload
+      p.popupSubTitle Or drag and drop video files
+      p.error(ng-if="errorMessage") Error: {{errorMessage}}
+      .buttonContainer
+        button.closeButton(ng-click="vm.closeUploadPopup()") close

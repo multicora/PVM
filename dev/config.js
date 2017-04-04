@@ -37,6 +37,10 @@
       controller: 'authCtrl',
       controllerAs: 'vm',
       templateUrl: 'auth/register.html'
+    }).when('/dashboard', {
+      controller: 'dashboardCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'dashboard/tpl.html'
     }).when('/library', {
       controller: 'libraryCtrl',
       controllerAs: 'vm',

@@ -8,8 +8,18 @@
     }
   });
 
-  ctrl.$inject = ['$location', 'tokenService', 'profileService'];
-  function ctrl($location, tokenService, profileService) {
+  ctrl.$inject = [
+    '$location',
+    '$mdSidenav',
+    'tokenService',
+    'profileService'
+  ];
+  function ctrl(
+    $location,
+    $mdSidenav,
+    tokenService,
+    profileService
+  ) {
     var vm = this;
 
     vm.isAuthenticated = !!tokenService.getToken();
@@ -21,7 +31,11 @@
       } else {
         return $location.path(url);
       }
-    }
+    };
+
+    vm.openMenu = function () {
+      $mdSidenav('left').toggle();
+    };
 
     vm.invalidateSession = function () {
       tokenService.clearToken();
