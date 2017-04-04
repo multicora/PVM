@@ -47,6 +47,12 @@
     font-size: 24px;
     text-align: center;
     padding: 0;
+    letter-spacing: 0;
+  }
+
+  .title-input::placeholder {
+    font-style: italic;
+    font-size: 24px;
   }
 
   .user-name input,

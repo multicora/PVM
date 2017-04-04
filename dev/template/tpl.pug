@@ -56,7 +56,8 @@
       input.mdl-textfield__input.title-input(
         type="text"
         ng-if="vm.titleObj.editMode"
-        ng-model="vm.titleObj.title")
+        ng-model="vm.titleObj.title"
+        placeholder="Add conversation topic here")
     button.edit-button.btn.btn-circle(
       type="button"
       ng-click="vm.edit(vm.titleObj)")

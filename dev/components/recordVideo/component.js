@@ -27,7 +27,7 @@
           record: {
             audio: true,
             video: true,
-            maxLength: 120,
+            maxLength: 60,
             debug: true
           }
         },

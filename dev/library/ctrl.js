@@ -7,6 +7,7 @@
     '$location',
     '$mdToast',
     '$mdDialog',
+    '$timeout',
     'libraryService',
     'uploadService',
     'conversationsService'
@@ -15,6 +16,7 @@
     $location,
     $mdToast,
     $mdDialog,
+    $timeout,
     libraryService,
     uploadService,
     conversationsService
@@ -134,6 +136,7 @@
         .show( confirm ).then(function() {
           libraryService.deleteTemplate(id).then(function() {
             getTemplates();
+            $timeout($mdToast.showSimple('Template deleted!'), 1000);
           });
         })
     };
@@ -141,7 +144,7 @@
     // Confirm popup for delete template
     function showConfirmDeleteVideo(id) {
       var alertVideo = $mdDialog.alert({
-        textContent: 'This video can not be deleted.',
+        textContent: 'This video can not be deleted because you use it in template or conversation.',
         ok: 'Ok'
       });
 
@@ -150,6 +153,7 @@
           libraryService.deleteVideo(id).then(function() {
             getVideos();
             getThumbnails();
+            $timeout($mdToast.showSimple('Video deleted!'), 1000);
           }, function(err) {
           $mdDialog.show( alertVideo );
           });
