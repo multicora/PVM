@@ -1,0 +1,50 @@
+.video-record-container,
+.video-preview-container {
+  max-width: 725px;
+  width: 100%;
+  border-radius: 2px;
+  background-color:  #f8f8f8;
+
+  .error {
+    margin-bottom: -30px;
+    text-align: center;
+  }
+
+  .videoNameContainer {
+    text-align: center;
+
+    input {
+      border: 1px solid #f6f6f6;
+      background: none;
+      font-size: 18px;
+      margin: 16px 0 -10px 0;
+      text-align: center;
+      width: 80%;
+    }
+  }
+
+  .popupTitle {
+    padding-top: 16px;
+    color: rgba(0, 0, 0, 0.87);
+    text-align: center;
+    font-size: 24px;
+  }
+
+  .button-container {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    margin-top: 24px;
+    padding: 0 16px 24px 0;
+    box-sizing: border-box;
+    
+    .save,
+    .send {
+      margin-left: 10px;
+    }
+  }
+
+  .record-video {
+    margin: 0 16px;
+  }
+}

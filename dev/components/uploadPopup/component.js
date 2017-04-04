@@ -13,7 +13,6 @@
   ctrl.$inject = [];
   function ctrl() {
     var vm = this;
-    vm.showUploadPopup = false;
 
     vm.uploadBtnClick = function () {
       vm.showUploadPopup = true;

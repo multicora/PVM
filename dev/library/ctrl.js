@@ -20,7 +20,7 @@
     conversationsService
   ) {
     var vm = this;
-
+    vm.showUploadPopup = true;
     vm.showRecordPopup = false;
     vm.showSendPopup = false;
     vm.recordedData = null;
