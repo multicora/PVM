@@ -5,19 +5,11 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      getVideos: '&',
-      showUploadPopup: '^'
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
-    var vm = this;
-
-    vm.uploadBtnClick = function () {
-      vm.showUploadPopup = true;
-    };
-
+  ctrl.$inject = ['fabButtonService'];
+  function ctrl(fabButtonService) {
     vm.closeUploadPopup = function () {
       vm.showUploadPopup = false;
     };
