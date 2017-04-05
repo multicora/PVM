@@ -10,7 +10,7 @@
     'libraryService',
     'uploadService',
     'conversationsService',
-    'fabButtonsService'
+    'uploadRecordPopupService'
   ];
   function ctrl(
     $location,
@@ -19,7 +19,7 @@
     libraryService,
     uploadService,
     conversationsService,
-    fabButtonsService
+    uploadRecordPopupService
   ) {
     var vm = this;
     vm.showUploadPopup = true;
@@ -29,7 +29,6 @@
       cancel: 'No'
     });
 
-    vm.showRecordPopup = false;
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendButton = true;
@@ -38,11 +37,11 @@
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data;
+        getThumbnails();
       });
     };
 
     vm.getVideos();
-    getThumbnails();
     getTemplates();
     getConversations();
 
@@ -52,15 +51,11 @@
     };
 
     vm.uploadBtnClick = function () {
-      fabButtonsService.showUploadPopup();
+      uploadRecordPopupService.showUploadPopup();
     }
 
     vm.recordBtnClick = function () {
-      fabButtonsService.showRecordPopup();
-    };
-
-    vm.closeRecordPopup = function () {
-      vm.showRecordPopup = false;
+      uploadRecordPopupService.showRecordPopup();
     };
 
     vm.finishRecord = function (data) {
@@ -133,6 +128,22 @@
         })
     };
 
+    // Confirm popup for delete video
+    function showConfirmDeleteVideo(id) {
+      var alertVideo = $mdDialog.alert({
+        textContent: 'This video can not be deleted.',
+        ok: 'Ok'
+      });
+
+      $mdDialog
+        .show( confirm ).then(function() {
+          libraryService.deleteVideo(id).then(function() {
+            vm.getVideos();
+          }, function(err) {
+          $mdDialog.show( alertVideo );
+          });
+        })
+    };
 
     function getThumbnails() {
       libraryService.getThumbnails().then(function (res) {

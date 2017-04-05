@@ -5,18 +5,21 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
+      getVideos: '&'
     }
   });
 
-  ctrl.$inject = ['fabButtonsService'];
-  function ctrl(fabButtonsService) {
+  ctrl.$inject = ['uploadRecordPopupService'];
+  function ctrl(uploadRecordPopupService) {
+    var vm = this;
+
     vm.closeUploadPopup = function () {
-      fabButtonsService.hideUploadPopup();
+      uploadRecordPopupService.hideUploadPopup();
     };
 
     vm.uploadEnd = function () {
       vm.closeUploadPopup();
       vm.getVideos();
-    }
+    };
   }
 })(angular);

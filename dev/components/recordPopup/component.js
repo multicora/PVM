@@ -5,14 +5,39 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      getVideos: '&',
-      showRecordPopup: '^'
+      getVideos: '&'
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = [
+    'uploadService',
+    'uploadRecordPopupService'
+  ];
+  function ctrl(
+    uploadService,
+    uploadRecordPopupService
+  ) {
     var vm = this;
 
+    vm.closeRecordPopup = function () {
+      uploadRecordPopupService.hideRecordPopup();
+    };
+
+    vm.finishRecord = function (data) {
+      vm.recordedData = data;
+    };
+
+    vm.sendRecordClick = function (name) {
+      name = name || 'no name';
+      uploadService.sendFile(
+        "/api/video",
+        vm.recordedData.video,
+        name + '.wmv'
+      ).then(function () {
+        vm.closeRecordPopup();
+        vm.getVideos();
+        vm.videoName = null;
+      });
+    };
   }
 })(angular);
