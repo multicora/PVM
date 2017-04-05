@@ -10,20 +10,15 @@
     text-align: center;
   }
 
-  .videoNameContainer {
+  .video-name-container {
     text-align: center;
-
-    input {
-      border: 1px solid #f6f6f6;
-      background: none;
-      font-size: 18px;
-      margin: 16px 0 -10px 0;
-      text-align: center;
-      width: 80%;
-    }
   }
 
-  .popupTitle {
+  .video-name {
+    margin: 16px 0 0 0;
+  }
+
+  .popup-title {
     padding-top: 16px;
     color: rgba(0, 0, 0, 0.87);
     text-align: center;

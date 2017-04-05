@@ -1,4 +1,4 @@
-.uploadForm {
+.upload-form {
   .popup {
     border-radius: 2px;
     background-color:  #ffffff;
@@ -9,23 +9,21 @@
     width: 100%;
   }
 
-  .popupTitle,
-  .popupSubTitle {
-    color: #161616;
+  .popup-title,
+  .popup-sub-title {
     text-align: center;
-    font-weight: 600;
   }
 
-  .popupTitle {
+  .popup-title {
     font-size: 20px;
   }
 
-  .popupSubTitle {
+  .popup-sub-title {
     font-size: 15px;
   }
 
-  .uploadIconContainer,
-  .buttonContainer {
+  .upload-icon-container,
+  .button-container {
     display: inline-block;
     width: 100%;
     text-align: center;
@@ -37,7 +35,7 @@
     opacity: 0;
   }
 
-  .uploadIcon {
+  .upload-icon {
     display: inline-block;
     width: 150px;
     height: 150px;
@@ -47,42 +45,13 @@
     cursor: pointer;
   }
 
-  .uploadIcon {
+  .upload-icon {
     transition: 1s;
     background-image: url('/files/images/uploadHover.svg');
   }
 
-  .uploadIcon:hover {
+  .upload-icon:hover {
     background-image: url('/files/images/upload.svg');
     transition: 1s;
   }
-
-  .closeButton {
-    width: 88px;
-    height: 36px;
-    border: none;
-    border-radius: 2px;
-    color: #161616;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 18px;
-    cursor: pointer;
-  }
-
-  .closeButton {
-    background-color: #fff;
-    transition: 1s; 
-  }
-
-  .closeButton:hover {
-    background-color: #f0f0f0;
-    transition: 1s;
-  }
-
-  .closeButton:focus {
-    outline: none;
-    background-color: #b3b3b3;
-    transition: 1s;
-  }
-
 }
