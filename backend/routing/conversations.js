@@ -57,6 +57,43 @@ module.exports = function (server, DAL) {
   });
 
   /**
+   * @api {post} /api/conversations-public Request for create public conversation
+   * @apiName CreateConversationPublic
+   * @apiGroup Conversations
+   *
+   * @apiParam {string}   id                              Conversation id.
+   *
+   * @apiSuccess {String}   link               Conversation link.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {
+   *   link: https://localhost:8081/conversation/107,
+   * }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/conversations-public',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        let author = request.auth.credentials;
+        let data = request.payload;
+        let serverUrl = utils.getServerUrl(request);
+        data.author = author.id;
+        data.public = 1;
+
+        DAL.conversations.createConversation(data).then(function (res) {
+          reply({'link': serverUrl + '/conversation/' + res.insertId});
+        }, function (err) {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
    * @api {get} /api/conversation Request conversation
    * @apiName GetConversation
    * @apiGroup Conversations
