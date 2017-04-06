@@ -84,12 +84,11 @@ module.exports = function (server, DAL) {
         data.author = author.id;
         data.public = 1;
 
-
-          DAL.conversations.createConversation(data).then(function (res) {
-            reply({'link': serverUrl + '/conversation/' + res.insertId});
-          }, function (err) {
-            reply(Boom.badImplementation(err, err));
-          });
+        DAL.conversations.createConversation(data).then(function (res) {
+          reply({'link': serverUrl + '/conversation/' + res.insertId});
+        }, function (err) {
+          reply(Boom.badImplementation(err, err));
+        });
       }
     }
   });
