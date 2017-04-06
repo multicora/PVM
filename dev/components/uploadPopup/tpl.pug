@@ -1,0 +1,16 @@
+popup.upload-form(close-popup="vm.closeUploadPopup()")
+  form
+    .upload-icon-container
+      label.upload-icon(for='upload-video')
+        div(
+          file-uploader
+          url="/video"
+          input-id="upload-video"
+          upload-end="vm.uploadEnd()"
+          upload-start=""
+          on-error="")
+    p.popup-title Select files to upload
+    p.popup-sub-title Or drag and drop video files
+    p.error(ng-if="errorMessage") Error: {{errorMessage}}
+    .button-container
+      button.btn.mdl-button.mdl-js-button.closeButton(ng-click="vm.closeUploadPopup()") close

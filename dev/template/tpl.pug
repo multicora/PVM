@@ -199,6 +199,23 @@
         button.btn.mdl-button.mdl-js-button(
           ng-click="vm.sendVideo(email)"
           ng-disabled="!email") send
+    md-button.md-icon-button(
+      aria-label="facebook"
+      ng-click="vm.shareFacebook()")
+      i.fa.fa-facebook
+    md-button.md-icon-button(
+      aria-label="linkedin"
+      ng-click="vm.shareLinkedin()")
+      i.fa.fa-linkedin
+    md-button.md-icon-button(
+      aria-label="twitter"
+      ng-click="vm.shareTwitter()")
+      i.fa.fa-twitter
+    md-button.md-icon-button(
+      aria-label="whatsapp"
+      ng-click="vm.shareWhatsapp()")
+      i.fa.fa-whatsapp
+
 
   //- SELECT VIDEO POPUP
   popup.select-video-container(

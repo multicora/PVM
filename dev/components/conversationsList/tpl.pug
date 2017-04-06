@@ -24,7 +24,8 @@
           i.material-icons insert_drive_file
 
       p.email 
-        span to: {{item.email}}
+        span(ng-if="item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
+        span(ng-if="!item.email || item.email === 'null' || item.email === 'undefined'") Public
       p.title
         span(
         ng-if="item.title && item.title != null && item.title != 'undefined'"

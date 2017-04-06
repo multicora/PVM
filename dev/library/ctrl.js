@@ -9,7 +9,8 @@
     '$mdDialog',
     'libraryService',
     'uploadService',
-    'conversationsService'
+    'conversationsService',
+    'uploadRecordPopupService'
   ];
   function ctrl(
     $location,
@@ -17,25 +18,30 @@
     $mdDialog,
     libraryService,
     uploadService,
-    conversationsService
+    conversationsService,
+    uploadRecordPopupService
   ) {
     var vm = this;
-
+    vm.showUploadPopup = true;
     var confirm = $mdDialog.confirm({
       textContent: 'Are you shure?',
       ok: 'Yes',
       cancel: 'No'
     });
 
-    vm.showRecordPopup = false;
-    vm.showUploadPopup = false;
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
 
-    getVideos();
-    getThumbnails();
+    vm.getVideos = function () {
+      libraryService.getVideos().then(function (res) {
+        vm.videosList = res.data;
+        getThumbnails();
+      });
+    };
+
+    vm.getVideos();
     getTemplates();
     getConversations();
 
@@ -44,13 +50,12 @@
       showConfirmDeleteVideo(id);
     };
 
-    // Rocord popup
-    vm.recordBtnClick = function () {
-      vm.showRecordPopup = true;
-    };
+    vm.uploadBtnClick = function () {
+      uploadRecordPopupService.showUploadPopup();
+    }
 
-    vm.closeRecordPopup = function () {
-      vm.showRecordPopup = false;
+    vm.recordBtnClick = function () {
+      uploadRecordPopupService.showRecordPopup();
     };
 
     vm.finishRecord = function (data) {
@@ -65,27 +70,13 @@
         name + '.wmv'
       ).then(function () {
         vm.closeRecordPopup();
-        getVideos();
+        vm.getVideos();
         vm.videoName = null;
       });
     };
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
-    };
-
-    // Upload popup
-    vm.uploadBtnClick = function () {
-      vm.showUploadPopup = true;
-    };
-
-    vm.closeUploadPopup = function () {
-      vm.showUploadPopup = false;
-    };
-
-    vm.uploadEnd = function () {
-      vm.closeUploadPopup();
-      getVideos();
     };
 
     //Preview popup
@@ -137,7 +128,7 @@
         })
     };
 
-    // Confirm popup for delete template
+    // Confirm popup for delete video
     function showConfirmDeleteVideo(id) {
       var alertVideo = $mdDialog.alert({
         textContent: 'This video can not be deleted.',
@@ -147,18 +138,11 @@
       $mdDialog
         .show( confirm ).then(function() {
           libraryService.deleteVideo(id).then(function() {
-            getVideos();
-            getThumbnails();
+            vm.getVideos();
           }, function(err) {
           $mdDialog.show( alertVideo );
           });
         })
-    };
-
-    function getVideos() {
-      libraryService.getVideos().then(function (res) {
-        vm.videosList = res.data;
-      });
     };
 
     function getThumbnails() {
