@@ -67,7 +67,12 @@
         vm.companyRole.role = vm.user.company_position;
       }
       conversationsService.createTemplate(vm.sendData).then(function(res) {
-        $mdToast.showSimple('Saved successfully!');
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Saved successfully!')
+          .position('bottom center')
+          .hideDelay(3000)
+      );
         $location.path('template-edit/' + res.data.templateId);
       });
     }
@@ -98,7 +103,12 @@
         'email': email
       }
       conversationsService.create(vm.sendData).then(function () {
-        $mdToast.showSimple('Sended successfully!');
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Sended successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
         vm.showSendPopup = false;
       });
     }

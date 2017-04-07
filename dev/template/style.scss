@@ -38,16 +38,24 @@
 
   .title {
     margin: 0;
+    max-width: 80%;
     .placeholder {
-      color: rgba(0, 0, 0, 0.24)
+      color: rgba(0, 0, 0, 0.24);
+      width: 310px;
     }
   }
 
-  .title-input {
-    font-size: 24px;
-    text-align: center;
+  .title-input-container {
+    margin: 0;
     padding: 0;
+    height: 30px;
+    width: 310px;
+  }
+
+  .title-input {
+    font-size: 20px;
     letter-spacing: 0;
+    font-family: 'Roboto Regular';
   }
 
   .title-input::placeholder {
@@ -60,8 +68,15 @@
     display: inline-block;
     width: 160px;
     padding: 0;
+    font-family: 'Roboto Regular';
   }
 
+  .role-input-container,
+  .name-input-container {
+    margin: 0;
+    padding: 0;
+  }
+  
   .name-input {
     font-size: 20px;
   }

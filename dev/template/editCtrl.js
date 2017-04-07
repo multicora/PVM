@@ -62,8 +62,13 @@
       vm.sendData.id = vm.templateId;
       conversationsService.updateTemplate(vm.sendData).then(function() {
         closeAllEditButton();
-          getTemplate();
-          $mdToast.showSimple('Saved successfully!');
+        getTemplate();
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Saved successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     }
 
@@ -94,7 +99,12 @@
       }
       conversationsService.create(vm.sendData).then(function () {
         vm.showSendPopup = false;
-        $mdToast.showSimple('Sended successfully!');
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Sended successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     }
 

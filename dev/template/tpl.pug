@@ -53,11 +53,13 @@
       span.btn(
         ng-if="vm.titleObj.title && !vm.titleObj.editMode && vm.titleObj.title != null && vm.titleObj.title != 'undefined'"
         ng-click="vm.edit(vm.titleObj)") {{vm.titleObj.title}}
-      input.mdl-textfield__input.title-input(
-        type="text"
-        ng-if="vm.titleObj.editMode"
-        ng-model="vm.titleObj.title"
-        placeholder="Add conversation topic here")
+      md-input-container.title-input-container(
+        md-no-float="true"
+        ng-if="vm.titleObj.editMode")
+        input.mdl-textfield__input.title-input(
+          type="text"
+          ng-model="vm.titleObj.title"
+          placeholder="Add conversation topic here")
     button.edit-button.btn.btn-circle(
       type="button"
       ng-click="vm.edit(vm.titleObj)")
@@ -84,10 +86,12 @@
           span.btn(
             ng-if="vm.user.name && !vm.nameObj.editMode && !vm.nameObj.name"
             ng-click="vm.edit(vm.nameObj)") {{vm.user.name}}
-          input.mdl-textfield__input.name-input(
-            type="text"
-            ng-if="vm.nameObj.editMode"
-            ng-model="vm.nameObj.name")
+          md-input-container.name-input-container(md-no-float="true")
+            input.mdl-textfield__input.name-input(
+              aria-label=" "
+              type="text"
+              ng-if="vm.nameObj.editMode"
+              ng-model="vm.nameObj.name")
           button.edit-button.btn.btn-circle(
             type="button"
             ng-click="vm.edit(vm.nameObj)")
@@ -104,10 +108,12 @@
           span.btn(
             ng-if="vm.user.company_position && !vm.companyRole.editMode && !vm.companyRole.role"
             ng-click="vm.edit(vm.companyRole)") {{vm.user.company_position}}
-          input.mdl-textfield__input.role-input(
-            type="text"
-            ng-if="vm.companyRole.editMode"
-            ng-model="vm.companyRole.role")
+          md-input-container.role-input-container(md-no-float="true")
+            input.mdl-textfield__input.role-input(
+              aria-label=" "
+              type="text"
+              ng-if="vm.companyRole.editMode"
+              ng-model="vm.companyRole.role")
           button.edit-button.btn.btn-circle(
             type="button"
             ng-click="vm.edit(vm.companyRole)")

@@ -39,7 +39,11 @@
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data;
-        getThumbnails();
+        return libraryService.getThumbnails();
+      }).then(function (res) {
+        for (let i = 0; i < res.data.length; i++) {
+          vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
+        }
       });
     };
 
@@ -74,6 +78,11 @@
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Video saved!')
+            .position('bottom center')
+        );
       });
     };
 
@@ -126,7 +135,11 @@
         .show( confirm ).then(function() {
           libraryService.deleteTemplate(id).then(function() {
             getTemplates();
-            $timeout($mdToast.showSimple('Template deleted!'), 1000);
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Template deleted!')
+                .position('bottom center')
+              );
           });
         })
     };
@@ -142,19 +155,16 @@
         .show( confirm ).then(function() {
           libraryService.deleteVideo(id).then(function() {
             vm.getVideos();
-            $timeout($mdToast.showSimple('Video deleted!'), 1000);
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Video deleted!')
+                .position('bottom center')
+                .hideDelay(3000)
+            );
           }, function(err) {
           $mdDialog.show( alertVideo );
           });
         })
-    };
-
-    function getThumbnails() {
-      libraryService.getThumbnails().then(function (res) {
-        for (let i = 0; i < res.data.length; i++) {
-          vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
-        }
-      });
     };
 
     function getTemplates() {
