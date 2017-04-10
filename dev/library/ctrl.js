@@ -22,7 +22,7 @@
     uploadRecordPopupService
   ) {
     var vm = this;
-    var confirm = $mdDialog.confirm({
+    var confirmDeletePopup = $mdDialog.confirm({
       title: 'Are you shure?',
       textContent: 'This action can`t be undone',
       ok: 'Delete',
@@ -43,6 +43,7 @@
         for (let i = 0; i < res.data.length; i++) {
           vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
         }
+      }, function (err) {
       });
     };
 
@@ -131,7 +132,7 @@
     // Confirm popup for delete template
     function showConfirmDeleteTemplate(id) {
       $mdDialog
-        .show( confirm ).then(function() {
+        .show( confirmDeletePopup ).then(function() {
           libraryService.deleteTemplate(id).then(function() {
             getTemplates();
             $mdToast.show(
@@ -145,13 +146,13 @@
 
     // Confirm popup for delete video
     function showConfirmDeleteVideo(id) {
-      var alertVideo = $mdDialog.alert({
+      var alertErrorDelete = $mdDialog.alert({
         textContent: 'This video can not be deleted because you use it in template or conversation.',
         ok: 'Ok'
       });
 
       $mdDialog
-        .show( confirm ).then(function() {
+        .show( confirmDeletePopup ).then(function() {
           libraryService.deleteVideo(id).then(function() {
             vm.getVideos();
             $mdToast.show(
@@ -161,7 +162,7 @@
                 .hideDelay(3000)
             );
           }, function(err) {
-          $mdDialog.show( alertVideo );
+          $mdDialog.show( alertErrorDelete );
           });
         })
     };
