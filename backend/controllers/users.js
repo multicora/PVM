@@ -59,7 +59,7 @@ module.exports = function (DAL) {
       });
     },
 
-    register: (email, password, confirmPassword, link) => {
+    register: (email, password, confirmPassword, confirmToken, link) => {
       return new Promise((resolve, reject) => {
         if (confirmPassword !== password) {
           reject({
@@ -69,6 +69,8 @@ module.exports = function (DAL) {
         } else {
           DAL.company.add().then((res) => {
             return DAL.users.register(email, password, res.insertId);
+          }).then(() => {
+            return DAL.users.addConfirmToken(confirmToken, email);
           }).then(() => {
             const message = [
               'Welcome to BizKonect App!'

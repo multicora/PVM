@@ -19,6 +19,12 @@
       });
     };
 
+    this.loginConfirm = function (confirmToken) {
+      return $http.post('/api/confirm-email', {
+        confirmToken: confirmToken
+      });
+    };
+
     this.reset = function (email) {
       var data = {'email': email};
 
