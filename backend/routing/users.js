@@ -6,6 +6,27 @@ const utils = require('../utils.js');
 module.exports = function (server, DAL) {
 const usersController = require('../controllers/users.js')(DAL);
 
+  /**
+   * @api {post} /api/login         Request for login
+   *
+   * @apiParam {Object}   user                     user info.
+   * @apiParam {String}   user.login                     user login.
+   * @apiParam {String}   user.password                     user password.
+   *
+   * @apiName Login
+   * @apiGroup Users
+   *
+   *
+   * @apiSuccess {String}   token    Token.
+   * @apiSuccess {String}   id    Id.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *      "token": "TPpNRBBz5VEeY7dX"
+   *      "id": "2"
+   *     }
+   */
   server.route({
     method: 'POST',
     path: '/api/login',
@@ -13,16 +34,73 @@ const usersController = require('../controllers/users.js')(DAL);
       handler: function (request, reply) {
         const user = request.payload;
         DAL.users.getUserForLogin(user.login).then((response) => {
-          if ( response && usersController.verifyPassword(user, response.password) ) {
-            let token = utils.newToken();
-            DAL.users.updateToken(token, user.login).then(() => {
-              user.token = token;
-              reply(user);
-            }, () => {
-              reply(Boom.badImplementation('Server error'));
-            });
+          if (response.confirmed) {
+            if ( response && usersController.verifyPassword(user, response.password) ) {
+              let token = utils.newToken();
+              DAL.users.updateToken(token, user.login).then(() => {
+                user.token = token;
+                reply({
+                  'token': user.token,
+                  'id': user.id
+                });
+              }, () => {
+                reply(Boom.badImplementation('Server error'));
+              });
+            } else {
+              reply(Boom.unauthorized('The username or password is incorrect'));
+            }
           } else {
-            reply(Boom.unauthorized('The username or password is incorrect'));
+            reply(Boom.unauthorized('Confirm your email'));
+          }
+        }, () => {
+          reply(Boom.unauthorized('The username or password is incorrect'));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/confirm-email         Request for confirm user email
+   *
+   * @apiParam {String}   confirmToken                     Confirm token.
+   *
+   * @apiName ConfirmUserEmail
+   * @apiGroup Users
+   *
+   *
+   * @apiSuccess {String}   token    Token.
+   * @apiSuccess {String}   id    Id.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *      "token": "TPpNRBBz5VEeY7dX"
+   *      "id": "2"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/confirm-email',
+    config: {
+      handler: function (request, reply) {
+        DAL.users.getUserByConfirmToken(request.payload.confirmToken).then((response) => {
+          if (!response.confirmed) {
+              let user = response;
+              let token = utils.newToken();
+              DAL.users.updateToken(token, user.email).then(() => {
+                user.token = token;
+                return DAL.users.confirmEmail(user.id);
+              }).then(() => {
+                reply({
+                  'token': user.token,
+                  'id': user.id
+                });
+              }, () => {
+                reply(Boom.badImplementation('Server error'));
+              });
+
+          } else {
+            reply(Boom.unauthorized('You just confirmed your password!'));
           }
         }, () => {
           reply(Boom.unauthorized('The username or password is incorrect'));
@@ -79,8 +157,9 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       handler: function (request, reply) {
         usersController.isUserExist(request.payload.email).then(res => {
+          let confirmToken = utils.newToken();
           let result = null;
-          let serverUrl = utils.getServerUrl(request);
+          let serverUrl = utils.getServerUrl(request) + '/login/' + confirmToken;
           if (res) {
             result = Promise.reject({
               'statusCode': 400,
@@ -90,6 +169,7 @@ const usersController = require('../controllers/users.js')(DAL);
             result = usersController.register(request.payload.email,
               request.payload.password,
               request.payload.confirmPassword,
+              confirmToken,
               serverUrl);
           }
           return result;

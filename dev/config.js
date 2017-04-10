@@ -25,6 +25,10 @@
       controller: 'authCtrl',
       controllerAs: 'vm',
       templateUrl: 'auth/login.html'
+    }).when('/login/:confirmToken', {
+      controller: 'authCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'auth/login.html'
     }).when('/reset-password', {
       controller: 'authCtrl',
       controllerAs: 'vm',

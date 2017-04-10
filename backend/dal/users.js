@@ -45,6 +45,18 @@ module.exports = (connection) => {
       });
     },
 
+    getUserByConfirmToken: (confirmToken) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * FROM `users` WHERE confirmToken = "' + confirmToken + '"'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getCompanyById: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -179,6 +191,20 @@ module.exports = (connection) => {
       });
     },
 
+    addConfirmToken: (confirmToken, email) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET confirmToken="' + confirmToken + '" ',
+          'WHERE email="' + email + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     blockUser: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -198,6 +224,20 @@ module.exports = (connection) => {
         let request = [
           'UPDATE `users` ',
           'SET blocked=FALSE ',
+          'WHERE id="' + id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    confirmEmail: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET confirmed=TRUE ',
           'WHERE id="' + id + '";'
         ].join('');
 
@@ -449,6 +489,25 @@ module.exports = (connection) => {
         'ADD `company_position` VARCHAR(255), ',
         'ADD `photo` VARCHAR(8000), ',
         'ADD FOREIGN KEY (company) REFERENCES company(id);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnConfirmed: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `confirmed` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnConfirmToken: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `confirmToken` VARCHAR(255);'
       ].join('');
 
       return connection.query(request, cb);
