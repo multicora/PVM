@@ -7,7 +7,6 @@
     '$location',
     '$mdToast',
     '$mdDialog',
-    '$timeout',
     'libraryService',
     'uploadService',
     'conversationsService',
@@ -17,20 +16,20 @@
     $location,
     $mdToast,
     $mdDialog,
-    $timeout,
     libraryService,
     uploadService,
     conversationsService,
     uploadRecordPopupService
   ) {
     var vm = this;
-    vm.showUploadPopup = true;
     var confirm = $mdDialog.confirm({
-      textContent: 'Are you shure?',
-      ok: 'Yes',
-      cancel: 'No'
+      title: 'Are you shure?',
+      textContent: 'This action can`t be undone',
+      ok: 'Delete',
+      cancel: 'Cancel'
     });
 
+    vm.showUploadPopup = true;
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendButton = true;
