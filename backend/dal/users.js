@@ -207,6 +207,20 @@ module.exports = (connection) => {
       });
     },
 
+    confirmEmail: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `users` ',
+          'SET confirmed=TRUE ',
+          'WHERE id="' + id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     newPassword: (resetToken, password) => {
       return new Promise((resolve, reject) => {
 
@@ -449,6 +463,16 @@ module.exports = (connection) => {
         'ADD `company_position` VARCHAR(255), ',
         'ADD `photo` VARCHAR(8000), ',
         'ADD FOREIGN KEY (company) REFERENCES company(id);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnConfirmed: function (cb) {
+      const request = [
+        'ALTER TABLE `users` ',
+        'ADD `confirmed` BOOLEAN ',
+        'DEFAULT FALSE;'
       ].join('');
 
       return connection.query(request, cb);
