@@ -22,13 +22,14 @@
     uploadRecordPopupService
   ) {
     var vm = this;
-    vm.showUploadPopup = true;
-    var confirm = $mdDialog.confirm({
-      textContent: 'Are you shure?',
-      ok: 'Yes',
-      cancel: 'No'
+    var confirmDeletePopup = $mdDialog.confirm({
+      title: 'Are you shure?',
+      textContent: 'This action can`t be undone',
+      ok: 'Delete',
+      cancel: 'Cancel'
     });
 
+    vm.showUploadPopup = true;
     vm.showSendPopup = false;
     vm.recordedData = null;
     vm.showSendButton = true;
@@ -37,7 +38,12 @@
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data;
-        getThumbnails();
+        return libraryService.getThumbnails();
+      }).then(function (res) {
+        for (let i = 0; i < res.data.length; i++) {
+          vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
+        }
+      }, function (err) {
       });
     };
 
@@ -72,6 +78,11 @@
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Video saved!')
+            .position('bottom center')
+        );
       });
     };
 
@@ -121,36 +132,39 @@
     // Confirm popup for delete template
     function showConfirmDeleteTemplate(id) {
       $mdDialog
-        .show( confirm ).then(function() {
+        .show( confirmDeletePopup ).then(function() {
           libraryService.deleteTemplate(id).then(function() {
             getTemplates();
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Template deleted!')
+                .position('bottom center')
+              );
           });
         })
     };
 
     // Confirm popup for delete video
     function showConfirmDeleteVideo(id) {
-      var alertVideo = $mdDialog.alert({
-        textContent: 'This video can not be deleted.',
+      var alertErrorDelete = $mdDialog.alert({
+        textContent: 'This video can not be deleted because you use it in template or conversation.',
         ok: 'Ok'
       });
 
       $mdDialog
-        .show( confirm ).then(function() {
+        .show( confirmDeletePopup ).then(function() {
           libraryService.deleteVideo(id).then(function() {
             vm.getVideos();
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Video deleted!')
+                .position('bottom center')
+                .hideDelay(3000)
+            );
           }, function(err) {
-          $mdDialog.show( alertVideo );
+          $mdDialog.show( alertErrorDelete );
           });
         })
-    };
-
-    function getThumbnails() {
-      libraryService.getThumbnails().then(function (res) {
-        for (let i = 0; i < res.data.length; i++) {
-          vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
-        }
-      });
     };
 
     function getTemplates() {

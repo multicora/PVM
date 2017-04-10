@@ -138,6 +138,8 @@
   }
 
   .default-header {
+    padding-top: 16px;
+
     .back {
       margin-left: 20px;
     }
@@ -166,9 +168,14 @@
       font-size: 24px;
       font-weight: 500;
       display: inline-block;
-      max-width: 800px;
-      width: 80%;
+      max-width: 80%;
       box-sizing: border-box;
+      padding: 0 10px;
+      height: 30px;
+    }
+
+    .edit-button {
+      vertical-align: top;
     }
   }
 

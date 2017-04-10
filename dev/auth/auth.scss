@@ -7,6 +7,11 @@
     vertical-align: middle;
     width: 300px;
 
+    .auth-content {
+      background-color: #fdfdfd;
+      margin-top: 16px;
+    }
+
     .logo {
       max-width: 300px;
     }
@@ -20,6 +25,7 @@
 
     .login-form {
       text-align: left;
+      padding-top: 32px;
 
       input {
         outline: none;
@@ -27,7 +33,6 @@
       }
 
       .button-container {
-        text-align: right;
         width: 100%;
 
         a {
@@ -35,22 +40,29 @@
         }
       }
 
-      .login-button {
-        background-color:  #dddddd;
-        border: none;
-        color: $font-color-buttons;
-        cursor: pointer;
-        font-size: 14px;
-        height: 36px;
-        margin-top: 25px;
-        outline: none;
-        text-transform: uppercase;
-        width: 97px;
+      .forgot-password-btn {
+        line-height: 36px;
+        float: left;
+        vertical-align: middle;
+        margin-left: 16px;
       }
 
-      .login-button:disabled {
-        color: $font-color-buttons-disabled;
-        cursor: default;
+      .forgot-password-btn {
+        font-size: 12px;
+        color: rgba(0,0,0,.24);
+        transition: .1s;
+      }
+
+      .forgot-password-btn:hover {
+        font-size: 13px;
+        color: rgba(0,0,0,.54);
+        text-decoration: underline;
+      }
+
+      .login-btn,
+      .register-btn {
+        float: right;
+        margin-right: 16px;
       }
 
       .error {

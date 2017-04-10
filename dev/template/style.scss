@@ -1,11 +1,10 @@
 .template {
   .edit-button {
-    margin-left: 10px;
+    margin-left: 16px;
     border: none;
     background: none;
     vertical-align: middle;
-    visibility: hidden;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.24);
   }
 
   .placeholder {
@@ -15,16 +14,20 @@
 
   .upload {
     border: none;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.24);
     display: inline-block;
 
     i {
       vertical-align: middle;
     }
 
-    .placeholder {
+    .upload-button-text {
       font-style: inherit;
     }
+  }
+
+  .upload:hover {
+    color: rgba(0, 0, 0, 0.54);
   }
 
   .logo-upload {
@@ -35,15 +38,29 @@
 
   .title {
     margin: 0;
+    max-width: 80%;
     .placeholder {
-      color: rgba(0, 0, 0, 0.24)
+      color: rgba(0, 0, 0, 0.24);
+      width: 310px;
     }
   }
 
-  .title-input {
-    font-size: 24px;
-    text-align: center;
+  .title-input-container {
+    margin: 0;
     padding: 0;
+    height: 30px;
+    width: 310px;
+  }
+
+  .title-input {
+    font-size: 20px;
+    letter-spacing: 0;
+    font-family: 'Roboto Regular';
+  }
+
+  .title-input::placeholder {
+    font-style: italic;
+    font-size: 24px;
   }
 
   .user-name input,
@@ -51,8 +68,15 @@
     display: inline-block;
     width: 160px;
     padding: 0;
+    font-family: 'Roboto Regular';
   }
 
+  .role-input-container,
+  .name-input-container {
+    margin: 0;
+    padding: 0;
+  }
+  
   .name-input {
     font-size: 20px;
   }
@@ -74,17 +98,17 @@
   .message:hover,
   .title-container:hover,
   .logo:hover,
-  .videoContent:hover,
   .user-name:hover,
   .user-role:hover {
     .edit-button {
-      visibility: visible;
+      color: rgba(0, 0, 0, .54);
     }
   }
 
   .files {
     .edit-button {
-      visibility: visible;
+      display: none;
+      color: rgba(0, 0, 0, .54);
     }
   }
 
