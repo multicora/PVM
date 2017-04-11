@@ -2,6 +2,11 @@
 
 const Boom = require('boom');
 const utils = require('../utils.js');
+const template = require('../services/mailTemplate.js');
+const mailer = require('../services/mailer.js');
+const config = require('../config.js');
+
+const EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
 
 module.exports = function (server, DAL) {
 const usersController = require('../controllers/users.js')(DAL);
@@ -50,7 +55,7 @@ const usersController = require('../controllers/users.js')(DAL);
               reply(Boom.unauthorized('The username or password is incorrect'));
             }
           } else {
-            reply(Boom.unauthorized('Confirm your email'));
+            reply({'key': EMAIL_IS_NOT_CONFIRMED});
           }
         }, () => {
           reply(Boom.unauthorized('The username or password is incorrect'));
@@ -104,6 +109,55 @@ const usersController = require('../controllers/users.js')(DAL);
           }
         }, () => {
           reply(Boom.unauthorized('The username or password is incorrect'));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/resend-confirm-mail         Request for resend confirm user mail
+   *
+   * @apiParam {String}   email                   email.
+   *
+   * @apiName ResendConfirmMail
+   * @apiGroup Users
+   *
+   *
+   * @apiSuccess {String}   status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/resend-confirm-mail',
+    config: {
+      handler: function (request, reply) {
+        DAL.users.getUserByEmail(request.payload.email).then(res => {
+          let serverUrl = utils.getServerUrl(request) + '/login/' + res.confirmToken;
+            const message = [
+              'Welcome to BizKonect App!'
+            ].join('\n');
+
+            const mail = {
+              to: res.email,
+              subject: 'Confirm email',
+              text: message,
+              html: template.templateForWelcome(serverUrl)
+            };
+
+            mailer(config).send(mail).then(
+              () => {
+                reply({'status': 'success'});
+              }, (err) => {
+                reply(Boom.badImplementation(err.message, err));
+              }
+            );
+        }, err => {
+          reply(Boom.badImplementation(err.message, err));
         });
       }
     }
