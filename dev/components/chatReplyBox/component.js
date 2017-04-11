@@ -9,11 +9,10 @@
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = [
+  ];
+  function ctrl(
+  ) {
     var vm = this;
-    vm.activateTextArea = function() {
-      vm.class = 'active';
-    }
   }
 })(angular);
