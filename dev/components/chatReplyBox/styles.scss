@@ -1,5 +1,4 @@
 .chat-reply-box {
-  display: none;  // For user testing we shouldent show this block
   max-width: 600px;
   width: 100%;
   margin: 24px auto;
@@ -9,25 +8,19 @@
     background-color: #fff;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     border-radius: 2px;
-    
+    width: 100%;
+    padding: 16px 16px 24px 16px;
+    box-sizing: border-box;
   }
 
   .chat-reply-text {
-    outline: none;
-    resize: none;
-    padding: 16px 16px 0 16px;
-    word-wrap: break-word;
     font-size: 14px;
-    box-sizing: border-box;
+    width: 100%;
+    border-bottom: none;
   }
 
   .chat-reply-text::placeholder {
     font-size: 14px;
-  }
-
-  .active {
-    height: 80px;
-    transition: 0.5s;
   }
 
   .send {
