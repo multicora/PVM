@@ -27,5 +27,8 @@ module.exports = function(connection){
   // Company
   DAL.company = require('./company.js')(connection);
 
+  // Chat
+  DAL.chat = require('./chat.js')(connection);
+
   return DAL;
 };

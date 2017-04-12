@@ -13,7 +13,6 @@
       'messageReceived': '[in][time]%time%[/time]: [user]%name%[/user]: %text%[/in]',
       'userSplit': '[sys][time]%time%[/time]: Пользователь [user]%name%[/user] покинул чат.[/sys]'
     };
-    var url = 'ws://localhost:8080';
     var socket;
 
     socket = io();
