@@ -13,7 +13,7 @@ module.exports = function(connection) {
         ].join('');
 
         connection.query(request, function (err) {
-          err ? reject() : resolve();
+          err ? reject(err) : resolve();
         });
       });
     },

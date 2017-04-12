@@ -7,13 +7,15 @@
     '$routeParams',
     '$location',
     'conversationsService',
-    'profileService'
+    'profileService',
+    'chat'
   ];
   function ctrl(
     $routeParams,
     $location,
     conversationsService,
-    profileService
+    profileService,
+    chat
   ) {
     var vm = this;
 
@@ -34,6 +36,10 @@
           type: 'video/mp4'
         }]
       };
+    });
+
+    chat.connect().then(function (chatInstance) {
+      chatInstance.send('Test');
     });
 
     vm.back = function (event) {
