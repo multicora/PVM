@@ -29,6 +29,10 @@
           resolve({
             send: function (msg) {
               socket.send(escape(msg));
+            },
+
+            message: function (msg) {
+              console.log(111111111);
             }
           });
         });
