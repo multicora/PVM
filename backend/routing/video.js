@@ -34,8 +34,7 @@ module.exports = function (server, DAL) {
             reply();
           },
           function (err) {
-            console.log('Error:');
-            console.log(new Error(err));
+            console.log(err);
             reply(Boom.badImplementation(500, err));
           }
         );

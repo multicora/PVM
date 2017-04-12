@@ -53,8 +53,8 @@ function startServer(tls) {
         _.bind(registerAuth, null, server, DAL)
       ).then(
         _.bind(registerRouting, null, server, DAL)
-      // ).then(
-      //   _.bind(registerSocket, null, server)
+      ).then(
+        _.bind(registerSocket, null, server)
       ).then(
         _.bind(run, null, server)
       ).then(
@@ -159,14 +159,14 @@ function run(server) {
   );
 }
 
-// function registerSocket(server) {
-//   return new Promise(
-//     function (resolve, reject) {
-//       const io = require('socket.io')(server);
-//       resolve();
-//     }
-//   );
-// }
+function registerSocket(server) {
+  return new Promise(
+    function (resolve) {
+      require('./services/chat.js')(server);
+      resolve();
+    }
+  );
+}
 
 function registerAuth(server, DAL) {
   const usersController = require('./controllers/users.js')(DAL);
