@@ -2,6 +2,21 @@
 
 module.exports = (connection) => {
   return {
+    add: (data) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'INSERT INTO ',
+            '`chat` (`id`, `message`, `conversationId`, `authorId`, `date`) ',
+            'VALUES (NULL, "' + data.message + '", "' + data.conversationId + '", "' +
+              data.authorId + '", "' + data.date + '");'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            // console.log(err, response);
+            err ? reject(err) : resolve(response);
+          });
+        });
+    },
 
     // For migrations
     createTable: (cb) => {

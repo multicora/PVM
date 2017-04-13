@@ -23,6 +23,7 @@
     vm.media = null;
     vm.user = null;
     vm.showUserHeader = true;
+    vm.sendMessage;
     getProfile();
 
     conversationsService.get($routeParams.id).then(function (res) {
@@ -39,13 +40,15 @@
     });
 
     chat.connect().then(function (chatInstance) {
-      console.log(111111111111111);
-      chatInstance.send('Test');
+      vm.sendMessage = function(message) {
+        chatInstance.send({
+          'message': message,
+          'authorId': vm.user.id,
+          'conversationId': vm.conversation.id
+        });
+      }
     });
 
-    vm.sendMessage = function(message) {
-      chat.message(message);
-    }
 
     vm.back = function (event) {
       event.stopPropagation();
