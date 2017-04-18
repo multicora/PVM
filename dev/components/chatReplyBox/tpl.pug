@@ -1,5 +1,5 @@
 .chat-reply-box
-  form(ng-submit="vm.sendMessage({$data: vm.message})")
+  form(ng-submit="vm.send()")
     md-input-container.text-container(aria-label="text input")
       label Type here to reply
       textarea.chat-reply-text(

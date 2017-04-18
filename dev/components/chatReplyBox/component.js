@@ -6,8 +6,7 @@
     controllerAs: 'vm',
     transclude: true,
     bindings: {
-      sendMessage: '&',
-      message: '<'
+      sendMessage: '&'
     }
   });
 
@@ -16,5 +15,9 @@
   function ctrl(
   ) {
     var vm = this;
+    vm.send = function () {
+      vm.sendMessage({$data: vm.message});
+      vm.message = null;
+    }
   }
 })(angular);
