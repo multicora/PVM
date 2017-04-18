@@ -66,7 +66,9 @@
             p.message
               span {{vm.conversation.message}}
 
-        chat-reply-box(send-message="vm.sendMessage($date)")
+        chat-list(list="vm.chatList")
+
+        chat-reply-box(send-message="vm.sendMessage($data)")
 
   footer
     .logo-container

@@ -471,7 +471,7 @@ module.exports = function (server, DAL) {
    * @apiSuccess {String}   chat.authorId                 Author id.
    * @apiSuccess {String}   chat.conversationId           Conversation Id.
    * @apiSuccess {String}   chat.date                     Date.
-   * @apiSuccess {Object[]} chat.message                  Message.
+   * @apiSuccess {String}   chat.message                  Message.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -481,7 +481,7 @@ module.exports = function (server, DAL) {
    *   authorId: 4,
    *   conversationId: 20,
    *   date: '0000-00-00 00:00:00',
-   *   message: {Object[]}
+   *   message: 'text'
    * ]}
    */
   server.route({

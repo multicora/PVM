@@ -40,8 +40,15 @@
     }).then(function() {
       return conversationsService.getChat($routeParams.id);
     }).then(function(res) {
-      vm.chat = res.data;
-      console.log(vm.chat);
+      vm.chatList = res.data;
+
+      vm.chatList.map(function(chat) {
+        if (chat.authorId != vm.user.id) {
+          chat.className = 'income';
+        } else {
+          chat.photo = vm.user.photo;
+        }
+      });
     });
 
     chat.connect().then(function (chatInstance) {
