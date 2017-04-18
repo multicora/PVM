@@ -3,8 +3,8 @@
     label Type here to reply
     textarea.chat-reply-text(
       aria-label="text input"
-      ng-model="vm.replyMessage")
+      ng-model="replyMessage")
   button.btn.mdl-button.send(
-    ng-click="vm.send"
-    ng-if="vm.replyMessage")
+    ng-click="vm.sendMessage({$data: replyMessage})"
+    ng-if="replyMessage")
     | Send

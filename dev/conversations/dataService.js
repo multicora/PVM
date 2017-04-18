@@ -37,5 +37,9 @@
     this.createTemplate = function (data) {
       return $http.post('/api/template', data);
     };
+
+    this.getChat = function (id) {
+      return $http.get('/api/chat/' + id);
+    };
   }
 })(angular);

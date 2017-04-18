@@ -468,27 +468,29 @@ module.exports = function (server, DAL) {
    *
    * @apiSuccess {Object[]} chat                          List of chat messages.
    * @apiSuccess {String}   chat.id                       Chat id.
-   * @apiSuccess {String}   chat.message                  Message.
    * @apiSuccess {String}   chat.authorId                 Author id.
    * @apiSuccess {String}   chat.conversationId           Conversation Id.
    * @apiSuccess {String}   chat.date                     Date.
+   * @apiSuccess {Object[]} chat.message                  Message.
    *
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
    * {[
    *   id: 1,
-   *   title: null,
-   *   message: null
+   *   authorId: 4,
+   *   conversationId: 20,
+   *   date: '0000-00-00 00:00:00',
+   *   message: {Object[]}
    * ]}
    */
   server.route({
     method: 'GET',
-    path: '/api/chat',
+    path: '/api/chat/{id}',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.chat.getByConversationId(request.payload).then(res => {
+        DAL.chat.getByConversationId(request.params.id).then(res => {
           reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));

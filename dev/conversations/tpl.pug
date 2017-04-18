@@ -66,9 +66,7 @@
             p.message
               span {{vm.conversation.message}}
 
-        chat-reply-box
-
-        button(ng-click="vm.sendMessage('hello')") SEND MEssage
+        chat-reply-box(send-message="vm.sendMessage($date)")
 
   footer
     .logo-container

@@ -37,6 +37,11 @@
           type: 'video/mp4'
         }]
       };
+    }).then(function() {
+      return conversationsService.getChat($routeParams.id);
+    }).then(function(res) {
+      vm.chat = res.data;
+      console.log(vm.chat);
     });
 
     chat.connect().then(function (chatInstance) {
@@ -48,7 +53,6 @@
         });
       }
     });
-
 
     vm.back = function (event) {
       event.stopPropagation();
