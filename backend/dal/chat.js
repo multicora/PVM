@@ -18,6 +18,20 @@ module.exports = (connection) => {
         });
     },
 
+    getByConversationId: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * ',
+          'FROM chat ',
+          'WHERE conversationId=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [

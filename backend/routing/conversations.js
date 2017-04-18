@@ -458,4 +458,42 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {get} /api/chat Request chat
+   * @apiName GetChat
+   * @apiGroup Chat
+   *
+   * @apiParam {string}   id                              Conversation id.
+   *
+   * @apiSuccess {Object[]} chat                          List of chat messages.
+   * @apiSuccess {String}   chat.id                       Chat id.
+   * @apiSuccess {String}   chat.message                  Message.
+   * @apiSuccess {String}   chat.authorId                 Author id.
+   * @apiSuccess {String}   chat.conversationId           Conversation Id.
+   * @apiSuccess {String}   chat.date                     Date.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {[
+   *   id: 1,
+   *   title: null,
+   *   message: null
+   * ]}
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/chat',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.chat.getByConversationId(request.payload).then(res => {
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };
