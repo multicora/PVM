@@ -1,10 +1,11 @@
 .chat-reply-box
-  md-input-container.text-container(aria-label="text input")
-    label Type here to reply
-    textarea.chat-reply-text(
-      aria-label="text input"
-      ng-model="replyMessage")
-  button.btn.mdl-button.send(
-    ng-click="vm.sendMessage({$data: replyMessage})"
-    ng-if="replyMessage")
-    | Send
+  form(ng-submit="vm.sendMessage({$data: vm.message})")
+    md-input-container.text-container(aria-label="text input")
+      label Type here to reply
+      textarea.chat-reply-text(
+        aria-label="text input"
+        ng-model="vm.message")
+    button.btn.mdl-button.send(
+      type="submit"
+      ng-if="vm.message")
+      | Send

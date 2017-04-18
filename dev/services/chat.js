@@ -17,9 +17,11 @@
             console.log(data);
           });
 
+          socket.on()
+
           resolve({
-            send: function (msg) {
-              socket.send(msg);
+            send: function (msg, cb) {
+              socket.emit('message', msg, cb);
             }
           });
         });

@@ -1,7 +1,7 @@
 .chat-list-container
   .message-container(
     ng-repeat="item in vm.list"
-    ng-class="vm.list.className"
+    ng-class="item.className"
   )
     .photo(ng-style="{backgroundImage: 'url('+ item.photo + ')' }")
     .message {{item.message}}

@@ -6,7 +6,8 @@
     controllerAs: 'vm',
     transclude: true,
     bindings: {
-      sendMessage: '&'
+      sendMessage: '&',
+      message: '<'
     }
   });
 

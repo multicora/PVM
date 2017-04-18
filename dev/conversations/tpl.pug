@@ -63,12 +63,14 @@
             ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null && vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'"
             ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
           .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'")
-            p.message
-              span {{vm.conversation.message}}
+            p.message {{vm.conversation.message}}
 
         chat-list(list="vm.chatList")
 
-        chat-reply-box(send-message="vm.sendMessage($data)")
+        chat-reply-box(
+          message="vm.message"
+          send-message="vm.sendMessage($data)"
+        )
 
   footer
     .logo-container

@@ -18,12 +18,14 @@
     chat
   ) {
     var vm = this;
+    var sendObj;
 
     vm.conversation = null;
     vm.media = null;
     vm.user = null;
     vm.showUserHeader = true;
     vm.sendMessage;
+
     getProfile();
 
     conversationsService.get($routeParams.id).then(function (res) {
@@ -53,10 +55,14 @@
 
     chat.connect().then(function (chatInstance) {
       vm.sendMessage = function(message) {
-        chatInstance.send({
+        sendObj = {
           'message': message,
           'authorId': vm.user.id,
           'conversationId': vm.conversation.id
+        }
+        chatInstance.send(sendObj, function() {
+          sendObj.photo = vm.user.photo;
+          vm.chatList.push(sendObj);
         });
       }
     });

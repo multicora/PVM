@@ -8,14 +8,14 @@ module.exports = function (server, DAL) {
   io.sockets.on('connection', function (socket) {
     // Т.к. чат простой - в качестве ников пока используем первые 5 символов от ID сокета
     var ID = socket.id.toString().substr(0, 5);
-    // Посылаем клиенту сообщение о том, что он успешно подключился и его имя
-    socket.json.send({'event': 'connected successful'});
-    // Навешиваем обработчик на входящее сообщение
-    socket.on('message', function (data) {
+
+    socket.on('message', function (data, cb) {
+      console.log(data);
       var date = new Date();
       data.date = date;
       DAL.chat.add(data);
-      socket.emit('income', data);
+      socket.broadcast.emit('income', data);
+      cb();
     });
     // При отключении клиента - уведомляем остальных
     socket.on('disconnect', function() {
