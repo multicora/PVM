@@ -36,12 +36,17 @@
 
     pubSub.on('incomeMessage', function(data) {
       data.className = 'income';
-      profileService.getProfilePhoto(data.authorId).then(function(res) {
-        vm.incomeUserPhoto = vm.incomeUserPhoto || res.data;
-      });
-      data.photo = vm.incomeUserPhoto;
-      vm.chatList.push(data);
-      $rootScope.$apply();
+      if (!vm.incomeUserPhoto) {
+        profileService.getProfilePhoto(data.authorId).then(function(res) {
+          vm.incomeUserPhoto = res.data;
+          data.photo = vm.incomeUserPhoto;
+          vm.chatList.push(data);
+        });
+      } else {
+        data.photo = vm.incomeUserPhoto;
+        vm.chatList.push(data);
+        $rootScope.$apply();
+      }
     });
 
     conversationsService.get($routeParams.id).then(function (res) {

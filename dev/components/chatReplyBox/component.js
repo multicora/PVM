@@ -19,5 +19,13 @@
       vm.sendMessage({$data: vm.message});
       vm.message = null;
     }
+
+    vm.onkeyDown = function(event) {
+      event.stopPropagation();
+      var keyCode = event.which || event.keyCode;
+      if (keyCode === 13 && vm.message) {
+        vm.send();
+      }
+    }
   }
 })(angular);
