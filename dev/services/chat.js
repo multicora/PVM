@@ -4,8 +4,14 @@
 
   app.service('chat', service);
 
-  service.$inject = ['$q'];
-  function service($q) {
+  service.$inject = [
+    '$q',
+    'pubSub'
+    ];
+  function service(
+    $q,
+    pubSub
+  ) {
     var socket;
 
     socket = io();
@@ -13,8 +19,9 @@
     this.connect = function () {
       return $q(function (resolve) {
         socket.on('connect', function () {
+
           socket.on('income', function (data) {
-            console.log(data);
+            pubSub.emit('incomeMessage', data);
           });
 
           socket.on()

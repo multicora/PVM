@@ -1,3 +1,4 @@
+'use strict';
 (function (angular) {
   var app = angular.module('app');
 
@@ -8,14 +9,16 @@
     '$location',
     'conversationsService',
     'profileService',
-    'chat'
+    'chat',
+    'pubSub'
   ];
   function ctrl(
     $routeParams,
     $location,
     conversationsService,
     profileService,
-    chat
+    chat,
+    pubSub
   ) {
     var vm = this;
     var sendObj;
@@ -27,6 +30,11 @@
     vm.sendMessage;
 
     getProfile();
+
+    pubSub.on('incomeMessage', function(data) {
+      data.className = 'income';
+      vm.chatList.push(data);
+    });
 
     conversationsService.get($routeParams.id).then(function (res) {
       vm.conversation = res.data;
