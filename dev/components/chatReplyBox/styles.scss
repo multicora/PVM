@@ -1,8 +1,15 @@
+.chat-reply-container {
+  position: fixed;
+  width: 100%;
+  bottom: 60px;
+  left: 0;
+}
+
 .chat-reply-box {
   max-width: 600px;
   width: 100%;
-  margin: 24px auto;
   position: relative;
+  margin: 0 auto;
 
   .text-container {
     background-color: #fff;
@@ -23,14 +30,15 @@
     font-size: 14px;
   }
 
+  .send {
+    margin-top: 0;
+    position: absolute;
+    right: 10px;
+    bottom: 25px;
+  }
+
   @media (max-width: 650px) {
     width: 90%;
 
-    .send {
-      margin-top: 0;
-      position: absolute;
-      right: 10px;
-      bottom: 25px;
-    }
   }
 }
