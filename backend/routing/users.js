@@ -271,13 +271,26 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       plugins: {
-        hapiRouteAcl: {
-          permissions: ['users:edit']
-        }
+        permissions: ['users:edit']
       },
       handler: function (request, reply) {
         DAL.users.getUserForEdit(request.params.id).then(function(res) {
           reply(res);
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/api/profile-photo/{id}',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.users.getUserById(request.params.id).then(function(res) {
+          reply(res.photo);
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });

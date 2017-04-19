@@ -10,6 +10,10 @@
       return $http.get('/api/profile');
     };
 
+    this.getProfilePhoto = function (id) {
+      return $http.get('/api/profile-photo/' + id);
+    };
+
     this.getCompany = function (id) {
       return $http.post('/api/company', id);
     };

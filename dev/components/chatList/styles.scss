@@ -22,6 +22,14 @@
     border: 10px solid transparent;
     position: relative;
     display: inline-block;
+
+    @media (max-width: 650px) {
+      width: 300px;
+    }
+
+    @media (max-width: 450px) {
+      width: 200px;
+    }
   }
 
   .message:after {
@@ -40,6 +48,7 @@
 
     .photo {
       float: right;
+      margin-right: 10px;
     }
 
     .message {
@@ -55,6 +64,14 @@
       position: absolute;
       top: -10px;
       left: 520px;
+
+      @media (max-width: 650px) {
+        left: 320px;
+      }
+
+      @media (max-width: 450px) {
+        left: 220px;
+      }
     }
   }
 

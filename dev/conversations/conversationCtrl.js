@@ -7,6 +7,7 @@
   ctrl.$inject = [
     '$routeParams',
     '$location',
+    '$rootScope',
     'conversationsService',
     'profileService',
     'chat',
@@ -15,6 +16,7 @@
   function ctrl(
     $routeParams,
     $location,
+    $rootScope,
     conversationsService,
     profileService,
     chat,
@@ -26,6 +28,7 @@
     vm.conversation = null;
     vm.media = null;
     vm.user = null;
+    vm.incomeUserPhoto = null;
     vm.showUserHeader = true;
     vm.sendMessage;
 
@@ -33,7 +36,12 @@
 
     pubSub.on('incomeMessage', function(data) {
       data.className = 'income';
+      profileService.getProfilePhoto(data.authorId).then(function(res) {
+        vm.incomeUserPhoto = vm.incomeUserPhoto || res.data;
+      });
+      data.photo = vm.incomeUserPhoto;
       vm.chatList.push(data);
+      $rootScope.$apply();
     });
 
     conversationsService.get($routeParams.id).then(function (res) {
@@ -54,9 +62,8 @@
 
       vm.chatList.map(function(chat) {
         if (chat.authorId != vm.user.id) {
+          vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
           chat.className = 'income';
-        } else {
-          chat.photo = vm.user.photo;
         }
       });
     });
@@ -71,6 +78,7 @@
         chatInstance.send(sendObj, function() {
           sendObj.photo = vm.user.photo;
           vm.chatList.push(sendObj);
+          $rootScope.$apply();
         });
       }
     });

@@ -12,7 +12,6 @@ module.exports = (connection) => {
           ].join('');
 
           connection.query(request, (err, response) => {
-            // console.log(err, response);
             err ? reject(err) : resolve(response);
           });
         });
