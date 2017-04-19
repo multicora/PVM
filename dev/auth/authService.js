@@ -14,14 +14,20 @@
   ) {
     this.login = function (login, password) {
       return $http.post('/api/login', {
-        login: login,
-        password: password
+        'login': login,
+        'password': password
       });
     };
 
     this.loginConfirm = function (confirmToken) {
       return $http.post('/api/confirm-email', {
-        confirmToken: confirmToken
+        'confirmToken': confirmToken
+      });
+    };
+
+    this.resendConfirmMail = function (email) {
+      return $http.post('/api/resend-confirm-mail', {
+        'email': email
       });
     };
 

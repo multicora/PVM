@@ -139,7 +139,7 @@
               $mdToast.simple()
                 .textContent('Template deleted!')
                 .position('bottom center')
-              );
+            );
           });
         })
     };
