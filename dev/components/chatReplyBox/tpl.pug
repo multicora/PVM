@@ -5,6 +5,7 @@
         label Type here to reply
         textarea.chat-reply-text(
           aria-label="text input"
+          maxlength="300"
           ng-keydown="vm.onkeyDown($event)"
           ng-model="vm.message")
       button.btn.mdl-button.send(

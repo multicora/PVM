@@ -42,7 +42,7 @@ module.exports = (connection) => {
           'conversationId int(255), ',
           'authorId int(255), ',
           'date datetime, ',
-          'message varchar(8000), ',
+          'message varchar(300), ',
           'PRIMARY KEY (id), ',
           'FOREIGN KEY (authorId) REFERENCES users(id), ',
           'FOREIGN KEY (conversationId) REFERENCES conversations(id) ',
