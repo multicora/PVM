@@ -54,6 +54,8 @@ function startServer(tls) {
       ).then(
         _.bind(registerRouting, null, server, DAL)
       ).then(
+        _.bind(registerSocket, null, server, DAL)
+      ).then(
         _.bind(run, null, server)
       ).then(
         _.bind(showSuccessMessage, null, server),
@@ -153,6 +155,15 @@ function run(server) {
       server.start((err) => {
         err ? reject(err) : resolve();
       });
+    }
+  );
+}
+
+function registerSocket(server, DAL) {
+  return new Promise(
+    function (resolve) {
+      require('./services/chat.js')(server, DAL);
+      resolve();
     }
   );
 }

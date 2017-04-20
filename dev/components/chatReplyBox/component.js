@@ -6,14 +6,26 @@
     controllerAs: 'vm',
     transclude: true,
     bindings: {
+      sendMessage: '&'
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = [
+  ];
+  function ctrl(
+  ) {
     var vm = this;
-    vm.activateTextArea = function() {
-      vm.class = 'active';
+    vm.send = function () {
+      vm.sendMessage({$data: vm.message});
+      vm.message = null;
+    }
+
+    vm.onkeyDown = function(event) {
+      event.stopPropagation();
+      var keyCode = event.which || event.keyCode;
+      if (keyCode === 13 && vm.message) {
+        vm.send();
+      }
     }
   }
 })(angular);
