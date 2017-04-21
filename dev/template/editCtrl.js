@@ -9,6 +9,7 @@
     '$location',
     '$mdToast',
     'conversationsService',
+    'uploadRecordPopupService',
     'profileService',
     'libraryService',
     'Socialshare'
@@ -19,6 +20,7 @@
     $location,
     $mdToast,
     conversationsService,
+    uploadRecordPopupService,
     profileService,
     libraryService,
     Socialshare
@@ -35,13 +37,19 @@
     vm.templateId = $routeParams.templateId;
     getTemplate();
     getProfile();
-    getVideos();
 
-    libraryService.getThumbnails().then(function (res) {
-      for (let i = 0; i < res.data.length; i++) {
-        vm.list[i].attributes.thumbnail = res.data[i].attributes;
-      }
-    });
+    vm.getVideos = function() {
+      libraryService.getVideos().then(function (res) {
+        vm.list = res.data;
+        return libraryService.getThumbnails();
+      }).then(function (res) {
+        for (let i = 0; i < res.data.length; i++) {
+          vm.list[i].attributes.thumbnail = res.data[i].attributes;
+        }
+      });
+    };
+
+    vm.getVideos();
 
     vm.edit = function(element) {
       element.editMode = true;
@@ -156,6 +164,15 @@
       });
     }
 
+    vm.uploadBtnClick = function () {
+      console.log(11111111111);
+      uploadRecordPopupService.showUploadPopup();
+    }
+
+    vm.recordBtnClick = function () {
+      uploadRecordPopupService.showRecordPopup();
+    };
+
     $scope.convertToBase64LogoTemplate = function(event) {
       var f = document.getElementById('logo').files[0],
           r = new FileReader(),
@@ -224,12 +241,6 @@
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
         vm.user.name = res.data.firstName + ' ' +res.data.secondName;
-      });
-    };
-
-    function getVideos() {
-      libraryService.getVideos().then(function (res) {
-        vm.list = res.data;
       });
     };
 
