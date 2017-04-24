@@ -27,7 +27,7 @@
   .messages-container
     p.content-title Recent activities
     .message-content(ng-repeat="item in vm.messages")
-      p.time 5 min
+      p.time {{item.passedTime}}
       p.message.ellipsis {{item.message}}
       .button-container
         md-button.message-button(ng-click="vm.redirectToConversation(item.conversationId)") reply

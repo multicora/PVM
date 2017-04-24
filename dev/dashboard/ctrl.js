@@ -25,7 +25,33 @@
     getConversation();
     conversationsService.getChatForDashboard().then(function (res) {
       vm.messages = res.data;
+      var length = vm.messages.length;
+      for (var i = 0; i < length-1; i++) {
+        for (var j = 0; j < length-1-i; j++) {
+          if (vm.messages[j+1].date > vm.messages[j].date) {
+            var first = vm.messages[j+1];
+            vm.messages[j+1] = vm.messages[j];
+            vm.messages[j] = first;
+          }
+        }
+      }
+
       vm.messages = vm.messages.slice(0, 5);
+      for (var i = 0; i < vm.messages.length; i++) {
+        var date = new Date();
+        vm.messages[i].date = new Date(vm.messages[i].date);
+
+        vm.messages[i].passedTime = date.getTime() - vm.messages[i].date.getTime();
+
+        if (vm.messages[i].passedTime < 360000) {
+          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getMinutes() + 'min';
+        } else if (vm.messages[i].passedTime < 86400000) {
+          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getHours() + 'hrs';
+        } else if (vm.messages[i].passedTime){
+          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getDays() + 'days';
+        }
+      }
+
     });
 
     vm.configMessage = {
