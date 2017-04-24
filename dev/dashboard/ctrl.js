@@ -5,11 +5,13 @@
 
   ctrl.$inject = [
     '$scope',
+    '$location',
     'conversationsService',
     'uploadService',
   ];
   function ctrl(
     $scope,
+    $location,
     conversationsService,
     uploadService
   ) {
@@ -18,9 +20,13 @@
     vm.showUploadPopup = false;
     vm.sentConversation = 0;
     vm.openedConversation = 0;
+    vm.messages;
 
     getConversation();
-    conversationsService.getChatForDashboard();
+    conversationsService.getChatForDashboard().then(function (res) {
+      vm.messages = res.data;
+      vm.messages = vm.messages.slice(0, 5);
+    });
 
     vm.configMessage = {
       "labels": false,
@@ -73,6 +79,10 @@
 
     vm.uploadEnd = function () {
       vm.closeUploadPopup();
+    };
+
+    vm.redirectToConversation = function (id) {
+      $location.path('conversation/' + id);
     }
 
     function getConversation() {

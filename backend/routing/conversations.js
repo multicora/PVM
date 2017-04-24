@@ -564,7 +564,13 @@ module.exports = function (server, DAL) {
 
           return Promise.all(promises);
         }).then(res => {
-          reply(res);
+          let chats = [];
+          res.map( chat => {
+            for (let i = 0; i < chat.length; i++) {
+              chats.push(chat[i]);
+            }
+          });
+          reply(chats);
         }, err => {
           reply(Boom.badImplementation(err, err));
         });

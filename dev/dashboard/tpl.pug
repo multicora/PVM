@@ -26,11 +26,11 @@
         //- .chart-video(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configVideo")
   .messages-container
     p.content-title Recent activities
-    .message-content(ng-repeat="item in [1, 2, 3 , 4, 5]")
+    .message-content(ng-repeat="item in vm.messages")
       p.time 5 min
-      p.message.ellipsis Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate inventore soluta reiciendis est suscipit, deleniti possimus optio adipisci, obcaecati cum consectetur dolore ad dolores, culpa delectus quam aliquam. Commodi, vel.
+      p.message.ellipsis {{item.message}}
       .button-container
-        md-button.message-button reply
+        md-button.message-button(ng-click="vm.redirectToConversation(item.conversationId)") reply
         //- md-button.message-button view
 
   video-fab-buttons(
