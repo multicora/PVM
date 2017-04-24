@@ -165,7 +165,6 @@
     }
 
     vm.uploadBtnClick = function () {
-      console.log(11111111111);
       uploadRecordPopupService.showUploadPopup();
     }
 
