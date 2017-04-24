@@ -552,11 +552,21 @@ module.exports = function (server, DAL) {
         let conversationsArr = [];
 
         DAL.conversations.getByAuthor(author.id).then(res => {
+          let promises = [];
+
           res.map( conversation => {
             conversationsArr.push(conversation.id);
           });
 
-          console.log(conversationsArr);
+          conversationsArr.map( id => {
+            promises.push(DAL.chat.getByConversationId(id));
+          });
+
+          return Promise.all(promises);
+        }).then(res => {
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
         });
       }
     }
