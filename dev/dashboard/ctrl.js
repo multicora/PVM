@@ -20,6 +20,7 @@
     vm.openedConversation = 0;
 
     getConversation();
+    conversationsService.getChatForDashboard();
 
     vm.configMessage = {
       "labels": false,
