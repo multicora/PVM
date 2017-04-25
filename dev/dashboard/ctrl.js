@@ -44,7 +44,9 @@
 
         vm.messages[i].passedTime = date.getTime() - vm.messages[i].date.getTime();
 
-        if (vm.messages[i].passedTime < 360000) {
+        if (vm.messages[i].passedTime < 60000) {
+          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getSeconds() + 'sec';
+        } else if (vm.messages[i].passedTime < 3600000) {
           vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getMinutes() + 'min';
         } else if (vm.messages[i].passedTime < 86400000) {
           vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getHours() + 'hrs';

@@ -45,6 +45,8 @@
       } else {
         data.photo = vm.incomeUserPhoto;
         vm.chatList.push(data);
+
+        updateChatStatus(data.id);
         $rootScope.$apply();
       }
     });
@@ -64,13 +66,17 @@
       return conversationsService.getChat($routeParams.id);
     }).then(function(res) {
       vm.chatList = res.data;
+      var incomeChats = [];
 
       vm.chatList.map(function(chat) {
         if (chat.authorId != vm.user.id) {
           vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
           chat.className = 'income';
+          incomeChats.push(chat);
         }
       });
+
+      updateChatStatus(incomeChats[incomeChats.length - 1].id);
     });
 
     chat.connect().then(function (chatInstance) {
@@ -105,6 +111,13 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
+      });
+    };
+
+    function updateChatStatus(id) {
+      conversationsService.changeChatStatus({
+        messageId: id,
+        conversationId: $routeParams.id
       });
     };
   }

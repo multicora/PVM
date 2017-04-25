@@ -567,10 +567,61 @@ module.exports = function (server, DAL) {
           let chats = [];
           res.map( chat => {
             for (let i = 0; i < chat.length; i++) {
-              chats.push(chat[i]);
+              if (chat[i].authorId !== author.id) {
+                chats.push(chat[i]);
+              }
             }
           });
           reply(chats);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/chat-status Request for update chat status
+   * @apiName UpdateChatStatus
+   * @apiGroup Chat
+   *
+   * @apiParam {string}   messageId                              Chat message id.
+   * @apiParam {string}   conversationId                         Conversation id.
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/chat-status',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        var data = {
+          conversationId: request.payload.conversationId,
+          userId: request.auth.credentials.id,
+          messageId: request.payload.messageId
+        };
+
+        DAL.chat.getStatusTable(data).then((res) => {
+          var result;
+          if (res) {
+            data.id = res.id;
+            result = DAL.chat.updateStatus(data);
+          } else {
+            result = DAL.chat.createStatusTable(data);
+          }
+
+          return result;
+        }).then(() => {
+          reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(err, err));
         });
