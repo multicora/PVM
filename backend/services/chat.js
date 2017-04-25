@@ -8,8 +8,11 @@ module.exports = function (server, DAL) {
     socket.on('message', function (data, cb) {
       var date = new Date();
       data.date = date;
-      DAL.chat.add(data);
-      socket.broadcast.emit('income', data);
+      DAL.chat.add(data).then(() => {
+        socket.broadcast.emit('income', data);
+      }, err => {
+        console.log('error', err);
+      });
       cb();
     });
 
