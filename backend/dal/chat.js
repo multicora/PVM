@@ -50,6 +50,16 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
+    },
+
+    addColumnViewed: (cb) => {
+      const request = [
+        'ALTER TABLE `chat` ',
+        'ADD `viewed` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
     }
   };
 };
