@@ -6,7 +6,10 @@ header.main-header
       i.material-icons menu
     img.logo.pointer(src='/files/images/logo_bizkonect.svg')
     .notification-container
-      .material-icons.mdl-badge.mdl-badge--overlap.email-notification(data-badge="") email
+      .material-icons.mdl-badge.mdl-badge--overlap.email-notification(
+        ng-if="vm.notViewed"
+        data-badge="{{vm.notViewed}}"
+        ng-click="vm.redirect('/dashboard')") email
   md-sidenav.md-sidenav-left(
     md-component-id="left"
     md-whiteframe="4"

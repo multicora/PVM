@@ -510,16 +510,6 @@ module.exports = function (server, DAL) {
             chats[i].photo = res[i].photo.toString();
           }
 
-          return chats;
-        }).then(() => {
-          var promises = [];
-
-          chats.map(function(chat) {
-            promises.push( DAL.chat.markAsViewed(chat.id) );
-          });
-
-          return Promise.all(promises);
-        }).then(() => {
           reply(chats);
         }, err => {
           reply(Boom.badImplementation(err, err));

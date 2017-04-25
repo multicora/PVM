@@ -25,9 +25,10 @@
     getConversation();
     conversationsService.getChatForDashboard().then(function (res) {
       vm.messages = res.data;
+
       var length = vm.messages.length;
-      for (var i = 0; i < length-1; i++) {
-        for (var j = 0; j < length-1-i; j++) {
+      for (var i = 0; i < length - 1; i++) {
+        for (var j = 0; j < length - 1 - i; j++) {
           if (vm.messages[j+1].date > vm.messages[j].date) {
             var first = vm.messages[j+1];
             vm.messages[j+1] = vm.messages[j];
