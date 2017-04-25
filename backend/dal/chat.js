@@ -8,7 +8,7 @@ module.exports = (connection) => {
             'INSERT INTO ',
             '`chat` (`id`, `message`, `conversationId`, `authorId`, `date`) ',
             'VALUES (NULL, "' + data.message + '", "' + data.conversationId + '", "' +
-              data.authorId + '", "' + data.date + '");'
+              data.authorId + '", NOW());'
           ].join('');
 
           connection.query(request, (err, response) => {
