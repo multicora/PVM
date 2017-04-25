@@ -17,10 +17,17 @@ $mobile-width: 567px;
 
   .navigation-components {
     display: inline-block;
+    width: 100%;
   }
 
-  .right {
+  .notification-container {
     float: right;
+    margin-right: 50px;
+    line-height: 64px;
+  }
+
+  .email-notification {
+    vertical-align: middle;
   }
 
   .logo {
