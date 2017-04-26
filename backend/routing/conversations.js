@@ -605,18 +605,20 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        chatCtrl.startTimer(1223, 123);
-        var data = {
-          conversationId: request.payload.conversationId,
-          userId: request.auth.credentials.id,
+        let user = request.auth.credentials;
+        let conversationId = request.payload.conversationId;
+        let data = {
+          conversationId: conversationId,
+          userId: user.id,
           messageId: request.payload.messageId
         };
 
         DAL.chat.getStatusTable(data).then((res) => {
-          var result;
+          let result;
           if (res) {
             data.id = res.id;
             result = DAL.chat.updateStatus(data);
+            chatCtrl.clearTimer(conversationId, user.id);
           } else {
             result = DAL.chat.createStatusTable(data);
           }

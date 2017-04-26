@@ -12,12 +12,11 @@ module.exports = function (DAL) {
     },
 
     startTimer: (conversationId, userId) => {
-      console.log(timersArr);
       var changed = 0;
 
       timersArr.map(item => {
-        if (item.conversationId) {
-          item.conversationId.userId = sendNotification(userId);
+        if (item[conversationId]) {
+          item[conversationId][userId] = sendNotification(userId);
           changed++;
         }
       });
@@ -43,6 +42,14 @@ module.exports = function (DAL) {
           return setTimeout(mailer(config).send(mail), config.notification.time * 60000);
         });
       };
+    },
+
+    clearTimer: (conversationId, userId) => {
+      timersArr.map(item => {
+        if (item[conversationId][userId]) {
+          clearTimeout(item[conversationId][userId]);
+        }
+      });
     },
   };
 };
