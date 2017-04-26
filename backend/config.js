@@ -50,6 +50,9 @@ var config = {
   mailGun: {
     apiKey: '',
     domain: ''
+  },
+  notification: {
+    time: 1 // Should be in minutes
   }
 };
 

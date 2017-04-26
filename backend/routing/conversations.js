@@ -8,6 +8,7 @@ const template = require('../services/mailTemplate.js');
 const utils = require('../utils.js');
 
 module.exports = function (server, DAL) {
+  const chatCtrl = require('../controllers/chat.js')(DAL);
   const videoCtrl = require('../controllers/video.js')(DAL);
   const usersCtrl = require('../controllers/users.js')(DAL);
   const notificationsCtrl = require('../controllers/notifications.js')(DAL);
@@ -604,6 +605,7 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
+        chatCtrl.startTimer(1223, 123);
         var data = {
           conversationId: request.payload.conversationId,
           userId: request.auth.credentials.id,
