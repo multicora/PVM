@@ -7,7 +7,8 @@ module.exports = function (server, DAL) {
   io.sockets.on('connection', function (socket) {
 
     socket.on('message', function (data, cb) {
-      chatCtrl.sendChatToDb(data).then(() => {
+      chatCtrl.sendChatToDb(data).then((res) => {
+        data.id = res.insertId;
         socket.broadcast.emit('income', data);
       }, err => {
         console.log('error', err);

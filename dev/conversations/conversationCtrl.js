@@ -45,7 +45,6 @@
       } else {
         data.photo = vm.incomeUserPhoto;
         vm.chatList.push(data);
-
         updateChatStatus(data.id);
         $rootScope.$apply();
       }
