@@ -4,7 +4,8 @@ const mailer = require('../services/mailer.js');
 // const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
-  const timersArr = {};
+  let timersArr = {};
+  console.log(111111111);
 
   function createKey(conversationId, userId) {
     return conversationId + '_' + userId;
@@ -15,6 +16,8 @@ module.exports = function (DAL) {
 
     timersArr[key] = setTimeout(function () { sendNotification(userId) },
       config.notification.time * 60000);
+
+    console.log(timersArr, '==========');
   };
 
   function sendNotification (userId) {
@@ -40,13 +43,13 @@ module.exports = function (DAL) {
       DAL.chat.getByConversationId(conversationId).then(res => {
         var usersArr = [];
 
-        res.map(data => {
+        res.filter(data => {
           if (usersArr.indexOf(data.authorId) === -1 && data.authorId !== userId) {
             usersArr.push(data.authorId);
           }
         });
 
-        usersArr.forEach(id => {
+        usersArr.map(id => {
           createTimer(conversationId, id);
         });
       });
@@ -54,6 +57,8 @@ module.exports = function (DAL) {
 
     clearTimer: (conversationId, userId) => {
       let key = createKey(conversationId, userId);
+      console.log(timersArr);
+      console.log(key, 'key');
 
       clearTimeout(timersArr[key]);
     },
