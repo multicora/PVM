@@ -508,7 +508,11 @@ module.exports = function (server, DAL) {
         }).then(res => {
 
           for (var i = 0; i < chats.length; i++) {
-            chats[i].photo = res[i].photo.toString();
+            if (res[i].photo) {
+              chats[i].photo = res[i].photo.toString();
+            } else {
+              chats[i].photo = null;
+            }
           }
 
           reply(chats);

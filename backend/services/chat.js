@@ -9,6 +9,7 @@ module.exports = function (server, DAL) {
     socket.on('message', function (data, cb) {
       chatCtrl.sendChatToDb(data).then((res) => {
         data.id = res.insertId;
+        chatCtrl.startTimer(data.conversationId, data.authorId);
         socket.broadcast.emit('income', data);
       }, err => {
         console.log('error', err);
