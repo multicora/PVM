@@ -4,7 +4,7 @@ const mailer = require('../services/mailer.js');
 // const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
-  const timersArr = [];
+  const timersArr = {};
 
   function createKey(conversationId, userId) {
     return conversationId + '_' + userId;
@@ -12,26 +12,9 @@ module.exports = function (DAL) {
 
   function createTimer(conversationId, userId) {
     let key = createKey(conversationId, userId);
-    var changed = 0;
 
-    timersArr.map(item => {
-      if (item[key]) {
-        item[key] = setTimeout(function () { sendNotification(userId) },
-          config.notification.time * 60000);
-        changed++;
-
-      }
-    });
-
-    if (!changed) {
-      var obj = {};
-      obj[key] = setTimeout(function () { sendNotification(userId) },
-        config.notification.time * 60000);
-      timersArr.push(obj);
-      console.log('pushed', timersArr);
-    }
-
-    console.log('timersArr', timersArr);
+    timersArr[key] = setTimeout(function () { sendNotification(userId) },
+      config.notification.time * 60000);
   };
 
   function sendNotification (userId) {
@@ -44,7 +27,6 @@ module.exports = function (DAL) {
         text: message,
         html: '<div style="white-space: pre;">' + message + '</div>'
       };
-
       console.log('NOTIFICATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', 'user -> ' + userId);
     });
   };
@@ -55,9 +37,9 @@ module.exports = function (DAL) {
     },
 
     startTimer: (conversationId, userId) => {
-      console.log('start', timersArr);
       DAL.chat.getByConversationId(conversationId).then(res => {
         var usersArr = [];
+
         res.map(data => {
           if (usersArr.indexOf(data.authorId) === -1 && data.authorId !== userId) {
             usersArr.push(data.authorId);
@@ -71,13 +53,9 @@ module.exports = function (DAL) {
     },
 
     clearTimer: (conversationId, userId) => {
-      console.log('clear', timersArr);
       let key = createKey(conversationId, userId);
-      timersArr.map(item => {
-        if (item[key]) {
-          clearTimeout(item[key]);
-        }
-      });
+
+      clearTimeout(timersArr[key]);
     },
   };
 };
