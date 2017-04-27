@@ -8,6 +8,7 @@
     '$routeParams',
     '$location',
     '$rootScope',
+    '$document',
     'conversationsService',
     'profileService',
     'chat',
@@ -17,6 +18,7 @@
     $routeParams,
     $location,
     $rootScope,
+    $document,
     conversationsService,
     profileService,
     chat,
@@ -41,11 +43,13 @@
           vm.incomeUserPhoto = res.data;
           data.photo = vm.incomeUserPhoto;
           vm.chatList.push(data);
+          scrollBottom();
         });
       } else {
         data.photo = vm.incomeUserPhoto;
         vm.chatList.push(data);
         $rootScope.$apply();
+        scrollBottom();
       }
     });
 
@@ -80,10 +84,12 @@
           'authorId': vm.user.id,
           'conversationId': vm.conversation.id
         }
+
         chatInstance.send(sendObj, function() {
           sendObj.photo = vm.user.photo;
           vm.chatList.push(sendObj);
           $rootScope.$apply();
+          scrollBottom();
         });
       }
     });
@@ -91,21 +97,26 @@
     vm.back = function (event) {
       event.stopPropagation();
       $location.path('library');
-    }
+    };
 
     vm.contentClick = function (event) {
       vm.headerClass = 'showHeader';
-    }
+    };
 
     vm.videoContentClick = function (event) {
       event.stopPropagation();
       vm.headerClass = 'hideHeader';
-    }
+    };
 
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
       });
-    };
+    }
+
+    function scrollBottom() {
+      var bodyElement = $document.find('body')[0];
+      bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
+    }
   }
 })(angular);
