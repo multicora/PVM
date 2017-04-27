@@ -4,7 +4,7 @@ const mailer = require('../services/mailer.js');
 // const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
-  let timersArr = [];
+  const timersArr = [];
 
   function createKey(conversationId, userId) {
     return conversationId + '_' + userId;
@@ -16,7 +16,7 @@ module.exports = function (DAL) {
 
     timersArr.map(item => {
       if (item[key]) {
-        item[key] = setTimeout(function() {sendNotification(userId)},
+        item[key] = setTimeout(function () { sendNotification(userId) },
           config.notification.time * 60000);
         changed++;
 
@@ -25,10 +25,13 @@ module.exports = function (DAL) {
 
     if (!changed) {
       var obj = {};
-      obj[key] = setTimeout(function() {sendNotification(userId)},
+      obj[key] = setTimeout(function () { sendNotification(userId) },
         config.notification.time * 60000);
       timersArr.push(obj);
+      console.log('pushed', timersArr);
     }
+
+    console.log('timersArr', timersArr);
   };
 
   function sendNotification (userId) {
@@ -52,6 +55,7 @@ module.exports = function (DAL) {
     },
 
     startTimer: (conversationId, userId) => {
+      console.log('start', timersArr);
       DAL.chat.getByConversationId(conversationId).then(res => {
         var usersArr = [];
         res.map(data => {
@@ -67,6 +71,7 @@ module.exports = function (DAL) {
     },
 
     clearTimer: (conversationId, userId) => {
+      console.log('clear', timersArr);
       let key = createKey(conversationId, userId);
       timersArr.map(item => {
         if (item[key]) {

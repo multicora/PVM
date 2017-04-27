@@ -75,7 +75,9 @@
         }
       });
 
-      updateChatStatus(incomeChats[incomeChats.length - 1].id);
+      if (incomeChats.length) {
+        updateChatStatus(incomeChats[incomeChats.length - 1].id);
+      }
     });
 
     chat.connect().then(function (chatInstance) {
