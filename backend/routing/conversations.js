@@ -493,9 +493,8 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         var chats;
-        DAL.chat.getByConversationId(request.params.id).then(res => {
-          return res;
-        }).then( res => {
+        DAL.chat.getByConversationId(request.params.id).then( res => {
+          // TODO: 'res' is not a chats it is a messeges
           chats = res;
           var promises = [];
 
@@ -507,11 +506,12 @@ module.exports = function (server, DAL) {
         }).then(res => {
 
           for (var i = 0; i < chats.length; i++) {
-            chats[i].photo = res[i].photo.toString();
+            // TODO: we do not need thoto for all messages
+            chats[i].photo = res[i].photo ? res[i].photo.toString() : null;
           }
 
           reply(chats);
-        }, err => {
+        }).catch( err => {
           reply(Boom.badImplementation(err, err));
         });
       }

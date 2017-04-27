@@ -3,18 +3,19 @@
 module.exports = (connection) => {
   return {
     add: (data) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`chat` (`id`, `message`, `conversationId`, `authorId`, `date`) ',
-            'VALUES (NULL, "' + data.message + '", "' + data.conversationId + '", "' +
-              data.authorId + '", "' + data.date + '");'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        // TODO: looks like something wrong with 'date' (may be it is in inappropriate format)
+        let request = [
+          'INSERT INTO ',
+          '`chat` (`id`, `message`, `conversationId`, `authorId`, `date`) ',
+          'VALUES (NULL, "' + data.message + '", "' + data.conversationId + '", "' +
+            data.authorId + '", "' + data.date + '");'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
         });
+      });
     },
 
     getByConversationId: (id) => {

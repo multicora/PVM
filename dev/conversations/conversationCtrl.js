@@ -8,6 +8,7 @@
     '$routeParams',
     '$location',
     '$rootScope',
+    '$document',
     'conversationsService',
     'profileService',
     'chat',
@@ -17,6 +18,7 @@
     $routeParams,
     $location,
     $rootScope,
+    $document,
     conversationsService,
     profileService,
     chat,
@@ -113,7 +115,7 @@
     }
 
     function scrollBottom() {
-      var bodyElement = document.body;
+      var bodyElement = $document.find('body')[0];
       bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
     }
   }
