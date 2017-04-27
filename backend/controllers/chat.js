@@ -1,6 +1,6 @@
 'use strict';
 const config = require('../config.js');
-const mailer = require('../services/mailer.js');
+// const mailer = require('../services/mailer.js');
 // const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
@@ -14,22 +14,22 @@ module.exports = function (DAL) {
   function createTimer(conversationId, userId) {
     let key = createKey(conversationId, userId);
 
-    timersArr[key] = setTimeout(function () { sendNotification(userId) },
+    timersArr[key] = setTimeout(function () { sendNotification(userId); },
       config.notification.time * 60000);
 
     console.log(timersArr, '==========');
   };
 
   function sendNotification (userId) {
-    DAL.users.getUserById(userId).then(res => {
-      const message = 'You have new message!';
+    DAL.users.getUserById(userId).then(() => {
+      // const message = 'You have new message!';
 
-      const mail = {
-        to: res.email,
-        subject: 'Notification about new message',
-        text: message,
-        html: '<div style="white-space: pre;">' + message + '</div>'
-      };
+      // const mail = {
+      //   to: res.email,
+      //   subject: 'Notification about new message',
+      //   text: message,
+      //   html: '<div style="white-space: pre;">' + message + '</div>'
+      // };
       console.log('NOTIFICATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', 'user -> ' + userId);
     });
   };
