@@ -6,20 +6,26 @@ const mailer = require('../services/mailer.js');
 module.exports = function (DAL) {
   let timersArr = [];
 
+  function createKey(conversationId, userId) {
+    return conversationId + '_' + userId;
+  };
+
   function createTimer(conversationId, userId) {
+    let key = createKey(conversationId, userId);
     var changed = 0;
 
     timersArr.map(item => {
-      if (item[conversationId]) {
-        item[conversationId][userId] = sendNotification(userId);
+      if (item[key]) {
+        item[key] = setTimeout(function() {sendNotification(userId)},
+          config.notification.time * 60000);
         changed++;
+
       }
     });
 
     if (!changed) {
       var obj = {};
-      obj[conversationId] = {};
-      obj[conversationId][userId] = setTimeout(function() {sendNotification(userId)},
+      obj[key] = setTimeout(function() {sendNotification(userId)},
         config.notification.time * 60000);
       timersArr.push(obj);
     }
@@ -61,9 +67,10 @@ module.exports = function (DAL) {
     },
 
     clearTimer: (conversationId, userId) => {
+      let key = createKey(conversationId, userId);
       timersArr.map(item => {
-        if (item[conversationId][userId]) {
-          clearTimeout(item[conversationId][userId]);
+        if (item[key]) {
+          clearTimeout(item[key]);
         }
       });
     },
