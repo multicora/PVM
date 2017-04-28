@@ -11,10 +11,10 @@ module.exports = (connection) => {
               data.authorId + '", NOW());'
           ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
         });
+      });
     },
 
     getByConversationId: (id) => {
