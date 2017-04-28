@@ -8,7 +8,6 @@ module.exports = function (DAL) {
   let timersArr = {};
 
   pubSub.on('incomeMessage', function(data) {
-    console.log(111111111111111111111111111111111);
     sendChatToDb(data).then(res => {
       data.id = res.insertId;
       startTimer(data.conversationId, data.authorId);

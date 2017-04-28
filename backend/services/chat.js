@@ -10,11 +10,7 @@ const pubSub = require('../services/pubSub.js')();
       pubSub.emit('incomeMessage', data);
 
       // socket.broadcast.emit('income', data);
-      // chatCtrl.sendChatToDb(data).then((res) => {
-      //   data.id = res.insertId;
-      // }, err => {
-      //   console.log('error', err);
-      // });
+
       cb();
     });
 
