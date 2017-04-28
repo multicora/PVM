@@ -265,11 +265,15 @@ module.exports = function (server, DAL) {
             data.logo = null;
           }
           return videoCtrl.getFile(data.videoId);
-        }).then(buffer => {
+        }).then( buffer => {
           data.videoUrl = buffer.uri.href;
           reply(data);
-        }, err => {
-          reply(Boom.badImplementation(err, err));
+        }).catch( err => {
+          if (err.message === '404') {
+            reply(Boom.notFound(err.message, 'Not found'));
+          } else {
+            reply(Boom.badImplementation(err, err));
+          }
         });
       }
     }
@@ -310,7 +314,11 @@ module.exports = function (server, DAL) {
         DAL.templates.update(data).then(() => {
           reply({'status': 'success'});
         }, err => {
-          reply(Boom.badImplementation(err, err));
+          if (err.message === '404') {
+            reply(Boom.notFound(err.message, 'Not found'));
+          } else {
+            reply(Boom.badImplementation(err, err));
+          }
         });
       }
     }

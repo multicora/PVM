@@ -30,26 +30,34 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response[0]);
+          let error;
+
+          if (err) {
+            error = err;
+          } else if (!response[0]) {
+            error = new Error(404);
+          }
+
+          error ? reject(error) : resolve(response[0]);
         });
       });
     },
 
     create: (data) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`conversations` (`id`, `videoId`, `logo`, `author`, `name`,',
-            ' `title`, `company_role`, `message`, `is_template`) ',
-            'VALUES (NULL, "' + data.videoId + '" ,"' + data.logo + '" ,"' + data.author
-            + '" ,"' + data.name + '" ,"' + data.title + '" ,"'
-            + data.company_role + '" ,"' + data.message + '" ,"' + 1 + '");'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'INSERT INTO ',
+          '`conversations` (`id`, `videoId`, `logo`, `author`, `name`,',
+          ' `title`, `company_role`, `message`, `is_template`) ',
+          'VALUES (NULL, "' + data.videoId + '" ,"' + data.logo + '" ,"' + data.author
+          + '" ,"' + data.name + '" ,"' + data.title + '" ,"'
+          + data.company_role + '" ,"' + data.message + '" ,"' + 1 + '");'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
         });
+      });
     },
 
     delete: (id) => {
@@ -80,7 +88,15 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response);
+          let error;
+
+          if (err) {
+            error = err;
+          } else if (response.affectedRows === 0) {
+            error = new Error(404);
+          }
+
+          error ? reject(error) : resolve(response);
         });
       });
     },
