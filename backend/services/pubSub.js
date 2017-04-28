@@ -23,6 +23,8 @@ module.exports = function () {
           fn(data);
         });
       }
+
+      return data;
     }
   };
 

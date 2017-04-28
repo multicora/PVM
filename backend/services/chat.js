@@ -8,7 +8,6 @@ const pubSub = require('../services/pubSub.js')();
 
     socket.on('message', function (data, cb) {
       pubSub.emit('incomeMessage', data);
-
       // socket.broadcast.emit('income', data);
 
       cb();
