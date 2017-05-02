@@ -230,12 +230,18 @@
     ng-if="vm.showSelectPopup"
     close-popup="vm.closeSelectPopup()")
     video-list(
-    list="vm.list"
-    on-upload-click="vm.uploadBtnClick()"
-    on-record-click="vm.recordBtnClick()"
-    show-send-button="vm.showSendButton"
-    on-send-click="vm.sendClickHandler($data)"
-    on-thumbnail-click="vm.onThumbnailClick($data)")
+      list="vm.list"
+      on-upload-click="vm.uploadBtnClick()"
+      on-record-click="vm.recordBtnClick()"
+      show-send-button="vm.showSendButton"
+      on-send-click="vm.sendClickHandler($data)"
+      on-thumbnail-click="vm.onThumbnailClick($data)")
     .button-container
       button.btn.mdl-button.mdl-js-button.mdl-button--raised.close-select-popup(ng-click="vm.closeSelectPopup()") close
+
+  //- Record popup
+  record-popup-wrapper(get-videos="vm.getVideos()")
+
+  //- Upload popup
+  upload-popup-wrapper(get-videos="vm.getVideos()")
 

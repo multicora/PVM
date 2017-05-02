@@ -112,7 +112,7 @@
 
     // Send
     vm.sendClickHandler = function (video) {
-      $location.path('template/' + video.id);
+      $location.url('template/?video=' + video.id);
     };
 
     // Templates
@@ -122,7 +122,7 @@
     };
 
     vm.useTemplate = function (id) {
-      $location.path('template-edit/' + id);
+      $location.path('template/' + id);
     };
 
     vm.viewConversation = function (id) {
