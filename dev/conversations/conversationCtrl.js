@@ -32,6 +32,7 @@
     vm.user = null;
     vm.incomeUserPhoto = null;
     vm.showUserHeader = true;
+    vm.messageClassName = 'income';
     vm.sendMessage;
 
     getProfile();
@@ -58,6 +59,7 @@
       vm.conversation = res.data;
       if (vm.user && vm.conversation.author === vm.user.id) {
         vm.showUserHeader = false;
+        vm.messageClassName = '';
       }
       vm.media = {
         sources: [{

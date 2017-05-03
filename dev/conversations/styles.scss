@@ -272,45 +272,6 @@
 
   .chat-container {
     padding-top: 20px;
-    position: relative;
-
-    .photo {
-      position: absolute;
-    }
-
-    .message {
-      margin: 0;
-    }
-
-    .chat-box {
-      width: 500px;
-      padding: 6px 6px 14px 6px;
-      margin: 10px 0 0 70px;
-      word-wrap: break-word;
-      background-color: #fff;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-      border-radius: 2px;
-      border: 10px solid transparent;
-      position: relative;
-
-      @media (max-width: 650px) {
-        width: 300px;
-      }
-
-      @media (max-width: 450px) {
-        width: 200px;
-      }
-    }
-
-    .chat-box:after {
-      content: '';
-      border: 10px solid transparent;
-      border-right: 10px solid #fff;
-      border-top: 10px solid #fff;
-      position: absolute;
-      top: -10px;
-      left: -28px;
-    }
 
     .files {
       padding: 10px;

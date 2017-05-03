@@ -1,7 +1,10 @@
 .chat-list-container {
   width: 100%;
   padding-bottom: 100px;
-  
+}
+
+.chat-list-container,
+.chat-container {
   .message-container {
     width: 100%;
     text-align: left;

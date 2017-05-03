@@ -95,6 +95,10 @@
     }
   }
 
+  .message-container {
+    width: 100%;
+  }
+
   .message:hover,
   .title-container:hover,
   .logo:hover,
@@ -105,34 +109,45 @@
     }
   }
 
-  .files {
-    .edit-button {
-      display: none;
-      color: rgba(0, 0, 0, .54);
-    }
-  }
-
-  .message {
-    margin: 0;
+  .chat-container {
     position: relative;
-
-    .edit-button {
-      position: absolute;
-      right: 10px;
-      bottom: 0;
+    .photo {
+      float: left;
     }
-  }
 
-  .chat-text-box-container {
-    width: 100%;
-    margin: 0;
-  }
+    .files {
+      .edit-button {
+        display: none;
+        color: rgba(0, 0, 0, .54);
+      }
+    }
 
-  .chat-text-box {
-    width: 100%;
-    outline: none;
-    border-bottom: none;
-    font-size: 14px;
+    .message {
+      margin: 5px 0 0 20px;
+      position: relative;
+
+      .edit-button {
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+      }
+    }
+
+    .text-container {
+      width: 100%;
+    }
+
+    .chat-text-box-container {
+      width: 100%;
+      margin: 0;
+    }
+
+    .chat-text-box {
+      width: 100%;
+      outline: none;
+      border-bottom: none;
+      font-size: 14px;
+    }
   }
 
   .snackbar-container {
