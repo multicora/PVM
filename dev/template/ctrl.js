@@ -9,6 +9,7 @@
     '$location',
     '$mdToast',
     'conversationsService',
+    'uploadRecordPopupService',
     'profileService',
     'libraryService',
     'Socialshare'
@@ -19,6 +20,7 @@
     $location,
     $mdToast,
     conversationsService,
+    uploadRecordPopupService,
     profileService,
     libraryService,
     Socialshare
@@ -31,18 +33,30 @@
     vm.showSendPopup = false;
     vm.showSelectPopup = false;
     vm.showSendButton = false;
+    vm.templateId = null;
+    vm.videoId = null;
 
-    vm.videoId = $routeParams.videoId;
-    getVideo(vm.videoId);
-
+    if ($routeParams.templateId) {
+      vm.templateId = $routeParams.templateId;
+      getTemplate();
+    } else {
+      vm.videoId = $routeParams.video;
+      getVideo(vm.videoId);
+    }
     getProfile();
-    getVideos();
 
-    libraryService.getThumbnails().then(function (res) {
-      for (let i = 0; i < res.data.length; i++) {
-        vm.list[i].attributes.thumbnail = res.data[i].attributes;
-      }
-    });
+    vm.getVideos = function() {
+      libraryService.getVideos().then(function (res) {
+        vm.list = res.data;
+        return libraryService.getThumbnails();
+      }).then(function (res) {
+        for (let i = 0; i < res.data.length; i++) {
+          vm.list[i].attributes.thumbnail = res.data[i].attributes;
+        }
+      });
+    };
+
+    vm.getVideos();
 
     vm.edit = function(element) {
       element.editMode = true;
@@ -50,7 +64,7 @@
 
     vm.save = function() {
       checkName();
-      vm.sendData ={
+      vm.sendData = {
         'name': vm.nameObj.name,
         'company_role': vm.companyRole.role,
         'message': vm.messageObj.message,
@@ -58,23 +72,47 @@
         'logo': vm.logo,
         'videoId': vm.videoId,
         'author': vm.user.id
-      }
+      };
 
-      if (!vm.nameObj.name) {
-        vm.nameObj.name = vm.user.name;
+      if (vm.templateId) {
+        // Edit
+        vm.sendData.id = vm.templateId;
+        conversationsService.updateTemplate(vm.sendData).then(function() {
+          closeAllEditButton();
+          getTemplate();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Saved successfully!')
+              .position('bottom center')
+              .hideDelay(3000)
+          );
+        }).catch(function (err) {
+          // TODO: add error style
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent(err.data.error)
+              .position('bottom center')
+              .hideDelay(3000)
+          );
+        });
+      } else {
+        // Create
+        if (!vm.nameObj.name) {
+          vm.nameObj.name = vm.user.name;
+        }
+        if (!vm.companyRole.role) {
+          vm.companyRole.role = vm.user.company_position;
+        }
+        conversationsService.createTemplate(vm.sendData).then(function(res) {
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Saved successfully!')
+              .position('bottom center')
+              .hideDelay(3000)
+          );
+          $location.path('template/' + res.data.templateId);
+        });
       }
-      if (!vm.companyRole.role) {
-        vm.companyRole.role = vm.user.company_position;
-      }
-      conversationsService.createTemplate(vm.sendData).then(function(res) {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Saved successfully!')
-          .position('bottom center')
-          .hideDelay(3000)
-      );
-        $location.path('template-edit/' + res.data.templateId);
-      });
     }
 
     vm.onThumbnailClick = function(video) {
@@ -161,6 +199,14 @@
       });
     }
 
+    vm.uploadBtnClick = function () {
+      uploadRecordPopupService.showUploadPopup();
+    }
+
+    vm.recordBtnClick = function () {
+      uploadRecordPopupService.showRecordPopup();
+    };
+
     $scope.convertToBase64LogoTemplate = function(event) {
       var f = document.getElementById('logo').files[0],
           r = new FileReader(),
@@ -201,6 +247,32 @@
       });
     }
 
+    function getTemplate() {
+      conversationsService.getTemplate(vm.templateId).then(function(res) {
+        vm.nameObj.name = res.data.name;
+        vm.companyRole.role = res.data.companyRole;
+        vm.messageObj.message = res.data.message;
+        vm.titleObj.title = res.data.title;
+        vm.logo = res.data.logo;
+        vm.videoId = res.data.videoId;
+        vm.media = {
+          sources: [{
+            src: res.data.videoUrl,
+            type: 'video/mp4'
+          }]
+        };
+      }).catch(function (res) {
+        // TODO: add error style
+        // TODO: add 404 page
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(res.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      });
+    }
+
     function closeAllEditButton() {
       vm.nameObj.editMode = false;
       vm.companyRole.editMode = false;
@@ -212,12 +284,6 @@
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
         vm.user.name = res.data.firstName + ' ' +res.data.secondName;
-      });
-    };
-
-    function getVideos() {
-      libraryService.getVideos().then(function (res) {
-        vm.list = res.data;
       });
     };
 

@@ -30,10 +30,12 @@
       return $http.get('/api/template/' + id);
     };
 
+    // TODO: move to 'templateService'
     this.updateTemplate = function (data) {
       return $http.post('/api/update-template', data);
     };
 
+    // TODO: move to 'templateService'
     this.createTemplate = function (data) {
       return $http.post('/api/template', data);
     };
