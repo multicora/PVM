@@ -133,22 +133,22 @@
 
     //- VIDEO FOOTER
     .videoFooter
-      .chat-container
+      .template-message-container
         .photo(
           ng-if="vm.user.photo && vm.user.photo != null"
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .chat-box
-          p.message
+          .message
             md-input-container.text-container(aria-label="text input")
               label Add your message
               textarea.chat-reply-text(
                 aria-label="text input"
                 maxlength="300"
                 ng-model="vm.messageObj.message")
-          .files
-            button.edit-button.btn.upload
-              i.material-icons file_upload
-              span.placeholder Upload files
+            .files
+              button.edit-button.btn.upload
+                i.material-icons file_upload
+                span.placeholder Upload files
 
   //- SNACKBAR
   .snackbar-container

@@ -109,17 +109,11 @@
     }
   }
 
-  .chat-container {
+  .template-message-container {
+    padding-top: 16px;
     position: relative;
     .photo {
       float: left;
-    }
-
-    .files {
-      .edit-button {
-        display: none;
-        color: rgba(0, 0, 0, .54);
-      }
     }
 
     .message {
@@ -133,20 +127,15 @@
       }
     }
 
+    .files {
+      .edit-button {
+        display: none;
+        color: rgba(0, 0, 0, .54);
+      }
+    }
+
     .text-container {
       width: 100%;
-    }
-
-    .chat-text-box-container {
-      width: 100%;
-      margin: 0;
-    }
-
-    .chat-text-box {
-      width: 100%;
-      outline: none;
-      border-bottom: none;
-      font-size: 14px;
     }
   }
 
