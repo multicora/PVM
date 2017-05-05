@@ -22,13 +22,23 @@
 
           socket.on('income', function (data) {
             pubSub.emit('incomeMessage', data);
+            socket.emit('read', {
+              type: 'read',
+              content: {
+                conversationId: data.conversationId,
+                authorId: data.authorId
+              }
+            });
           });
-
-          socket.on()
 
           resolve({
             send: function (msg, cb) {
-              socket.emit('message', msg, cb);
+              var data = {
+                content: msg,
+                type: 'chatMessage'
+              };
+
+              socket.emit('message', data, cb);
             }
           });
         });
