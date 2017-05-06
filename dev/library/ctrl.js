@@ -40,7 +40,7 @@
         vm.videosList = res.data;
         return libraryService.getThumbnails();
       }).then(function (res) {
-        for (let i = 0; i < res.data.length; i++) {
+        for (var i = 0; i < res.data.length; i++) {
           vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
         }
       }, function (err) {

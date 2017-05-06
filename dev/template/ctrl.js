@@ -50,7 +50,7 @@
         vm.list = res.data;
         return libraryService.getThumbnails();
       }).then(function (res) {
-        for (let i = 0; i < res.data.length; i++) {
+        for (var i = 0; i < res.data.length; i++) {
           vm.list[i].attributes.thumbnail = res.data[i].attributes;
         }
       });
