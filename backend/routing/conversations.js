@@ -626,7 +626,6 @@ module.exports = function (server, DAL) {
           if (res) {
             data.id = res.id;
             result = DAL.chat.updateStatus(data);
-            // chatCtrl.clearTimer(conversationId, user.id);
           } else {
             result = DAL.chat.createStatusTable(data);
           }

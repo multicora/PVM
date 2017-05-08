@@ -44,7 +44,7 @@
           vm.incomeUserPhoto = res.data;
           data.photo = vm.incomeUserPhoto;
           vm.chatList.push(data);
-          // reloadTemplate();
+          reloadTemplate();
           scrollBottom();
         });
       } else {
