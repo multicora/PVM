@@ -47,9 +47,5 @@
     this.getChatForDashboard = function () {
       return $http.get('/api/chatForDashboard');
     };
-
-    this.changeChatStatus = function (data) {
-      return $http.post('/api/chat-status', data);
-    };
   }
 })(angular);

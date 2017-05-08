@@ -50,7 +50,6 @@
       } else {
         data.photo = vm.incomeUserPhoto;
         vm.chatList.push(data);
-        updateChatStatus(data.id);
         reloadTemplate();
         scrollBottom();
       }
@@ -81,10 +80,6 @@
           incomeChats.push(chat);
         }
       });
-
-      if (incomeChats.length) {
-        updateChatStatus(incomeChats[incomeChats.length - 1].id);
-      }
     });
 
     chat.connect().then(function (chatInstance) {
@@ -132,12 +127,5 @@
     function reloadTemplate() {
       $rootScope.$apply();
     }
-
-    function updateChatStatus(id) {
-      conversationsService.changeChatStatus({
-        messageId: id,
-        conversationId: $routeParams.id
-      });
-    };
   }
 })(angular);
