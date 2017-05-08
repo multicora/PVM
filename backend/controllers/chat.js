@@ -1,6 +1,6 @@
 'use strict';
 const config = require('../config.js');
-// const mailer = require('../services/mailer.js');
+const mailer = require('../services/mailer.js');
 // const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
@@ -10,24 +10,29 @@ module.exports = function (DAL) {
     return conversationId + '_' + userId;
   };
 
-  function createTimer(conversationId, userId) {
-    let key = createKey(conversationId, userId);
+  function createTimer(data) {
+    let key = createKey(data.conversationId, data.userId);
 
-    timersArr[key] = setTimeout(function () { sendNotification(userId); },
+    timersArr[key] = setTimeout(function () { sendNotification(data); },
       config.notification.time * 60000);
   };
 
-  function sendNotification (userId) {
-    DAL.users.getUserById(userId).then(() => {
-      // const message = 'You have new message!';
+  function sendNotification (data) {
+    let email;
+    DAL.users.getUserById(data.userId).then((res) => {
+      email = res.email;
+      return DAL.users.getUserById(data.authorId);
+    }).then((res) => {
+      const message = 'You have new message from ' + res.firstName + ' ' + res.secondName;
 
-      // const mail = {
-      //   to: res.email,
-      //   subject: 'Notification about new message',
-      //   text: message,
-      //   html: '<div style="white-space: pre;">' + message + '</div>'
-      // };
-      console.log('NOTIFICATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', 'user -> ' + userId);
+      const mail = {
+        to: email,
+        subject: 'Notification about new message!',
+        text: message,
+        html: '<div style="white-space: pre;">' + message + '</div>'
+      };
+
+      mailer(config).send(mail);
     });
   };
 
@@ -46,7 +51,11 @@ module.exports = function (DAL) {
       });
 
       usersArr.map(id => {
-        createTimer(conversationId, id);
+        createTimer({
+          conversationId: conversationId,
+          userId: id,
+          authorId: userId
+        });
       });
     });
   };

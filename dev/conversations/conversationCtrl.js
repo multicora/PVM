@@ -44,13 +44,14 @@
           vm.incomeUserPhoto = res.data;
           data.photo = vm.incomeUserPhoto;
           vm.chatList.push(data);
+          // reloadTemplate();
           scrollBottom();
         });
       } else {
         data.photo = vm.incomeUserPhoto;
         vm.chatList.push(data);
         updateChatStatus(data.id);
-        $rootScope.$apply();
+        reloadTemplate();
         scrollBottom();
       }
     });
@@ -126,6 +127,10 @@
     function scrollBottom() {
       var bodyElement = $document.find('body')[0];
       bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
+    }
+
+    function reloadTemplate() {
+      $rootScope.$apply();
     }
 
     function updateChatStatus(id) {

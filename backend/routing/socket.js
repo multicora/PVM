@@ -10,7 +10,7 @@ module.exports = function (server, DAL) {
       socket.broadcast.emit('income', data);
     });
     socketService.on('read', function (data) {
-      chatCtrl.clearTimer(data.conversationId, data.authorId);
+      chatCtrl.clearTimer(data.conversationId, data.userId);
     });
   });
 };
