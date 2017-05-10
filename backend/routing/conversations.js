@@ -8,7 +8,7 @@ const template = require('../services/mailTemplate.js');
 const utils = require('../utils.js');
 
 module.exports = function (server, DAL) {
-  const videoCtrl = require('../controllers/video.js')(DAL);
+  const storageCtrl = require('../services/storage.js')(DAL);
   const usersCtrl = require('../controllers/users.js')(DAL);
   const notificationsCtrl = require('../controllers/notifications.js')(DAL);
 
@@ -195,7 +195,7 @@ module.exports = function (server, DAL) {
             } else {
               conversation.authorPhoto = null;
             }
-            return videoCtrl.getFile(conversation.videoId);
+            return storageCtrl.getFilet(conversation.videoId);
           }).then(
             function (buffer) {
               conversation.url = buffer.uri.href;
@@ -264,7 +264,7 @@ module.exports = function (server, DAL) {
           } else {
             data.logo = null;
           }
-          return videoCtrl.getFile(data.videoId);
+          return storageCtrl.getFile(data.videoId);
         }).then( buffer => {
           data.videoUrl = buffer.uri.href;
           reply(data);

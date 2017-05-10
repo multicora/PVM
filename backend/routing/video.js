@@ -3,7 +3,8 @@
 const Boom = require('boom');
 
 module.exports = function (server, DAL) {
-  const videoCtrl = require('../controllers/video.js')(DAL);
+  // const videoCtrl = require('../controllers/video.js')(DAL);
+  const storageCtrl = require('../services/storage.js')(DAL);
 
   server.route({
     method: 'POST',
@@ -19,25 +20,24 @@ module.exports = function (server, DAL) {
 
       handler: function (request, reply) {
         let user = request.auth.credentials;
-        let name;
-        if (request.payload.data && request.payload.data !== 'undefined') {
-          name = request.payload.data;
+        if (!request.payload.file) {
+          reply( Boom.badRequest('Property "file" is absent') );
         } else {
-          name = request.payload.file.hapi.filename;
-        }
-        videoCtrl.saveFile(
-          name,
-          user.id,
-          request.payload.file._data
-        ).then(
-          function () {
-            reply();
-          },
-          function (err) {
-            console.log(err);
-            reply(Boom.badImplementation(500, err));
+          let name;
+          if (request.payload.data && request.payload.data !== 'undefined') {
+            name = request.payload.data;
+          } else {
+            name = request.payload.file.hapi.filename;
           }
-        );
+
+          storageCtrl.addFile(request.payload.file._data, name,
+              user.id, user.firstName + user.secondName).then( () => {
+            reply();
+          }).catch( err => {
+            console.error(err);
+            reply(err);
+          });
+        }
       }
     }
   });
@@ -73,7 +73,7 @@ module.exports = function (server, DAL) {
     path: '/api/videos/{id}',
     config: {
       handler: function (request, reply) {
-        videoCtrl.getFile(request.params.id).then(
+        storageCtrl.getFile(request.params.id).then(
           function (buffer) {
             reply({
               type: 'video',
@@ -119,31 +119,31 @@ server.route({
     }
   });
 
-  server.route({
-    method: 'GET',
-    path: '/api/thumbnails',
-    config: {
-      auth: 'simple',
-      handler: function (request, reply) {
-        videoCtrl.getThumbnails(request.auth.credentials.id).then(
-          function(res) {
-            reply(res.map(
-              function(res) {
-                return {
-                  'type': 'thumbnail',
-                  'id': res.v_id,
-                  'attributes': res.thumbnail
-                };
-              }
-            ));
-          },
-          function(err) {
-            reply(Boom.badImplementation(err));
-          }
-        );
-      }
-    }
-  });
+  // server.route({
+  //   method: 'GET',
+  //   path: '/api/thumbnails',
+  //   config: {
+  //     auth: 'simple',
+  //     handler: function (request, reply) {
+  //       videoCtrl.getThumbnails(request.auth.credentials.id).then(
+  //         function(res) {
+  //           reply(res.map(
+  //             function(res) {
+  //               return {
+  //                 'type': 'thumbnail',
+  //                 'id': res.v_id,
+  //                 'attributes': res.thumbnail
+  //               };
+  //             }
+  //           ));
+  //         },
+  //         function(err) {
+  //           reply(Boom.badImplementation(err));
+  //         }
+  //       );
+  //     }
+  //   }
+  // });
 
   /**
    * @api {post} /api/delete-video Request for delete video
