@@ -10,7 +10,8 @@ module.exports = function () {
     applicationKey: config.storage.applicationKey
   });
 
-  return b2.authorize().then( () => {
+  return b2.authorize().then( (res) => {
+    const downloadUrl = res.data.downloadUrl;
     return {
       addFile: (fileBuffer, name, authorId, authorName) => {
         // get upload url
@@ -29,6 +30,17 @@ module.exports = function () {
             }
             // onUploadProgress: function(event) || null // progress monitoring
           });  // returns promise
+        });
+      },
+
+      getDownloadUrl: (id) => {
+        return new Promise((resolve) => {
+          resolve([
+            downloadUrl,
+            'b2api',
+            'v1',
+            'b2_download_file_by_id?fileId=' + id
+          ].join('/'));
         });
       },
 

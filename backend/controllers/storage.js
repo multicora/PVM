@@ -3,7 +3,7 @@ const uuid = require('node-uuid');
 const separator = '_';
 
 module.exports = function(DAL){
-  const b2 = require('./backblaze.js');
+  const b2 = require('../services/backblaze.js');
 
   return {
     addFile: (fileBuffer, name, authorId, authorName) => {
@@ -19,11 +19,10 @@ module.exports = function(DAL){
       });
     },
 
-
     getFile: (id) => {
       return b2().then( storage => {
         return DAL.videos.get(id).then(function (res) {
-          return storage.getFile(res.external_file_id);
+          return storage.getDownloadUrl(res.external_file_id);
         });
       });
     },

@@ -3,9 +3,25 @@
 const Boom = require('boom');
 
 module.exports = function (server, DAL) {
-  // const videoCtrl = require('../controllers/video.js')(DAL);
-  const storageCtrl = require('../services/storage.js')(DAL);
-
+  const storageCtrl = require('../controllers/storage.js')(DAL);
+  /**
+   * @api {post} /api/video Request for upload video
+   *
+   * @apiParam {Object}   file                 Video file.
+   *
+   * @apiName UploadVideo
+   * @apiGroup Videos
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
   server.route({
     method: 'POST',
     path: '/api/video',
@@ -17,7 +33,6 @@ module.exports = function (server, DAL) {
         allow: 'multipart/form-data'
       },
       auth: 'simple',
-
       handler: function (request, reply) {
         let user = request.auth.credentials;
         if (!request.payload.file) {
@@ -32,7 +47,7 @@ module.exports = function (server, DAL) {
 
           storageCtrl.addFile(request.payload.file._data, name,
               user.id, user.firstName + user.secondName).then( () => {
-            reply();
+            reply({'status': 'success'});
           }).catch( err => {
             console.error(err);
             reply(err);
@@ -77,9 +92,9 @@ module.exports = function (server, DAL) {
           function (buffer) {
             reply({
               type: 'video',
-              id: 7,
+              id: request.params.id,
               attributes: {
-                url: buffer.uri.href
+                url: buffer
               }
             });
           },
