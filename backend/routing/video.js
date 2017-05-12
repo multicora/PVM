@@ -134,31 +134,16 @@ server.route({
     }
   });
 
-  // server.route({
-  //   method: 'GET',
-  //   path: '/api/thumbnails',
-  //   config: {
-  //     auth: 'simple',
-  //     handler: function (request, reply) {
-  //       videoCtrl.getThumbnails(request.auth.credentials.id).then(
-  //         function(res) {
-  //           reply(res.map(
-  //             function(res) {
-  //               return {
-  //                 'type': 'thumbnail',
-  //                 'id': res.v_id,
-  //                 'attributes': res.thumbnail
-  //               };
-  //             }
-  //           ));
-  //         },
-  //         function(err) {
-  //           reply(Boom.badImplementation(err));
-  //         }
-  //       );
-  //     }
-  //   }
-  // });
+  server.route({
+    method: 'GET',
+    path: '/api/thumbnails',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        reply([]);
+      }
+    }
+  });
 
   /**
    * @api {post} /api/delete-video Request for delete video
