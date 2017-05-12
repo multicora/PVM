@@ -134,10 +134,10 @@
     //- VIDEO FOOTER
     .videoFooter
       .template-message-container
-        .photo(
-          ng-if="vm.user.photo && vm.user.photo != null"
-          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-        .chat-box
+        .message-container
+          .photo(
+            ng-if="vm.user.photo && vm.user.photo != null"
+            ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
           .message
             md-input-container.text-container(aria-label="text input")
               label Add your message

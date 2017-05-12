@@ -58,7 +58,7 @@
           preload="auto"
           vjs-media="vm.media")
       .videoFooter
-        .chat-container
+        .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")
             .photo(ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
             .message {{vm.conversation.message}}

@@ -330,6 +330,7 @@
   .message-container {
     width: 100%;
     text-align: right;
+    margin-top: 16px;
 
     .photo {
       float: right;
@@ -347,6 +348,14 @@
       border: 10px solid transparent;
       position: relative;
       display: inline-block;
+
+      @media (max-width: 650px) {
+        width: 300px;
+      }
+
+      @media (max-width: 450px) {
+        width: 200px;
+      }
     }
 
     .message:after {
@@ -371,24 +380,16 @@
   .message-container.income {
     width: 100%;
     text-align: left;
-    margin-top: 16px;
 
     .photo {
       float: left;
       margin-right: 25px;
+      margin-left: 0;
     }
 
     .message {
       margin: 10px 20px 0 0;
       background-color: #f9f9f9;
-
-      @media (max-width: 650px) {
-        width: 300px;
-      }
-
-      @media (max-width: 450px) {
-        width: 200px;
-      }
     }
 
     .message:after {
