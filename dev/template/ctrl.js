@@ -141,13 +141,14 @@
         'email': email
       }
       conversationsService.create(vm.sendData).then(function () {
+        vm.showSendPopup = false;
         $mdToast.show(
           $mdToast.simple()
             .textContent('Sended successfully!')
             .position('bottom center')
             .hideDelay(3000)
         );
-        vm.showSendPopup = false;
+        $location.path('/library');
       });
     }
 
