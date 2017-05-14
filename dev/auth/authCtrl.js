@@ -8,22 +8,24 @@
     '$routeParams',
     '$mdDialog',
     'authService',
-    'tokenService'
+    'tokenService',
+    'translations'
   ];
   function ctrl(
     $location,
     $routeParams,
     $mdDialog,
     authService,
-    tokenService
+    tokenService,
+    translations
   ) {
     var vm = this;
     var EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
     var unconfirmedEmailPopup = $mdDialog.confirm({
-      title: 'Confirm your email!',
-      textContent: 'We send you mail, please check your mailbox.',
-      ok: 'Resend confirmation',
-      cancel: 'Cancel'
+      title: translations.txt('CONFIRM_YOUR_EMAIL'),
+      textContent: translations.txt('LOGIN_PAGE_CONFIRM_YOUR_EMAIL_MESSAGE'),
+      ok: translations.txt('RESEND_CONFIRMATION'),
+      cancel: translations.txt('CANCEL')
     });
 
     if ($routeParams.confirmToken) {
@@ -34,17 +36,17 @@
     } else {
       vm.authenticate = function(login, password) {
         authService.login(login, password).then(function (res) {
-          if (res.data.key === EMAIL_IS_NOT_CONFIRMED) {
+          tokenService.setToken(res.data.token);
+          $location.path('/');
+        }, function(err) {
+          if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
             $mdDialog
               .show( unconfirmedEmailPopup ).then(function() {
                 authService.resendConfirmMail(login);
               });
           } else {
-            tokenService.setToken(res.data.token);
-            $location.path('/');
+            vm.errorMessage = translations.txt(err.data.message);
           }
-        }, function(err) {
-          vm.errorMessage = err.data.message;
         });
       }
 

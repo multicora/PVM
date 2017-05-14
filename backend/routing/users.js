@@ -6,8 +6,6 @@ const template = require('../services/mailTemplate.js');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 
-const EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
-
 module.exports = function (server, DAL) {
 const usersController = require('../controllers/users.js')(DAL);
 
@@ -38,27 +36,15 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       handler: function (request, reply) {
         const user = request.payload;
-        DAL.users.getUserForLogin(user.login).then((response) => {
-          if (response.confirmed) {
-            if ( response && usersController.verifyPassword(user, response.password) ) {
-              let token = utils.newToken();
-              DAL.users.updateToken(token, user.login).then(() => {
-                user.token = token;
-                reply({
-                  'token': user.token,
-                  'id': user.id
-                });
-              }, () => {
-                reply(Boom.badImplementation('Server error'));
-              });
-            } else {
-              reply(Boom.unauthorized('The username or password is incorrect'));
-            }
+
+        usersController.login(user).then((res) => {
+          reply(res);
+        }).catch((err) => {
+          if (err.type === 401) {
+            reply(Boom.unauthorized(err.key));
           } else {
-            reply({'key': EMAIL_IS_NOT_CONFIRMED});
+            reply(Boom.badImplementation(err));
           }
-        }, () => {
-          reply(Boom.unauthorized('The username or password is incorrect'));
         });
       }
     }

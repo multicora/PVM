@@ -7,15 +7,12 @@ const config = require('../config.js');
 const utils = require('../utils.js');
 const template = require('../services/mailTemplate.js');
 
+const EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
+const USERNAME_OR_PASSWORD_IS_INCORRECT = 'USERNAME_OR_PASSWORD_IS_INCORRECT';
+
 module.exports = function (DAL) {
   return {
-    verifyPassword: (user, passwordForVerify) => {
-      if (!!user.password && passwordHash.verify(user.password, passwordForVerify)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
+    verifyPassword: verifyPassword,
 
     resetPassword: (email, serverUrl, dataError, serverError) => {
       return new Promise((resolve, reject) => {
@@ -186,6 +183,44 @@ module.exports = function (DAL) {
         name: splitted[0] || '',
         value: splitted[1] || ''
       };
+    },
+
+    login: (user) => {
+      let token;
+
+      return DAL.users.getUserForLogin(user.login).then((response) => {
+        let result;
+
+        if (!response) {
+          result = Promise.reject({
+            key: USERNAME_OR_PASSWORD_IS_INCORRECT,
+            type: 401
+          });
+        } else if (!response.confirmed) {
+          result = Promise.reject({
+            key: EMAIL_IS_NOT_CONFIRMED,
+            type: 401
+          });
+        } else if (!verifyPassword(user, response.password)) {
+          result = Promise.reject({
+            key: USERNAME_OR_PASSWORD_IS_INCORRECT,
+            type: 401
+          });
+        } else {
+          token = utils.newToken();
+          result = DAL.users.updateToken(token, user.login);
+        }
+
+        return result;
+      }).then(() => {
+        return {
+          token: token,
+        };
+      });
     }
   };
+
+  function verifyPassword(user, passwordForVerify) {
+    return !!user.password && passwordHash.verify(user.password, passwordForVerify);
+  }
 };
