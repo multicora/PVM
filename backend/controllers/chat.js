@@ -4,6 +4,7 @@ const mailer = require('../services/mailer.js');
 // const template = require('../services/mailTemplate.js');
 
 module.exports = function (DAL) {
+  const minute = 60000;
   let timersArr = {};
 
   function createKey(conversationId, userId) {
@@ -14,7 +15,7 @@ module.exports = function (DAL) {
     let key = createKey(data.conversationId, data.userId);
 
     timersArr[key] = setTimeout(function () { sendNotification(data); },
-      config.notification.time * 60000);
+      config.notification.time * minute);
   };
 
   function sendNotification (data) {

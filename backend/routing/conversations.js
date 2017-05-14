@@ -8,7 +8,6 @@ const template = require('../services/mailTemplate.js');
 const utils = require('../utils.js');
 
 module.exports = function (server, DAL) {
-  const videoCtrl = require('../controllers/video.js')(DAL);
   const storageCtrl = require('../controllers/storage.js')(DAL);
   const usersCtrl = require('../controllers/users.js')(DAL);
   const notificationsCtrl = require('../controllers/notifications.js')(DAL);

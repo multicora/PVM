@@ -7,12 +7,14 @@
     '$scope',
     '$location',
     'conversationsService',
+    'uploadRecordPopupService',
     'uploadService',
   ];
   function ctrl(
     $scope,
     $location,
     conversationsService,
+    uploadRecordPopupService,
     uploadService
   ) {
     var vm = this;
@@ -44,15 +46,7 @@
 
         vm.messages[i].passedTime = date.getTime() - vm.messages[i].date.getTime();
 
-        if (vm.messages[i].passedTime < 60000) {
-          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getSeconds() + 'sec';
-        } else if (vm.messages[i].passedTime < 3600000) {
-          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getMinutes() + 'min';
-        } else if (vm.messages[i].passedTime < 86400000) {
-          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getHours() + 'hrs';
-        } else if (vm.messages[i].passedTime){
-          vm.messages[i].passedTime = new Date(vm.messages[i].passedTime).getDays() + 'days';
-        }
+        vm.messages[i].passedTime = formatTime(vm.messages[i].passedTime);
       }
 
     });
@@ -72,13 +66,12 @@
     //   "colors" : ['#8BC34A', '#F1F8E9']
     // }
 
-    // Rocord popup
-    vm.recordBtnClick = function () {
-      vm.showRecordPopup = true;
-    };
+    vm.uploadBtnClick = function () {
+      uploadRecordPopupService.showUploadPopup();
+    }
 
-    vm.closeRecordPopup = function () {
-      vm.showRecordPopup = false;
+    vm.recordBtnClick = function () {
+      uploadRecordPopupService.showRecordPopup();
     };
 
     vm.finishRecord = function (data) {
@@ -93,21 +86,14 @@
         name + '.wmv'
       ).then(function () {
         vm.closeRecordPopup();
+        vm.getVideos();
         vm.videoName = null;
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Video saved!')
+            .position('bottom center')
+        );
       });
-    };
-
-    // Upload popup
-    vm.uploadBtnClick = function () {
-      vm.showUploadPopup = true;
-    };
-
-    vm.closeUploadPopup = function () {
-      vm.showUploadPopup = false;
-    };
-
-    vm.uploadEnd = function () {
-      vm.closeUploadPopup();
     };
 
     vm.redirectToConversation = function (id) {
@@ -143,6 +129,20 @@
           }]
         };
       });
+    }
+
+    function formatTime (time) {
+      if (time < 60000) {
+        time = new Date(time).getSeconds() + ' sec';
+      } else if (time < 3600000) {
+        time = new Date(time).getMinutes() + ' min';
+      } else if (time < 86400000) {
+        time = new Date(time).getHours() + ' hrs';
+      } else if (time) {
+        time = new Date(time).getDay() + ' days';
+      }
+
+      return time;
     }
   }
 })(angular);
