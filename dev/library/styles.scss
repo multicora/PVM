@@ -24,7 +24,6 @@
   .video-preview-container {
     box-sizing: border-box;
     padding: 16px 16px 0 16px;
-    max-width: 600px;
     box-sizing: border-box;
     width: 100%;
 
@@ -36,27 +35,6 @@
 
     .video-container {
       width: 100%;
-      .vjs-video-wrap,
-      .video-js {
-        max-width: 100%;
-        width: 600px;
-        height: 400px;
-
-        @media (max-width: 700px) {
-          width: 500px;
-          height: 300px;
-        }
-
-        @media (max-width: 550px) {
-          width: 400px;
-          height: 250px;
-        }
-
-        @media (max-width: 450px) {
-          width: 280px;
-          height: 200px;
-        }
-      }
     }
   }
 
