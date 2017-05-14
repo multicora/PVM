@@ -22,9 +22,11 @@
 
   // Preview
   .video-preview-container {
+    box-sizing: border-box;
     padding: 16px 16px 0 16px;
     max-width: 600px;
     width: 100%;
+
     .title {
       margin: 0 auto;
       font-size: 18px;
@@ -40,56 +42,62 @@
       }
     }
   }
+
+  .video-preview .popup {
+    width: 640px;
+    max-width: 100%;
+  }
 }
-  // Send popup
-  .send-popup-container {
-    .popup {
-      background-color:  #f8f8f8;
-      border-radius: 2px;
-      max-width: 300px;
+
+// Send popup
+.send-popup-container {
+  .popup {
+    background-color:  #f8f8f8;
+    border-radius: 2px;
+    max-width: 300px;
+    width: 100%;
+    padding: 16px 16px 24px 16px;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .popupTitle {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: 'Roboto Thin', Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    padding-top: 25px;
+    text-align: center;
+    padding: 0;
+  }
+
+  .send-form {
+    text-align: center;
+    width: 100%;
+
+    .email-container {
       width: 100%;
-      padding: 16px 16px 24px 16px;
-      outline: none;
-      box-sizing: border-box;
+      margin-bottom: 0;
     }
 
-    .popupTitle {
-      color: rgba(0, 0, 0, 0.87);
-      font-family: 'Roboto Thin', Arial, sans-serif;
-      font-size: 24px;
-      font-weight: 300;
-      padding-top: 25px;
-      text-align: center;
-      padding: 0;
-    }
-
-    .send-form {
-      text-align: center;
-      width: 100%;
-
-      .email-container {
-        width: 100%;
-        margin-bottom: 0;
-      }
-
-      input {
-        margin-top: 16px;
-        display: inline-block;
-        width: 100%;
-      }
-    }
-
-    .button-container {
+    input {
+      margin-top: 16px;
       display: inline-block;
-      margin-top: 24px;
-      text-align: right;
       width: 100%;
-
-      button:last-child {
-        margin-left: 10px;
-      }
     }
   }
+
+  .button-container {
+    display: inline-block;
+    margin-top: 24px;
+    text-align: right;
+    width: 100%;
+
+    button:last-child {
+      margin-left: 10px;
+    }
+  }
+}
 
 .inlineBlock {
   display: inline-block;

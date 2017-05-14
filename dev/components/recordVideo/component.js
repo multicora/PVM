@@ -34,7 +34,8 @@
         controlBar: {
           volumeMenuButton: false,
           fullscreenToggle: false
-        }
+        },
+        fluid: true
       }
     );
 

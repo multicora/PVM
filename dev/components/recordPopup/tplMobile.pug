@@ -3,7 +3,14 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
     form.record-form
       p.popup-title Record your video
       .record-video
-        record-video(finish="vm.finishRecord($data)")
+        .video-bg.video-js.vjs-record
+          .vjs-device-button.vjs-control.vjs-icon-device-perm
+          input.file-input.vjs-device-button.vjs-control.vjs-icon-device-perm(
+            type="file"
+            name="file"
+            accept="video/*"
+            capture=""
+            on-file-change="vm.finishRecord($file)")
       .video-name-container
         md-input-container.video-name(md-no-float="true")
           input(
@@ -15,4 +22,4 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.cancel(ng-click="vm.closeRecordPopup()") cancel
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.save(
           ng-click="vm.sendRecordClick(vm.videoName)"
-          ng-disabled="!vm.recordedData") save
+          ng-disabled="!vm.videoFile") save

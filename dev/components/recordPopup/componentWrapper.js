@@ -9,15 +9,28 @@
     }
   });
 
-  ctrl.$inject = ['$rootScope'];
-  function ctrl($rootScope) {
+  ctrl.$inject = [
+    '$rootScope',
+    'tools'
+  ];
+  function ctrl(
+    $rootScope,
+    tools
+  ) {
     var vm = this;
 
     $rootScope.$on('showRecordPopup', function() {
-      vm.isShownRecordPopup = true;
+      var os = tools.getOperationSystem();
+
+      if (os === tools.os.IOS || os === tools.os.ANDROID) {
+        vm.isShownRecordPopupMobile = true;
+      } else {
+        vm.isShownRecordPopup = true;
+      }
     });
 
     $rootScope.$on('hideRecordPopup', function() {
+      vm.isShownRecordPopupMobile = false;
       vm.isShownRecordPopup = false;
     });
   }

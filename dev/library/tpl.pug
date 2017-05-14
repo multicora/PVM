@@ -53,7 +53,7 @@
   upload-popup-wrapper(get-videos="vm.getVideos()")
 
   //- Preview popup
-  popup(
+  popup.video-preview(
     ng-if="vm.showPreviewPopup"
     close-popup="vm.closePreviewPopup()")
     .video-preview-container
@@ -62,6 +62,7 @@
         video.video-js.vjs-default-skin(
           vjs-video
           controls
+          fluid
           preload="auto"
           vjs-media="vm.previewVideoUrl")
       .button-container

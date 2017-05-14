@@ -13,7 +13,8 @@ module.exports = function (server, DAL) {
         output: 'stream',
         parse: true,
         maxBytes: 2e+8, // 200Mb
-        allow: 'multipart/form-data'
+        allow: 'multipart/form-data',
+        timeout: false
       },
       auth: 'simple',
 
