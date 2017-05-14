@@ -3,8 +3,25 @@
 const Boom = require('boom');
 
 module.exports = function (server, DAL) {
-  const videoCtrl = require('../controllers/video.js')(DAL);
-
+  const storageCtrl = require('../controllers/storage.js')(DAL);
+  /**
+   * @api {post} /api/video Request for upload video
+   *
+   * @apiParam {Object}   file                 Video file.
+   *
+   * @apiName UploadVideo
+   * @apiGroup Videos
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
   server.route({
     method: 'POST',
     path: '/api/video',
@@ -16,28 +33,26 @@ module.exports = function (server, DAL) {
         allow: 'multipart/form-data'
       },
       auth: 'simple',
-
       handler: function (request, reply) {
         let user = request.auth.credentials;
-        let name;
-        if (request.payload.data && request.payload.data !== 'undefined') {
-          name = request.payload.data;
+        if (!request.payload.file) {
+          reply( Boom.badRequest('Property "file" is absent') );
         } else {
-          name = request.payload.file.hapi.filename;
-        }
-        videoCtrl.saveFile(
-          name,
-          user.id,
-          request.payload.file._data
-        ).then(
-          function () {
-            reply();
-          },
-          function (err) {
-            console.log(err);
-            reply(Boom.badImplementation(500, err));
+          let name;
+          if (request.payload.data && request.payload.data !== 'undefined') {
+            name = request.payload.data;
+          } else {
+            name = request.payload.file.hapi.filename;
           }
-        );
+
+          storageCtrl.addFile(request.payload.file._data, name,
+              user.id, user.firstName + user.secondName).then( () => {
+            reply({'status': 'success'});
+          }).catch( err => {
+            console.error(err);
+            reply(err);
+          });
+        }
       }
     }
   });
@@ -73,13 +88,13 @@ module.exports = function (server, DAL) {
     path: '/api/videos/{id}',
     config: {
       handler: function (request, reply) {
-        videoCtrl.getFile(request.params.id).then(
+        storageCtrl.getFile(request.params.id).then(
           function (buffer) {
             reply({
               type: 'video',
-              id: 7,
+              id: request.params.id,
               attributes: {
-                url: buffer.uri.href
+                url: buffer
               }
             });
           },
@@ -125,22 +140,7 @@ server.route({
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        videoCtrl.getThumbnails(request.auth.credentials.id).then(
-          function(res) {
-            reply(res.map(
-              function(res) {
-                return {
-                  'type': 'thumbnail',
-                  'id': res.v_id,
-                  'attributes': res.thumbnail
-                };
-              }
-            ));
-          },
-          function(err) {
-            reply(Boom.badImplementation(err));
-          }
-        );
+        reply([]);
       }
     }
   });
