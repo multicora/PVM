@@ -52,7 +52,12 @@ var config = {
     domain: ''
   },
   notification: {
-    time: 0.5 // Should be in minutes
+    time: 5 // Should be in minutes
+  },
+  storage: {
+    accountId: '',
+    applicationKey: '',
+    bucketId: ''
   }
 };
 

@@ -17,7 +17,9 @@
           {
             withCredentials: false,
             headers: {
-              'Content-Type': void 0
+              'Content-Type': void 0,
+              'Connection': 'keep-alive',
+              'Keep-Alive': 'timeout=2000, max=10000'
             },
             transformRequest: angular.identity,
             responseType: "arraybuffer"

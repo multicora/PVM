@@ -48,11 +48,11 @@
     vm.getVideos = function() {
       libraryService.getVideos().then(function (res) {
         vm.list = res.data;
-        return libraryService.getThumbnails();
-      }).then(function (res) {
-        for (let i = 0; i < res.data.length; i++) {
-          vm.list[i].attributes.thumbnail = res.data[i].attributes;
-        }
+        // return libraryService.getThumbnails();
+      // }).then(function (res) {
+      //   for (let i = 0; i < res.data.length; i++) {
+      //     vm.list[i].attributes.thumbnail = res.data[i].attributes;
+      //   }
       });
     };
 
