@@ -18,6 +18,33 @@ module.exports = (connection) => {
       });
     },
 
+    getAll: () => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * ',
+          'FROM conversations ;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    delete: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'DELETE ',
+          'FROM conversations ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
         let request = [
