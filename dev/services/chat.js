@@ -6,29 +6,43 @@
 
   service.$inject = [
     '$q',
-    'pubSub'
+    'pubSub',
+    'authService'
     ];
   function service(
     $q,
-    pubSub
+    pubSub,
+    authService
   ) {
     var socket;
-
+    var currentUser;
     socket = io();
 
     this.connect = function () {
       return $q(function (resolve) {
         socket.on('connect', function () {
-
+          authService.getCurrentUser().then(function(res) {
+            currentUser = res.data.id;
+          });
           socket.on('income', function (data) {
             pubSub.emit('incomeMessage', data);
+            socket.emit('read', {
+              type: 'read',
+              content: {
+                conversationId: data.conversationId,
+                userId: currentUser
+              }
+            });
           });
-
-          socket.on()
 
           resolve({
             send: function (msg, cb) {
-              socket.emit('message', msg, cb);
+              var data = {
+                content: msg,
+                type: 'chatMessage'
+              };
+
+              socket.emit('message', data, cb);
             }
           });
         });

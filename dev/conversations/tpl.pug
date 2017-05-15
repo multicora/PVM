@@ -58,12 +58,10 @@
           preload="auto"
           vjs-media="vm.media")
       .videoFooter
-        .chat-container
-          .photo(
-            ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null && vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'"
-            ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
-          .chat-box(ng-if="vm.conversation.message && vm.conversation.message != null && vm.conversation.message != 'undefined'")
-            p.message {{vm.conversation.message}}
+        .chat-container(ng-if="vm.conversation.message")
+          .message-container(ng-class="vm.messageClassName")
+            .photo(ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
+            .message {{vm.conversation.message}}
 
         chat-list(list="vm.chatList")
 

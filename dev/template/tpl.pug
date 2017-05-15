@@ -133,31 +133,22 @@
 
     //- VIDEO FOOTER
     .videoFooter
-      .chat-container
-        .photo(
-          ng-if="vm.user.photo && vm.user.photo != null"
-          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-        .chat-box
-          p.message
-            span.placeholder.btn(
-              ng-hide="vm.messageObj.editMode || (vm.messageObj.message && vm.messageObj.message != null && vm.messageObj.message != 'undefined')"
-              ng-click="vm.edit(vm.messageObj)") Add your message
-            span.btn(
-              ng-if="vm.messageObj.message && !vm.messageObj.editMode && vm.messageObj.message != null && vm.messageObj.message != 'undefined'"
-              ng-click="vm.edit(vm.messageObj)") {{vm.messageObj.message}}
-            md-input-container.chat-text-box-container(aria-label="text input")
-              textarea.chat-text-box(
+      .template-message-container
+        .message-container
+          .photo(
+            ng-if="vm.user.photo && vm.user.photo != null"
+            ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+          .message
+            md-input-container.text-container(aria-label="text input")
+              label Add your message
+              textarea.chat-reply-text(
                 aria-label="text input"
-                ng-if="vm.messageObj.editMode"
+                maxlength="300"
                 ng-model="vm.messageObj.message")
-              button.edit-button.btn.btn-circle(
-                type="button"
-                ng-click="vm.edit(vm.messageObj)")
-                i.material-icons mode_edit
-          .files
-            button.edit-button.btn.upload
-              i.material-icons file_upload
-              span.placeholder Upload files
+            .files
+              button.edit-button.btn.upload
+                i.material-icons file_upload
+                span.placeholder Upload files
 
   //- SNACKBAR
   .snackbar-container
@@ -219,11 +210,6 @@
       aria-label="twitter"
       ng-click="vm.shareTwitter()")
       i.fa.fa-twitter
-    md-button.md-icon-button(
-      aria-label="whatsapp"
-      ng-click="vm.shareWhatsapp()")
-      i.fa.fa-whatsapp
-
 
   //- SELECT VIDEO POPUP
   popup.select-video-container(

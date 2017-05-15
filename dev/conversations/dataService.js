@@ -43,5 +43,9 @@
     this.getChat = function (id) {
       return $http.get('/api/chat/' + id);
     };
+
+    this.getChatForDashboard = function () {
+      return $http.get('/api/chatForDashboard');
+    };
   }
 })(angular);
