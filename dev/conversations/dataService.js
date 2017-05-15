@@ -44,6 +44,10 @@
       return $http.get('/api/chat/' + id);
     };
 
+    this.videoWatched = function (id) {
+      return $http.get('/api/watched/' + id);
+    };
+
     this.getChatForDashboard = function () {
       return $http.get('/api/chatForDashboard');
     };

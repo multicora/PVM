@@ -110,6 +110,7 @@
     vm.videoContentClick = function (event) {
       event.stopPropagation();
       vm.headerClass = 'hideHeader';
+      // conversationsService.videoWatched(vm.conversation.id);
     };
 
     function getProfile() {

@@ -153,6 +153,20 @@ module.exports = (connection) => {
         });
     },
 
+    markAsWatched: (id) => {
+        return new Promise((resolve, reject) => {
+          let request = [
+            'UPDATE `conversations` ',
+            'SET is_watched=TRUE ',
+            'WHERE id=' + id + ';'
+          ].join('');
+
+          connection.query(request, (err, response) => {
+            err ? reject(err) : resolve(response);
+          });
+        });
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [
@@ -177,6 +191,16 @@ module.exports = (connection) => {
       const request = [
         'ALTER TABLE `conversations` ',
         'ADD `viewed` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnIsWatched: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `is_watched` BOOLEAN ',
         'DEFAULT FALSE;'
       ].join('');
 

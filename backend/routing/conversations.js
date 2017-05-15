@@ -212,6 +212,77 @@ module.exports = function (server, DAL) {
   });
 
   /**
+   * @api {get} /api/video-watched/:id Request for update conversation video watched status
+   *
+   * @apiParam {String}   id               conversation id.
+   *
+   * @apiName VideoWatched
+   * @apiGroup Templates
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+
+  server.route({
+    method: 'GET',
+    path: '/api/watched/{id}',
+    config: {
+      handler: function (request, reply) {
+        let conversationId = request.params.id;
+        let serverUrl = utils.getServerUrl(request);
+        let token = usersCtrl.parseToken(request.headers.authorization);
+        let conversation;
+
+        let needToMarkPromise = function() {
+          return new Promise((resolve) => {
+            let isWatched;
+
+            DAL.conversations.getById(conversationId).then((res) => {
+              isWatched = res.is_watched;
+
+              return usersCtrl.getUserByToken(token.value);
+            }).then((user) => {
+
+              if (conversation.author === user.id) {
+                resolve(false);
+              } else {
+                resolve(!isWatched);
+              }
+            }, () => {
+
+              resolve(!isWatched);
+            });
+          });
+        };
+
+        DAL.conversations.getById(conversationId).then(res => {
+          conversation = res;
+          return needToMarkPromise();
+        }).then(res => {
+          if (res) {
+            return DAL.conversations.markAsWatched(conversation.id).then(() => {
+              return notificationsCtrl.videoWatched(conversation, serverUrl + '/conversation/' + conversation.id);
+            });
+          } else {
+            return Promise.resolve();
+          }
+        }).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
    * @api {get} /api/template/:id Request template
    * @apiName GetTemplate
    * @apiGroup Templates
