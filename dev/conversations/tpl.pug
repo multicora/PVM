@@ -56,8 +56,7 @@
           vjs-video
           controls
           preload="auto"
-          vjs-media="vm.media"
-          ended="vm.sendNotification()")
+          vjs-media="vm.media")
       .videoFooter
         .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")

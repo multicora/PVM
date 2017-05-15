@@ -31,7 +31,7 @@ module.exports = function (DAL) {
           subject: 'Notification from conversation',
           text: message,
           html: '<div style="white-space: pre;">' + 'Person with email: ' + conversation.email +
-            'watched videou in your conversation!' + link + '</div>'
+            ' watched video in your conversation! Link for visite conversation ' + link + '</div>'
         };
 
         return mailer(config).send(mail);
