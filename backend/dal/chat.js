@@ -31,6 +31,34 @@ module.exports = (connection) => {
       });
     },
 
+    getAll: () => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * ',
+          'FROM chat ;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    delete: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'DELETE ',
+          'FROM chat ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          console.log(response, err);
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
     getStatusTable: (data) => {
       return new Promise((resolve, reject) => {
         let request = [
