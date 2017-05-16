@@ -10,13 +10,14 @@ module.exports = () => {
     videoWatched: (link, authorName, userName) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');
-        let videoWatchedTemplateDir = '/conversationOpened';
+        let videoWatchedTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, videoWatchedTemplateDir);
         let letter = new EmailTemplate(templateDir);
         let props = {
           authorName: authorName,
           userName: userName,
-          text: 'just watched your conversation video',
+          text1: '',
+          text2: 'just watched your conversation video',
           link: link
         };
         letter.render(props, function (err, result) {
@@ -28,13 +29,14 @@ module.exports = () => {
     conversationOpened: (link, authorName, userName) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');
-        let conversationOpendTemplateDir = '/conversationOpened';
+        let conversationOpendTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
         let props = {
           authorName: authorName,
           userName: userName,
-          text: 'just opened your conversation',
+          text1: '',
+          text2: 'just opened your conversation',
           link: link
         };
         letter.render(props, function (err, result) {
@@ -46,13 +48,14 @@ module.exports = () => {
     newMessage: (link, authorName, userName) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');
-        let conversationOpendTemplateDir = '/conversationOpened';
+        let conversationOpendTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
         let props = {
           authorName: authorName,
           userName: userName,
-          message: 'You have new message from',
+          text1: 'You have new message from',
+          text2: '',
           link: link
         };
         letter.render(props, function (err, result) {
