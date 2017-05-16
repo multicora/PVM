@@ -7,18 +7,101 @@ module.exports = () => {
   let templatesDir = './emailTemplates';
 
   return {
-    videoWatched: (url, email) => {
+    videoWatched: (link, authorName, userName) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');
-        let newUserTemplateDir = '/action';
-        let templateDir = path.join(__dirname, templatesDir, newUserTemplateDir);
+        let videoWatchedTemplateDir = '/conversationOpened';
+        let templateDir = path.join(__dirname, templatesDir, videoWatchedTemplateDir);
         let letter = new EmailTemplate(templateDir);
         let props = {
-          title: 'Your conversation video has been watched.',
-          line1: 'Person with email: ' + email + ' watched video in your conversation.',
-          line2: '',
-          buttonText: 'Go to conversation',
+          authorName: authorName,
+          userName: userName,
+          text: 'just watched your conversation video',
+          link: link
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
+    conversationOpened: (link, authorName, userName) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let conversationOpendTemplateDir = '/conversationOpened';
+        let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          authorName: authorName,
+          userName: userName,
+          text: 'just opened your conversation',
+          link: link
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
+    newMessage: (link, authorName, userName) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let conversationOpendTemplateDir = '/conversationOpened';
+        let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          authorName: authorName,
+          userName: userName,
+          message: 'You have new message from',
+          link: link
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
+    sendConversation: (url, authorName, title, message) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let sendConversationTemplateDir = '/conversation';
+        let templateDir = path.join(__dirname, templatesDir, sendConversationTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          title: title,
+          authorName: authorName,
+          message: message,
           buttonLink: url
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
+    resetPassword: (link) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let resetPasswordTemplateDir = '/resetPassword';
+        let templateDir = path.join(__dirname, templatesDir, resetPasswordTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          link: link
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
+    registration: (link) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let registerTemplateDir = '/registration';
+        let templateDir = path.join(__dirname, templatesDir, registerTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          link: link
         };
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);

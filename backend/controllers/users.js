@@ -5,7 +5,7 @@ const Promise = require('promise');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const utils = require('../utils.js');
-const template = require('../services/mailTemplate.js');
+const templates = require('../services/templates.js')();
 
 const EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
 const USERNAME_OR_PASSWORD_IS_INCORRECT = 'USERNAME_OR_PASSWORD_IS_INCORRECT';
@@ -18,16 +18,19 @@ module.exports = function (DAL) {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();
         DAL.users.addResetToken(resetToken, email).then((response) => {
-          if (response.affectedRows) {
-            const message = [
-              'Link for reset password: ' + serverUrl + '/new-password/' + resetToken
-            ].join('\n');
+          let result = null;
 
+          if (response.affectedRows) {
+            result = templates.resetPassword(serverUrl + '/new-password/' + resetToken);
+          }
+
+          return result;
+        }).then( template => {
             const mail = {
               to: email,
               subject: 'Reset password',
-              text: message,
-              html: template.templateForResetPassword(serverUrl + '/new-password/' + resetToken)
+              text: template.text,
+              html: template.html
             };
 
             mailer(config).send(mail).then(
@@ -37,9 +40,6 @@ module.exports = function (DAL) {
                 reject(err);
               }
             );
-          } else {
-            reject(dataError);
-          }
         }, () => {
           reject(serverError);
         });
@@ -69,15 +69,13 @@ module.exports = function (DAL) {
           }).then(() => {
             return DAL.users.addConfirmToken(confirmToken, email);
           }).then(() => {
-            const message = [
-              'Welcome to BizKonect App!'
-            ].join('\n');
-
+            return templates.registration(link);
+          }).then((template) => {
             const mail = {
               to: email,
               subject: 'Register',
-              text: message,
-              html: template.templateForWelcome(link)
+              text: template.text,
+              html: template.html
             };
 
             mailer(config).send(mail).then(

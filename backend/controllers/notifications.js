@@ -1,22 +1,26 @@
 'use strict';
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
-const mailTemplate = require('../services/mailTemplate.js'); // shoud be remove to template
-const template = require('../services/templates.js')();
+const templates = require('../services/templates.js')();
 
 module.exports = function (DAL) {
 
   return {
     conversationOpened: (conversation, link) => {
-      return DAL.users.getUserById(conversation.author).then((user) => {
+      let user;
+      return DAL.users.getUserById(conversation.author).then(res => {
+        user = res;
         user.firstName = user.firstName || '';
+
+        return templates.conversationOpened(link, user.firstName, 'Person with email: ' + conversation.email);
+      }).then(template => {
         const message = 'Your conversation was viewed!';
 
         const mail = {
           to: user.email,
           subject: 'Notification from conversation',
           text: message,
-          html: mailTemplate.templateForOpenedConversation(link, user.firstName, 'Person with email: ' + conversation.email)
+          html: template.html
         };
 
         return mailer(config).send(mail);
@@ -29,7 +33,7 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
-        return template.videoWatched(link, conversation.email || '');
+        return templates.videoWatched(link, conversation.email || '');
       }).then((res) => {
         const mail = {
           to: user.email,

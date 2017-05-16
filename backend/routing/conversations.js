@@ -4,7 +4,7 @@ const Boom = require('boom');
 const Promise = require('promise');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
-const template = require('../services/mailTemplate.js');
+const templates = require('../services/templates.js')();
 const utils = require('../utils.js');
 
 module.exports = function (server, DAL) {
@@ -22,10 +22,12 @@ module.exports = function (server, DAL) {
         let data = request.payload;
         data.author = author.id;
 
-          DAL.conversations.createConversation(data).then(function(res) {
+          DAL.conversations.createConversation(data).then(res => {
+            let serverUrl = utils.getServerUrl(request);
+
+            return templates.sendConversation(serverUrl + '/conversation/' + res.insertId, data.name, data.title, data.message);
+          }).then(template => {
             try {
-              let serverUrl = utils.getServerUrl(request);
-              const message = 'Link: ' + serverUrl + '/conversation/' + data.videoId;
               const from = [
                 author.firstName + ' ',
                 author.secondName + ' ',
@@ -36,8 +38,8 @@ module.exports = function (server, DAL) {
                 from: from,
                 to: data.email,
                 subject: 'Video from ' + author.firstName + ' ' + author.secondName, // Subject line
-                text: message,
-                html: template.templateForConversation(serverUrl + '/conversation/' + res.insertId, data.name, data.title, data.message)
+                text: template.text,
+                html: template.html
               };
               mailer(config).send(mail).then(
                 () => {
