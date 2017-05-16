@@ -1,9 +1,11 @@
 'use strict';
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
-const template = require('../services/mailTemplate.js');
+const mailTemplate = require('../services/mailTemplate.js'); // shoud be remove to template
+const template = require('../services/templates.js')();
 
 module.exports = function (DAL) {
+
   return {
     conversationOpened: (conversation, link) => {
       return DAL.users.getUserById(conversation.author).then((user) => {
@@ -14,7 +16,7 @@ module.exports = function (DAL) {
           to: user.email,
           subject: 'Notification from conversation',
           text: message,
-          html: template.templateForOpenedConversation(link, user.firstName, 'Person with email: ' + conversation.email)
+          html: mailTemplate.templateForOpenedConversation(link, user.firstName, 'Person with email: ' + conversation.email)
         };
 
         return mailer(config).send(mail);
@@ -22,16 +24,18 @@ module.exports = function (DAL) {
     },
 
     videoWatched: (conversation, link) => {
-      return DAL.users.getUserById(conversation.author).then((user) => {
+      let user;
+      return DAL.users.getUserById(conversation.author).then((res) => {
+        user = res;
         user.firstName = user.firstName || '';
-        const message = 'Your conversation video has been watched!';
 
+        return template.videoWatched(link, conversation.email || '');
+      }).then((res) => {
         const mail = {
           to: user.email,
           subject: 'Notification from conversation',
-          text: message,
-          html: '<div style="white-space: pre;">' + 'Person with email: ' + conversation.email +
-            ' watched video in your conversation! Link for visite conversation ' + link + '</div>'
+          text: res.text,
+          html: res.html
         };
 
         return mailer(config).send(mail);

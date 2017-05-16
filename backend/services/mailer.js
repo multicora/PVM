@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function (config) {
+  const Promise = require('promise');
+
   let apiKey = config.mailGun.apiKey;
   let domain = config.mailGun.domain;
   let mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
