@@ -5,12 +5,16 @@
 
   ctrl.$inject = [
     '$scope',
+    '$location',
     'conversationsService',
+    'uploadRecordPopupService',
     'uploadService',
   ];
   function ctrl(
     $scope,
+    $location,
     conversationsService,
+    uploadRecordPopupService,
     uploadService
   ) {
     var vm = this;
@@ -18,8 +22,34 @@
     vm.showUploadPopup = false;
     vm.sentConversation = 0;
     vm.openedConversation = 0;
+    vm.messages;
 
     getConversation();
+    conversationsService.getChatForDashboard().then(function (res) {
+      vm.messages = res.data;
+
+      var length = vm.messages.length;
+      for (var i = 0; i < length - 1; i++) {
+        for (var j = 0; j < length - 1 - i; j++) {
+          if (vm.messages[j+1].date > vm.messages[j].date) {
+            var first = vm.messages[j+1];
+            vm.messages[j+1] = vm.messages[j];
+            vm.messages[j] = first;
+          }
+        }
+      }
+
+      vm.messages = vm.messages.slice(0, 5);
+      for (var i = 0; i < vm.messages.length; i++) {
+        var date = new Date();
+        vm.messages[i].date = new Date(vm.messages[i].date);
+
+        vm.messages[i].passedTime = date.getTime() - vm.messages[i].date.getTime();
+
+        vm.messages[i].passedTime = formatTime(vm.messages[i].passedTime);
+      }
+
+    });
 
     vm.configMessage = {
       "labels": false,
@@ -36,13 +66,12 @@
     //   "colors" : ['#8BC34A', '#F1F8E9']
     // }
 
-    // Rocord popup
-    vm.recordBtnClick = function () {
-      vm.showRecordPopup = true;
-    };
+    vm.uploadBtnClick = function () {
+      uploadRecordPopupService.showUploadPopup();
+    }
 
-    vm.closeRecordPopup = function () {
-      vm.showRecordPopup = false;
+    vm.recordBtnClick = function () {
+      uploadRecordPopupService.showRecordPopup();
     };
 
     vm.finishRecord = function (data) {
@@ -57,21 +86,18 @@
         name + '.wmv'
       ).then(function () {
         vm.closeRecordPopup();
+        vm.getVideos();
         vm.videoName = null;
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Video saved!')
+            .position('bottom center')
+        );
       });
     };
 
-    // Upload popup
-    vm.uploadBtnClick = function () {
-      vm.showUploadPopup = true;
-    };
-
-    vm.closeUploadPopup = function () {
-      vm.showUploadPopup = false;
-    };
-
-    vm.uploadEnd = function () {
-      vm.closeUploadPopup();
+    vm.redirectToConversation = function (id) {
+      $location.path('conversation/' + id);
     }
 
     function getConversation() {
@@ -103,6 +129,20 @@
           }]
         };
       });
+    }
+
+    function formatTime (time) {
+      if (time < 60000) {
+        time = new Date(time).getSeconds() + ' sec';
+      } else if (time < 3600000) {
+        time = new Date(time).getMinutes() + ' min';
+      } else if (time < 86400000) {
+        time = new Date(time).getHours() + ' hrs';
+      } else if (time) {
+        time = new Date(time).getDay() + ' days';
+      }
+
+      return time;
     }
   }
 })(angular);

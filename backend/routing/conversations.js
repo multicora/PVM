@@ -525,4 +525,66 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {get} /api/chatForDashboard Request chat for dashboard
+   * @apiName GetChatForDashboard
+   * @apiGroup Chat
+   *
+   *
+   * @apiSuccess {Object[]} chat                          List of chat messages.
+   * @apiSuccess {String}   chat.id                       Chat id.
+   * @apiSuccess {String}   chat.authorId                 Author id.
+   * @apiSuccess {String}   chat.conversationId           Conversation Id.
+   * @apiSuccess {String}   chat.date                     Date.
+   * @apiSuccess {String}   chat.message                  Message.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {[
+   *   id: 1,
+   *   authorId: 4,
+   *   conversationId: 20,
+   *   date: '0000-00-00 00:00:00',
+   *   message: 'text'
+   * ]}
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/chatForDashboard',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        let author = request.auth.credentials;
+        let conversationsArr = [];
+
+        DAL.conversations.getByAuthor(author.id).then(res => {
+          let promises = [];
+
+          res.map( conversation => {
+            conversationsArr.push(conversation.id);
+          });
+
+          conversationsArr.map( id => {
+            promises.push(DAL.chat.getByConversationId(id));
+          });
+
+          return Promise.all(promises);
+        }).then(res => {
+          let chats = [];
+          res.map( chat => {
+            for (let i = 0; i < chat.length; i++) {
+              if (chat[i].authorId !== author.id) {
+                chats.push(chat[i]);
+              }
+            }
+          });
+          reply(chats);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };

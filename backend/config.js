@@ -51,6 +51,9 @@ var config = {
     apiKey: '',
     domain: ''
   },
+  notification: {
+    time: 5 // Should be in minutes
+  },
   storage: {
     accountId: '',
     applicationKey: '',

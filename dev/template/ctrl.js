@@ -65,11 +65,11 @@
     vm.save = function() {
       checkName();
       vm.sendData = {
-        'name': vm.nameObj.name,
-        'company_role': vm.companyRole.role,
-        'message': vm.messageObj.message,
-        'title': vm.titleObj.title,
-        'logo': vm.logo,
+        'name': vm.nameObj.name || '',
+        'company_role': vm.companyRole.role || '',
+        'message': vm.messageObj.message || '',
+        'title': vm.titleObj.title || '',
+        'logo': vm.logo || '',
         'videoId': vm.videoId,
         'author': vm.user.id
       };
@@ -131,23 +131,24 @@
 
     vm.sendVideo = function(email) {
       checkName();
-      vm.sendData ={
-        'name': vm.nameObj.name,
-        'company_role': vm.companyRole.role,
-        'message': vm.messageObj.message,
-        'title': vm.titleObj.title,
-        'logo': vm.logo,
+      vm.sendData = {
+        'name': vm.nameObj.name || '',
+        'company_role': vm.companyRole.role || '',
+        'message': vm.messageObj.message || '',
+        'title': vm.titleObj.title || '',
+        'logo': vm.logo || '',
         'videoId': vm.videoId,
         'email': email
       }
       conversationsService.create(vm.sendData).then(function () {
+        vm.showSendPopup = false;
         $mdToast.show(
           $mdToast.simple()
             .textContent('Sended successfully!')
             .position('bottom center')
             .hideDelay(3000)
         );
-        vm.showSendPopup = false;
+        $location.path('/library');
       });
     }
 
@@ -188,17 +189,6 @@
       });
     }
 
-    vm.shareViber = function () {
-      createPublicConversation().then(function(res) {
-        Socialshare.share({
-          'provider': 'whatsapp',
-          'attrs': {
-            'socialshareUrl': res.data.link
-          }
-        });
-      });
-    }
-
     vm.uploadBtnClick = function () {
       uploadRecordPopupService.showUploadPopup();
     }
@@ -229,12 +219,12 @@
 
     function createPublicConversation() {
       return new Promise(function (resolve, reject) {
-        vm.sendData ={
-          'name': vm.nameObj.name,
-          'company_role': vm.companyRole.role,
-          'message': vm.messageObj.message,
-          'title': vm.titleObj.title,
-          'logo': vm.logo,
+        vm.sendData = {
+          'name': vm.nameObj.name || '',
+          'company_role': vm.companyRole.role || '',
+          'message': vm.messageObj.message || '',
+          'title': vm.titleObj.title || '',
+          'logo': vm.logo || '',
           'videoId': vm.videoId,
           'email': null
         }
