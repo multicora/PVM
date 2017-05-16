@@ -13,7 +13,6 @@ module.exports = () => {
         let newUserTemplateDir = '/action';
         let templateDir = path.join(__dirname, templatesDir, newUserTemplateDir);
         let letter = new EmailTemplate(templateDir);
-        console.log(letter);
         let props = {
           title: 'Your conversation video has been watched.',
           line1: 'Person with email: ' + email + ' watched video in your conversation.',
