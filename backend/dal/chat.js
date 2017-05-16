@@ -44,11 +44,39 @@ module.exports = (connection) => {
       });
     },
 
+    getAllStatus: () => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT * ',
+          'FROM chat_status ;'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     delete: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
           'DELETE ',
           'FROM chat ',
+          'WHERE id=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          console.log(response, err);
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
+    deleteStatus: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'DELETE ',
+          'FROM chat_status ',
           'WHERE id=' + id + ';'
         ].join('');
 

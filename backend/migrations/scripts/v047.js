@@ -5,7 +5,16 @@ module.exports = function(DAL) {
     version: 47,
     message: 'Moving to backblaze',
     script: function (next) {
-      DAL.chat.getAll().then(res => {
+      DAL.chat.getAllStatus().then(res => {
+        let promises = [];
+        res.map(status => {
+          promises.push(DAL.chat.deleteStatus(status.id));
+        });
+
+        return Promise.all(promises);
+      }).then(() => {
+        return DAL.chat.getAll();
+      }).then(res => {
         let promises = [];
         res.map(chat => {
           promises.push(DAL.chat.delete(chat.id));
