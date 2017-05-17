@@ -21,6 +21,13 @@
 
     vm.save = function() {
       if(vm.editMod) {
+        vm.user.company = vm.user.company || '';
+        vm.user.company_position = vm.user.company_position || '';
+        vm.user.firstName = vm.user.firstName || '';
+        vm.user.secondName = vm.user.secondName || '';
+        vm.user.phone = vm.user.phone || '';
+        vm.user.photo = vm.user.photo || '';
+
         profileService.updateProfile(vm.user).then(function(res) {
           profileService.updateCompany(vm.company)
         }).then(function(res) {
