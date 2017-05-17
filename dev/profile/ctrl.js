@@ -21,12 +21,32 @@
 
     vm.save = function() {
       if(vm.editMod) {
+        vm.user.company = vm.user.company || '';
+        vm.user.company_position = vm.user.company_position || '';
+        vm.user.firstName = vm.user.firstName || '';
+        vm.user.secondName = vm.user.secondName || '';
+        vm.user.phone = vm.user.phone || '';
+        vm.user.photo = vm.user.photo || '';
+
         profileService.updateProfile(vm.user).then(function(res) {
           profileService.updateCompany(vm.company)
         }).then(function(res) {
           vm.editMod = false;
-          $mdToast.showSimple('Saved successfully!');
           getProfile();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Saved successfully!')
+              .position('bottom center')
+              .hideDelay(3000)
+          );
+        }).catch(function (err) {
+          // TODO: add error style
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent(err.data.error)
+              .position('bottom center')
+              .hideDelay(3000)
+          );
         });
       } else {
         vm.editMod = true;

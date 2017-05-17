@@ -12,7 +12,8 @@
     'uploadRecordPopupService',
     'profileService',
     'libraryService',
-    'Socialshare'
+    'Socialshare',
+    'templateService'
   ];
   function ctrl(
     $routeParams,
@@ -23,7 +24,8 @@
     uploadRecordPopupService,
     profileService,
     libraryService,
-    Socialshare
+    Socialshare,
+    templateService
   ) {
     var vm = this;
     vm.nameObj = {};
@@ -77,7 +79,7 @@
       if (vm.templateId) {
         // Edit
         vm.sendData.id = vm.templateId;
-        conversationsService.updateTemplate(vm.sendData).then(function() {
+        templateService.updateTemplate(vm.sendData).then(function() {
           closeAllEditButton();
           getTemplate();
           $mdToast.show(
@@ -103,7 +105,7 @@
         if (!vm.companyRole.role) {
           vm.companyRole.role = vm.user.company_position;
         }
-        conversationsService.createTemplate(vm.sendData).then(function(res) {
+        templateService.createTemplate(vm.sendData).then(function(res) {
           $mdToast.show(
             $mdToast.simple()
               .textContent('Saved successfully!')
@@ -238,7 +240,7 @@
     }
 
     function getTemplate() {
-      conversationsService.getTemplate(vm.templateId).then(function(res) {
+      templateService.getTemplate(vm.templateId).then(function(res) {
         vm.nameObj.name = res.data.name;
         vm.companyRole.role = res.data.companyRole;
         vm.messageObj.message = res.data.message;

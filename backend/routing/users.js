@@ -2,7 +2,7 @@
 
 const Boom = require('boom');
 const utils = require('../utils.js');
-const template = require('../services/mailTemplate.js');
+const templates = require('../services/templates.js');
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 
@@ -122,17 +122,17 @@ const usersController = require('../controllers/users.js')(DAL);
     path: '/api/resend-confirm-mail',
     config: {
       handler: function (request, reply) {
+        let user;
         DAL.users.getUserByEmail(request.payload.email).then(res => {
-          let serverUrl = utils.getServerUrl(request) + '/login/' + res.confirmToken;
-            const message = [
-              'Welcome to BizKonect App!'
-            ].join('\n');
+          user = res;
 
+          return templates.registration(utils.getServerUrl(request) + '/login/' + res.confirmToken);
+        }).then( template => {
             const mail = {
-              to: res.email,
+              to: user.email,
               subject: 'Confirm email',
-              text: message,
-              html: template.templateForWelcome(serverUrl)
+              text: template.text,
+              html: template.html
             };
 
             mailer(config).send(mail).then(

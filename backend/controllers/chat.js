@@ -1,7 +1,7 @@
 'use strict';
 const config = require('../config.js');
 const mailer = require('../services/mailer.js');
-// const template = require('../services/mailTemplate.js');
+const templates = require('../services/templates.js')();
 
 module.exports = function (DAL) {
   const minute = 60000;
@@ -19,18 +19,19 @@ module.exports = function (DAL) {
   };
 
   function sendNotification (data) {
-    let email;
+    let user;
     DAL.users.getUserById(data.userId).then((res) => {
-      email = res.email;
+      user = res;
       return DAL.users.getUserById(data.authorId);
-    }).then((res) => {
-      const message = 'You have new message from ' + res.firstName + ' ' + res.secondName;
+    }).then( res => {
+      return templates.newMessage('http://', user.firstName, res.firstName + ' ' + res.secondName);
+    }).then( template => {
 
       const mail = {
-        to: email,
+        to: user.email,
         subject: 'Notification about new message!',
-        text: message,
-        html: '<div style="white-space: pre;">' + message + '</div>'
+        text: template.text,
+        html: template.html
       };
 
       mailer(config).send(mail);

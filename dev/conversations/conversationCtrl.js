@@ -9,6 +9,7 @@
     '$location',
     '$rootScope',
     '$document',
+    '$scope',
     'conversationsService',
     'profileService',
     'chat',
@@ -19,6 +20,7 @@
     $location,
     $rootScope,
     $document,
+    $scope,
     conversationsService,
     profileService,
     chat,
@@ -98,6 +100,12 @@
       }
     });
 
+    $scope.$on('vjsVideoReady', function (e, data) {
+      data.player.on('ended', function() {
+        conversationsService.videoWatched(vm.conversation.id);
+      });
+    });
+
     vm.back = function (event) {
       event.stopPropagation();
       $location.path('library');
@@ -110,6 +118,7 @@
     vm.videoContentClick = function (event) {
       event.stopPropagation();
       vm.headerClass = 'hideHeader';
+      // conversationsService.videoWatched(vm.conversation.id);
     };
 
     function getProfile() {

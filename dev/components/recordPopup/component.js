@@ -10,10 +10,12 @@
   });
 
   ctrl.$inject = [
+    '$mdToast',
     'uploadService',
     'uploadRecordPopupService'
   ];
   function ctrl(
+    $mdToast,
     uploadService,
     uploadRecordPopupService
   ) {
@@ -37,6 +39,20 @@
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Video saved successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      }).catch(function (err) {
+        // TODO: add error style
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     };
   }
