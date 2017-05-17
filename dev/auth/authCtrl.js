@@ -9,24 +9,24 @@
     '$mdDialog',
     'authService',
     'tokenService',
-    // 'translations'
+    'translations'
   ];
   function ctrl(
     $location,
     $routeParams,
     $mdDialog,
     authService,
-    tokenService
-    // translations
+    tokenService,
+    translations
   ) {
     var vm = this;
-    // var EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
-    // var unconfirmedEmailPopup = $mdDialog.confirm({
-    //   title: translations.txt('CONFIRM_YOUR_EMAIL'),
-    //   textContent: translations.txt('LOGIN_PAGE_CONFIRM_YOUR_EMAIL_MESSAGE'),
-    //   ok: translations.txt('RESEND_CONFIRMATION'),
-    //   cancel: translations.txt('CANCEL')
-    // });
+    var EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
+    var unconfirmedEmailPopup = $mdDialog.confirm({
+      title: translations.txt('CONFIRM_YOUR_EMAIL'),
+      textContent: translations.txt('LOGIN_PAGE_CONFIRM_YOUR_EMAIL_MESSAGE'),
+      ok: translations.txt('RESEND_CONFIRMATION'),
+      cancel: translations.txt('CANCEL')
+    });
 
     if ($routeParams.confirmToken) {
       authService.loginConfirm($routeParams.confirmToken).then(function (res) {
