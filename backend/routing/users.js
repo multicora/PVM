@@ -2,7 +2,7 @@
 
 const Boom = require('boom');
 const utils = require('../utils.js');
-const templates = require('../services/templates.js');
+const templates = require('../services/templates.js')();
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 

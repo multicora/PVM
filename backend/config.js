@@ -58,6 +58,9 @@ var config = {
     accountId: '',
     applicationKey: '',
     bucketId: ''
+  },
+  suport: {
+    email: ''
   }
 };
 
