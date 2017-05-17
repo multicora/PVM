@@ -68,24 +68,6 @@
       vm.recordedData = data;
     };
 
-    vm.sendRecordClick = function (name) {
-      name = name || 'no name';
-      uploadService.sendFile(
-        "/api/video",
-        vm.recordedData.video,
-        name + '.wmv'
-      ).then(function () {
-        vm.closeRecordPopup();
-        vm.getVideos();
-        vm.videoName = null;
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Video saved!')
-            .position('bottom center')
-        );
-      });
-    };
-
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
     };

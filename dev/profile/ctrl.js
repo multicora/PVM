@@ -32,8 +32,21 @@
           profileService.updateCompany(vm.company)
         }).then(function(res) {
           vm.editMod = false;
-          $mdToast.showSimple('Saved successfully!');
           getProfile();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Saved successfully!')
+              .position('bottom center')
+              .hideDelay(3000)
+          );
+        }).catch(function (err) {
+          // TODO: add error style
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent(err.data.error)
+              .position('bottom center')
+              .hideDelay(3000)
+          );
         });
       } else {
         vm.editMod = true;
