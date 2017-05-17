@@ -22,7 +22,7 @@ module.exports = function (server, DAL) {
         let data = request.payload;
         data.author = author.id;
 
-          DAL.conversations.createConversation(data).then(res => {
+          DAL.conversations.create(data).then(res => {
             let serverUrl = utils.getServerUrl(request);
 
             return templates.sendConversation(serverUrl + '/conversation/' + res.insertId, data.name, data.title, data.message);
@@ -86,7 +86,7 @@ module.exports = function (server, DAL) {
         data.author = author.id;
         data.public = 1;
 
-        DAL.conversations.createConversation(data).then(function (res) {
+        DAL.conversations.create(data).then(function (res) {
           reply({'link': serverUrl + '/conversation/' + res.insertId});
         }, function (err) {
           reply(Boom.badImplementation(err, err));
