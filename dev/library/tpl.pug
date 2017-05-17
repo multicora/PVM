@@ -68,3 +68,8 @@
       .button-container
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.close(ng-click="vm.closePreviewPopup()") close
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.send(ng-click="vm.sendClickHandler(vm.previewVideo)") send
+
+  //- Feedback form
+  popup(ng-if="vm.showFeedbackPopup"
+    close-popup="vm.closeFeedbackPopup()")
+    feedback(close-popup="vm.closeFeedbackPopup()")

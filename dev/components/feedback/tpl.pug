@@ -1,0 +1,18 @@
+.feedback-form
+  .feedback-form-container
+    md-input-container
+      label Your email
+      input(
+        ng-model="vm.feedback.email"
+        type="email"
+        required="")
+    md-input-container.message-container
+      label Your feedback
+      textarea(
+        ng-model="vm.feedback.message"
+        aria-label="text input")
+    .button-container
+      button.btn.mdl-button.mdl-js-button(ng-click="vm.closePopup()") close
+      button.btn.mdl-button.mdl-js-button(
+        ng-disabled="!vm.feedback.email"
+        ng-click="vm.sendClickHandler(vm.feedback)") send

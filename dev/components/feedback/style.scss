@@ -1,0 +1,25 @@
+.feedback-form-container {
+  background-color:  #f8f8f8;
+  border-radius: 2px;
+  max-width: 500px;
+  width: 100%;
+  padding: 16px 16px 24px 16px;
+  outline: none;
+  box-sizing: border-box;
+  outline: none;
+
+  .message-container {
+    width: 100%;
+  }
+
+  .button-container {
+    display: inline-block;
+    margin-top: 24px;
+    text-align: right;
+    width: 100%;
+
+    button:last-child {
+      margin-left: 10px;
+    }
+  }
+}

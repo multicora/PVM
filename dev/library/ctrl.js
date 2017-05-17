@@ -34,6 +34,7 @@
     vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
+    vm.showFeedbackPopup = true;
 
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
@@ -110,6 +111,10 @@
     vm.viewConversation = function (id) {
       $location.path('conversation/' + id);
     };
+
+    vm.closeFeedbackPopup = function () {
+      vm.showFeedbackPopup = false;
+    }
 
     // Confirm popup for delete template
     function showConfirmDeleteTemplate(id) {
