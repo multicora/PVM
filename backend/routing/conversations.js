@@ -162,6 +162,8 @@ module.exports = function (server, DAL) {
             DAL.conversations.isViewed(conversation.id).then((result) => {
               isViwed = result;
 
+              return DAL.conversations.updateTime(conversation.id);
+            }).then(() => {
               return usersCtrl.getUserByToken(token.value);
             }).then(
               (user) => {
@@ -271,6 +273,8 @@ module.exports = function (server, DAL) {
           if (res) {
             return DAL.conversations.markAsWatched(conversation.id).then(() => {
               return notificationsCtrl.videoWatched(conversation, serverUrl + '/conversation/' + conversation.id);
+            }).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
             });
           } else {
             return Promise.resolve();

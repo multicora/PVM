@@ -48,7 +48,7 @@ module.exports = (connection) => {
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT title, message, id, email, viewed, updated ',
+          'SELECT title, message, id, email, viewed, is_watched, updated ',
           'FROM `conversations` ',
           'WHERE author=' + author + ' AND ',
           'is_template = 0;'
@@ -82,13 +82,27 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE conversations ',
-          'SET =videoId"' + data.videoId + '", ',
+          'SET videoId"' + data.videoId + '", ',
           'logo="' + data.logo + '", ',
           'title="' + data.title + '", ',
           'company_role="' + data.companyRole + '", ',
           'message="' + data.message + '" ',
           'updated=NOW() ',
           'WHERE id="' + data.id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateTime: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE conversations ',
+          'SET updated=NOW() ',
+          'WHERE id="' + id + '";'
         ].join('');
 
         connection.query(request, (err, response) => {
