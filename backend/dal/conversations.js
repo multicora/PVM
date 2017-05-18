@@ -48,7 +48,7 @@ module.exports = (connection) => {
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT title, message, id, email, viewed ',
+          'SELECT title, message, id, email, viewed, video_is_watched, updated ',
           'FROM `conversations` ',
           'WHERE author=' + author + ' AND ',
           'is_template = 0;'
@@ -60,17 +60,16 @@ module.exports = (connection) => {
       });
     },
 
-    // TODO: rename to 'create'
-    createConversation: (data) => {
+    create: (data) => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
             '`conversations` (`id`, `videoId`, `email`, `logo`, `author`, `name`,',
-            ' `title`, `company_role`, `message`, `is_template`) ',
+            ' `title`, `company_role`, `message`, `is_template`, `updated`) ',
             'VALUES (NULL, "' + data.videoId + '" ,"' + data.email + '" ,"'
             + data.logo + '" ,"' + data.author + '" ,"' + data.name + '" ,"'
             + data.title + '" ,"' + data.company_role + '" ,"' + data.message
-            + '" ,"' + 0 + '");'
+            + '" ,"' + 0 + '", NOW());'
           ].join('');
 
           connection.query(request, (err, response) => {
@@ -83,12 +82,27 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE conversations ',
-          'SET =videoId"' + data.videoId + '", ',
+          'SET videoId"' + data.videoId + '", ',
           'logo="' + data.logo + '", ',
           'title="' + data.title + '", ',
           'company_role="' + data.companyRole + '", ',
           'message="' + data.message + '" ',
+          'updated=NOW() ',
           'WHERE id="' + data.id + '";'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    updateTime: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE conversations ',
+          'SET updated=NOW() ',
+          'WHERE id="' + id + '";'
         ].join('');
 
         connection.query(request, (err, response) => {
@@ -157,7 +171,7 @@ module.exports = (connection) => {
         return new Promise((resolve, reject) => {
           let request = [
             'UPDATE `conversations` ',
-            'SET is_watched=TRUE ',
+            'SET video_is_watched=TRUE ',
             'WHERE id=' + id + ';'
           ].join('');
 
@@ -201,6 +215,16 @@ module.exports = (connection) => {
       const request = [
         'ALTER TABLE `conversations` ',
         'ADD `is_watched` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    renameColumnIsWatched: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'CHANGE `is_watched` `video_is_watched` BOOLEAN ',
         'DEFAULT FALSE;'
       ].join('');
 
@@ -257,6 +281,16 @@ module.exports = (connection) => {
         'ALTER TABLE `conversations` ',
         'ADD `is_template` BOOLEAN ',
         'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnUpdated: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `updated` datetime ',
+        'DEFAULT NOW();'
       ].join('');
 
       return connection.query(request, cb);

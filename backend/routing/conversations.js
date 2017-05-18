@@ -22,7 +22,7 @@ module.exports = function (server, DAL) {
         let data = request.payload;
         data.author = author.id;
 
-          DAL.conversations.createConversation(data).then(res => {
+          DAL.conversations.create(data).then(res => {
             let serverUrl = utils.getServerUrl(request);
 
             return templates.sendConversation(serverUrl + '/conversation/' + res.insertId, data.name, data.title, data.message);
@@ -86,7 +86,7 @@ module.exports = function (server, DAL) {
         data.author = author.id;
         data.public = 1;
 
-        DAL.conversations.createConversation(data).then(function (res) {
+        DAL.conversations.create(data).then(function (res) {
           reply({'link': serverUrl + '/conversation/' + res.insertId});
         }, function (err) {
           reply(Boom.badImplementation(err, err));
@@ -162,6 +162,8 @@ module.exports = function (server, DAL) {
             DAL.conversations.isViewed(conversation.id).then((result) => {
               isViwed = result;
 
+              return DAL.conversations.updateTime(conversation.id);
+            }).then(() => {
               return usersCtrl.getUserByToken(token.value);
             }).then(
               (user) => {
@@ -234,7 +236,7 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'GET',
-    path: '/api/watched/{id}',
+    path: '/api/video-watched/{id}',
     config: {
       handler: function (request, reply) {
         let conversationId = request.params.id;
@@ -247,7 +249,7 @@ module.exports = function (server, DAL) {
             let isWatched;
 
             DAL.conversations.getById(conversationId).then((res) => {
-              isWatched = res.is_watched;
+              isWatched = res.video_is_watched;
 
               return usersCtrl.getUserByToken(token.value);
             }).then((user) => {
@@ -271,6 +273,8 @@ module.exports = function (server, DAL) {
           if (res) {
             return DAL.conversations.markAsWatched(conversation.id).then(() => {
               return notificationsCtrl.videoWatched(conversation, serverUrl + '/conversation/' + conversation.id);
+            }).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
             });
           } else {
             return Promise.resolve();

@@ -1,7 +1,7 @@
 .conversations-content
   .conversations-container
     .conversation(
-      ng-repeat="item in vm.list"
+      ng-repeat="item in vm.list | orderBy:'-updated'"
       ng-click="vm.onViewClick({$data: item.id})")
       .indicators(ng-click="vm.onIndicatorClick({$event: $event})")
         .mail(ng-if="!item.viewed")
@@ -13,17 +13,17 @@
         .is-watching(ng-if="item.viwatching")
           md-tooltip(md-direction="right") Video is watching now
           i.material-icons remove_red_eye
-        .not-viewed(ng-if="!item.viewed")
+        .not-viewed(ng-if="!item.video_is_watched")
           md-tooltip(md-direction="right") Video hasn't been watched
           i.material-icons remove_red_eye
-        .viewed(ng-if="item.viewed")
+        .viewed(ng-if="item.video_is_watched")
           md-tooltip(md-direction="right") Video has been watched
           i.material-icons remove_red_eye
         .files
           md-tooltip(md-direction="right") Files haven't been downloaded yet
           i.material-icons insert_drive_file
 
-      p.email 
+      p.email
         span(ng-if="item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
         span(ng-if="!item.email || item.email === 'null' || item.email === 'undefined'") Public
       p.title
