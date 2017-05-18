@@ -31,7 +31,7 @@
     };
 
     this.videoWatched = function (id) {
-      return $http.get('/api/watched/' + id);
+      return $http.get('/api/video-watched/' + id);
     };
 
     this.getChatForDashboard = function () {
