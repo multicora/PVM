@@ -236,7 +236,7 @@ module.exports = function (server, DAL) {
 
   server.route({
     method: 'GET',
-    path: '/api/watched/{id}',
+    path: '/api/video-watched/{id}',
     config: {
       handler: function (request, reply) {
         let conversationId = request.params.id;
@@ -249,7 +249,7 @@ module.exports = function (server, DAL) {
             let isWatched;
 
             DAL.conversations.getById(conversationId).then((res) => {
-              isWatched = res.is_watched;
+              isWatched = res.video_is_watched;
 
               return usersCtrl.getUserByToken(token.value);
             }).then((user) => {

@@ -13,10 +13,10 @@
         .is-watching(ng-if="item.viwatching")
           md-tooltip(md-direction="right") Video is watching now
           i.material-icons remove_red_eye
-        .not-viewed(ng-if="!item.is_watched")
+        .not-viewed(ng-if="!item.video_is_watched")
           md-tooltip(md-direction="right") Video hasn't been watched
           i.material-icons remove_red_eye
-        .viewed(ng-if="item.is_watched")
+        .viewed(ng-if="item.video_is_watched")
           md-tooltip(md-direction="right") Video has been watched
           i.material-icons remove_red_eye
         .files

@@ -48,7 +48,7 @@ module.exports = (connection) => {
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT title, message, id, email, viewed, is_watched, updated ',
+          'SELECT title, message, id, email, viewed, video_is_watched, updated ',
           'FROM `conversations` ',
           'WHERE author=' + author + ' AND ',
           'is_template = 0;'
@@ -171,7 +171,7 @@ module.exports = (connection) => {
         return new Promise((resolve, reject) => {
           let request = [
             'UPDATE `conversations` ',
-            'SET is_watched=TRUE ',
+            'SET video_is_watched=TRUE ',
             'WHERE id=' + id + ';'
           ].join('');
 
@@ -214,7 +214,7 @@ module.exports = (connection) => {
     addColumnIsWatched: (cb) => {
       const request = [
         'ALTER TABLE `conversations` ',
-        'ADD `is_watched` BOOLEAN ',
+        'ADD `video_is_watched` BOOLEAN ',
         'DEFAULT FALSE;'
       ].join('');
 
