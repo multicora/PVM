@@ -23,3 +23,50 @@
     }
   }
 }
+
+.feedback-buton {
+  position: fixed;
+  right: 50px;
+  bottom: 20px;
+
+  @media (max-width: 567px) {
+    right: 80px;
+  }
+}
+
+.conversation {
+  .feedback-buton {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+
+    @media (max-width: 567px) {
+      right: 20px;
+      bottom: 10px;
+    }
+  }
+}
+
+.template {
+  .feedback-buton {
+    position: fixed;
+    right: 50px;
+    bottom: 60px;
+
+    @media (max-width: 567px) {
+      right: 10px;
+    }
+  }
+}
+
+.profile {
+  .feedback-buton {
+    position: fixed;
+    right: 50px;
+    bottom: 30px;
+
+    @media (max-width: 567px) {
+      right: 10px;
+    }
+  }
+}

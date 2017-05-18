@@ -45,6 +45,23 @@ module.exports = () => {
       });
     },
 
+    feedbackIncome: (email, message, date) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let conversationOpendTemplateDir = '/feedback';
+        let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          email: email,
+          message: message,
+          date: date
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
     newMessage: (link, authorName, userName) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');

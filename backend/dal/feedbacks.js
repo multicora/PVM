@@ -6,8 +6,8 @@ module.exports = (connection) => {
         return new Promise((resolve, reject) => {
           let request = [
             'INSERT INTO ',
-            '`feedbacks` (`id`, `message`, `date`) ',
-            'VALUES (NULL, "' + data.message + '", NOW());'
+            '`feedbacks` (`id`, `email`, `message`, `date`) ',
+            'VALUES (NULL, "' + data.email + '", "' + data.message + '", NOW());'
           ].join('');
 
         connection.query(request, (err, response) => {
@@ -53,11 +53,12 @@ module.exports = (connection) => {
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
           'email varchar(255), ',
-          'message varchar(300) ',
-          'answered BOOLEAN DEFAULT FALSE ',
-          'date datetime, ',
+          'message varchar(300), ',
+          'answered BOOLEAN DEFAULT FALSE, ',
+          'date datetime ',
         ');'
       ].join('');
+
 
       return connection.query(request, cb);
     }

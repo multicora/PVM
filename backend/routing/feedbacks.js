@@ -1,7 +1,7 @@
 'use strict';
 
 const Boom = require('boom');
-// const templates = require('../services/templates.js')();
+const templates = require('../services/templates.js')();
 const config = require('../config.js');
 const mailer = require('../services/mailer.js');
 
@@ -28,7 +28,7 @@ module.exports = function (server, DAL) {
    */
 
   server.route({
-    method: 'GET',
+    method: 'POST',
     path: '/api/feedback',
     config: {
       auth: 'simple',
@@ -36,6 +36,7 @@ module.exports = function (server, DAL) {
         let feedback = request.payload;
 
         DAL.feedbacks.add(feedback).then(() => {
+          return templates.feedbackIncome(feedback.email, feedback.message, new Date());
         }).then( template => {
             const mail = {
               to: config.suport.email,
