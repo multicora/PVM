@@ -1,7 +1,7 @@
 'use strict';
 
 const Boom = require('boom');
-const templates = require('../services/templates.js')();
+// const templates = require('../services/templates.js')();
 const config = require('../config.js');
 const mailer = require('../services/mailer.js');
 
