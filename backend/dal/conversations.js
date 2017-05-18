@@ -214,7 +214,17 @@ module.exports = (connection) => {
     addColumnIsWatched: (cb) => {
       const request = [
         'ALTER TABLE `conversations` ',
-        'ADD `video_is_watched` BOOLEAN ',
+        'ADD `is_watched` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    renameColumnIsWatched: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'CHANGE `is_watched` `video_is_watched` BOOLEAN ',
         'DEFAULT FALSE;'
       ].join('');
 
