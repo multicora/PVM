@@ -13,9 +13,29 @@ module.exports = function () {
   return b2.authorize().then( (res) => {
     const downloadUrl = res.data.downloadUrl;
     return {
+      addVideo: (fileBuffer, name, authorId, authorName) => {
+        // get upload url
+        return b2.getUploadUrl(config.storage.videoBucketId).then( res => {
+          // upload file
+          return b2.uploadFile({
+            uploadUrl: res.data.uploadUrl,
+            uploadAuthToken: res.data.authorizationToken,
+            filename: name,
+            data: fileBuffer, // this is expecting a Buffer not an encoded string,
+            info: {
+              // optional info headers, prepended with X-Bz-Info- when sent, throws error if more than 10 keys set
+              // valid characters should be a-z, A-Z and '-', all other characters will cause an error to be thrown
+              authorId: authorId,
+              authorName: authorName
+            }
+            // onUploadProgress: function(event) || null // progress monitoring
+          });  // returns promise
+        });
+      },
+
       addFile: (fileBuffer, name, authorId, authorName) => {
         // get upload url
-        return b2.getUploadUrl(config.storage.bucketId).then( res => {
+        return b2.getUploadUrl(config.storage.fileBucketId).then( res => {
           // upload file
           return b2.uploadFile({
             uploadUrl: res.data.uploadUrl,

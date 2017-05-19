@@ -57,7 +57,8 @@ var config = {
   storage: {
     accountId: '',
     applicationKey: '',
-    bucketId: ''
+    videoBucketId: '',
+    fileBucketId: ''
   },
   suport: {
     email: ''
