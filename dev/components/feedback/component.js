@@ -8,10 +8,12 @@
   });
 
   ctrl.$inject = [
-    'feedbacksService'
+    'feedbacksService',
+    '$mdToast'
   ];
   function ctrl(
-    feedbacksService
+    feedbacksService,
+    $mdToast
   ) {
     var vm = this;
     vm.showFeedbackPopup = false;
@@ -27,7 +29,20 @@
     vm.sendClickHandler = function(data) {
       feedbacksService.send(vm.feedback).then( function() {
         vm.showFeedbackPopup = false;
-      });
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Sent successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      })
     }
   }
 })(angular);
