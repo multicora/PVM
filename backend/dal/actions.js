@@ -85,7 +85,6 @@ module.exports = function(connection) {
     createTableActions: function(cb) {
       let request = [
         'CREATE TABLE ',
-        'IF NOT EXISTS ',
         'actions ',
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
@@ -99,7 +98,6 @@ module.exports = function(connection) {
     createTableRolesToActions: function(cb) {
       let request = [
         'CREATE TABLE ',
-        'IF NOT EXISTS ',
         'roles_to_actions ',
         '(',
           'id_role int(255), ',

@@ -48,7 +48,6 @@ module.exports = (connection) => {
     createTable: (cb) => {
       let request = [
         'CREATE TABLE ',
-        'IF NOT EXISTS ',
         'feedbacks ',
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
