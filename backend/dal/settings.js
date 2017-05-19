@@ -5,7 +5,6 @@ module.exports = function(connection) {
     create: (cb) => {
       let request1 = [
         'CREATE TABLE',
-        ' IF NOT EXISTS ',
         'dbinfo ',
         '(',
         'name varchar(255) NOT NULL UNIQUE, ',

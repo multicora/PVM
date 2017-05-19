@@ -1,0 +1,72 @@
+.feedback-form-container {
+  background-color:  #f8f8f8;
+  border-radius: 2px;
+  max-width: 500px;
+  width: 100%;
+  padding: 16px 16px 24px 16px;
+  outline: none;
+  box-sizing: border-box;
+  outline: none;
+
+  .message-container {
+    width: 100%;
+  }
+
+  .button-container {
+    display: inline-block;
+    margin-top: 24px;
+    text-align: right;
+    width: 100%;
+
+    button:last-child {
+      margin-left: 10px;
+    }
+  }
+}
+
+.feedback-buton {
+  position: fixed;
+  right: 50px;
+  bottom: 20px;
+
+  @media (max-width: 567px) {
+    right: 80px;
+  }
+}
+
+.conversation {
+  .feedback-buton {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+
+    @media (max-width: 567px) {
+      right: 20px;
+      bottom: 10px;
+    }
+  }
+}
+
+.template {
+  .feedback-buton {
+    position: fixed;
+    right: 50px;
+    bottom: 60px;
+
+    @media (max-width: 567px) {
+      right: 10px;
+    }
+  }
+}
+
+.profile {
+  .feedback-buton {
+    position: fixed;
+    right: 50px;
+    bottom: 30px;
+
+    @media (max-width: 567px) {
+      right: 10px;
+    }
+  }
+}

@@ -403,7 +403,6 @@ module.exports = (connection) => {
     createTable: (cb) => {
       let request = [
         'CREATE TABLE ',
-        'IF NOT EXISTS ',
         'users ',
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
@@ -422,7 +421,6 @@ module.exports = (connection) => {
     createTableCompany: (cb) => {
       let request = [
         'CREATE TABLE ',
-        'IF NOT EXISTS ',
         'company ',
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',

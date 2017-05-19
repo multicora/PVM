@@ -77,7 +77,6 @@ module.exports = function(connection) {
     createTable: function(cb) {
       let request = [
         'CREATE TABLE ',
-        'IF NOT EXISTS ',
         'videos ',
         '(',
           'v_id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',

@@ -30,5 +30,8 @@ module.exports = function(connection){
   // Chat
   DAL.chat = require('./chat.js')(connection);
 
+  // Feedbacks
+  DAL.feedbacks = require('./feedbacks.js')(connection);
+
   return DAL;
 };

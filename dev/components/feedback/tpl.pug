@@ -1,0 +1,23 @@
+.feedback-form
+  popup(ng-if="vm.showFeedbackPopup"
+    close-popup="vm.close()")
+    .feedback-form-container
+      md-input-container
+        label Your email
+        input(
+          ng-model="vm.feedback.email"
+          type="email"
+          required="")
+      md-input-container.message-container
+        label Your feedback
+        textarea(
+          ng-model="vm.feedback.message"
+          maxlength="300"
+          aria-label="text input")
+      .button-container
+        button.btn.mdl-button.mdl-js-button(ng-click="vm.close()") close
+        button.btn.mdl-button.mdl-js-button(
+          ng-disabled="!vm.feedback.email"
+          ng-click="vm.sendClickHandler(vm.feedback)") send
+md-button.md-fab.md-mini.feedback-buton(ng-click="vm.showFeedbackPopup=true")
+  md-icon.material-icons feedback
