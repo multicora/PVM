@@ -52,7 +52,7 @@ module.exports = function(connection) {
           err ? reject(err) : resolve(response);
         });
       });
-    }
+    },
 
     // For migrations
     createTable: function(cb) {
@@ -62,17 +62,14 @@ module.exports = function(connection) {
         '(',
           'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
           'name varchar(255), ',
-          'url varchar(255), ',
-          'ADD `external_file_name` VARCHAR(255) ',
-          'NOT NULL, ',
-          'ADD UNIQUE `external_name` (`external_file_name`), '
-          'ADD `external_file_id` VARCHAR(255) ',
-          'NOT NULL, ',
-          'ADD UNIQUE `external_id` (`external_file_id`), ',
-          'ADD `author` int(255) ',
+          '`external_file_name` VARCHAR(255) ',
+          'NOT NULL UNIQUE, ',
+          '`external_file_id` VARCHAR(255) ',
+          'NOT NULL UNIQUE, ',
+          '`author` int(255) ',
           'NOT NULL, ',
           'PRIMARY KEY (id), ',
-          'ADD FOREIGN KEY (author) REFERENCES users(id);',
+          'FOREIGN KEY (author) REFERENCES users(id)',
         ') '
       ].join('');
 
