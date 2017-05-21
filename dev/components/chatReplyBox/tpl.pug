@@ -1,13 +1,15 @@
 .chat-reply-container
   .chat-reply-box
     form(ng-submit="vm.send()")
-      md-input-container.text-container(aria-label="text input")
-        label Type here to reply
-        textarea.chat-reply-text(
-          aria-label="text input"
-          maxlength="300"
-          ng-keydown="vm.onkeyDown($event)"
-          ng-model="vm.message")
+      label(for="messageBox")
+        md-input-container.text-container(aria-label="text input")
+          label Type here to reply
+          textarea.chat-reply-text(
+            id="messageBox"
+            aria-label="text input"
+            maxlength="300"
+            ng-keydown="vm.onkeyDown($event)"
+            ng-model="vm.message")
       button.btn.mdl-button.send(
         type="submit"
         ng-if="vm.message")

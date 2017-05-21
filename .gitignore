@@ -25,3 +25,8 @@ testem.log
 /backend/cakey.pem
 /backend/passphrase.txt
 /documentation
+/backend/private_key.pem
+/backend/public_key.pem
+/cacert.pem
+/cakey.pem
+/passphrase.txt
