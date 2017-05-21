@@ -2,6 +2,7 @@
 
 const Promise = require('promise');
 const passwordHash = require('password-hash');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = (connection) => {
   return {
@@ -9,13 +10,14 @@ module.exports = (connection) => {
     register: (email, password, company) => {
         return new Promise((resolve, reject) => {
           password = passwordHash.generate(password);
-          let request = [
-            'INSERT INTO ',
-            '`users` (`id`, `email`, `password`, `company`) ',
-            'VALUES (NULL, "' + email + '","' + password + '","' + company + '");'
-          ].join('');
 
-          connection.query(request, (err, response) => {
+          const request = sqlBuilder.insert()
+            .into("users")
+            .set("email", email)
+            .set("password", password)
+            .set("company", company);
+
+          connection.query(request.toString(), (err, response) => {
             err ? reject(err) : resolve(response[0]);
           });
         });
@@ -254,7 +256,7 @@ module.exports = (connection) => {
         let request = [
           'UPDATE `users` ',
           'SET password="' + password + '", ',
-          'resetToken="' + null + '" ',
+          'resetToken="' + null + '" ', // TODO
           'WHERE resetToken="' + resetToken + '";'
         ].join('');
 
@@ -284,7 +286,7 @@ module.exports = (connection) => {
           let request = [
             'INSERT INTO ',
             '`company` (`id`, `name`) ',
-            'VALUES (NULL, "' + null + '");'
+            'VALUES (NULL, "' + null + '");' // TODO
           ].join('');
 
           connection.query(request, (err, response) => {
