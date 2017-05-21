@@ -15,9 +15,10 @@ module.exports = (connection) => {
             .into("users")
             .set("email", email)
             .set("password", password)
-            .set("company", company);
+            .set("company", company)
+            .toString();
 
-          connection.query(request.toString(), (err, response) => {
+          connection.query(request, (err, response) => {
             err ? reject(err) : resolve(response[0]);
           });
         });
@@ -251,14 +252,14 @@ module.exports = (connection) => {
 
     newPassword: (resetToken, password) => {
       return new Promise((resolve, reject) => {
-
         password = passwordHash.generate(password);
-        let request = [
-          'UPDATE `users` ',
-          'SET password="' + password + '", ',
-          'resetToken="' + null + '" ', // TODO
-          'WHERE resetToken="' + resetToken + '";'
-        ].join('');
+
+        const request = sqlBuilder.update()
+          .table('users')
+          .set('password', password)
+          .set('resetToken', null)
+          .where('resetToken', resetToken)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -277,20 +278,6 @@ module.exports = (connection) => {
 
           connection.query(request, (err, response) => {
             err ? reject(err) : resolve(response[0]);
-          });
-        });
-    },
-
-    addCompanyForRegister: () => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`company` (`id`, `name`) ',
-            'VALUES (NULL, "' + null + '");' // TODO
-          ].join('');
-
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
           });
         });
     },
