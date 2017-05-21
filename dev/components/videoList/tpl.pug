@@ -3,10 +3,18 @@
     .add-button
       .content
         .buttons
-          .upload(ng-click="vm.onUploadClick()")
+          .upload(
+            ng-click="vm.onUploadClick()"
+            ga-click="button"
+            ga-click-action="click"
+            ga-click-label="upload-in-list")
             .fa.fa-cloud-upload(aria-hidden="true")
             p Upload
-          .record(ng-click="vm.onRecordClick()")
+          .record(
+            ng-click="vm.onRecordClick()"
+            ga-click="button"
+            ga-click-action="click"
+            ga-click-label="record-in-list")
             .fa.fa-video-camera(aria-hidden="true")
             p Record
         p.text New video

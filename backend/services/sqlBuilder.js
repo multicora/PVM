@@ -1,8 +1,8 @@
 'use strict';
 
-const squel = require("squel");
+const squel = require('squel');
 
-squel.registerValueHandler('undefined', function(x) {
+squel.registerValueHandler('undefined', function() {
   return null;
 });
 

@@ -32,8 +32,8 @@ module.exports = (connection) => {
     add: () => {
         return new Promise((resolve, reject) => {
           const request = sqlBuilder.insert()
-            .into("company")
-            .set("name", null);
+            .into('company')
+            .set('name', null);
 
           connection.query(request.toString(), (err, response) => {
             err ? reject(err) : resolve(response);

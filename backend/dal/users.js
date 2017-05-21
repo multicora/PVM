@@ -6,22 +6,21 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = (connection) => {
   return {
-
     register: (email, password, company) => {
-        return new Promise((resolve, reject) => {
-          password = passwordHash.generate(password);
+      return new Promise((resolve, reject) => {
+        password = passwordHash.generate(password);
 
-          const request = sqlBuilder.insert()
-            .into("users")
-            .set("email", email)
-            .set("password", password)
-            .set("company", company)
-            .toString();
+        const request = sqlBuilder.insert()
+          .into('users')
+          .set('email', email)
+          .set('password', password)
+          .set('company', company)
+          .toString();
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     getUserById: (id) => {
@@ -149,17 +148,17 @@ module.exports = (connection) => {
     },
 
     selectUserEmailById: (id) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'SELECT email ',
-            'FROM users ',
-            'WHERE id=' + id + ';'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT email ',
+          'FROM users ',
+          'WHERE id=' + id + ';'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     getUserByToken: (token) => {
@@ -268,32 +267,32 @@ module.exports = (connection) => {
     },
 
     addUser: (firstName, secondName, email, password) => {
-        return new Promise((resolve, reject) => {
-          password = passwordHash.generate(password);
-          let request = [
-            'INSERT INTO ',
-            '`users` (`id`, `firstName`, `secondName`, `email`, `password`) ',
-            'VALUES (NULL, "' + firstName + '","' + secondName + '","' + email + '","' + password + '");'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        password = passwordHash.generate(password);
+        let request = [
+          'INSERT INTO ',
+          '`users` (`id`, `firstName`, `secondName`, `email`, `password`) ',
+          'VALUES (NULL, "' + firstName + '","' + secondName + '","' + email + '","' + password + '");'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     addUserInvite: (email) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`users` (`id`, `email`) ',
-            'VALUES (NULL, "' + email + '");'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'INSERT INTO ',
+          '`users` (`id`, `email`) ',
+          'VALUES (NULL, "' + email + '");'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     updateToken: (token, email) => {
@@ -328,17 +327,16 @@ module.exports = (connection) => {
 
     updateUserProfile: (user) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE users ',
-          'SET firstName="' + user.firstName + '", ',
-          'secondName="' + user.secondName + '", ',
-          'email="' + user.email + '", ',
-          'phone="' + user.phone + '", ',
-          'photo="' + user.photo + '", ',
-          'company="' + user.company + '", ',
-          'company_position="' + user.company_position + '" ',
-          'WHERE id="' + user.id + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('users')
+          .set('firstName', user.firstName)
+          .set('secondName', user.secondName)
+          .set('phone', user.phone)
+          .set('photo', user.photo)
+          .set('company', user.company)
+          .set('company_position', user.company_position)
+          .where('id', user.id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
