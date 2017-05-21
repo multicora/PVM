@@ -6,8 +6,12 @@
 
   service.$inject = [];
   function service() {
-    this.send = function (type, fields) {
-      ga('send', type, fields);
+    // Example
+    // ga('send', 'event', 'link', 'click', 'http://example.com', {
+    //   nonInteraction: true
+    // });
+    this.send = function (type, eventCategory, eventAction, eventLabel, eventValue) {
+      ga('send', type, eventCategory, eventAction, eventLabel, eventValue);
     };
   }
 })(angular);
