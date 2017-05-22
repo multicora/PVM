@@ -34,7 +34,7 @@
               file.attributes.size += ' b';
             }
 
-            file.attributes.date = new Date(file.attributes.date).toDateString();
+            file.attributes.date = new Date(file.attributes.date).toLocaleDateString();
           });
 
           resolve(res.data);
