@@ -9,8 +9,8 @@ module.exports = function (server, DAL) {
    *
    * @apiParam {Object}   file                 File.
    *
-   * @apiName UploadVideo
-   * @apiGroup Videos
+   * @apiName UploadFile
+   * @apiGroup Files
    *
    *
    * @apiSuccess {Object}   status           Status.
@@ -105,6 +105,50 @@ module.exports = function (server, DAL) {
             reply(500, 'Internal error');
           }
         );
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/files Request for files
+   *
+   *
+   * @apiName GetFiles
+   * @apiGroup Files
+   *
+   *
+   * @apiSuccess {Object}   files                 files.
+   * @apiSuccess {String}   files.type            file type.
+   * @apiSuccess {String}   files.id              file id.
+   * @apiSuccess {String}   files.attributes      file attributes.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/files',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.files.getByAuthor(request.auth.credentials.id).then(function(res) {
+          reply(res.map(
+            function(res) {
+
+              res.name = res.name.replace(/\.([0-9a-z]+)(?:[\?#]|$)/, '');
+              return {
+                'type': 'file',
+                'id': res.id,
+                'attributes': res
+              };
+            }
+          ));
+        }, function(err) {
+          reply(Boom.badImplementation(500, err));
+        });
       }
     }
   });

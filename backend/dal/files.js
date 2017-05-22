@@ -1,16 +1,20 @@
 'use strict';
 
 const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
-    add: function (name, userId, externalName, id) {
+    add: function (name, userId, externalName, externalId) {
       return new Promise(function (resolve, reject) {
-        let request = [
-          'INSERT INTO ',
-            '`files` (`id`, `name`, `url`, `external_file_name`, `external_file_id`, `author`) ',
-            'VALUES (NULL, "' + name + '", NULL, "' + externalName + '", "' + id + '", "' + userId + '");'
-        ].join('');
+        const request = sqlBuilder.insert()
+          .into('files')
+          .set('id', null)
+          .set('name', name)
+          .set('external_file_name', externalName)
+          .set('external_file_id', externalId)
+          .set('author', userId)
+          .toString();
 
         connection.query(request, function (err) {
           err ? reject(err) : resolve();
@@ -26,6 +30,16 @@ module.exports = function(connection) {
 
         connection.query(request, function (err, response) {
           (err || !response.length) ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
+    getByAuthor: function (author) {
+      return new Promise(function (resolve, reject) {
+        let request = 'SELECT * FROM `files` WHERE author = ' + author + ';';
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
         });
       });
     },
