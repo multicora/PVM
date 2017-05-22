@@ -3,8 +3,18 @@
 
   app.controller('mainCtrl', ctrl);
 
-  ctrl.$inject = ['$scope', '$location'];
-  function ctrl($scope, $location) {
+  ctrl.$inject = [
+    '$rootScope',
+    '$location',
+    '$scope',
+    'ga'
+  ];
+  function ctrl(
+    $rootScope,
+    $location,
+    $scope,
+    ga
+  ) {
     var vm = this;
 
     $scope.redirect = function(url, urlParam) {
@@ -14,5 +24,9 @@
         return $location.path(url);
       }
     }
+
+    $rootScope.$on('$routeChangeStart', function (e, next) {
+      ga.send('pageview', next.originalPath);
+    });
   }
 })(angular);

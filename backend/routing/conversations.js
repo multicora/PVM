@@ -11,6 +11,7 @@ module.exports = function (server, DAL) {
   const storageCtrl = require('../controllers/storage.js')(DAL);
   const usersCtrl = require('../controllers/users.js')(DAL);
   const notificationsCtrl = require('../controllers/notifications.js')(DAL);
+  const conversationCtrl = require('../controllers/conversation.js')(DAL);
 
   server.route({
     method: 'POST',
@@ -144,73 +145,25 @@ module.exports = function (server, DAL) {
     path: '/api/conversations/{id}',
     config: {
       handler: function (request, reply) {
-        let conversationId = request.params.id;
         let token = usersCtrl.parseToken(request.headers.authorization);
         let serverUrl = utils.getServerUrl(request);
+        let conversation;
 
-        // Finding conversation
-        DAL.conversations.getById(conversationId).then((conversation) => {
-          if (conversation.logo) {
-            conversation.logo = conversation.logo.toString();
-          } else {
-            conversation.logo = null;
-          }
-          // Deciding if we need to mark conversation as viewed
-          let needToMarkPromise = new Promise((resolve) => {
-            let isViwed;
+        conversationCtrl.get(request.params.id).then((res) => {
+          conversation = res;
 
-            DAL.conversations.isViewed(conversation.id).then((result) => {
-              isViwed = result;
-
-              return DAL.conversations.updateTime(conversation.id);
-            }).then(() => {
-              return usersCtrl.getUserByToken(token.value);
-            }).then(
-              (user) => {
-                if (conversation.author === user.id) {
-                  resolve(false);
-                } else {
-                  resolve(!isViwed);
-                }
-              },
-              () => {
-                resolve(!isViwed);
-              }
-            );
+          return conversationCtrl.needToMarkAsViewed(conversation, token.value).then((res) => {
+            let result;
+            if (res) {
+              result = conversationCtrl.markAsViewed(conversation, serverUrl);
+            }
+            return result;
           });
-
-          needToMarkPromise.then((result) => {
-            if (result) {
-              // Mark as viewed and notify author
-              return DAL.conversations.markAsViewed(conversation.id).then(() => {
-                return notificationsCtrl.conversationOpened(conversation, serverUrl + '/conversation/' + conversation.id);
-              });
-            } else {
-              return Promise.resolve();
-            }
-          }).then(() => {
-            // Get author information
-            return DAL.users.getUserById(conversation.author);
-          }).then((user) => {
-            conversation.authorEmail = user.email;
-            conversation.authorPhone = user.phone;
-            if (user.photo) {
-              conversation.authorPhoto = user.photo.toString();
-            } else {
-              conversation.authorPhoto = null;
-            }
-            return storageCtrl.getFile(conversation.videoId);
-          }).then(
-            function (buffer) {
-              conversation.url = buffer;
-              reply(conversation);
-            },
-            function (err) {
-              reply(Boom.badImplementation(err, err));
-            }
-          );
+        }).then(() => {
+          reply(conversation);
+        }).catch((err) => {
+          reply(Boom.badImplementation(err, err));
         });
-
       }
     }
   });

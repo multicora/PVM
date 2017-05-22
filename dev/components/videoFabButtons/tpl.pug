@@ -1,7 +1,15 @@
 fab-buttons.video-fab-buttons
-  span.upload(ng-click="vm.uploadBtnClick()")
+  span.upload(
+    ng-click="vm.uploadBtnClick()"
+    ga-click="button"
+    ga-click-action="click"
+    ga-click-label="upload-fab")
     span.upload-icon
       .fa.fa-cloud-upload(aria-hidden="true")
-  span.record(ng-click="vm.recordBtnClick()")
+  span.record(
+    ng-click="vm.recordBtnClick()"
+    ga-click="button"
+    ga-click-action="click"
+    ga-click-label="record-fab")
     span.video-icon
       .fa.fa-video-camera(aria-hidden="true")

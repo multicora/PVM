@@ -12,13 +12,13 @@
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = ['ga'];
+  function ctrl(ga) {
     var vm = this;
 
     vm.clickHandler = function() {
       if (vm.eventCategory && vm.eventAction) {
-        ga('send', 'event', vm.eventCategory, vm.eventAction, vm.eventLabel);
+        ga.send('event', vm.eventCategory, vm.eventAction, vm.eventLabel);
       }
     };
   }

@@ -19,5 +19,9 @@
         button.btn.mdl-button.mdl-js-button(
           ng-disabled="!vm.feedback.email"
           ng-click="vm.sendClickHandler(vm.feedback)") send
-md-button.md-fab.md-mini.feedback-buton(ng-click="vm.showFeedbackPopup=true")
+md-button.md-fab.md-mini.feedback-buton(
+  ng-click="vm.showFeedbackPopup=true"
+  ga-click="button"
+  ga-click-action="click"
+  ga-click-label="feedback")
   md-icon.material-icons feedback

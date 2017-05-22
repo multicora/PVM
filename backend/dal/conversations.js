@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = (connection) => {
   return {
@@ -61,21 +62,25 @@ module.exports = (connection) => {
     },
 
     create: (data) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`conversations` (`id`, `videoId`, `email`, `logo`, `author`, `name`,',
-            ' `title`, `company_role`, `message`, `is_template`, `updated`) ',
-            'VALUES (NULL, "' + data.videoId + '" ,"' + data.email + '" ,"'
-            + data.logo + '" ,"' + data.author + '" ,"' + data.name + '" ,"'
-            + data.title + '" ,"' + data.company_role + '" ,"' + data.message
-            + '" ,"' + 0 + '", NOW());'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.insert()
+          .into('conversations')
+          .set('videoId', data.videoId)
+          .set('email', data.email)
+          .set('logo', data.logo)
+          .set('author', data.author)
+          .set('name', data.name)
+          .set('title', data.title)
+          .set('company_role', data.company_role)
+          .set('message', data.message)
+          .set('is_template', 0)
+          .set('updated', sqlBuilder.str('NOW()'))
+          .toString();
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
         });
+      });
     },
 
     update: (data) => {
@@ -112,73 +117,60 @@ module.exports = (connection) => {
     },
 
     selectVideoById: (id) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'SELECT videoId ',
-            'FROM conversations ',
-            'WHERE id=' + id + ';'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT videoId ',
+          'FROM conversations ',
+          'WHERE id=' + id + ';'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     selectUserEmailById: (id) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'SELECT email ',
-            'FROM conversations ',
-            'WHERE id=' + id + ';'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT email ',
+          'FROM conversations ',
+          'WHERE id=' + id + ';'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
-    },
-
-    isViewed: (id) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'SELECT viewed ',
-            'FROM conversations ',
-            'WHERE id=' + id + ';'
-          ].join('');
-
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0].viewed);
-          });
-        });
+      });
     },
 
     markAsViewed: (id) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'UPDATE `conversations` ',
-            'SET viewed=TRUE ',
-            'WHERE id=' + id + ';'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('viewed', true)
+          .set('updated', sqlBuilder.str('NOW()'))
+          .where('id = ' + id)
+          .toString();
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
         });
+      });
     },
 
     markAsWatched: (id) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'UPDATE `conversations` ',
-            'SET video_is_watched=TRUE ',
-            'WHERE id=' + id + ';'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'UPDATE `conversations` ',
+          'SET video_is_watched=TRUE ',
+          'WHERE id=' + id + ';'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
         });
+      });
     },
 
     // For migrations

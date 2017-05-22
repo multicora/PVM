@@ -124,6 +124,8 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
+      }).catch(function () {
+        vm.user = null;
       });
     }
 

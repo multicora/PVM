@@ -2,23 +2,25 @@
 
 const Promise = require('promise');
 const passwordHash = require('password-hash');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = (connection) => {
   return {
-
     register: (email, password, company) => {
-        return new Promise((resolve, reject) => {
-          password = passwordHash.generate(password);
-          let request = [
-            'INSERT INTO ',
-            '`users` (`id`, `email`, `password`, `company`) ',
-            'VALUES (NULL, "' + email + '","' + password + '","' + company + '");'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        password = passwordHash.generate(password);
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        const request = sqlBuilder.insert()
+          .into('users')
+          .set('email', email)
+          .set('password', password)
+          .set('company', company)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     getUserById: (id) => {
@@ -146,17 +148,17 @@ module.exports = (connection) => {
     },
 
     selectUserEmailById: (id) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'SELECT email ',
-            'FROM users ',
-            'WHERE id=' + id + ';'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'SELECT email ',
+          'FROM users ',
+          'WHERE id=' + id + ';'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     getUserByToken: (token) => {
@@ -249,14 +251,14 @@ module.exports = (connection) => {
 
     newPassword: (resetToken, password) => {
       return new Promise((resolve, reject) => {
-
         password = passwordHash.generate(password);
-        let request = [
-          'UPDATE `users` ',
-          'SET password="' + password + '", ',
-          'resetToken="' + null + '" ',
-          'WHERE resetToken="' + resetToken + '";'
-        ].join('');
+
+        const request = sqlBuilder.update()
+          .table('users')
+          .set('password', password)
+          .set('resetToken', null)
+          .where('resetToken', resetToken)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -265,46 +267,32 @@ module.exports = (connection) => {
     },
 
     addUser: (firstName, secondName, email, password) => {
-        return new Promise((resolve, reject) => {
-          password = passwordHash.generate(password);
-          let request = [
-            'INSERT INTO ',
-            '`users` (`id`, `firstName`, `secondName`, `email`, `password`) ',
-            'VALUES (NULL, "' + firstName + '","' + secondName + '","' + email + '","' + password + '");'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        password = passwordHash.generate(password);
+        let request = [
+          'INSERT INTO ',
+          '`users` (`id`, `firstName`, `secondName`, `email`, `password`) ',
+          'VALUES (NULL, "' + firstName + '","' + secondName + '","' + email + '","' + password + '");'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
-    },
-
-    addCompanyForRegister: () => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`company` (`id`, `name`) ',
-            'VALUES (NULL, "' + null + '");'
-          ].join('');
-
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
-        });
+      });
     },
 
     addUserInvite: (email) => {
-        return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`users` (`id`, `email`) ',
-            'VALUES (NULL, "' + email + '");'
-          ].join('');
+      return new Promise((resolve, reject) => {
+        let request = [
+          'INSERT INTO ',
+          '`users` (`id`, `email`) ',
+          'VALUES (NULL, "' + email + '");'
+        ].join('');
 
-          connection.query(request, (err, response) => {
-            err ? reject(err) : resolve(response[0]);
-          });
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
+      });
     },
 
     updateToken: (token, email) => {
@@ -339,17 +327,16 @@ module.exports = (connection) => {
 
     updateUserProfile: (user) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE users ',
-          'SET firstName="' + user.firstName + '", ',
-          'secondName="' + user.secondName + '", ',
-          'email="' + user.email + '", ',
-          'phone="' + user.phone + '", ',
-          'photo="' + user.photo + '", ',
-          'company="' + user.company + '", ',
-          'company_position="' + user.company_position + '" ',
-          'WHERE id="' + user.id + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('users')
+          .set('firstName', user.firstName)
+          .set('secondName', user.secondName)
+          .set('phone', user.phone)
+          .set('photo', user.photo)
+          .set('company', user.company)
+          .set('company_position', user.company_position)
+          .where('id', user.id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);

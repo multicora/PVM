@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = (connection) => {
   return {
@@ -30,13 +31,11 @@ module.exports = (connection) => {
 
     add: () => {
         return new Promise((resolve, reject) => {
-          let request = [
-            'INSERT INTO ',
-            '`company` (`id`, `name`) ',
-            'VALUES (NULL, "' + null + '");'
-          ].join('');
+          const request = sqlBuilder.insert()
+            .into('company')
+            .set('name', null);
 
-          connection.query(request, (err, response) => {
+          connection.query(request.toString(), (err, response) => {
             err ? reject(err) : resolve(response);
           });
         });
