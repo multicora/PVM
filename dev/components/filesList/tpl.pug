@@ -1,0 +1,20 @@
+.content
+  .files-container
+    .add-button
+      .content
+        .buttons
+          .upload(
+            ng-click="vm.onUploadClick()"
+            ga-click="button"
+            ga-click-action="click"
+            ga-click-label="upload-in-list")
+            .fa.fa-cloud-upload(aria-hidden="true")
+            p Upload
+        p.text New file
+    .file-container(ng-repeat="item in vm.list")
+      file-tile(
+        file="item"
+        show-send-button="vm.showSendButton"
+        on-send-click="vm.onSendClick({$data: item})"
+        on-delete-video="vm.onDeleteVideo({$data: item.id})"
+        on-thumbnail-click="vm.onThumbnailClick({$data: item})")

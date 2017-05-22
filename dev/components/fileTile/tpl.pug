@@ -1,0 +1,19 @@
+.file-tile
+  i.material-icons.icon insert_drive_file
+  p.text.ellipsis(title='{{vm.file.attributes.name}}') {{vm.file.attributes.name}}
+  .buttons-container
+    md-menu.menu(
+      ng-if="vm.showSendButton"
+      md-position-mode="target-right target")
+      md-button.menu-button(
+        ng-click="$mdMenu.open()"
+        aria-label="Open menu")
+        img(src='/files/images/dots.png', alt='')
+      md-menu-content(ng-mouseleave="$mdMenu.close()")
+        md-menu-item
+          md-button(ng-click="vm.onDeleteVideo()") Delete
+    .inlineBlock(
+      ng-if="vm.showSendButton"
+      ng-click="vm.onSendClick()")
+      .send
+        .fa.fa-paper-plane(aria-hidden="true")

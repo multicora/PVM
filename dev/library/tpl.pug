@@ -32,6 +32,7 @@
             list="vm.templatesList"
             on-use-click="vm.useTemplate($data)"
             on-delete="vm.deleteTemplate($data, $event)")
+
       //- Conversations
       md-tab(label='conversations')
         md-content.md-padding.tubs-content(
@@ -40,6 +41,17 @@
             list="vm.conversationsList"
             on-indicator-click="vm.stopPropagation($event)"
             on-view-click="vm.viewConversation($data)")
+
+      //- Files
+      md-tab(label='files')
+        md-content.md-padding.tubs-content(
+          md-selected="vm.selectedIndex")
+          files-list(
+            list="vm.conversationsList"
+            on-upload-click="vm.uploadBtnClick()"
+            show-send-button="vm.showSendButton"
+            on-send-click="vm.sendClickHandler($data)"
+            on-delete-video="vm.deleteVideo($data)")
 
   //- Video record & upload fab button
   video-fab-buttons(

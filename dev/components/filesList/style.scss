@@ -1,7 +1,6 @@
 //CONTENT
 .content {
-  //VIDEOS
-  .videos-container,
+  //FILES
   .files-container {
     margin: 0 auto;
     max-width: 920px;
@@ -33,7 +32,6 @@
 
       .buttons {
         margin-top: 60px;
-        .record,
         .upload {
           font-size: 38px;
           display: inline-block;
@@ -41,26 +39,12 @@
           outline: none;
         }
 
-        .record {
-          margin-left: 10px;
-        }
-
         .upload {
           margin-right: 10px;
         }
 
-        .record {
-          color: #757575;
-          transition: 0.5s;
-        }
-
         .upload {
           color: #757575;
-          transition: 0.5s;
-        }
-
-        .record:hover {
-          color: $record-buttons-color;
           transition: 0.5s;
         }
 
@@ -79,7 +63,6 @@
       }
     }
 
-    .video-container,
     .file-container {
       display: inline-block;
     }
