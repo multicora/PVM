@@ -1,5 +1,7 @@
 //CONTENT
 .files-content {
+  padding-bottom: 50px;
+
   //FILES
   .upload-container {
     width: 100%;
@@ -12,10 +14,13 @@
     transition: .3s;
     opacity: 0.5;
     box-shadow: none;
-    cursor: pointer;
 
     .button-container {
       text-align: center;
+
+      .text {
+        margin: 0;
+      }
     }
 
     #upload-file {
@@ -56,6 +61,8 @@
     background-color: #fff;
     position: relative;
     outline: none;
+    line-height: 20px;
+    
 
     .name,
     .size,
@@ -67,18 +74,27 @@
       display: inline-block;
       vertical-align: middle;
       width: 30%;
-      padding-left: 16px;
       box-sizing: border-box;
     }
 
     .size,
     .date {
+      padding-left: 16px;
       text-align: center;
     }
 
     .name {
       font-size: 18px;
-      font-family: 'Roboto Medium';
+
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    .file-icon {
+      font-size: 18px;
+      vertical-align: middle;
+      margin-right: 5px;
     }
 
     .button-container {
@@ -94,6 +110,15 @@
 
     .delete {
       margin-left: 10px;
+    }
+  }
+
+  .file.default {
+    .name,
+    .size,
+    .date {
+      font-weight: bold;
+      font-size: 14px;
     }
   }
 

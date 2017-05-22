@@ -152,4 +152,37 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {post} /api/delete-file Request for delete file
+   *
+   * @apiParam {string}   id                 File id.
+   *
+   * @apiName DeleteFile
+   * @apiGroup Files
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+  server.route({
+    method: 'POST',
+    path: '/api/delete-file',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.files.delete(request.payload).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };

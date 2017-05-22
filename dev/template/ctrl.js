@@ -14,7 +14,8 @@
     'profileService',
     'libraryService',
     'Socialshare',
-    'templateService'
+    'templateService',
+    'filesService'
   ];
   function ctrl(
     $routeParams,
@@ -27,7 +28,8 @@
     profileService,
     libraryService,
     Socialshare,
-    templateService
+    templateService,
+    filesService
   ) {
     var vm = this;
     vm.nameObj = {};
@@ -62,9 +64,8 @@
     };
 
     vm.getFiles = function () {
-      libraryService.getFiles().then(function (res) {
-        vm.filesList = res.data;
-        console.log(res.data);
+      filesService.getFiles().then(function(res) {
+        vm.filesList = res;
       });
     }
 

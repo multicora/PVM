@@ -33,5 +33,9 @@
     this.deleteVideo = function (id) {
       return $http.post('/api/delete-video', id);
     };
+
+    this.deleteFile = function (id) {
+      return $http.post('/api/delete-file', id);
+    };
   }
 })(angular);

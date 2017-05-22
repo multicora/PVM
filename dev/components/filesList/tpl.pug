@@ -1,6 +1,6 @@
 .files-content
   .upload-container
-    label(for='upload-file')
+    label.pointer(for='upload-file')
       div(
         file-uploader
         url="/file"
@@ -13,15 +13,17 @@
         p.text Select files to upload, or drag and drop files
   .files-container
     .file-container
-      .file
+      .file.default
         p.name file name
         p.size file size
         p.date file date
     .file-container(ng-repeat="item in vm.list")
       .file.with-hover(ng-click="vm.onUseClick({$data: item.id})")
-        p.name {{item.attributes.name}}
-        p.size {{}} size
-        p.date {{}} date
+        p.name
+          i.material-icons.file-icon insert_drive_file
+          span {{item.attributes.name}}
+        p.size {{item.attributes.size}}
+        p.date {{item.attributes.date}}
         .button-container
           //- button.btn.mdl-button.mdl-js-button.use(ng-click="vm.onUseClick({$data: item.id})")
           //-   | Use

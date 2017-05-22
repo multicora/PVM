@@ -7,7 +7,7 @@
     bindings: {
       onUploadEnd: '&',
       onSendClick: '&',
-      onDeleteFile: '&',
+      onDelete: '&',
       showSendButton: '<',
       list: '<',
     }

@@ -5,7 +5,7 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
-    add: function (name, userId, externalName, externalId) {
+    add: function (name, userId, externalName, externalId, size) {
       return new Promise(function (resolve, reject) {
         const request = sqlBuilder.insert()
           .into('files')
@@ -13,6 +13,8 @@ module.exports = function(connection) {
           .set('name', name)
           .set('external_file_name', externalName)
           .set('external_file_id', externalId)
+          .set('size', size)
+          .set('date', sqlBuilder.str('NOW()'))
           .set('author', userId)
           .toString();
 
@@ -82,6 +84,8 @@ module.exports = function(connection) {
           'NOT NULL UNIQUE, ',
           '`author` int(255) ',
           'NOT NULL, ',
+          'size int(255), ',
+          'date datetime, ',
           'PRIMARY KEY (id), ',
           'FOREIGN KEY (author) REFERENCES users(id)',
         ') '

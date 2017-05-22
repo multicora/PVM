@@ -10,7 +10,8 @@
     'libraryService',
     'uploadService',
     'conversationsService',
-    'uploadRecordPopupService'
+    'uploadRecordPopupService',
+    'filesService'
   ];
   function ctrl(
     $location,
@@ -19,7 +20,8 @@
     libraryService,
     uploadService,
     conversationsService,
-    uploadRecordPopupService
+    uploadRecordPopupService,
+    filesService
   ) {
     var vm = this;
     var confirmDeletePopup = $mdDialog.confirm({
@@ -47,15 +49,8 @@
       });
     };
 
-    vm.getFiles = function () {
-      libraryService.getFiles().then(function (res) {
-        vm.filesList = res.data;
-        console.log(res.data);
-      });
-    }
-
     vm.getVideos();
-    vm.getFiles();
+    getFiles();
     getTemplates();
     getConversations();
 
@@ -64,8 +59,14 @@
       showConfirmDeleteVideo(id);
     };
 
+    // Upload files
     vm.onUploadFileEnd = function () {
-      vm.getFiles();
+      getFiles();
+    };
+
+    //Delete file
+    vm.deleteFile = function (id) {
+      showConfirmDeleteFile(id);
     };
 
     vm.uploadBtnClick = function () {
@@ -138,6 +139,21 @@
         })
     };
 
+    // Confirm popup for delete file
+    function showConfirmDeleteFile(id) {
+      $mdDialog
+        .show( confirmDeletePopup ).then(function() {
+          libraryService.deleteFile(id).then(function() {
+            getFiles();
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('File deleted!')
+                .position('bottom center')
+            );
+          });
+        })
+    };
+
     // Confirm popup for delete video
     function showConfirmDeleteVideo(id) {
       var alertErrorDelete = $mdDialog.alert({
@@ -161,13 +177,19 @@
         })
     };
 
-    function getTemplates() {
+    function getTemplates () {
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
       });
     };
 
-    function getConversations() {
+    function getFiles () {
+      filesService.getFiles().then(function(res) {
+        vm.filesList = res;
+      });
+    }
+
+    function getConversations () {
       libraryService.getConversations().then(function (res) {
         vm.conversationsList = res.data;
       });

@@ -146,16 +146,9 @@
                 maxlength="300"
                 ng-model="vm.messageObj.message")
             .files
-              //- button.btn.upload(
-              //-   file-uploader
-              //-   url="/file"
-              //-   input-id="upload-file"
-              //-   on-error="")
-              //-   i.material-icons file_upload
-              //-   span.upload-button-text() Upload file
-              button.edit-button.btn.upload
+              button.edit-button.btn.upload(ng-click="vm.showSelectFilePopup=true")
                 i.material-icons file_upload
-                span.placeholder(ng-click="vm.showSelectFilePopup=true") Add files
+                span.placeholder Add files
 
 
 
@@ -231,7 +224,7 @@
       show-send-button="vm.showSendButton"
       on-send-click="vm.sendClickHandler($data)"
       on-thumbnail-click="vm.onThumbnailClick($data)")
-    .button-container
+    .buttons-container
       button.btn.mdl-button.mdl-js-button.mdl-button--raised.close-select-popup(ng-click="vm.closeSelectPopup()") close
 
   //- SELECT FILE POPUP
@@ -240,10 +233,8 @@
     close-popup="vm.closeSelectFilePopup()")
     files-list(
       list="vm.filesList"
-      on-upload-click="vm.uploadBtnClick()"
-      show-send-button="vm.showSendButton"
-      on-send-click="vm.sendClickHandler($data)")
-    .button-container
+      on-upload-end="vm.getFiles()")
+    .buttons-container
       button.btn.mdl-button.mdl-js-button.mdl-button--raised.close-select-popup(ng-click="vm.closeSelectFilePopup()") close
 
   //- Record popup
