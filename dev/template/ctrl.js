@@ -10,6 +10,7 @@
     '$mdToast',
     'conversationsService',
     'uploadRecordPopupService',
+    'uploadService',
     'profileService',
     'libraryService',
     'Socialshare',
@@ -22,6 +23,7 @@
     $mdToast,
     conversationsService,
     uploadRecordPopupService,
+    uploadService,
     profileService,
     libraryService,
     Socialshare,
@@ -34,6 +36,7 @@
     vm.titleObj = {};
     vm.showSendPopup = false;
     vm.showSelectPopup = false;
+    vm.closeSelectFilePopup = false;
     vm.showSendButton = false;
     vm.templateId = null;
     vm.videoId = null;
@@ -58,7 +61,15 @@
       });
     };
 
+    vm.getFiles = function () {
+      libraryService.getFiles().then(function (res) {
+        vm.filesList = res.data;
+        console.log(res.data);
+      });
+    }
+
     vm.getVideos();
+    vm.getFiles();
 
     vm.edit = function(element) {
       element.editMode = true;
@@ -125,6 +136,10 @@
 
     vm.closeSelectPopup = function() {
       vm.showSelectPopup = false;
+    }
+
+    vm.closeSelectFilePopup = function() {
+      vm.showSelectFilePopup = false;
     }
 
     vm.closeSendPopup = function() {
@@ -198,6 +213,15 @@
     vm.recordBtnClick = function () {
       uploadRecordPopupService.showRecordPopup();
     };
+
+    // vm.uploadFileEnd = function () {
+    //   $mdToast.show(
+    //     $mdToast.simple()
+    //       .textContent('Uploaded!')
+    //       .position('bottom center')
+    //       .hideDelay(3000)
+    //   );
+    // };
 
     $scope.convertToBase64LogoTemplate = function(event) {
       var f = document.getElementById('logo').files[0],

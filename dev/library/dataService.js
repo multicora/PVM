@@ -22,6 +22,10 @@
       return $http.get('/api/conversations');
     };
 
+    this.getFiles = function () {
+      return $http.get('/api/files');
+    };
+
     this.deleteTemplate = function (id) {
       return $http.post('/api/delete-template', id);
     };

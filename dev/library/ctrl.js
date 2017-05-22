@@ -47,13 +47,25 @@
       });
     };
 
+    vm.getFiles = function () {
+      libraryService.getFiles().then(function (res) {
+        vm.filesList = res.data;
+        console.log(res.data);
+      });
+    }
+
     vm.getVideos();
+    vm.getFiles();
     getTemplates();
     getConversations();
 
     // Delete video
     vm.deleteVideo = function (id) {
       showConfirmDeleteVideo(id);
+    };
+
+    vm.onUploadFileEnd = function () {
+      vm.getFiles();
     };
 
     vm.uploadBtnClick = function () {

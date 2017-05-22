@@ -123,7 +123,6 @@
 
     .files {
       .edit-button {
-        display: none;
         color: rgba(0, 0, 0, .54);
       }
     }
@@ -169,7 +168,8 @@
   }
 }
 
-.select-video-container {
+.select-video-container,
+.select-file-container {
   .popup {
     background-color:  #f8f8f8;
     box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
@@ -179,7 +179,19 @@
     height: 100%;
     padding: 10px 0;
     position: relative;
-    overflow: scroll;
+    overflow-y: scroll;
+
+    .button-container {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      padding: 10px 0;
+      text-align: right;
+
+      .btn {
+        margin-right: 10px;
+      }
+    }
 
     @media (max-width: 695px) {
       max-width: 470px;
@@ -188,18 +200,6 @@
 
     @media (max-width: 470px) {
       max-width: 245px;
-    }
-  }
-
-  .button-container {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    padding: 10px 0;
-    text-align: right;
-
-    .btn {
-      margin-right: 10px;
     }
   }
 }

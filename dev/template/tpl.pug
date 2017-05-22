@@ -146,9 +146,18 @@
                 maxlength="300"
                 ng-model="vm.messageObj.message")
             .files
+              //- button.btn.upload(
+              //-   file-uploader
+              //-   url="/file"
+              //-   input-id="upload-file"
+              //-   on-error="")
+              //-   i.material-icons file_upload
+              //-   span.upload-button-text() Upload file
               button.edit-button.btn.upload
                 i.material-icons file_upload
-                span.placeholder Upload files
+                span.placeholder(ng-click="vm.showSelectFilePopup=true") Add files
+
+
 
   //- SNACKBAR
   .snackbar-container
@@ -224,6 +233,18 @@
       on-thumbnail-click="vm.onThumbnailClick($data)")
     .button-container
       button.btn.mdl-button.mdl-js-button.mdl-button--raised.close-select-popup(ng-click="vm.closeSelectPopup()") close
+
+  //- SELECT FILE POPUP
+  popup.select-file-container(
+    ng-if="vm.showSelectFilePopup"
+    close-popup="vm.closeSelectFilePopup()")
+    files-list(
+      list="vm.filesList"
+      on-upload-click="vm.uploadBtnClick()"
+      show-send-button="vm.showSendButton"
+      on-send-click="vm.sendClickHandler($data)")
+    .button-container
+      button.btn.mdl-button.mdl-js-button.mdl-button--raised.close-select-popup(ng-click="vm.closeSelectFilePopup()") close
 
   //- Record popup
   record-popup-wrapper(get-videos="vm.getVideos()")

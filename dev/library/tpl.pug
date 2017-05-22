@@ -47,11 +47,11 @@
         md-content.md-padding.tubs-content(
           md-selected="vm.selectedIndex")
           files-list(
-            list="vm.conversationsList"
-            on-upload-click="vm.uploadBtnClick()"
-            show-send-button="vm.showSendButton"
-            on-send-click="vm.sendClickHandler($data)"
-            on-delete-video="vm.deleteVideo($data)")
+            list="vm.filesList"
+            on-upload-end="vm.onUploadFileEnd()"
+            show-send-button=""
+            on-send-click=""
+            on-delete-video="")
 
   //- Video record & upload fab button
   video-fab-buttons(

@@ -1,20 +1,30 @@
-.content
+.files-content
+  .upload-container
+    label(for='upload-file')
+      div(
+        file-uploader
+        url="/file"
+        input-id="upload-file"
+        upload-end="vm.onUploadEnd()"
+        upload-start=""
+        on-error="")
+      .button-container
+        .upload-icon
+        p.text Select files to upload, or drag and drop files
   .files-container
-    .add-button
-      .content
-        .buttons
-          .upload(
-            ng-click="vm.onUploadClick()"
-            ga-click="button"
-            ga-click-action="click"
-            ga-click-label="upload-in-list")
-            .fa.fa-cloud-upload(aria-hidden="true")
-            p Upload
-        p.text New file
+    .file-container
+      .file
+        p.name file name
+        p.size file size
+        p.date file date
     .file-container(ng-repeat="item in vm.list")
-      file-tile(
-        file="item"
-        show-send-button="vm.showSendButton"
-        on-send-click="vm.onSendClick({$data: item})"
-        on-delete-video="vm.onDeleteVideo({$data: item.id})"
-        on-thumbnail-click="vm.onThumbnailClick({$data: item})")
+      .file.with-hover(ng-click="vm.onUseClick({$data: item.id})")
+        p.name {{item.attributes.name}}
+        p.size {{}} size
+        p.date {{}} date
+        .button-container
+          //- button.btn.mdl-button.mdl-js-button.use(ng-click="vm.onUseClick({$data: item.id})")
+          //-   | Use
+          button.btn.mdl-button.mdl-js-button.mdl-button--icon.delete(ng-click="vm.onDelete({$data: item.id, $event: $event})")
+            i.material-icons delete
+

@@ -27,7 +27,7 @@
 
       input.on('change', function (event) {
         if (event.target.files[0]) {
-          uploadService.sendFile('/api/video', event.target.files[0]).then(uploadEnd, onError);
+          uploadService.sendFile('/api' + scope.url, event.target.files[0]).then(uploadEnd, onError);
         }
         event.target.value = null;
         scope.uploadStart();
@@ -35,7 +35,12 @@
 
       function uploadEnd() {
         scope.uploadEnd();
-        $mdToast.showSimple('Uploaded successfully!');
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Uploaded!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       }
 
       function onError(err) {

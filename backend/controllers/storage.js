@@ -27,7 +27,7 @@ module.exports = function(DAL){
         console.log('Start uploading to storage');
         return storage.addFile(fileBuffer, newName, authorId, authorName).then((fileInfo) => {
           console.log('Finish uploading');
-          return DAL.videos.add(name, authorId, newName, fileInfo.data.fileId);
+          return DAL.files.add(name, authorId, newName, fileInfo.data.fileId);
         });
       });
     },
