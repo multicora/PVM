@@ -27,9 +27,28 @@ module.exports = function(DAL) {
 
         return conversation;
       }).then(() => {
-        return storageCtrl.getFile(conversation.videoId);
+        return storageCtrl.getVideo(conversation.videoId);
       }).then((buffer) => {
+        let result = null;
+
         conversation.url = buffer;
+        if (conversation.file) {
+          result = DAL.files.getById(conversation.file);
+        }
+
+        return result;
+      }).then( res => {
+        let result = null;
+        if (res) {
+          conversation.file = res;
+          result = storageCtrl.getFile(conversation.file.id);
+        }
+
+        return result;
+      }).then(res => {
+        if (res) {
+          conversation.file.url = res;
+        }
 
         return conversation;
       });

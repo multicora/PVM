@@ -68,6 +68,7 @@
           type: 'video/mp4'
         }]
       };
+
     }).then(function() {
       return conversationsService.getChat($routeParams.id);
     }).then(function(res) {

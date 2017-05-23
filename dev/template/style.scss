@@ -122,6 +122,34 @@
     }
 
     .files {
+      text-align: left;
+
+      .template-file {
+        display: inline-block;
+        width: 50px;
+        text-align: center;
+        position: relative;
+        padding-top: 10px;
+      }
+
+      .template-file-icon {
+        font-size: 34px;
+      }
+
+      .template-file-name {
+        font-size: 12px;
+        margin: 0;
+      }
+
+      .delete-file {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        font-size: 18px;
+        cursor: pointer;
+        outline: none;
+      }
+
       .edit-button {
         color: rgba(0, 0, 0, .54);
       }
@@ -129,6 +157,7 @@
 
     .text-container {
       width: 100%;
+      margin-bottom: 0;
     }
   }
 

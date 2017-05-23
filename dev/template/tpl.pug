@@ -146,11 +146,14 @@
                 maxlength="300"
                 ng-model="vm.messageObj.message")
             .files
+              .template-file(ng-if="vm.file")
+                i.material-icons.template-file-icon insert_drive_file
+                p.template-file-name.ellipsis {{vm.file.attributes.name}}
+                i.material-icons.delete-file(ng-click="vm.deleteFile()") highlight_off
               button.edit-button.btn.upload(ng-click="vm.showSelectFilePopup=true")
                 i.material-icons file_upload
-                span.placeholder Add files
-
-
+                span.placeholder(ng-if="!vm.file") Add files
+                span.placeholder(ng-if="vm.file") Edit files
 
   //- SNACKBAR
   .snackbar-container

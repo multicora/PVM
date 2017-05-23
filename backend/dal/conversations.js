@@ -80,7 +80,7 @@ module.exports = (connection) => {
           .set('message', data.message)
           .set('is_template', 0)
           .set('updated', sqlBuilder.str('NOW()'))
-          .set('file', data.file)
+          .set('file', data.fileId)
           .toString();
 
         connection.query(request, (err, response) => {

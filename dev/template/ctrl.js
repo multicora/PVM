@@ -235,7 +235,13 @@
 
       getFile(vm.fileId).then(function(res) {
         vm.file = res;
+        $scope.$apply();
       });
+    }
+
+    vm.deleteFile = function() {
+      vm.file = null;
+      vm.fileId = null;
     }
 
     $scope.convertToBase64LogoTemplate = function(event) {
@@ -281,7 +287,6 @@
     function getFile (id) {
       return new Promise(function(resolve) {
         libraryService.getFile(id).then(function (res) {
-          console.log(res);
           resolve(res.data);
         });
       });
@@ -303,10 +308,8 @@
           }]
         };
 
-        if (vm.fileId) {
-          return getFile(vm.fileId);
-        }
-      }).catch(function(res) {
+        return getFile(vm.fileId);
+      }).then(function(res) {
         vm.file = res;
       }).catch(function (res) {
         // TODO: add error style

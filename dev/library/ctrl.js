@@ -141,6 +141,11 @@
 
     // Confirm popup for delete file
     function showConfirmDeleteFile(id) {
+      var alertErrorDelete = $mdDialog.alert({
+        textContent: 'This file can not be deleted because you use it in template or conversation.',
+        ok: 'Ok'
+      });
+
       $mdDialog
         .show( confirmDeletePopup ).then(function() {
           libraryService.deleteFile(id).then(function() {
@@ -149,9 +154,12 @@
               $mdToast.simple()
                 .textContent('File deleted!')
                 .position('bottom center')
+                .hideDelay(3000)
             );
+          }, function(err) {
+            $mdDialog.show( alertErrorDelete );
           });
-        })
+        });
     };
 
     // Confirm popup for delete video
@@ -172,7 +180,7 @@
                 .hideDelay(3000)
             );
           }, function(err) {
-          $mdDialog.show( alertErrorDelete );
+            $mdDialog.show( alertErrorDelete );
           });
         })
     };
