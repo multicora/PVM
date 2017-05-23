@@ -48,12 +48,17 @@ module.exports = (connection) => {
 
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'SELECT title, message, id, email, viewed, video_is_watched, updated ',
-          'FROM `conversations` ',
-          'WHERE author=' + author + ' AND ',
-          'is_template = 0;'
-        ].join('');
+        const request = sqlBuilder.select()
+          .from('conversations')
+          .field('id')
+          .field('email')
+          .field('viewed')
+          .field('video_is_watched')
+          .field('title')
+          .field('message')
+          .field('updated')
+          .where('author = ' + author + ' AND is_template = 0')
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -75,6 +80,7 @@ module.exports = (connection) => {
           .set('message', data.message)
           .set('is_template', 0)
           .set('updated', sqlBuilder.str('NOW()'))
+          .set('file', data.file)
           .toString();
 
         connection.query(request, (err, response) => {
@@ -85,16 +91,17 @@ module.exports = (connection) => {
 
     update: (data) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE conversations ',
-          'SET videoId"' + data.videoId + '", ',
-          'logo="' + data.logo + '", ',
-          'title="' + data.title + '", ',
-          'company_role="' + data.companyRole + '", ',
-          'message="' + data.message + '" ',
-          'updated=NOW() ',
-          'WHERE id="' + data.id + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('videoId', data.videoId)
+          .set('logo', data.logo)
+          .set('title', data.title)
+          .set('company_role', data.companyRole)
+          .set('message', data.message)
+          .set('updated', sqlBuilder.str('NOW()'))
+          .set('file', data.file)
+          .where('id = ' + data.id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -104,11 +111,11 @@ module.exports = (connection) => {
 
     updateTime: (id) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE conversations ',
-          'SET updated=NOW() ',
-          'WHERE id="' + id + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('updated', sqlBuilder.str('NOW()'))
+          .where('id = ' + id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -295,6 +302,16 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+
+    addColumnFile: function (cb) {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `file` int(255), ',
+        'ADD FOREIGN KEY (file) REFERENCES files(id);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
   };
 };

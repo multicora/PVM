@@ -42,6 +42,7 @@
     vm.showSendButton = false;
     vm.templateId = null;
     vm.videoId = null;
+    vm.fileId = null;
 
     if ($routeParams.templateId) {
       vm.templateId = $routeParams.templateId;
@@ -78,6 +79,7 @@
 
     vm.save = function() {
       checkName();
+
       vm.sendData = {
         'name': vm.nameObj.name || '',
         'company_role': vm.companyRole.role || '',
@@ -85,7 +87,8 @@
         'title': vm.titleObj.title || '',
         'logo': vm.logo || '',
         'videoId': vm.videoId,
-        'author': vm.user.id
+        'author': vm.user.id,
+        'file': vm.fileId || ''
       };
 
       if (vm.templateId) {
@@ -156,6 +159,7 @@
         'title': vm.titleObj.title || '',
         'logo': vm.logo || '',
         'videoId': vm.videoId,
+        'fileId': vm.fileId || '',
         'email': email
       }
       conversationsService.create(vm.sendData).then(function () {
@@ -215,14 +219,24 @@
       uploadRecordPopupService.showRecordPopup();
     };
 
-    // vm.uploadFileEnd = function () {
-    //   $mdToast.show(
-    //     $mdToast.simple()
-    //       .textContent('Uploaded!')
-    //       .position('bottom center')
-    //       .hideDelay(3000)
-    //   );
-    // };
+    vm.uploadFileEnd = function () {
+      vm.getFiles();
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Uploaded!')
+          .position('bottom center')
+          .hideDelay(3000)
+      );
+    };
+
+    vm.onUseFileClick = function(file) {
+      vm.fileId = file;
+      vm.showSelectFilePopup = false;
+
+      getFile(vm.fileId).then(function(res) {
+        vm.file = res;
+      });
+    }
 
     $scope.convertToBase64LogoTemplate = function(event) {
       var f = document.getElementById('logo').files[0],
@@ -264,6 +278,15 @@
       });
     }
 
+    function getFile (id) {
+      return new Promise(function(resolve) {
+        libraryService.getFile(id).then(function (res) {
+          console.log(res);
+          resolve(res.data);
+        });
+      });
+    }
+
     function getTemplate() {
       templateService.getTemplate(vm.templateId).then(function(res) {
         vm.nameObj.name = res.data.name;
@@ -272,12 +295,19 @@
         vm.titleObj.title = res.data.title;
         vm.logo = res.data.logo;
         vm.videoId = res.data.videoId;
+        vm.fileId = res.data.file || null;
         vm.media = {
           sources: [{
             src: res.data.videoUrl,
             type: 'video/mp4'
           }]
         };
+
+        if (vm.fileId) {
+          return getFile(vm.fileId);
+        }
+      }).catch(function(res) {
+        vm.file = res;
       }).catch(function (res) {
         // TODO: add error style
         // TODO: add 404 page

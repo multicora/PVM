@@ -258,6 +258,7 @@ module.exports = function (server, DAL) {
    * @apiSuccess {String}   template.message              Template message.
    * @apiSuccess {String}   template.videoUrl             Template video url.
    * @apiSuccess {String}   template.logo                 Template company logo.
+   * @apiSuccess {String}   template.file                 Template file id.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -271,7 +272,8 @@ module.exports = function (server, DAL) {
    *   title: null,
    *   message: null,
    *   logo: null,
-   *   videoUrl: 'https://dl.boxcloud.com/d/1/Iu3ZkIwjP6VYkw90
+   *   videoUrl: 'https://dl.boxcloud.com/d/1/Iu3ZkIwjP6VYkw90,
+   *   file: 2
    * }
    */
   server.route({
@@ -289,12 +291,13 @@ module.exports = function (server, DAL) {
           data.companyRole = res.company_role;
           data.title = res.title;
           data.message = res.message;
+          data.file = res.file;
           if (res.logo) {
             data.logo = res.logo.toString();
           } else {
             data.logo = null;
           }
-          return storageCtrl.getFile(data.videoId);
+          return storageCtrl.getVideo(data.videoId);
         }).then( buffer => {
           data.videoUrl = buffer;
           reply(data);

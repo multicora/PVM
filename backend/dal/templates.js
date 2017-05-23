@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = (connection) => {
   return {
@@ -45,14 +46,20 @@ module.exports = (connection) => {
 
     create: (data) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'INSERT INTO ',
-          '`conversations` (`id`, `videoId`, `logo`, `author`, `name`,',
-          ' `title`, `company_role`, `message`, `is_template`) ',
-          'VALUES (NULL, "' + data.videoId + '" ,"' + data.logo + '" ,"' + data.author
-          + '" ,"' + data.name + '" ,"' + data.title + '" ,"'
-          + data.company_role + '" ,"' + data.message + '" ,"' + 1 + '");'
-        ].join('');
+        const request = sqlBuilder.insert()
+          .into('conversations')
+          .set('id', null)
+          .set('videoId', data.videoId)
+          .set('logo', data.logo)
+          .set('author', data.author)
+          .set('title', data.title)
+          .set('company_role', data.companyRole)
+          .set('name', data.name)
+          .set('message', data.message)
+          .set('updated', sqlBuilder.str('NOW()'))
+          .set('file', data.file)
+          .set('is_template', 1)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -76,16 +83,18 @@ module.exports = (connection) => {
 
     update: (data) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE conversations ',
-          'SET videoId="' + data.videoId + '", ',
-          'logo="' + data.logo + '", ',
-          'title="' + data.title + '", ',
-          'name="' + data.name + '", ',
-          'company_role="' + data.company_role + '", ',
-          'message="' + data.message + '" ',
-          'WHERE id="' + data.id + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('videoId', data.videoId)
+          .set('logo', data.logo)
+          .set('title', data.title)
+          .set('company_role', data.companyRole)
+          .set('name', data.name)
+          .set('message', data.message)
+          .set('updated', sqlBuilder.str('NOW()'))
+          .set('file', data.file)
+          .where('id = ' + data.id)
+          .toString();
 
         connection.query(request, (err, response) => {
           let error;

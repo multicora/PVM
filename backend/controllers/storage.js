@@ -32,9 +32,17 @@ module.exports = function(DAL){
       });
     },
 
-    getFile: (id) => {
+    getVideo: (id) => {
       return b2().then( storage => {
         return DAL.videos.get(id).then(function (res) {
+          return storage.getDownloadUrl(res.external_file_id);
+        });
+      });
+    },
+
+    getFile: (id) => {
+      return b2().then( storage => {
+        return DAL.files.getById(id).then(function (res) {
           return storage.getDownloadUrl(res.external_file_id);
         });
       });

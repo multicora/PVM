@@ -26,6 +26,10 @@
       return $http.get('/api/files');
     };
 
+    this.getFile = function (id) {
+      return $http.get('/api/file/' + id);
+    };
+
     this.deleteTemplate = function (id) {
       return $http.post('/api/delete-template', id);
     };

@@ -89,7 +89,7 @@ module.exports = function (server, DAL) {
     path: '/api/videos/{id}',
     config: {
       handler: function (request, reply) {
-        storageCtrl.getFile(request.params.id).then(
+        storageCtrl.getVideo(request.params.id).then(
           function (buffer) {
             reply({
               type: 'video',

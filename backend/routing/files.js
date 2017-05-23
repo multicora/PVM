@@ -67,10 +67,13 @@ module.exports = function (server, DAL) {
    *
    * @apiSuccess {Object}  file                       File obj.
    * @apiSuccess {Object}  file.data                  File data obj.
-   * @apiSuccess {Object}  file.data.attributes       File attributes obj.
-   * @apiSuccess {String}  file.data.attributes.url   File url.
    * @apiSuccess {String}  file.data.id               File id.
    * @apiSuccess {String}  file.data.type             File type.
+   * @apiSuccess {Object}  file.data.attributes       File attributes obj.
+   * @apiSuccess {String}  file.data.attributes.url   File url.
+   * @apiSuccess {String}  file.data.attributes.size  File size.
+   * @apiSuccess {String}  file.data.attributes.name  File name.
+   * @apiSuccess {String}  file.data.attributes.date  File date.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -79,7 +82,10 @@ module.exports = function (server, DAL) {
    *      "type": "video",
    *      "id": "10",
    *      "attributes": {
-   *        "url": "https://dl.boxcloud.com/d/1/A0nI9YwUM_Dfmt4WGLzSXS/download"
+   *        "url": "https://dl.boxcloud.com/d/1/A0nI9YwUM_Dfmt4WGLzSXS/download",
+   *        "name": "name"
+   *        "size": "83922"
+   *        "date": " 2017-05-22T12:48:02.000Z"
    *      }
    *    }
    *  }
@@ -89,22 +95,26 @@ module.exports = function (server, DAL) {
     path: '/api/file/{id}',
     config: {
       handler: function (request, reply) {
-        storageCtrl.getFile(request.params.id).then(
-          function (buffer) {
-            reply({
-              type: 'video',
-              id: request.params.id,
-              attributes: {
-                url: buffer
-              }
-            });
-          },
-          function (err) {
-            console.log('Error:');
-            console.log(new Error(err));
-            reply(500, 'Internal error');
-          }
-        );
+        let file;
+        storageCtrl.getFile(request.params.id).then( res => {
+          file = {
+            type: 'file',
+            attributes: {
+              url: res
+            }
+          };
+
+          return DAL.files.getById(request.params.id);
+        }).then( res => {
+          file.id = res.id;
+          file.attributes.date = res.date;
+          file.attributes.name = res.name;
+          file.attributes.size = res.size;
+
+          reply(file);
+        }).catch( err => {
+          reply(Boom.badImplementation(500, err));
+        });
       }
     }
   });

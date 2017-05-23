@@ -235,7 +235,8 @@
       list="vm.filesList"
       show-delete-button="false"
       show-use-button="true"
-      on-upload-end="vm.getFiles()")
+      on-upload-end="vm.uploadFileEnd()"
+      on-use-click="vm.onUseFileClick($data)")
     .buttons-container
       button.btn.mdl-button.mdl-js-button.mdl-button--raised.close-select-popup(ng-click="vm.closeSelectFilePopup()") close
 
