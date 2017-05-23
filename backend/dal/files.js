@@ -26,9 +26,10 @@ module.exports = function(connection) {
 
     getById: function (id) {
       return new Promise(function (resolve, reject) {
-        let request = [
-          'SELECT * FROM `files` WHERE id = ' + id
-        ].join('');
+        const request = sqlBuilder.select()
+          .from('files')
+          .where('id = ' + id)
+          .toString();
 
         connection.query(request, function (err, response) {
           (err || !response.length) ? reject(err) : resolve(response[0]);
@@ -38,7 +39,10 @@ module.exports = function(connection) {
 
     getByAuthor: function (author) {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT * FROM `files` WHERE author = ' + author + ';';
+        const request = sqlBuilder.select()
+          .from('files')
+          .where('author = ' + author)
+          .toString();
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
@@ -54,18 +58,9 @@ module.exports = function(connection) {
           'WHERE id=' + id + ';'
         ].join('');
 
+
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response[0]);
-        });
-      });
-    },
-
-    getByAuthor: function (author) {
-      return new Promise(function (resolve, reject) {
-        let request = 'SELECT * FROM `files` WHERE author = ' + author + ';';
-
-        connection.query(request, function (err, response) {
-          err ? reject(err) : resolve(response);
         });
       });
     },
