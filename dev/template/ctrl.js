@@ -219,16 +219,6 @@
       uploadRecordPopupService.showRecordPopup();
     };
 
-    vm.uploadFileEnd = function () {
-      vm.getFiles();
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Uploaded!')
-          .position('bottom center')
-          .hideDelay(3000)
-      );
-    };
-
     vm.onUseFileClick = function(file) {
       vm.fileId = file;
       vm.showSelectFilePopup = false;
