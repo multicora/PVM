@@ -257,7 +257,7 @@ module.exports = (connection) => {
           .table('users')
           .set('password', password)
           .set('resetToken', null)
-          .where('resetToken', resetToken)
+          .where('resetToken = "' + resetToken + '"')
           .toString();
 
         connection.query(request, (err, response) => {
@@ -335,7 +335,7 @@ module.exports = (connection) => {
           .set('photo', user.photo)
           .set('company', user.company)
           .set('company_position', user.company_position)
-          .where('id', user.id)
+          .where('id = ' + user.id)
           .toString();
 
         connection.query(request, (err, response) => {
