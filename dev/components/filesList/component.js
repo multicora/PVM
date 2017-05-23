@@ -6,9 +6,10 @@
     controllerAs: 'vm',
     bindings: {
       onUploadEnd: '&',
-      onSendClick: '&',
+      onUseClick: '&',
       onDelete: '&',
-      showSendButton: '<',
+      showDeleteButton: '<',
+      showUseButton: '<',
       list: '<',
     }
   });
