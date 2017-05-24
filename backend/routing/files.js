@@ -46,12 +46,15 @@ module.exports = function (server, DAL) {
             name = request.payload.file.hapi.filename;
           }
 
-          storageCtrl.addFile(request.payload.file._data, name,
-              user.id, user.firstName + user.secondName).then( () => {
-            reply({'status': 'success'});
+          storageCtrl.addFile(
+            request.payload.file._data,
+            name,
+            user.id,
+            user.firstName + user.secondName
+          ).then( () => {
+            reply();
           }).catch( err => {
-            console.error(err);
-            reply(err);
+            reply(Boom.badImplementation(500, err));
           });
         }
       }
