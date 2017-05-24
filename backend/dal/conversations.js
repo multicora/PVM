@@ -178,6 +178,20 @@ module.exports = (connection) => {
       });
     },
 
+    markAsDownloaded: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('file_is_downloaded', true)
+          .where('id = ' + id)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [
@@ -300,6 +314,16 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+
+    addColumnFileIsDownloaded: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `file_is_downloaded` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
   };
 };

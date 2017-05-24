@@ -34,6 +34,10 @@
       return $http.get('/api/video-watched/' + id);
     };
 
+    this.fileDownloaded = function (id) {
+      return $http.get('/api/file-downloaded/' + id);
+    };
+
     this.getChatForDashboard = function () {
       return $http.get('/api/chatForDashboard');
     };

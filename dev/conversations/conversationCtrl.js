@@ -116,6 +116,10 @@
       vm.headerClass = 'showHeader';
     };
 
+    vm.onFileClick = function() {
+      conversationsService.fileDownloaded(vm.conversation.id);
+    };
+
     vm.videoContentClick = function (event) {
       event.stopPropagation();
       vm.headerClass = 'hideHeader';

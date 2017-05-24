@@ -254,6 +254,83 @@ module.exports = function (server, DAL) {
   });
 
   /**
+   * @api {get} /api/file-downloaded/:id Request for update conversation file downloaded status
+   *
+   * @apiParam {String}   id               conversation id.
+   *
+   * @apiName VideoWatched
+   * @apiGroup Templates
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+
+  server.route({
+    method: 'GET',
+    path: '/api/file-downloaded/{id}',
+    config: {
+      handler: function (request, reply) {
+        let conversationId = request.params.id;
+        let serverUrl = utils.getServerUrl(request);
+        let token = usersCtrl.parseToken(request.headers.authorization);
+        let conversation;
+
+        let needToMarkPromise = function() {
+          return new Promise((resolve) => {
+            let isDownloaded;
+
+            DAL.conversations.getById(conversationId).then((res) => {
+              isDownloaded = res.file_is_downloaded;
+
+              return usersCtrl.getUserByToken(token.value);
+            }).then((user) => {
+
+              if (conversation.author === user.id) {
+                resolve(false);
+              } else {
+                resolve(!isDownloaded);
+              }
+            }, () => {
+
+              resolve(!isDownloaded);
+            });
+          });
+        };
+
+        DAL.conversations.getById(conversationId).then(res => {
+          conversation = res;
+          return needToMarkPromise();
+        }).then(res => {
+
+          if (res) {
+            return DAL.conversations.markAsDownloaded(conversation.id).then(() => {
+              return notificationsCtrl.fileDownloaded(conversation, serverUrl +
+                '/conversation/' +
+                conversation.id);
+            }).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
+            });
+          } else {
+            return Promise.resolve();
+          }
+        }).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+
+  /**
    * @api {get} /api/template/:id Request template
    * @apiName GetTemplate
    * @apiGroup Templates

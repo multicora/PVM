@@ -33,7 +33,28 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
-        return templates.videoWatched(link, conversation.email || '');
+        return templates.videoWatched(link, user.firstName,
+          ('Person with email: ' + conversation.email) || '');
+      }).then((res) => {
+        const mail = {
+          to: user.email,
+          subject: 'Notification from conversation',
+          text: res.text,
+          html: res.html
+        };
+
+        return mailer(config).send(mail);
+      });
+    },
+
+    fileDownloaded: (conversation, link) => {
+      let user;
+      return DAL.users.getUserById(conversation.author).then((res) => {
+        user = res;
+        user.firstName = user.firstName || '';
+
+        return templates.fileDownloaded(link, user.firstName,
+          ('Person with email: ' + conversation.email) || '');
       }).then((res) => {
         const mail = {
           to: user.email,
