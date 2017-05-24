@@ -146,14 +146,15 @@
                 maxlength="300"
                 ng-model="vm.messageObj.message")
             .files
-              .template-file(ng-if="vm.file")
+              .template-file(
+                ng-repeat="item in vm.files track by $index"
+                ng-if="vm.files")
                 i.material-icons.template-file-icon insert_drive_file
-                p.template-file-name.ellipsis {{vm.file.attributes.name}}
-                i.material-icons.delete-file(ng-click="vm.deleteFile()") highlight_off
+                p.template-file-name.ellipsis {{item.attributes.name}}
+                i.material-icons.delete-file(ng-click="vm.deleteFile($index)") highlight_off
               button.edit-button.btn.upload(ng-click="vm.showSelectFilePopup=true")
                 i.material-icons file_upload
-                span.placeholder(ng-if="!vm.file") Add files
-                span.placeholder(ng-if="vm.file") Edit files
+                span.placeholder Add files
 
   //- SNACKBAR
   .snackbar-container
@@ -197,11 +198,12 @@
         input(
           type="email"
           ng-model="email"
-          placeholder="Type recipient email here")
+          placeholder="Type recipient email here"
+          required="")
       .button-container
         button.btn.mdl-button.mdl-js-button(ng-click="vm.closeSendPopup()") close
         button.btn.mdl-button.mdl-js-button(
-          ng-click="vm.sendVideo(email)"
+          ng-click="vm.sendTemplate(email)"
           ng-disabled="!email") send
     md-button.md-icon-button(
       aria-label="facebook"
@@ -221,7 +223,7 @@
     ng-if="vm.showSelectPopup"
     close-popup="vm.closeSelectPopup()")
     video-list(
-      list="vm.list"
+      list="vm.videoList"
       on-upload-click="vm.uploadBtnClick()"
       on-record-click="vm.recordBtnClick()"
       show-send-button="vm.showSendButton"

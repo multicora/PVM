@@ -11,6 +11,7 @@ module.exports = function(DAL) {
     get: (id) => {
       let conversationId = id;
       let conversation;
+      let filesArr = [];
 
       // Finding conversation
       return DAL.conversations.getById(conversationId).then((res) => {
@@ -29,25 +30,37 @@ module.exports = function(DAL) {
       }).then(() => {
         return storageCtrl.getVideo(conversation.videoId);
       }).then((buffer) => {
-        let result = null;
-
         conversation.url = buffer;
-        if (conversation.file) {
-          result = DAL.files.getById(conversation.file);
-        }
 
-        return result;
+        return DAL.files.getFilesByConversation(conversationId);
       }).then( res => {
-        let result = null;
-        if (res) {
-          conversation.file = res;
-          result = storageCtrl.getFile(conversation.file.id);
-        }
+        let promises = [];
 
-        return result;
+        res.forEach(file => {
+          filesArr.push(file.id_file);
+        });
+
+        filesArr.forEach(id => {
+          promises.push(DAL.files.getById(id));
+        });
+
+        return Promise.all(promises);
+      }).then( res => {
+        let promises = [];
+        conversation.files = [];
+
+        res.forEach(file => {
+          conversation.files.push({name: file.name});
+        });
+
+        filesArr.forEach(id => {
+          promises.push(storageCtrl.getFile(id));
+        });
+
+        return Promise.all(promises);
       }).then(res => {
-        if (res) {
-          conversation.file.url = res;
+        for (let i = 0; i < conversation.files.length; i++) {
+          conversation.files[i].url = res[i];
         }
 
         return conversation;

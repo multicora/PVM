@@ -62,14 +62,15 @@
         .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")
             .photo(ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
-            .message 
+            .message
               p {{vm.conversation.message}}
-              .files-container(ng-if="vm.conversation.file")
+              .files-container(ng-if="vm.conversation.files")
                 a.file(
-                  download="{{vm.conversation.file.name}}"
-                  ng-href="{{vm.conversation.file.url}}")
+                  ng-repeat="item in vm.conversation.files"
+                  download="{{item.name}}"
+                  ng-href="{{item.url}}")
                   i.material-icons.file-icon insert_drive_file
-                  p.file-name.ellipsis {{vm.conversation.file.name}}
+                  p.file-name.ellipsis {{item.name}}
 
         chat-list(list="vm.chatList")
 

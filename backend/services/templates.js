@@ -123,6 +123,7 @@ module.exports = () => {
         let props = {
           link: link
         };
+
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);
         });

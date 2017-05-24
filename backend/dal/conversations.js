@@ -80,7 +80,6 @@ module.exports = (connection) => {
           .set('message', data.message)
           .set('is_template', 0)
           .set('updated', sqlBuilder.str('NOW()'))
-          .set('file', data.fileId)
           .toString();
 
         connection.query(request, (err, response) => {
@@ -99,7 +98,6 @@ module.exports = (connection) => {
           .set('company_role', data.companyRole)
           .set('message', data.message)
           .set('updated', sqlBuilder.str('NOW()'))
-          .set('file', data.file)
           .where('id = ' + data.id)
           .toString();
 
@@ -302,16 +300,6 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    },
-
-    addColumnFile: function (cb) {
-      const request = [
-        'ALTER TABLE `conversations` ',
-        'ADD `file` int(255), ',
-        'ADD FOREIGN KEY (file) REFERENCES files(id);'
-      ].join('');
-
-      return connection.query(request, cb);
-    },
+    }
   };
 };

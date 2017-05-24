@@ -24,6 +24,20 @@ module.exports = function(connection) {
       });
     },
 
+    addFileToConversation: function (fileId, conversationId) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.insert()
+          .into('files_to_conversations')
+          .set('id_file', fileId)
+          .set('id_conversation', conversationId)
+          .toString();
+
+        connection.query(request, function (err) {
+          err ? reject(err) : resolve();
+        });
+      });
+    },
+
     getById: function (id) {
       return new Promise(function (resolve, reject) {
         const request = sqlBuilder.select()
@@ -32,7 +46,34 @@ module.exports = function(connection) {
           .toString();
 
         connection.query(request, function (err, response) {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
+
+    getFilesByConversation: function (id) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.select()
+          .from('files_to_conversations')
+          .where('id_conversation = ' + id)
+          .toString();
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    deleteFilesFromConversation: (id) => {
+      return new Promise((resolve, reject) => {
+        let request = [
+          'DELETE ',
+          'FROM files_to_conversations ',
+          'WHERE id_conversation=' + id + ';'
+        ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response[0]);
         });
       });
     },
@@ -58,7 +99,6 @@ module.exports = function(connection) {
           'WHERE id=' + id + ';'
         ].join('');
 
-
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response[0]);
         });
@@ -83,6 +123,21 @@ module.exports = function(connection) {
           'date datetime, ',
           'PRIMARY KEY (id), ',
           'FOREIGN KEY (author) REFERENCES users(id)',
+        ') '
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    createTableFilesToConversations: (cb) => {
+      let request = [
+        'CREATE TABLE ',
+        'files_to_conversations ',
+        '(',
+          'id_file int(255), ',
+          'id_conversation int(255), ',
+          'FOREIGN KEY (id_file) REFERENCES files(id), ',
+          'FOREIGN KEY (id_conversation) REFERENCES conversations(id) ',
         ') '
       ].join('');
 

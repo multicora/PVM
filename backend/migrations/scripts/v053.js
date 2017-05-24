@@ -3,9 +3,9 @@
 module.exports = function(DAL) {
   return {
     version: 53,
-    message: 'Add column "file" to conversations table',
+    message: 'Add table "files_to_conversations"',
     script: function (next) {
-      DAL.conversations.addColumnFile(next);
+      DAL.files.createTableFilesToConversations(next);
     }
   };
 };

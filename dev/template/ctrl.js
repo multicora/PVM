@@ -42,7 +42,7 @@
     vm.showSendButton = false;
     vm.templateId = null;
     vm.videoId = null;
-    vm.fileId = null;
+    vm.files = [];
 
     if ($routeParams.templateId) {
       vm.templateId = $routeParams.templateId;
@@ -55,23 +55,11 @@
 
     vm.getVideos = function() {
       libraryService.getVideos().then(function (res) {
-        vm.list = res.data;
-        // return libraryService.getThumbnails();
-      // }).then(function (res) {
-      //   for (let i = 0; i < res.data.length; i++) {
-      //     vm.list[i].attributes.thumbnail = res.data[i].attributes;
-      //   }
+        vm.videoList = res.data;
       });
     };
 
-    vm.getFiles = function () {
-      filesService.getFiles().then(function(res) {
-        vm.filesList = res;
-      });
-    }
-
     vm.getVideos();
-    vm.getFiles();
 
     vm.edit = function(element) {
       element.editMode = true;
@@ -88,7 +76,7 @@
         'logo': vm.logo || '',
         'videoId': vm.videoId,
         'author': vm.user.id,
-        'file': vm.fileId || ''
+        'files': getFilesId(vm.files)
       };
 
       if (vm.templateId) {
@@ -150,8 +138,9 @@
       vm.showSendPopup = false;
     }
 
-    vm.sendVideo = function(email) {
+    vm.sendTemplate = function(email) {
       checkName();
+
       vm.sendData = {
         'name': vm.nameObj.name || '',
         'company_role': vm.companyRole.role || '',
@@ -159,7 +148,7 @@
         'title': vm.titleObj.title || '',
         'logo': vm.logo || '',
         'videoId': vm.videoId,
-        'fileId': vm.fileId || '',
+        'files': getFilesId(vm.files),
         'email': email
       }
       conversationsService.create(vm.sendData).then(function () {
@@ -219,20 +208,23 @@
       uploadRecordPopupService.showRecordPopup();
     };
 
-    vm.onUseFileClick = function(file) {
-      vm.fileId = file;
+    vm.onUseFileClick = function(id) {
       vm.showSelectFilePopup = false;
 
-      getFile(vm.fileId).then(function(res) {
-        vm.file = res;
-        $scope.$apply();
-      });
-    }
+      if (vm.files.length <= 3) {
+        vm.filesList.forEach( function ( file ) {
+          if (file.id === id) {
+            vm.files.push(file);
+          }
+        });
+      }
 
-    vm.deleteFile = function() {
-      vm.file = null;
-      vm.fileId = null;
-    }
+      return vm.files;
+    };
+
+    vm.deleteFile = function(index) {
+      vm.files.splice(index, 1);
+    };
 
     $scope.convertToBase64LogoTemplate = function(event) {
       var f = document.getElementById('logo').files[0],
@@ -274,10 +266,13 @@
       });
     }
 
-    function getFile (id) {
-      return new Promise(function(resolve) {
-        libraryService.getFile(id).then(function (res) {
-          resolve(res.data);
+    function getTemplateFiles (arr) {
+      vm.files = [];
+      arr.forEach( function(id) {
+        vm.filesList.forEach( function(file) {
+          if (file.id === id) {
+            vm.files.push(file);
+          }
         });
       });
     }
@@ -290,7 +285,7 @@
         vm.titleObj.title = res.data.title;
         vm.logo = res.data.logo;
         vm.videoId = res.data.videoId;
-        vm.fileId = res.data.file || null;
+        vm.filesArr = res.data.files;
         vm.media = {
           sources: [{
             src: res.data.videoUrl,
@@ -298,19 +293,31 @@
           }]
         };
 
-        return getFile(vm.fileId);
+        return filesService.getFiles();
       }).then(function(res) {
-        vm.file = res;
-      }).catch(function (res) {
+
+        vm.filesList = res;
+        getTemplateFiles(vm.filesArr);
+      }).catch(function (err) {
         // TODO: add error style
         // TODO: add 404 page
         $mdToast.show(
           $mdToast.simple()
-            .textContent(res.data.error)
+            .textContent(err.data.error)
             .position('bottom center')
             .hideDelay(3000)
         );
       });
+    }
+
+    function getFilesId(files) {
+      var arr = [];
+
+      files.forEach( function (file) {
+        arr.push(file.id);
+      });
+
+      return arr;
     }
 
     function closeAllEditButton() {

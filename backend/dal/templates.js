@@ -57,7 +57,6 @@ module.exports = (connection) => {
           .set('name', data.name)
           .set('message', data.message)
           .set('updated', sqlBuilder.str('NOW()'))
-          .set('file', data.file)
           .set('is_template', 1)
           .toString();
 
@@ -92,7 +91,6 @@ module.exports = (connection) => {
           .set('name', data.name)
           .set('message', data.message)
           .set('updated', sqlBuilder.str('NOW()'))
-          .set('file', data.file)
           .where('id = ' + data.id)
           .toString();
 
