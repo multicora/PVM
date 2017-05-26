@@ -10,10 +10,12 @@
     '$mdToast',
     'conversationsService',
     'uploadRecordPopupService',
+    'uploadService',
     'profileService',
     'libraryService',
     'Socialshare',
-    'templateService'
+    'templateService',
+    'filesService'
   ];
   function ctrl(
     $routeParams,
@@ -22,10 +24,12 @@
     $mdToast,
     conversationsService,
     uploadRecordPopupService,
+    uploadService,
     profileService,
     libraryService,
     Socialshare,
-    templateService
+    templateService,
+    filesService
   ) {
     var vm = this;
     vm.nameObj = {};
@@ -34,9 +38,11 @@
     vm.titleObj = {};
     vm.showSendPopup = false;
     vm.showSelectPopup = false;
+    vm.closeSelectFilePopup = false;
     vm.showSendButton = false;
     vm.templateId = null;
     vm.videoId = null;
+    vm.files = [];
 
     if ($routeParams.templateId) {
       vm.templateId = $routeParams.templateId;
@@ -49,12 +55,7 @@
 
     vm.getVideos = function() {
       libraryService.getVideos().then(function (res) {
-        vm.list = res.data;
-        // return libraryService.getThumbnails();
-      // }).then(function (res) {
-      //   for (let i = 0; i < res.data.length; i++) {
-      //     vm.list[i].attributes.thumbnail = res.data[i].attributes;
-      //   }
+        vm.videoList = res.data;
       });
     };
 
@@ -66,6 +67,7 @@
 
     vm.save = function() {
       checkName();
+
       vm.sendData = {
         'name': vm.nameObj.name || '',
         'company_role': vm.companyRole.role || '',
@@ -73,7 +75,8 @@
         'title': vm.titleObj.title || '',
         'logo': vm.logo || '',
         'videoId': vm.videoId,
-        'author': vm.user.id
+        'author': vm.user.id,
+        'files': getFilesId(vm.files)
       };
 
       if (vm.templateId) {
@@ -127,12 +130,17 @@
       vm.showSelectPopup = false;
     }
 
+    vm.closeSelectFilePopup = function() {
+      vm.showSelectFilePopup = false;
+    }
+
     vm.closeSendPopup = function() {
       vm.showSendPopup = false;
     }
 
-    vm.sendVideo = function(email) {
+    vm.sendTemplate = function(email) {
       checkName();
+
       vm.sendData = {
         'name': vm.nameObj.name || '',
         'company_role': vm.companyRole.role || '',
@@ -140,6 +148,7 @@
         'title': vm.titleObj.title || '',
         'logo': vm.logo || '',
         'videoId': vm.videoId,
+        'files': getFilesId(vm.files),
         'email': email
       }
       conversationsService.create(vm.sendData).then(function () {
@@ -199,6 +208,24 @@
       uploadRecordPopupService.showRecordPopup();
     };
 
+    vm.onUseFileClick = function(id) {
+      vm.showSelectFilePopup = false;
+
+      if (vm.files.length <= 3) {
+        vm.filesList.forEach( function ( file ) {
+          if (file.id === id) {
+            vm.files.push(file);
+          }
+        });
+      }
+
+      return vm.files;
+    };
+
+    vm.deleteFile = function(index) {
+      vm.files.splice(index, 1);
+    };
+
     $scope.convertToBase64LogoTemplate = function(event) {
       var f = document.getElementById('logo').files[0],
           r = new FileReader(),
@@ -239,6 +266,17 @@
       });
     }
 
+    function getTemplateFiles (arr) {
+      vm.files = [];
+      arr.forEach( function(id) {
+        vm.filesList.forEach( function(file) {
+          if (file.id === id) {
+            vm.files.push(file);
+          }
+        });
+      });
+    }
+
     function getTemplate() {
       templateService.getTemplate(vm.templateId).then(function(res) {
         vm.nameObj.name = res.data.name;
@@ -247,22 +285,39 @@
         vm.titleObj.title = res.data.title;
         vm.logo = res.data.logo;
         vm.videoId = res.data.videoId;
+        vm.filesArr = res.data.files;
         vm.media = {
           sources: [{
             src: res.data.videoUrl,
             type: 'video/mp4'
           }]
         };
-      }).catch(function (res) {
+
+        return filesService.getFiles();
+      }).then(function(res) {
+
+        vm.filesList = res;
+        getTemplateFiles(vm.filesArr);
+      }).catch(function (err) {
         // TODO: add error style
         // TODO: add 404 page
         $mdToast.show(
           $mdToast.simple()
-            .textContent(res.data.error)
+            .textContent(err.data.error)
             .position('bottom center')
             .hideDelay(3000)
         );
       });
+    }
+
+    function getFilesId(files) {
+      var arr = [];
+
+      files.forEach( function (file) {
+        arr.push(file.id);
+      });
+
+      return arr;
     }
 
     function closeAllEditButton() {

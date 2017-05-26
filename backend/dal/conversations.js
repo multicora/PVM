@@ -48,12 +48,17 @@ module.exports = (connection) => {
 
     getByAuthor: (author) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'SELECT title, message, id, email, viewed, video_is_watched, updated ',
-          'FROM `conversations` ',
-          'WHERE author=' + author + ' AND ',
-          'is_template = 0;'
-        ].join('');
+        const request = sqlBuilder.select()
+          .from('conversations')
+          .field('id')
+          .field('email')
+          .field('viewed')
+          .field('video_is_watched')
+          .field('title')
+          .field('message')
+          .field('updated')
+          .where('author = ' + author + ' AND is_template = 0')
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -85,16 +90,16 @@ module.exports = (connection) => {
 
     update: (data) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE conversations ',
-          'SET videoId"' + data.videoId + '", ',
-          'logo="' + data.logo + '", ',
-          'title="' + data.title + '", ',
-          'company_role="' + data.companyRole + '", ',
-          'message="' + data.message + '" ',
-          'updated=NOW() ',
-          'WHERE id="' + data.id + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('videoId', data.videoId)
+          .set('logo', data.logo)
+          .set('title', data.title)
+          .set('company_role', data.companyRole)
+          .set('message', data.message)
+          .set('updated', sqlBuilder.str('NOW()'))
+          .where('id = ' + data.id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -104,11 +109,11 @@ module.exports = (connection) => {
 
     updateTime: (id) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE conversations ',
-          'SET updated=NOW() ',
-          'WHERE id="' + id + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('updated', sqlBuilder.str('NOW()'))
+          .where('id = ' + id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -166,6 +171,20 @@ module.exports = (connection) => {
           'SET video_is_watched=TRUE ',
           'WHERE id=' + id + ';'
         ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    markAsDownloaded: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('conversations')
+          .set('file_is_downloaded', true)
+          .where('id = ' + id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
@@ -295,6 +314,16 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+
+    addColumnFileIsDownloaded: (cb) => {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'ADD `file_is_downloaded` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
   };
 };

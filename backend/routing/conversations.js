@@ -19,14 +19,24 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        let author = request.auth.credentials;
-        let data = request.payload;
+        const author = request.auth.credentials;
+        const data = request.payload;
+        const serverUrl = utils.getServerUrl(request);
+        let conversationId;
         data.author = author.id;
 
           DAL.conversations.create(data).then(res => {
-            let serverUrl = utils.getServerUrl(request);
+            let promises = [];
+            conversationId = res.insertId;
 
-            return templates.sendConversation(serverUrl + '/conversation/' + res.insertId, data.name, data.title, data.message);
+            data.files.forEach( id => {
+              promises.push(DAL.files.addFileToConversation(id, conversationId));
+            });
+
+            return Promise.all(promises);
+          }).then(() => {
+            return templates.sendConversation(serverUrl + '/conversation/' +
+              conversationId, data.name, data.title, data.message);
           }).then(template => {
             try {
               const from = [
@@ -97,7 +107,7 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/conversation Request conversation
+   * @api {get} /api/conversation/:id Request conversation
    * @apiName GetConversation
    * @apiGroup Conversations
    *
@@ -118,6 +128,7 @@ module.exports = function (server, DAL) {
    * @apiSuccess {String}   conversation.authorPhoto          Conversation author photo.
    * @apiSuccess {String}   conversation.videoId              Conversation video id.
    * @apiSuccess {String}   conversation.viwed                Conversation viewed.
+   * @apiSuccess {Array}    conversation.files                Conversation files id.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -137,7 +148,8 @@ module.exports = function (server, DAL) {
    *   authorPhone: "43434343445",
    *   authorPhoto: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD",
    *   videoId: 7,
-   *   viewed: 0
+   *   viewed: 0,
+   *   filse: [1, 2]
    * }
    */
   server.route({
@@ -242,6 +254,83 @@ module.exports = function (server, DAL) {
   });
 
   /**
+   * @api {get} /api/file-downloaded/:id Request for update conversation file downloaded status
+   *
+   * @apiParam {String}   id               conversation id.
+   *
+   * @apiName VideoWatched
+   * @apiGroup Templates
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+
+  server.route({
+    method: 'GET',
+    path: '/api/file-downloaded/{id}',
+    config: {
+      handler: function (request, reply) {
+        let conversationId = request.params.id;
+        let serverUrl = utils.getServerUrl(request);
+        let token = usersCtrl.parseToken(request.headers.authorization);
+        let conversation;
+
+        let needToMarkPromise = function() {
+          return new Promise((resolve) => {
+            let isDownloaded;
+
+            DAL.conversations.getById(conversationId).then((res) => {
+              isDownloaded = res.file_is_downloaded;
+
+              return usersCtrl.getUserByToken(token.value);
+            }).then((user) => {
+
+              if (conversation.author === user.id) {
+                resolve(false);
+              } else {
+                resolve(!isDownloaded);
+              }
+            }, () => {
+
+              resolve(!isDownloaded);
+            });
+          });
+        };
+
+        DAL.conversations.getById(conversationId).then(res => {
+          conversation = res;
+          return needToMarkPromise();
+        }).then(res => {
+
+          if (res) {
+            return DAL.conversations.markAsDownloaded(conversation.id).then(() => {
+              return notificationsCtrl.fileDownloaded(conversation, serverUrl +
+                '/conversation/' +
+                conversation.id);
+            }).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
+            });
+          } else {
+            return Promise.resolve();
+          }
+        }).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+
+  /**
    * @api {get} /api/template/:id Request template
    * @apiName GetTemplate
    * @apiGroup Templates
@@ -258,6 +347,7 @@ module.exports = function (server, DAL) {
    * @apiSuccess {String}   template.message              Template message.
    * @apiSuccess {String}   template.videoUrl             Template video url.
    * @apiSuccess {String}   template.logo                 Template company logo.
+   * @apiSuccess {Array}    template.files                Template files.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -271,7 +361,8 @@ module.exports = function (server, DAL) {
    *   title: null,
    *   message: null,
    *   logo: null,
-   *   videoUrl: 'https://dl.boxcloud.com/d/1/Iu3ZkIwjP6VYkw90
+   *   videoUrl: 'https://dl.boxcloud.com/d/1/Iu3ZkIwjP6VYkw90,
+   *   files: [1, 2]
    * }
    */
   server.route({
@@ -294,9 +385,18 @@ module.exports = function (server, DAL) {
           } else {
             data.logo = null;
           }
-          return storageCtrl.getFile(data.videoId);
+          return storageCtrl.getVideo(data.videoId);
         }).then( buffer => {
           data.videoUrl = buffer;
+
+          return DAL.files.getFilesByConversation(request.params.id);
+        }).then(res => {
+          data.files = [];
+
+          res.forEach(file => {
+            data.files.push(file.id_file);
+          });
+
           reply(data);
         }).catch( err => {
           if (err.message === '404') {
@@ -342,6 +442,15 @@ module.exports = function (server, DAL) {
       handler: function (request, reply) {
         let data = request.payload;
         DAL.templates.update(data).then(() => {
+          return DAL.files.deleteFilesFromConversation(data.id);
+        }).then(() => {
+          let promises = [];
+          data.files.forEach( id => {
+            promises.push(DAL.files.addFileToConversation(id, data.id));
+          });
+
+          return Promise.all(promises);
+        }).then(() => {
           reply({'status': 'success'});
         }, err => {
           if (err.message === '404') {
@@ -385,8 +494,18 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         let data = request.payload;
+        let templateId;
         DAL.templates.create(data).then((res) => {
-          reply({'templateId': res.insertId});
+          templateId = res.insertId;
+          let promises = [];
+
+          data.files.forEach( id => {
+            promises.push(DAL.files.addFileToConversation(id, templateId));
+          });
+
+          return Promise.all(promises);
+        }).then(() => {
+          reply({'templateId': templateId});
         }, err => {
           reply(Boom.badImplementation(err, err));
         });

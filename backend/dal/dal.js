@@ -33,5 +33,8 @@ module.exports = function(connection){
   // Feedbacks
   DAL.feedbacks = require('./feedbacks.js')(connection);
 
+  // Files
+  DAL.files = require('./files.js')(connection);
+
   return DAL;
 };

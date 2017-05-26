@@ -377,6 +377,27 @@
     }
   }
 
+  .files-container {
+    text-align: right;
+
+    .file {
+      text-decoration: none;
+      width: 50px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .file-icon {
+      font-size: 34px;
+    }
+
+    .file-name {
+      max-width: 100%;
+      margin-bottom: 0;
+      font-size: 12px;
+    }
+  }
+
   .message-container.income {
     width: 100%;
     text-align: left;

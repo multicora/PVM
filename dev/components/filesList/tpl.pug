@@ -1,0 +1,36 @@
+.files-content
+  .upload-container
+    label.pointer(for='upload-file')
+      div(
+        file-uploader
+        url="/file"
+        input-id="upload-file"
+        upload-end="vm.onUploadEnd()"
+        upload-start=""
+        on-error="")
+      .button-container
+        .upload-icon
+        p.text Select files to upload, or drag and drop files
+  .files-container
+    .file-container
+      .file.default
+        p.name file name
+        p.size file size
+        p.date file date
+    .file-container(ng-repeat="item in vm.list")
+      .file.with-hover(ng-click="vm.onUseClick({$data: item.id})")
+        p.name
+          i.material-icons.file-icon insert_drive_file
+          span {{item.attributes.name}}
+        p.size {{item.attributes.size}}
+        p.date {{item.attributes.date}}
+        .button-container
+          button.btn.mdl-button.mdl-js-button.use(
+            ng-if="vm.showUseButton"
+            ng-click="vm.onUseClick({$data: item.id})")
+            | Use
+          button.btn.mdl-button.mdl-js-button.mdl-button--icon.delete(
+            ng-if="vm.showDeleteButton"
+            ng-click="vm.onDelete({$data: item.id, $event: $event})")
+            i.material-icons delete
+

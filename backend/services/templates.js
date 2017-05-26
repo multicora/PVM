@@ -26,6 +26,26 @@ module.exports = () => {
       });
     },
 
+    fileDownloaded: (link, authorName, userName) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let fileDownloadedTemplateDir = '/conversationNotification';
+        let templateDir = path.join(__dirname, templatesDir, fileDownloadedTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          authorName: authorName,
+          userName: userName,
+          text1: '',
+          text2: 'just downloaded your conversation files',
+          link: link
+        };
+
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
     conversationOpened: (link, authorName, userName) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');
@@ -39,6 +59,7 @@ module.exports = () => {
           text2: 'just opened your conversation',
           link: link
         };
+
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);
         });
@@ -75,6 +96,7 @@ module.exports = () => {
           text2: '',
           link: link
         };
+
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);
         });
@@ -123,6 +145,7 @@ module.exports = () => {
         let props = {
           link: link
         };
+
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);
         });

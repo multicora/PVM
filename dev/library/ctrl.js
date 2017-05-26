@@ -10,7 +10,8 @@
     'libraryService',
     'uploadService',
     'conversationsService',
-    'uploadRecordPopupService'
+    'uploadRecordPopupService',
+    'filesService'
   ];
   function ctrl(
     $location,
@@ -19,7 +20,8 @@
     libraryService,
     uploadService,
     conversationsService,
-    uploadRecordPopupService
+    uploadRecordPopupService,
+    filesService
   ) {
     var vm = this;
     var confirmDeletePopup = $mdDialog.confirm({
@@ -48,12 +50,23 @@
     };
 
     vm.getVideos();
+    getFiles();
     getTemplates();
     getConversations();
 
     // Delete video
     vm.deleteVideo = function (id) {
       showConfirmDeleteVideo(id);
+    };
+
+    // Upload files
+    vm.onUploadFileEnd = function () {
+      getFiles();
+    };
+
+    //Delete file
+    vm.deleteFile = function (id) {
+      showConfirmDeleteFile(id);
     };
 
     vm.uploadBtnClick = function () {
@@ -126,6 +139,29 @@
         })
     };
 
+    // Confirm popup for delete file
+    function showConfirmDeleteFile(id) {
+      var alertErrorDelete = $mdDialog.alert({
+        textContent: 'This file can not be deleted because you use it in template or conversation.',
+        ok: 'Ok'
+      });
+
+      $mdDialog
+        .show( confirmDeletePopup ).then(function() {
+          libraryService.deleteFile(id).then(function() {
+            getFiles();
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('File deleted!')
+                .position('bottom center')
+                .hideDelay(3000)
+            );
+          }, function(err) {
+            $mdDialog.show( alertErrorDelete );
+          });
+        });
+    };
+
     // Confirm popup for delete video
     function showConfirmDeleteVideo(id) {
       var alertErrorDelete = $mdDialog.alert({
@@ -144,18 +180,24 @@
                 .hideDelay(3000)
             );
           }, function(err) {
-          $mdDialog.show( alertErrorDelete );
+            $mdDialog.show( alertErrorDelete );
           });
         })
     };
 
-    function getTemplates() {
+    function getTemplates () {
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
       });
     };
 
-    function getConversations() {
+    function getFiles () {
+      filesService.getFiles().then(function(res) {
+        vm.filesList = res;
+      });
+    }
+
+    function getConversations () {
       libraryService.getConversations().then(function (res) {
         vm.conversationsList = res.data;
       });

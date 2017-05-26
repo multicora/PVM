@@ -122,14 +122,42 @@
     }
 
     .files {
+      text-align: left;
+
+      .template-file {
+        display: inline-block;
+        width: 50px;
+        text-align: center;
+        position: relative;
+        padding-top: 10px;
+      }
+
+      .template-file-icon {
+        font-size: 34px;
+      }
+
+      .template-file-name {
+        font-size: 12px;
+        margin: 0;
+      }
+
+      .delete-file {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        font-size: 18px;
+        cursor: pointer;
+        outline: none;
+      }
+
       .edit-button {
-        display: none;
         color: rgba(0, 0, 0, .54);
       }
     }
 
     .text-container {
       width: 100%;
+      margin-bottom: 0;
     }
   }
 
@@ -169,7 +197,8 @@
   }
 }
 
-.select-video-container {
+.select-video-container,
+.select-file-container {
   .popup {
     background-color:  #f8f8f8;
     box-shadow: 5px 10px 21px 0px rgba(0, 0, 0, 0.26);
@@ -179,7 +208,19 @@
     height: 100%;
     padding: 10px 0;
     position: relative;
-    overflow: scroll;
+    overflow-y: scroll;
+
+    .buttons-container {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      padding: 10px 0;
+      text-align: right;
+
+      .btn {
+        margin-right: 10px;
+      }
+    }
 
     @media (max-width: 695px) {
       max-width: 470px;
@@ -187,19 +228,7 @@
     }
 
     @media (max-width: 470px) {
-      max-width: 245px;
-    }
-  }
-
-  .button-container {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    padding: 10px 0;
-    text-align: right;
-
-    .btn {
-      margin-right: 10px;
+      max-width: 100%;
     }
   }
 }

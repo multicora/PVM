@@ -46,7 +46,7 @@ module.exports = function (server, DAL) {
             name = request.payload.file.hapi.filename;
           }
 
-          storageCtrl.addFile(request.payload.file._data, name,
+          storageCtrl.addVideo(request.payload.file._data, name,
               user.id, user.firstName + user.secondName).then( () => {
             reply({'status': 'success'});
           }).catch( err => {
@@ -89,7 +89,7 @@ module.exports = function (server, DAL) {
     path: '/api/videos/{id}',
     config: {
       handler: function (request, reply) {
-        storageCtrl.getFile(request.params.id).then(
+        storageCtrl.getVideo(request.params.id).then(
           function (buffer) {
             reply({
               type: 'video',

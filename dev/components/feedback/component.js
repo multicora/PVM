@@ -29,6 +29,7 @@
     vm.sendClickHandler = function(data) {
       feedbacksService.send(vm.feedback).then( function() {
         vm.showFeedbackPopup = false;
+        vm.feedback = {};
         $mdToast.show(
           $mdToast.simple()
             .textContent('Sent successfully!')

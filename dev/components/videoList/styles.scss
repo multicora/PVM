@@ -1,7 +1,8 @@
 //CONTENT
 .content {
   //VIDEOS
-  .videos-container {
+  .videos-container,
+  .files-container {
     margin: 0 auto;
     max-width: 920px;
 
@@ -78,7 +79,8 @@
       }
     }
 
-    .video-container {
+    .video-container,
+    .file-container {
       display: inline-block;
     }
   }

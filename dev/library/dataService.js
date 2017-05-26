@@ -22,12 +22,24 @@
       return $http.get('/api/conversations');
     };
 
+    this.getFiles = function () {
+      return $http.get('/api/files');
+    };
+
+    this.getFile = function (id) {
+      return $http.get('/api/file/' + id);
+    };
+
     this.deleteTemplate = function (id) {
       return $http.post('/api/delete-template', id);
     };
 
     this.deleteVideo = function (id) {
       return $http.post('/api/delete-video', id);
+    };
+
+    this.deleteFile = function (id) {
+      return $http.post('/api/delete-file', id);
     };
   }
 })(angular);

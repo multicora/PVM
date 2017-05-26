@@ -1,0 +1,147 @@
+//CONTENT
+.files-content {
+  padding-bottom: 50px;
+
+  //FILES
+  .upload-container {
+    width: 100%;
+    border: 2px dashed #757575;
+    box-sizing: border-box;
+    color: #757575;
+    margin: 0px auto 5px auto;
+    max-width: 920px;
+    width: 100%;
+    transition: .3s;
+    opacity: 0.5;
+    box-shadow: none;
+
+    .button-container {
+      text-align: center;
+
+      .text {
+        margin: 0;
+      }
+    }
+
+    #upload-file {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+
+    .upload-icon {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: none;
+      background-size: cover;
+    }
+
+    .upload-icon {
+      background-image: url('/files/images/upload.svg');
+    }
+  }
+
+  .upload-container:hover {
+    transition: .3s;
+    opacity: 1;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
+    z-index: 2;
+  }
+
+  .files-container {
+    margin: 0 auto;
+    max-width: 920px;
+    width: 100%;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+  }
+
+  .file {
+    padding: 16px 16px 16px 16px;
+    background-color: #fff;
+    position: relative;
+    outline: none;
+    line-height: 20px;
+    
+
+    .name,
+    .size,
+    .date {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0;
+      display: inline-block;
+      vertical-align: middle;
+      width: 30%;
+      box-sizing: border-box;
+    }
+
+    .size,
+    .date {
+      padding-left: 16px;
+      text-align: center;
+    }
+
+    .name {
+      font-size: 18px;
+
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    .file-icon {
+      font-size: 18px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    .button-container {
+      text-align: right;
+      display: inline-block;
+      width: 10%;
+    }
+
+    .btn {
+      outline: none;
+      border: none;
+    }
+
+    .delete {
+      margin-left: 10px;
+    }
+  }
+
+  .file.default {
+    .name,
+    .size,
+    .date {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  }
+
+  .file {
+    transition: .3s;
+    z-index: 1;
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.35);
+  }
+
+  .file-container:first-child {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+  }
+
+  .file-container:last-child {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+
+  .with-hover:hover {
+    transition: .3s;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
+    z-index: 2;
+    cursor: pointer;
+  }
+}

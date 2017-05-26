@@ -68,6 +68,7 @@
           type: 'video/mp4'
         }]
       };
+
     }).then(function() {
       return conversationsService.getChat($routeParams.id);
     }).then(function(res) {
@@ -113,6 +114,10 @@
 
     vm.contentClick = function (event) {
       vm.headerClass = 'showHeader';
+    };
+
+    vm.onFileClick = function() {
+      conversationsService.fileDownloaded(vm.conversation.id);
     };
 
     vm.videoContentClick = function (event) {

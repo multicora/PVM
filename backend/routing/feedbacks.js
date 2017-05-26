@@ -45,6 +45,8 @@ module.exports = function (server, DAL) {
               html: template.html
             };
 
+            console.log(mail);
+
             mailer(config).send(mail).then(
               () => {
                 reply({'status': 'success'});
