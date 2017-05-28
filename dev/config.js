@@ -92,6 +92,6 @@
   }
 
   function getEnvironment(location) {
-    return location.hostname === 'localhost' ? 'develop' : production;
+    return location.hostname === 'localhost' ? 'develop' : 'production';
   }
 })(angular);
