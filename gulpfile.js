@@ -41,8 +41,10 @@ path.be = 'backend';
 path.dest = 'backend/public';
 path.pug = path.dev + '/**/*.pug';
 path.css = path.dev + '/**/*.scss';
-path.js = path.dev + '/**/*.js';
+path.js = path.dev + '/**/!(*spec).js';
 path.assets = path.dev + '/files/**/*';
+
+require('./gulp/tests.js')();
 
 gulp.task('compile-pug', function() {
   return gulp.src(path.pug)
