@@ -186,6 +186,7 @@
     };
 
     function getTemplates () {
+      // TODO: add .catch() part
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
       });

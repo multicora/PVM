@@ -103,6 +103,7 @@
     }
 
     function getConversation() {
+      // TODO: add .catch() part
       conversationsService.getByAuthor().then(function (res) {
         vm.conversations = res.data;
 

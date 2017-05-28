@@ -17,6 +17,7 @@
     vm.getFiles = function () {
       return new Promise(function(resolve) {
 
+        // TODO: add .catch() part
         libraryService.getFiles().then(function (res) {
           res.data.map(function(file) {
             if (file.attributes.size >= vm.byteInKilobyte ) {

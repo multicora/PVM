@@ -5,7 +5,8 @@
     'vjs.video',
     'ngMaterial',
     '720kb.socialshare',
-    'angularCharts'
+    'angularCharts',
+    'tandibar/ng-rollbar'
   ]);
 
 })(angular);
