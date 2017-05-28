@@ -27,7 +27,8 @@
     getConversation();
     conversationsService.getChatForDashboard().then(function (res) {
       vm.messages = res.data;
-
+      // TODO: move to separate function
+      // TODO: use "[].sort()" function 
       var length = vm.messages.length;
       for (var i = 0; i < length - 1; i++) {
         for (var j = 0; j < length - 1 - i; j++) {
@@ -39,6 +40,7 @@
         }
       }
 
+      // TODO: move to separate function
       vm.messages = vm.messages.slice(0, 5);
       for (var i = 0; i < vm.messages.length; i++) {
         var date = new Date();
