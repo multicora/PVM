@@ -40,16 +40,18 @@
           conversation-list(
             list="vm.conversationsList"
             on-indicator-click="vm.stopPropagation($event)"
-            on-view-click="vm.viewConversation($data)")
+            on-view-click="vm.viewConversation($data)"
+            show-indicators="vm.showConversationIndicators")
 
-      //- Conversations
+      //- Conversations to user
       md-tab(label='conversations to me')
         md-content.md-padding.tubs-content(
           md-selected="vm.selectedIndex")
           conversation-list(
-            list="vm.conversationsToMeList"
+            list="vm.conversationsToUserList"
             on-indicator-click="vm.stopPropagation($event)"
-            on-view-click="vm.viewConversation($data)")
+            on-view-click="vm.viewConversation($data)"
+            to-user="vm.toUser")
 
       //- Files
       md-tab(label='files')

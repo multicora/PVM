@@ -652,8 +652,23 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
+        let conversations;
         DAL.conversations.getByEmail(request.auth.credentials.email).then(res => {
-          reply(res);
+          let promises = [];
+          conversations = res;
+
+          conversations.forEach(conversation => {
+            promises.push(DAL.users.getUserById(conversation.author));
+          });
+
+          return Promise.all(promises);
+        }).then( res => {
+
+          for (let i = 0; i < conversations.length; i++) {
+            conversations[i].author = res[i].email;
+          }
+
+          reply(conversations);
         }, err => {
           reply(Boom.badImplementation(err, err));
         });

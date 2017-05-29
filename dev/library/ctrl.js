@@ -36,6 +36,8 @@
     vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
+    vm.showConversationIndicators = true;
+    vm.toUser = true;
 
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
@@ -208,7 +210,6 @@
     function getConversationsToUser () {
       libraryService.getConversationsToUser().then(function (res) {
         vm.conversationsToUserList = res.data;
-        console.log(vm.conversationsToUserList);
       });
     };
 
