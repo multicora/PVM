@@ -6,23 +6,34 @@
   app.service('resolver', service);
 
   service.$inject = [
+    '$location',
     '$q',
     'authService',
     'UserCheckingService',
-    '$location'
+    'tokenService'
   ];
 
   function service(
+    $location,
     $q,
     authService,
     UserCheckingService,
-    $location
+    tokenService
   ) {
     this.get = function (action, path) {
       return _.bind(function () {
         return resolve(action, path);
       }, this);
     };
+
+    this.tokenChecker = function () {
+      return _.bind(function () {
+        return $q(function (resolve) {
+          tokenService.getToken() ? resolve() : redirect('/login');
+        });
+      }, this);
+    };
+
     function resolve (action, path) {
       return $q(function (resolve) {
         $q.all([authService.getCurrentUser(), authService.getRoles()]).then(
@@ -42,5 +53,9 @@
         );
       });
     };
+
+    function redirect(url) {
+      $location.path(url);
+    }
   }
 })(angular);
