@@ -53,6 +53,7 @@
     getFiles();
     getTemplates();
     getConversations();
+    getConversationsToUser();
 
     // Delete video
     vm.deleteVideo = function (id) {
@@ -201,6 +202,13 @@
     function getConversations () {
       libraryService.getConversations().then(function (res) {
         vm.conversationsList = res.data;
+      });
+    };
+
+    function getConversationsToUser () {
+      libraryService.getConversationsToUser().then(function (res) {
+        vm.conversationsToUserList = res.data;
+        console.log(vm.conversationsToUserList);
       });
     };
 

@@ -66,6 +66,25 @@ module.exports = (connection) => {
       });
     },
 
+    getByEmail: (email) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.select()
+          .from('conversations')
+          .field('id')
+          .field('author')
+          .field('viewed')
+          .field('title')
+          .field('message')
+          .field('updated')
+          .where('email = "' + email + '" AND is_template = 0')
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     create: (data) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()

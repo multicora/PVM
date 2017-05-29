@@ -590,6 +590,8 @@ module.exports = function (server, DAL) {
    * @apiSuccess {String}   conversation.title                Conversation title.
    * @apiSuccess {String}   conversation.message              Conversation message.
    * @apiSuccess {String}   conversation.viwed                Conversation video url.
+   * @apiSuccess {String}   conversation.video_is_watched     Conversation video is watched status.
+   * @apiSuccess {String}   conversation.updated              Conversation updated.
    *
    *
    * @apiSuccessExample Success-Response:
@@ -598,7 +600,9 @@ module.exports = function (server, DAL) {
    *   id: 1,
    *   title: null,
    *   message: null,
-   *   viewed: 1
+   *   viewed: 1,
+   *   updated: '0000-00-00 00:00:00',
+   *   video_is_watched: 1
    * ]}
    */
   server.route({
@@ -608,6 +612,47 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         DAL.conversations.getByAuthor(request.auth.credentials.id).then(res => {
+          reply(res);
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {get} /api/conversations_to_user Request conversations
+   * @apiName GetConversations
+   * @apiGroup Conversations
+   *
+   * @apiSuccess {Object[]} conversations                     List of conversations.
+   * @apiSuccess {String}   conversation.id                   Conversation id.
+   * @apiSuccess {String}   conversation.title                Conversation title.
+   * @apiSuccess {String}   conversation.message              Conversation message.
+   * @apiSuccess {String}   conversation.viwed                Conversation video url.
+   * @apiSuccess {String}   conversation.author               Conversation author id.
+   * @apiSuccess {String}   conversation.updated              Conversation updated.
+   *
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   * {[
+   *   id: 1,
+   *   title: null,
+   *   message: null,
+   *   viewed: 1,
+   *   author: 2,
+   *   updated: '0000-00-00 00:00:00'
+
+   * ]}
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/conversations_to_user',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.conversations.getByEmail(request.auth.credentials.email).then(res => {
           reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));

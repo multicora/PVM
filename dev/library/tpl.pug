@@ -42,6 +42,15 @@
             on-indicator-click="vm.stopPropagation($event)"
             on-view-click="vm.viewConversation($data)")
 
+      //- Conversations
+      md-tab(label='conversations to me')
+        md-content.md-padding.tubs-content(
+          md-selected="vm.selectedIndex")
+          conversation-list(
+            list="vm.conversationsToMeList"
+            on-indicator-click="vm.stopPropagation($event)"
+            on-view-click="vm.viewConversation($data)")
+
       //- Files
       md-tab(label='files')
         md-content.md-padding.tubs-content(
