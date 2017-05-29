@@ -5,7 +5,8 @@
   "private": true,
   "main": "backend/index.js",
   "scripts": {
-    "postinstall": "bower i"
+    "postinstall": "bower i",
+    "precommit": "gulp belint && gulp felint && gulp test"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "gulp-sourcemaps": "^1.9.1",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.8",
+    "husky": "^0.13.4",
     "jasmine-core": "^2.6.2",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",
