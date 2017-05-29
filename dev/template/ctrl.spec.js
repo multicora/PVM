@@ -3,6 +3,7 @@ describe('templateCtrl', function() {
   var $controller;
   var $q;
   var $rootScope;
+  var $routeParams;
   var conversationsService = {
     create: jasmine.createSpy('create'),
     createPublic: jasmine.createSpy('createPublic'),
@@ -30,6 +31,7 @@ describe('templateCtrl', function() {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $controller = _$controller_;
     $rootScope = _$rootScope_;
+    $routeParams = _$routeParams_;
     $q = _$q_;
   }));
 
@@ -82,8 +84,6 @@ describe('templateCtrl', function() {
   //     expect(ctrl.messages).toBeTruthy();
     });
   });
-
-  // TODO: test message sorting
 
   function getDependency() {
     return {
