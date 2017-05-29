@@ -1,5 +1,5 @@
-'use strict';
 (function(angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.service('authService', service);
@@ -35,7 +35,7 @@
       var data = {'email': email};
 
       return $http.post('api/reset-password', data);
-    }
+    };
 
     this.register = function (email, password, confirmPassword) {
       var data = {
@@ -45,7 +45,7 @@
       };
 
       return $http.post('api/register', data);
-    }
+    };
 
     this.setPassword = function (newPassword, confirmPassword, resetToken) {
       var data = {
@@ -55,20 +55,20 @@
       };
 
       return $http.post('api/new-password', data);
-    }
+    };
 
     this.getCurrentUser = function() {
       return $http.get('api/currentUser');
-    }
+    };
 
     this.getRoles = function () {
       return $http.get('api/roles');
-    }
+    };
 
     this.setUser = function (newUser) {
       var user = newUser;
       return user;
-    }
+    };
 
     this.redirectByRole = function (roles) {
       var map = {
@@ -87,6 +87,6 @@
       } else {
         $location.path('/').search('param', null);
       }
-    }
+    };
   }
 })(angular);

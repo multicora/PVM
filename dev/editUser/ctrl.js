@@ -1,4 +1,5 @@
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.controller('editUserCtrl', ctrl);

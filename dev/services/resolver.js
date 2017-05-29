@@ -1,6 +1,6 @@
-'use strict';
-
 (function(angular) {
+  'use strict';
+
   var app = angular.module('app');
 
   app.service('resolver', service);
@@ -24,7 +24,7 @@
       }, this);
     };
     function resolve (action, path) {
-      return  $q(function (resolve) {
+      return $q(function (resolve) {
         $q.all([authService.getCurrentUser(), authService.getRoles()]).then(
           function (res) {
             var user = res[0].data;
@@ -36,11 +36,11 @@
             }
             resolve();
           },
-          function (errRes) {
+          function () {
             resolve();
           }
         );
-      })
+      });
     };
   }
 })(angular);

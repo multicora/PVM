@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').directive('recordVideo', directive);
 
   directive.$inject = [];
@@ -14,7 +14,7 @@
       }
     };
   }
-  function link(scope, element, attrs) {
+  function link(scope) {
     var player = videojs(
       'record',
       {
@@ -40,7 +40,7 @@
     );
 
     player.on('finishRecord', function() {
-      scope.finish({$data: player.recordedData})
+      scope.finish({$data: player.recordedData});
       scope.$apply();
     });
 

@@ -21,30 +21,32 @@ var debug = require('gulp-debug'); // e.g .pipe(debug({title: 'unicorn:'}))
 var sourcemaps = require('gulp-sourcemaps');
 var nodemon = require('gulp-nodemon');
 var apidoc = require('gulp-api-doc');
-var eslint = require('gulp-eslint');
 var install = require('gulp-install');
 
 var beConfig = require('./backend/config.js');
 
-var config = {
-  autoprefixer: {
-    browsers: ['last 2 versions'],
-    cascade: false
-  },
-  scssOrder: ['**/app.scss'],
-  jsOrder: ['**/app.js', '**/appConfig.js']
-};
+var config = require('./gulp/config.js')();
+var path = config.path;
+// var config = {
+//   autoprefixer: {
+//     browsers: ['last 2 versions'],
+//     cascade: false
+//   },
+//   scssOrder: ['**/app.scss'],
+//   jsOrder: ['**/app.js', '**/appConfig.js']
+// };
 
-var path = {};
-path.dev = 'dev';
-path.be = 'backend';
-path.dest = 'backend/public';
-path.pug = path.dev + '/**/*.pug';
-path.css = path.dev + '/**/*.scss';
-path.js = path.dev + '/**/!(*spec).js';
-path.assets = path.dev + '/files/**/*';
+// var path = {};
+// path.dev = 'dev';
+// path.be = 'backend';
+// path.dest = 'backend/public';
+// path.pug = path.dev + '/**/*.pug';
+// path.css = path.dev + '/**/*.scss';
+// path.js = path.dev + '/**/!(*spec).js';
+// path.assets = path.dev + '/files/**/*';
 
 require('./gulp/tests.js')();
+require('./gulp/jslint.js')();
 
 gulp.task('compile-pug', function() {
   return gulp.src(path.pug)
@@ -181,80 +183,80 @@ gulp.task('apidoc', function () {
     .pipe(gulp.dest('documentation'));
 });
 
-gulp.task('belint', function () {
-  return gulp.src([path.be + '/**/*.js', '!' + path.be + '/public/**/*.js'])
-    .pipe(eslint({
-      envs: [
-        'node',
-        'es6',
-        'mocha'
-      ],
-      "rules": {
-        "block-scoped-var": 2,
-        "guard-for-in": 2,
-        "no-alert": 2,
-        "no-array-constructor": 2,
-        "no-caller": 2,
-        "no-catch-shadow": 2,
-        "no-labels": 2,
-        "no-eval": 2,
-        "no-extend-native": 2,
-        "no-extra-bind": 2,
-        "no-implied-eval": 2,
-        "no-iterator": 2,
-        "no-label-var": 2,
-        "no-labels": 2,
-        "no-lone-blocks": 2,
-        "no-loop-func": 2,
-        "no-multi-spaces": 2,
-        "no-multi-str": 2,
-        "no-native-reassign": 2,
-        "no-new": 2,
-        "no-new-func": 2,
-        "no-new-object": 2,
-        "no-new-wrappers": 2,
-        "no-octal-escape": 2,
-        "no-process-exit": 2,
-        "no-proto": 2,
-        "no-return-assign": 2,
-        "no-script-url": 2,
-        "no-sequences": 2,
-        "no-shadow-restricted-names": 2,
-        "no-spaced-func": 2,
-        "no-trailing-spaces": 2,
-        "no-undef": 2,
-        "no-undef-init": 2,
-        "no-unused-expressions": [2, {"allowTernary": true}],
-        "no-unused-vars": 2,
-        "no-use-before-define": [2, { "functions": false, "variables": true }],
-        "no-with": 2,
-        "camelcase": 2,
-        "comma-spacing": 2,
-        "consistent-return": 2,
-        "curly": [2, "all"],
-        "dot-notation": [2, { "allowKeywords": true }],
-        "eol-last": 2,
-        "no-extra-parens": [2, "functions"],
-        "eqeqeq": 2,
-        "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
-        "new-cap": 2,
-        "new-parens": 2,
-        "quotes": [2, "single"],
-        "semi": 2,
-        "semi-spacing": [2, {"before": false, "after": true}],
-        "space-infix-ops": 2,
-        "keyword-spacing": 2,
-        "space-unary-ops": [2, { "words": true, "nonwords": false }],
-        "strict": 2,
-        "radix": 2,
-        "yoda": [2, "never"]
-      },
-      extends: "eslint:recommended",
-      useEslintrc: false
-    }))
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-});
+// gulp.task('belint', function () {
+//   return gulp.src([path.be + '/**/*.js', '!' + path.be + '/public/**/*.js'])
+//     .pipe(eslint({
+//       envs: [
+//         'node',
+//         'es6',
+//         'mocha'
+//       ],
+//       "rules": {
+//         "block-scoped-var": 2,
+//         "guard-for-in": 2,
+//         "no-alert": 2,
+//         "no-array-constructor": 2,
+//         "no-caller": 2,
+//         "no-catch-shadow": 2,
+//         "no-labels": 2,
+//         "no-eval": 2,
+//         "no-extend-native": 2,
+//         "no-extra-bind": 2,
+//         "no-implied-eval": 2,
+//         "no-iterator": 2,
+//         "no-label-var": 2,
+//         "no-labels": 2,
+//         "no-lone-blocks": 2,
+//         "no-loop-func": 2,
+//         "no-multi-spaces": 2,
+//         "no-multi-str": 2,
+//         "no-native-reassign": 2,
+//         "no-new": 2,
+//         "no-new-func": 2,
+//         "no-new-object": 2,
+//         "no-new-wrappers": 2,
+//         "no-octal-escape": 2,
+//         "no-process-exit": 2,
+//         "no-proto": 2,
+//         "no-return-assign": 2,
+//         "no-script-url": 2,
+//         "no-sequences": 2,
+//         "no-shadow-restricted-names": 2,
+//         "no-spaced-func": 2,
+//         "no-trailing-spaces": 2,
+//         "no-undef": 2,
+//         "no-undef-init": 2,
+//         "no-unused-expressions": [2, {"allowTernary": true}],
+//         "no-unused-vars": 2,
+//         "no-use-before-define": [2, { "functions": false, "variables": true }],
+//         "no-with": 2,
+//         "camelcase": 2,
+//         "comma-spacing": 2,
+//         "consistent-return": 2,
+//         "curly": [2, "all"],
+//         "dot-notation": [2, { "allowKeywords": true }],
+//         "eol-last": 2,
+//         "no-extra-parens": [2, "functions"],
+//         "eqeqeq": 2,
+//         "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
+//         "new-cap": 2,
+//         "new-parens": 2,
+//         "quotes": [2, "single"],
+//         "semi": 2,
+//         "semi-spacing": [2, {"before": false, "after": true}],
+//         "space-infix-ops": 2,
+//         "keyword-spacing": 2,
+//         "space-unary-ops": [2, { "words": true, "nonwords": false }],
+//         "strict": 2,
+//         "radix": 2,
+//         "yoda": [2, "never"]
+//       },
+//       extends: "eslint:recommended",
+//       useEslintrc: false
+//     }))
+//     .pipe(eslint.format())
+//     .pipe(eslint.failAfterError());
+// });
 // --------------------------------------------------
 
 var buildTasks = ['assets', 'compile-pug', 'app-js', 'lib-js', 'app-css', 'lib-css', 'copy-lib-fonts', 'apidoc'];

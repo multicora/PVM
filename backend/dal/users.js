@@ -99,7 +99,7 @@ module.exports = (connection) => {
     getUserForEditProfile: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, company, phone, photo, company_position, id ',
+          'SELECT firstName, secondName, email, company, phone, photo, companyPosition, id ',
           'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
@@ -125,7 +125,7 @@ module.exports = (connection) => {
     getAllUsers: function () {
       return new Promise(function (resolve, reject) {
         let request = [
-          'SELECT firstName, secondName, email, blocked, id, permanent, company, company_position, phone ',
+          'SELECT firstName, secondName, email, blocked, id, permanent, company, companyPosition, phone ',
           'FROM `users`;'
         ].join('');
 
@@ -334,7 +334,7 @@ module.exports = (connection) => {
           .set('phone', user.phone)
           .set('photo', user.photo)
           .set('company', user.company)
-          .set('company_position', user.company_position)
+          .set('companyPosition', user.companyPosition)
           .where('id = ' + user.id)
           .toString();
 
@@ -493,6 +493,14 @@ module.exports = (connection) => {
       const request = [
         'ALTER TABLE `users` ',
         'ADD `confirmToken` VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    changeCompanyPositionFieldName: function (cb) {
+      const request = [
+        'ALTER TABLE users CHANGE company_position companyPosition VARCHAR(255);'
       ].join('');
 
       return connection.query(request, cb);

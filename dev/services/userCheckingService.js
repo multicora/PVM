@@ -1,17 +1,17 @@
-'use strict';
-
 (function(angular) {
+  'use strict';
+
   angular
     .module('app')
     .factory('UserCheckingService', UserCheckingService);
 
 
-  UserCheckingService.$inject = ['$http'];
+  UserCheckingService.$inject = [];
 
-  function UserCheckingService($http) {
+  function UserCheckingService() {
     return {
       checkUser: checkUser
-    }
+    };
 
     function checkUser(user, roles, action) {
       var answer = false;

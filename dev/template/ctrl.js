@@ -1,4 +1,5 @@
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.controller('templateCtrl', ctrl);
@@ -8,6 +9,7 @@
     '$scope',
     '$location',
     '$mdToast',
+    '$q',
     'conversationsService',
     'uploadRecordPopupService',
     'uploadService',
@@ -22,6 +24,7 @@
     $scope,
     $location,
     $mdToast,
+    $q,
     conversationsService,
     uploadRecordPopupService,
     uploadService,
@@ -63,7 +66,7 @@
 
     vm.edit = function(element) {
       element.editMode = true;
-    }
+    };
 
     vm.save = function() {
       checkName();
@@ -106,7 +109,7 @@
           vm.nameObj.name = vm.user.name;
         }
         if (!vm.companyRole.role) {
-          vm.companyRole.role = vm.user.company_position;
+          vm.companyRole.role = vm.user.companyPosition;
         }
         templateService.createTemplate(vm.sendData).then(function(res) {
           $mdToast.show(
@@ -118,25 +121,25 @@
           $location.path('template/' + res.data.templateId);
         });
       }
-    }
+    };
 
     vm.onThumbnailClick = function(video) {
       vm.videoId = video.id;
       vm.showSelectPopup = false;
       getVideo(vm.videoId);
-    }
+    };
 
     vm.closeSelectPopup = function() {
       vm.showSelectPopup = false;
-    }
+    };
 
     vm.closeSelectFilePopup = function() {
       vm.showSelectFilePopup = false;
-    }
+    };
 
     vm.closeSendPopup = function() {
       vm.showSendPopup = false;
-    }
+    };
 
     vm.sendTemplate = function(email) {
       checkName();
@@ -150,7 +153,7 @@
         'videoId': vm.videoId,
         'files': getFilesId(vm.files),
         'email': email
-      }
+      };
       conversationsService.create(vm.sendData).then(function () {
         vm.showSendPopup = false;
         $mdToast.show(
@@ -161,11 +164,11 @@
         );
         $location.path('/library');
       });
-    }
+    };
 
     vm.back = function () {
       $location.path('library');
-    }
+    };
 
     vm.shareFacebook = function () {
       createPublicConversation().then(function(res) {
@@ -176,7 +179,7 @@
           }
         });
       });
-    }
+    };
 
     vm.shareLinkedin = function () {
       createPublicConversation().then(function(res) {
@@ -187,7 +190,7 @@
           }
         });
       });
-    }
+    };
 
     vm.shareTwitter = function () {
       createPublicConversation().then(function(res) {
@@ -198,11 +201,11 @@
           }
         });
       });
-    }
+    };
 
     vm.uploadBtnClick = function () {
       uploadRecordPopupService.showUploadPopup();
-    }
+    };
 
     vm.recordBtnClick = function () {
       uploadRecordPopupService.showRecordPopup();
@@ -226,7 +229,7 @@
       vm.files.splice(index, 1);
     };
 
-    $scope.convertToBase64LogoTemplate = function(event) {
+    $scope.convertToBase64LogoTemplate = function() {
       var f = document.getElementById('logo').files[0],
           r = new FileReader(),
           size = (f.size >= 524288),
@@ -240,14 +243,14 @@
           // TODO: converted to base64 image
           vm.logo = e.target.result;
           $scope.$digest();
-        }
+        };
         r.readAsDataURL(f);
-      }
+      };
       $scope.$apply();
-    }
+    };
 
     function createPublicConversation() {
-      return new Promise(function (resolve, reject) {
+      return $q(function (resolve, reject) {
         vm.sendData = {
           'name': vm.nameObj.name || '',
           'company_role': vm.companyRole.role || '',
@@ -256,7 +259,7 @@
           'logo': vm.logo || '',
           'videoId': vm.videoId,
           'email': null
-        }
+        };
 
         conversationsService.createPublic(vm.sendData).then(function (res) {
           resolve(res);
@@ -330,7 +333,7 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
-        vm.user.name = res.data.firstName + ' ' +res.data.secondName;
+        vm.user.name = res.data.firstName + ' ' + res.data.secondName;
       });
     };
 
@@ -350,7 +353,7 @@
         vm.nameObj.name = vm.user.name;
       }
       if (!vm.companyRole.role || vm.companyRole.role === 'undefined' || vm.companyRole.role === null) {
-        vm.companyRole.role = vm.user.company_position;
+        vm.companyRole.role = vm.user.companyPosition;
       }
     }
   }
