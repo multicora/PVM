@@ -1,4 +1,5 @@
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.controller('profileCtrl', ctrl);
@@ -20,17 +21,17 @@
     getProfile();
 
     vm.save = function() {
-      if(vm.editMod) {
+      if (vm.editMod) {
         vm.user.company = vm.user.company || '';
-        vm.user.company_position = vm.user.company_position || '';
+        vm.user.companyPosition = vm.user.companyPosition || '';
         vm.user.firstName = vm.user.firstName || '';
         vm.user.secondName = vm.user.secondName || '';
         vm.user.phone = vm.user.phone || '';
         vm.user.photo = vm.user.photo || '';
 
-        profileService.updateProfile(vm.user).then(function(res) {
-          profileService.updateCompany(vm.company)
-        }).then(function(res) {
+        profileService.updateProfile(vm.user).then(function() {
+          profileService.updateCompany(vm.company);
+        }).then(function() {
           vm.editMod = false;
           getProfile();
           $mdToast.show(
@@ -51,9 +52,9 @@
       } else {
         vm.editMod = true;
       }
-    }
+    };
 
-    $scope.convertToBase64Photo = function(event) {
+    $scope.convertToBase64Photo = function() {
       var f = document.getElementById('photo').files[0],
           r = new FileReader(),
           size = (f.size >= 524288),
@@ -66,13 +67,13 @@
           // TODO: converted to base64 image
           vm.user.photo = e.target.result;
           $scope.$digest();
-        }
+        };
         r.readAsDataURL(f);
       }
       $scope.$apply();
-    }
+    };
 
-    $scope.convertToBase64Logo = function(event) {
+    $scope.convertToBase64Logo = function() {
       var f = document.getElementById('logo').files[0],
           r = new FileReader(),
           size = (f.size >= 524288),
@@ -86,17 +87,17 @@
           // TODO: converted to base64 image
           vm.company.logo = e.target.result;
           $scope.$digest();
-        }
+        };
         r.readAsDataURL(f);
       }
       $scope.$apply();
-    }
+    };
 
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
       }).then(function() {
-        return profileService.getCompany(vm.user.company)
+        return profileService.getCompany(vm.user.company);
       }).then(function(res) {
         vm.company = res.data;
       });

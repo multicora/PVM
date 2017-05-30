@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').directive('fileUploader', directive);
 
   directive.$inject = [
@@ -22,7 +22,7 @@
       }
     };
 
-    function link(scope, element, attrs) {
+    function link(scope, element) {
       var input = element.find('input');
 
       input.on('change', function (event) {

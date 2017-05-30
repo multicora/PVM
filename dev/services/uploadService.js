@@ -1,5 +1,5 @@
-'use strict';
 (function(angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.service('uploadService', service);
@@ -23,9 +23,9 @@
             'Keep-Alive': 'timeout=2000, max=10000'
           },
           transformRequest: angular.identity,
-          responseType: "arraybuffer"
+          responseType: 'arraybuffer'
         }
       );
-    }
+    };
   }
 })(angular);

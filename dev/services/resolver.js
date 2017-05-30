@@ -1,30 +1,41 @@
-'use strict';
-
 (function(angular) {
+  'use strict';
+
   var app = angular.module('app');
 
   app.service('resolver', service);
 
   service.$inject = [
+    '$location',
     '$q',
     'authService',
     'UserCheckingService',
-    '$location'
+    'tokenService'
   ];
 
   function service(
+    $location,
     $q,
     authService,
     UserCheckingService,
-    $location
+    tokenService
   ) {
     this.get = function (action, path) {
       return _.bind(function () {
         return resolve(action, path);
       }, this);
     };
+
+    this.tokenChecker = function () {
+      return _.bind(function () {
+        return $q(function (resolve) {
+          tokenService.getToken() ? resolve() : redirect('/login');
+        });
+      }, this);
+    };
+
     function resolve (action, path) {
-      return  $q(function (resolve) {
+      return $q(function (resolve) {
         $q.all([authService.getCurrentUser(), authService.getRoles()]).then(
           function (res) {
             var user = res[0].data;
@@ -36,11 +47,15 @@
             }
             resolve();
           },
-          function (errRes) {
+          function () {
             resolve();
           }
         );
-      })
+      });
     };
+
+    function redirect(url) {
+      $location.path(url);
+    }
   }
 })(angular);

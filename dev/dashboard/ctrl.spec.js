@@ -1,4 +1,5 @@
 describe('dashboardCtrl', function() {
+  'use strict';
 
   var $controller;
   var $q;

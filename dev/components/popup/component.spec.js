@@ -1,4 +1,6 @@
 describe('popup component', function() {
+  'use strict';
+
   var componentController;
   var bindings;
 

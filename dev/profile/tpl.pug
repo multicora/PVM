@@ -117,14 +117,14 @@
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon work
             span(ng-hide="vm.editMod",
-              ng-bind="vm.user.company_position"
-              ng-if="vm.user.company_position && vm.user.company_position != 'null'")
+              ng-bind="vm.user.companyPosition"
+              ng-if="vm.user.companyPosition && vm.user.companyPosition != 'null'")
             span(ng-hide="vm.editMod",
-              ng-if="!vm.user.company_position || vm.user.company_position === 'null'") Information is absent
+              ng-if="!vm.user.companyPosition || vm.user.companyPosition === 'null'") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
-              ng-model="vm.user.company_position"
+              ng-model="vm.user.companyPosition"
               placeholder="Company Position")
 
   //- Feedback form

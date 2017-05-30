@@ -1,5 +1,5 @@
-'use strict';
 (function(angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.service('profileService', service);
@@ -18,7 +18,7 @@
       return $http.post('/api/company', id);
     };
 
-    this.updateProfile = function (user, company) {
+    this.updateProfile = function (user) {
       return $http.post('/api/update-profile', user);
     };
 
@@ -28,14 +28,14 @@
 
     this.updatePhoto = function (photo) {
       return $http.post('/api/update-profile-photo', {
-        "photo": photo
+        photo: photo
       });
     };
 
     this.updateCompanyLogo = function (logo, company) {
       return $http.post('/api/update-company-logo', {
-        "logo": logo,
-        "company": company
+        logo: logo,
+        company: company
       });
     };
   }

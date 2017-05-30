@@ -1,4 +1,5 @@
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.controller('authCtrl', ctrl);
@@ -48,16 +49,16 @@
             vm.errorMessage = translations.txt(err.data.message);
           }
         });
-      }
+      };
 
       vm.register = function(email, password, confirmPassword) {
-        authService.register(email, password, confirmPassword).then(function(res) {
+        authService.register(email, password, confirmPassword).then(function() {
           vm.errorRegister = '';
           $location.path('/login');
         }, function(err) {
           vm.errorRegister = err.data.message;
         });
-      }
+      };
 
       vm.sendResetRequest = function (email) {
         authService.reset(email).then(
@@ -71,7 +72,7 @@
             }
           }
         );
-      }
+      };
 
       vm.setPassword = function (newPassword, confirmPassword) {
         authService.setPassword(newPassword, confirmPassword, $routeParams.token).then(
@@ -83,7 +84,7 @@
             }
           }
         );
-      }
+      };
     }
   }
 })(angular);
