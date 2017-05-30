@@ -309,23 +309,7 @@ module.exports = (connection) => {
       });
     },
 
-    updateUser: (user) => {
-      return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE users ',
-          'SET firstName="' + user.firstName + '", ',
-          'secondName="' + user.secondName + '", ',
-          'email="' + user.email + '" ',
-          'WHERE id="' + user.id + '"'
-        ].join('');
-
-        connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response);
-        });
-      });
-    },
-
-    updateUserProfile: (user) => {
+    updateProfile: (user) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.update()
           .table('users')

@@ -46,9 +46,9 @@
           .mdl-list__item-primary-content
             span.second-name(ng-hide="vm.editMod",
               ng-bind="vm.user.secondName"
-              ng-if="vm.user.secondName && vm.user.secondName != 'null'")
+              ng-if="vm.user.secondName && vm.user.secondName != null")
             span.second-name(ng-hide="vm.editMod",
-              ng-if="!vm.user.secondName || vm.user.secondName === 'null'") Information is absent
+              ng-if="!vm.user.secondName || vm.user.secondName === null") Information is absent
             input.second-name.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
@@ -60,9 +60,9 @@
             i.material-icons.mdl-list__item-icon phone
             span(ng-hide="vm.editMod",
               ng-bind="vm.user.phone"
-              ng-if="vm.user.phone && vm.user.phone != 'null'")
+              ng-if="vm.user.phone && vm.user.phone != null")
             span(ng-hide="vm.editMod",
-              ng-if="!vm.user.phone || vm.user.phone === 'null'") Information is absent
+              ng-if="!vm.user.phone || vm.user.phone === null") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"

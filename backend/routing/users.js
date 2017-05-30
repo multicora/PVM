@@ -349,7 +349,7 @@ const usersController = require('../controllers/users.js')(DAL);
         }
       },
       handler: function (request, reply) {
-        DAL.users.updateUser(request.payload).then(function(res) {
+        DAL.users.updateProfile(request.payload).then(function(res) {
           reply(res);
         }, function(err) {
           reply(Boom.badImplementation(500, err));
@@ -546,7 +546,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.updateUserProfile(request.payload)
+        DAL.users.updateProfile(request.payload)
         .then(() => {
           reply({'status': 'success'});
         }, err => {
