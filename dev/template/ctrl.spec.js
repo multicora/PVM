@@ -1,9 +1,9 @@
 describe('templateCtrl', function() {
+  'use strict';
 
   var $controller;
   var $q;
   var $rootScope;
-  var $routeParams;
   var $location;
   var conversationsService;
   var libraryService;
@@ -11,7 +11,6 @@ describe('templateCtrl', function() {
   var profileService;
   var templateService;
   var uploadRecordPopupService;
-  var uploadService = {};
 
   beforeEach(module('app'));
   beforeEach(inject(function(_$controller_, _$rootScope_, _$q_, _$location_){
@@ -21,7 +20,6 @@ describe('templateCtrl', function() {
     $q = _$q_;
     $location = _$location_;
 
-    $routeParams = {};
     templateService = {
       getTemplate: jasmine.createSpy('getTemplate'),
       createTemplate: jasmine.createSpy('createTemplate'),
@@ -29,7 +27,7 @@ describe('templateCtrl', function() {
     };
     libraryService = {
       getVideos: jasmine.createSpy('getVideos').and.callFake(function () {
-        return $q.resolve({data:[]});
+        return $q.resolve({ data: [] });
       })
     };
     uploadRecordPopupService = {
@@ -45,7 +43,7 @@ describe('templateCtrl', function() {
         return $q.resolve({
           data: {
             attributes: {
-              url:''
+              url: ''
             }
           }
         });
@@ -53,7 +51,7 @@ describe('templateCtrl', function() {
     };
     profileService = {
       getProfile: jasmine.createSpy('getProfile').and.callFake(function () {
-        return $q.resolve({data:[]});
+        return $q.resolve({ data: [] });
       }),
     };
     filesService = {
@@ -192,6 +190,28 @@ describe('templateCtrl', function() {
     });
   });
 
+  describe('onThumbnailClick', function() {
+    it('should show record popup', function() {
+      var scope = $rootScope.$new();
+      var ctrl = $controller('templateCtrl', {
+        $scope: scope,
+        templateService: templateService,
+        libraryService: libraryService,
+        filesService: filesService,
+        conversationsService: conversationsService,
+        profileService: profileService,
+        uploadRecordPopupService: uploadRecordPopupService
+      });
+      var video = {
+        id: 1
+      };
+
+      ctrl.onThumbnailClick(video);
+      expect(ctrl.showSelectPopup).toBe(false);
+      expect(conversationsService.getVideo).toHaveBeenCalled();
+    });
+  });
+
   describe('edit', function() {
     it('should set true into "edit mode"', function() {
       var scope = $rootScope.$new();
@@ -292,7 +312,6 @@ describe('templateCtrl', function() {
   describe('onUseFileClick', function() {
     it('should add file to "files" if file id and id file from files list is equal and files length <= 3', function() {
       var scope = $rootScope.$new();
-      var showSelectFilePopup;
       var length;
       var id = 1;
       var ctrl = $controller('templateCtrl', {
@@ -328,7 +347,6 @@ describe('templateCtrl', function() {
   describe('onUseFileClick', function() {
     it('should/`nt add file to "files" if file id and id file from files list is/`nt equal and files length <= 3', function() {
       var scope = $rootScope.$new();
-      var showSelectFilePopup;
       var length;
       var id = 3;
       var ctrl = $controller('templateCtrl', {
@@ -364,7 +382,6 @@ describe('templateCtrl', function() {
   describe('onUseFileClick', function() {
     it('should/`nt add file to "files" if > 3', function() {
       var scope = $rootScope.$new();
-      var showSelectFilePopup;
       var length;
       var id = 1;
       var ctrl = $controller('templateCtrl', {
