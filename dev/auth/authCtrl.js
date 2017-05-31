@@ -55,7 +55,6 @@
         authService.register(email, password, confirmPassword).then(function() {
           vm.errorRegister = '';
           vm.selectedIndex = 0;
-          // $location.path('/login');
         }, function(err) {
           vm.errorRegister = err.data.message;
         });
