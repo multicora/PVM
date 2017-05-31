@@ -209,9 +209,7 @@ describe('templateCtrl', function() {
 
       expect(templateService.createTemplate).toHaveBeenCalled();
     });
-  });
 
-  describe('save if', function() {
     it('should save template if templateId isn/`t defined and nameObj.name isn/`t defined and companyRole.role isn/`t defined. ', function() {
       var scope = $rootScope.$new();
 
@@ -425,9 +423,7 @@ describe('templateCtrl', function() {
 
       expect(ctrl.files.length).toBe(length + 1);
     });
-  });
 
-  describe('onUseFileClick', function() {
     it('should/`nt add file to "files" if file id and id file from files list is/`nt equal and files length <= 3', function() {
       var scope = $rootScope.$new();
       var length;
