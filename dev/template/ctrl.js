@@ -152,6 +152,7 @@
         'files': getFilesId(vm.files),
         'email': email
       };
+
       conversationsService.create(vm.sendData).then(function () {
         vm.showSendPopup = false;
         $mdToast.show(

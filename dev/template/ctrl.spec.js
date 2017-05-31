@@ -22,8 +22,14 @@ describe('templateCtrl', function() {
 
     templateService = {
       getTemplate: jasmine.createSpy('getTemplate'),
-      createTemplate: jasmine.createSpy('createTemplate'),
-      updateTemplate: jasmine.createSpy('updateTemplate'),
+      createTemplate: jasmine.createSpy('createTemplate').and.callFake(function () {
+        return $q.resolve({ data: {
+          templateId: 1
+        } });
+      }),
+      updateTemplate: jasmine.createSpy('updateTemplate').and.callFake(function () {
+        return $q.resolve({ data: [] });
+      }),
     };
     libraryService = {
       getVideos: jasmine.createSpy('getVideos').and.callFake(function () {
@@ -149,6 +155,83 @@ describe('templateCtrl', function() {
 
       expect(ctrl.showSendPopup).toBe(false);
       expect($location.path()).toBe('/library');
+    });
+  });
+
+  describe('update', function() {
+    it('should update template if templateId is defined', function() {
+      var scope = $rootScope.$new();
+
+      var ctrl = $controller('templateCtrl', {
+        $scope: scope,
+        templateService: templateService,
+        libraryService: libraryService,
+        filesService: filesService,
+        conversationsService: conversationsService,
+        profileService: profileService,
+      });
+
+      ctrl.user = {
+        id: 1
+      };
+      ctrl.nameObj.name = 'name';
+      ctrl.companyRole.role = 'role';
+      ctrl.sendData = {};
+      ctrl.templateId = 1;
+
+      ctrl.save();
+
+      expect(templateService.updateTemplate).toHaveBeenCalled();
+    });
+  });
+
+  describe('save', function() {
+    it('should save template if templateId isn/`t defined', function() {
+      var scope = $rootScope.$new();
+
+      var ctrl = $controller('templateCtrl', {
+        $scope: scope,
+        templateService: templateService,
+        libraryService: libraryService,
+        filesService: filesService,
+        conversationsService: conversationsService,
+        profileService: profileService,
+      });
+
+      ctrl.user = {
+        id: 1
+      };
+      ctrl.nameObj.name = 'name';
+      ctrl.companyRole.role = 'role';
+      ctrl.sendData = {};
+
+      ctrl.save();
+
+      expect(templateService.createTemplate).toHaveBeenCalled();
+    });
+  });
+
+  describe('save if', function() {
+    it('should save template if templateId isn/`t defined and nameObj.name isn/`t defined and companyRole.role isn/`t defined. ', function() {
+      var scope = $rootScope.$new();
+
+      var ctrl = $controller('templateCtrl', {
+        $scope: scope,
+        templateService: templateService,
+        libraryService: libraryService,
+        filesService: filesService,
+        conversationsService: conversationsService,
+        profileService: profileService,
+      });
+
+      ctrl.user = {
+        id: 1
+      };
+      ctrl.sendData = {};
+
+      ctrl.save();
+
+      expect(templateService.createTemplate).toHaveBeenCalled();
     });
   });
 
