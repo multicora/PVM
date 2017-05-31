@@ -18,9 +18,10 @@ describe('authCtrl', function() {
 
     authService = {
       loginConfirm: jasmine.createSpy('loginConfirm'),
-      login: jasmine.createSpy('login').and.callFake(function () {
-        return $q.resolve({data: {}});
-      }),
+      login: jasmine.createSpy('login'),
+      register: jasmine.createSpy('register'),
+      reset: jasmine.createSpy('reset'),
+      setPassword: jasmine.createSpy('setPassword')
     };
     tokenService = {
       setToken: jasmine.createSpy('setToken').and.callFake(function () {
@@ -28,6 +29,27 @@ describe('authCtrl', function() {
       })
     };
   }));
+
+  describe('authenticate', function() {
+    it('should call "location.path" with parametr "/" if $routeParams.confirmToken is not defined and authService.login response haven/`t error', function() {
+      var scope = $rootScope.$new();
+      var ctrl = $controller('authCtrl', {
+        $scope: scope,
+        authService: authService,
+        tokenService: tokenService
+      });
+      var login;
+      var password;
+
+      authService.login.and.callFake(function () {
+        return $q.resolve({data: {}});
+      });
+
+      ctrl.authenticate(login, password);
+      scope.$apply();
+      expect($location.path()).toBe('/');
+    });
+  });
 
   describe('register', function() {
     it('"errorRegister" should be "" and "selectedIndex" should be 0 if response haven/`t error', function() {
@@ -41,7 +63,7 @@ describe('authCtrl', function() {
       var password;
       var confirmPassword;
 
-      authService.register = jasmine.createSpy('register').and.callFake(function () {
+      authService.register.and.callFake(function () {
         return $q.resolve({data: {}});
       });
 
@@ -62,7 +84,7 @@ describe('authCtrl', function() {
       });
       var email;
 
-      authService.reset = jasmine.createSpy('reset').and.callFake(function () {
+      authService.reset.and.callFake(function () {
         return $q.resolve({data: {}});
       });
 
@@ -81,7 +103,7 @@ describe('authCtrl', function() {
       });
       var email;
 
-      authService.reset = jasmine.createSpy('reset').and.callFake(function () {
+      authService.reset.and.callFake(function () {
         return $q.resolve({data: {
           error: 'error',
           message: 'message'
@@ -106,7 +128,7 @@ describe('authCtrl', function() {
       var newPassword;
       var confirmPassword;
 
-      authService.setPassword = jasmine.createSpy('setPassword').and.callFake(function () {
+      authService.setPassword.and.callFake(function () {
         return $q.resolve({data: {}});
       });
 
@@ -118,7 +140,7 @@ describe('authCtrl', function() {
     it('should show error if response have error', function() {
       var scope = $rootScope.$new();
 
-      authService.setPassword = jasmine.createSpy('setPassword').and.callFake(function () {
+      authService.setPassword.and.callFake(function () {
         return $q.resolve({data: {
           error: 'error',
           message: 'message'
