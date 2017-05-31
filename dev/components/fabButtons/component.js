@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('fabButtons', {
     templateUrl: 'components/fabButtons/tpl.html',
     controller: ctrl,
@@ -11,6 +11,5 @@
 
   ctrl.$inject = [];
   function ctrl() {
-    var vm = this;
   }
 })(angular);

@@ -1,10 +1,10 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').directive('gaClick', directive);
 
   directive.$inject = ['ga'];
   function directive(ga) {
-    function link(scope, el, attr) {
+    function link(scope, el) {
       function clickHandler() {
         ga.send('event', scope.gaClick, scope.gaClickAction, scope.gaClickLabel);
       }

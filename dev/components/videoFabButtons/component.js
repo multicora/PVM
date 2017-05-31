@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('videoFabButtons', {
     templateUrl: 'components/videoFabButtons/tpl.html',
     controller: ctrl,
@@ -13,6 +13,5 @@
 
   ctrl.$inject = [];
   function ctrl() {
-    var vm = this;
   }
 })(angular);
