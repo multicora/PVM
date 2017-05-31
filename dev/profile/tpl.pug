@@ -73,8 +73,8 @@
           .mdl-list__item-primary-content
             i.material-icons.mdl-list__item-icon mail
             span(ng-bind="vm.user.email"
-              ng-if="vm.user.email && vm.user.email != 'null'")
-            span(ng-if="!vm.user.email || vm.user.email === 'null'") Information is absent
+              ng-if="vm.user.email && vm.user.email != null")
+            span(ng-if="!vm.user.email || vm.user.email === null") Information is absent
 
     .company-info
       ul.mdl-list.info-content
@@ -86,9 +86,9 @@
             i.material-icons.mdl-list__item-icon work
             span(ng-hide="vm.editMod",
               ng-bind="vm.company.name"
-              ng-if="vm.company.name && vm.company.name != 'null' && vm.company.name != 'undefined'")
+              ng-if="vm.company.name && vm.company.name != null && vm.company.name != 'undefined'")
             span(ng-hide="vm.editMod",
-              ng-if="!vm.company.name || vm.company.name === 'null' || vm.company.name === 'undefined'") Information is absent
+              ng-if="!vm.company.name || vm.company.name === null || vm.company.name === 'undefined'") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
@@ -98,9 +98,9 @@
         li.mdl-list__item
           .mdl-list__item-primary-content
             .company-logo(
-              ng-if="vm.company.logo && vm.company.logo != 'null'"
+              ng-if="vm.company.logo && vm.company.logo != null"
               ng-style="{backgroundImage: 'url('+ vm.company.logo + ')' }")
-            .company-logo(ng-if="!vm.company.logo || vm.company.logo === 'null'")
+            .company-logo(ng-if="!vm.company.logo || vm.company.logo === null")
             div(ng-show="vm.editMod")
               label(for="logo")
                 .upload-logo
@@ -118,9 +118,9 @@
             i.material-icons.mdl-list__item-icon work
             span(ng-hide="vm.editMod",
               ng-bind="vm.user.companyPosition"
-              ng-if="vm.user.companyPosition && vm.user.companyPosition != 'null'")
+              ng-if="vm.user.companyPosition && vm.user.companyPosition != null")
             span(ng-hide="vm.editMod",
-              ng-if="!vm.user.companyPosition || vm.user.companyPosition === 'null'") Information is absent
+              ng-if="!vm.user.companyPosition || vm.user.companyPosition === null") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
