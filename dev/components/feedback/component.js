@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('feedback', {
     templateUrl: 'components/feedback/tpl.html',
     controller: ctrl,
@@ -24,9 +24,9 @@
 
     vm.close = function() {
       vm.showFeedbackPopup = false;
-    }
+    };
 
-    vm.sendClickHandler = function(data) {
+    vm.sendClickHandler = function() {
       feedbacksService.send(vm.feedback).then( function() {
         vm.showFeedbackPopup = false;
         vm.feedback = {};
@@ -43,7 +43,7 @@
             .position('bottom center')
             .hideDelay(3000)
         );
-      })
-    }
+      });
+    };
   }
 })(angular);

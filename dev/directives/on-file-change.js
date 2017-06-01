@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').directive('onFileChange', function() {
     function link(scope, el, attr) {
       el.attr('onchange', 'angular.element(this).scope().onChange(this.files[0]);');

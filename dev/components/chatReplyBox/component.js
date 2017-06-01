@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('chatReplyBox', {
     templateUrl: 'components/chatReplyBox/tpl.html',
     controller: ctrl,
@@ -18,7 +18,7 @@
     vm.send = function () {
       vm.sendMessage({$data: vm.message});
       vm.message = null;
-    }
+    };
 
     vm.onkeyDown = function(event) {
       event.stopPropagation();
@@ -26,6 +26,6 @@
       if (keyCode === 13 && vm.message) {
         vm.send();
       }
-    }
+    };
   }
 })(angular);

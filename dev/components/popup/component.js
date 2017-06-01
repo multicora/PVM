@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('popup', {
     templateUrl: 'components/popup/tpl.html',
     controller: ctrl,
@@ -12,13 +12,13 @@
     }
   });
 
-  ctrl.$inject = ['$timeout', '$window'];
-  function ctrl($timeout, $window) {
+  ctrl.$inject = [];
+  function ctrl() {
     var vm = this;
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
-    }
+    };
 
     vm.onkeyDown = function(event) {
       var keyCode = event.which || event.keyCode;

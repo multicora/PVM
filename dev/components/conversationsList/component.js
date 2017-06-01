@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('conversationList', {
     templateUrl: 'components/conversationsList/tpl.html',
     controller: ctrl,
@@ -11,8 +11,7 @@
     }
   });
 
-  ctrl.$inject = ['$scope'];
-  function ctrl($scope) {
-    var vm = this;
+  ctrl.$inject = [];
+  function ctrl() {
   }
 })(angular);

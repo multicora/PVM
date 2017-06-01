@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('uploadPopup', {
     templateUrl: 'components/uploadPopup/tpl.html',
     controller: ctrl,
