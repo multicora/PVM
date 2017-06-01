@@ -181,6 +181,69 @@ module.exports = function (server, DAL) {
   });
 
   /**
+   * @api {get} /api/video-watched/:id Request for send notification about watching video.
+   *
+   * @apiParam {String}   id               conversation id.
+   *
+   * @apiName VideoIsWatching
+   * @apiGroup Conversations
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+
+  server.route({
+    method: 'GET',
+    path: '/api/video-is-watching/{id}',
+    config: {
+      handler: function (request, reply) {
+        let conversationId = request.params.id;
+        let serverUrl = utils.getServerUrl(request);
+        let token = usersCtrl.parseToken(request.headers.authorization);
+        let conversation;
+
+        let needToSendPromise = function() {
+          return new Promise((resolve) => {
+            usersCtrl.getUserByToken(token.value).then((user) => {
+              if (conversation.author === user.id) {
+                resolve(false);
+              } else {
+                resolve(true);
+              }
+            }, () => {
+              resolve(true);
+            });
+          });
+        };
+
+        DAL.conversations.getById(conversationId).then(res => {
+          conversation = res;
+          return needToSendPromise();
+        }).then(res => {
+          if (res) {
+            return notificationsCtrl.videoIsWatching(conversation, serverUrl + '/conversation/' + conversation.id).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
+            });
+          } else {
+            return Promise.resolve();
+          }
+        }).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
    * @api {get} /api/video-watched/:id Request for update conversation video watched status
    *
    * @apiParam {String}   id               conversation id.

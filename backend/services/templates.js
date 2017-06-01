@@ -26,6 +26,25 @@ module.exports = () => {
       });
     },
 
+    videoIsWatching: (link, authorName, userName) => {
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let videoIsWatchingTemplateDir = '/conversationNotification';
+        let templateDir = path.join(__dirname, templatesDir, videoIsWatchingTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          authorName: authorName,
+          userName: userName,
+          text1: '',
+          text2: 'is watching your conversation video now',
+          link: link
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
     fileDownloaded: (link, authorName, userName) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');
