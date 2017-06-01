@@ -34,12 +34,16 @@
       return $http.get('/api/video-watched/' + id);
     };
 
+    this.videoIsWatching = function (id) {
+      return $http.get('/api/video-is-watching/' + id);
+    };
+
     this.fileDownloaded = function (id) {
       return $http.get('/api/file-downloaded/' + id);
     };
 
     this.getChatForDashboard = function () {
-      return $http.get('/api/chatForDashboard');
+      return $http.get('/api/chat-for-dashboard');
     };
   }
 })(angular);

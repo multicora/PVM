@@ -739,7 +739,7 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/chatForDashboard Request chat for dashboard
+   * @api {get} /api/chat-for-dashboard Request chat for dashboard
    * @apiName GetChatForDashboard
    * @apiGroup Chat
    *
@@ -764,7 +764,7 @@ module.exports = function (server, DAL) {
    */
   server.route({
     method: 'GET',
-    path: '/api/chatForDashboard',
+    path: '/api/chat-for-dashboard',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
