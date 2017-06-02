@@ -4,16 +4,19 @@ describe('conversationCtrl', function() {
   var $controller;
   var $q;
   var $rootScope;
+  var $location;
   var conversationsService;
   var chat;
   var profileService;
+  var event;
 
   beforeEach(module('app'));
-  beforeEach(inject(function(_$controller_, _$rootScope_, _$q_){
+  beforeEach(inject(function(_$controller_, _$rootScope_, _$q_, _$location_){
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $q = _$q_;
+    $location = _$location_;
 
     conversationsService = {
       get: jasmine.createSpy('get').and.callFake(function () {
@@ -40,6 +43,9 @@ describe('conversationCtrl', function() {
           ]
         });
       }),
+    };
+    event = {
+      stopPropagation: jasmine.createSpy('stopPropagation')
     };
     chat = {
       connect: jasmine.createSpy('getProfile').and.callFake(function () {
@@ -79,23 +85,37 @@ describe('conversationCtrl', function() {
     });
   });
 
-  // shoud be fixed
-  // describe('videoContentClick', function() {
-  //   it('should set "hideHeader" to headerClass', function() {
-  //     var scope = $rootScope.$new();
-  //     var ctrl = $controller('conversationCtrl', {
-  //       $scope: scope,
-  //       chat: chat,
-  //       conversationsService: conversationsService,
-  //       profileService: profileService
-  //     });
+  describe('videoContentClick', function() {
+    it('should set "hideHeader" to headerClass', function() {
+      var scope = $rootScope.$new();
+      var ctrl = $controller('conversationCtrl', {
+        $scope: scope,
+        chat: chat,
+        conversationsService: conversationsService,
+        profileService: profileService
+      });
 
-  //     var event;
-  //     ctrl.videoContentClick(event);
+      ctrl.videoContentClick(event);
 
-  //     expect(ctrl.headerClass).toBe('hideHeader');
-  //   });
-  // });
+      expect(ctrl.headerClass).toBe('hideHeader');
+    });
+  });
+
+  describe('back', function() {
+    it('should call "location.path" with parametr "/library"', function() {
+      var scope = $rootScope.$new();
+      var ctrl = $controller('conversationCtrl', {
+        $scope: scope,
+        chat: chat,
+        conversationsService: conversationsService,
+        profileService: profileService
+      });
+
+      ctrl.back(event);
+
+      expect($location.path()).toBe('/library');
+    });
+  });
 
   describe('onFileClick', function() {
     it('should call "conversationsService.fileDownloaded"', function() {

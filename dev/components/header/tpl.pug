@@ -5,18 +5,18 @@ header.main-header
       ng-click="vm.openMenu()")
       i.material-icons menu
     img.logo.pointer(src='/files/images/logo_bizkonect.svg')
-    //- .notification-container
-    //-   .material-icons.mdl-badge.mdl-badge--overlap.email-notification(
-    //-     data-badge=2
-    //-     ng-click="vm.redirect('/dashboard')") email
-    //-   md-menu(md-position-mode="target-right target")
-    //-     .material-icons.mdl-badge.mdl-badge--overlap.notifications(
-    //-       data-badge=1
-    //-       ng-click="$mdMenu.open()"
-    //-     ) notifications
-    //-     md-menu-content(ng-mouseleave="$mdMenu.close()")
-    //-       md-menu-item
-    //-         p text1
+    .notification-container
+      .material-icons.mdl-badge.mdl-badge--overlap.email-notification(
+        data-badge=2
+        ng-click="vm.redirect('/dashboard')") email
+      md-menu(md-position-mode="target-right target")
+        .material-icons.mdl-badge.mdl-badge--overlap.notifications(
+          data-badge=1
+          ng-click="$mdMenu.open()"
+        ) notifications
+        md-menu-content(ng-mouseleave="$mdMenu.close()")
+          md-menu-item
+            p notification
 
 
   md-sidenav.md-sidenav-left(
