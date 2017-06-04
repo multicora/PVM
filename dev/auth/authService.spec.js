@@ -5,6 +5,11 @@ describe('authService', function() {
   var location;
 
   beforeEach(module('app'));
+  beforeEach(module(function ($provide) {
+    $provide.value('$location', {
+      path: jasmine.createSpy('path')
+    });
+  }));
   beforeEach(function() {
     inject(function($injector, $httpBackend, $location) {
       authService = $injector.get('authService');
@@ -111,19 +116,22 @@ describe('authService', function() {
 
       authService.redirectByRole(roles);
 
-      expect(location.path()).toBe('/admin');
+      expect(location.path).toHaveBeenCalledWith('/admin');
     });
 
-      it('should redirect to "/" if roles dosen/`t contain role with "name" "admin"', function() {
+      it('should redirect to "/" if roles dosen\'t contain role with "name" "admin"', function() {
       var roles = [
         {
           name: 'user'
         }
       ];
 
+      location.path.and.returnValue({
+        search: jasmine.createSpy('search')
+      });
       authService.redirectByRole(roles);
 
-      expect(location.path()).toBe('/');
+      expect(location.path).toHaveBeenCalledWith('/');
     });
   });
 });
