@@ -34,57 +34,57 @@
         tokenService.setToken(res.data.token);
         $location.path('/');
       });
-    } else {
-      vm.authenticate = function(login, password) {
-        authService.login(login, password).then(function (res) {
-          tokenService.setToken(res.data.token);
-          $location.path('/');
-        }, function(err) {
-          if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
-            $mdDialog
-              .show( unconfirmedEmailPopup ).then(function() {
-                authService.resendConfirmMail(login);
-              });
-          } else {
-            vm.errorMessage = translations.txt(err.data.message);
-          }
-        });
-      };
-
-      vm.register = function(email, password, confirmPassword) {
-        authService.register(email, password, confirmPassword).then(function() {
-          vm.errorRegister = '';
-          vm.selectedIndex = 0;
-        }, function(err) {
-          vm.errorRegister = err.data.message;
-        });
-      };
-
-      vm.sendResetRequest = function (email) {
-        authService.reset(email).then(
-          function(res) {
-            if (res.data.error) {
-              vm.errorMessage = res.data.message;
-              vm.successMessage = null;
-            } else {
-              vm.errorMessage = null;
-              vm.successMessage = 'A letter with the link for resetting password has been sent to your email.';
-            }
-          }
-        );
-      };
-
-      vm.setPassword = function (newPassword, confirmPassword) {
-        authService.setPassword(newPassword, confirmPassword, $routeParams.token).then(
-          function(res) {
-            if (res.data.error) {
-              vm.errorMessage = res.data.message;
-            } else {
-              $location.path('/');
-            }
-          }
-        );
-      };
     }
+
+    vm.authenticate = function(login, password) {
+      authService.login(login, password).then(function (res) {
+        tokenService.setToken(res.data.token);
+        $location.path('/');
+      }, function(err) {
+        if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
+          $mdDialog
+            .show( unconfirmedEmailPopup ).then(function() {
+              authService.resendConfirmMail(login);
+            });
+        } else {
+          vm.errorMessage = translations.txt(err.data.message);
+        }
+      });
+    };
+
+    vm.register = function(email, password, confirmPassword) {
+      authService.register(email, password, confirmPassword).then(function() {
+        vm.errorRegister = '';
+        vm.selectedIndex = 0;
+      }, function(err) {
+        vm.errorRegister = err.data.message;
+      });
+    };
+
+    vm.sendResetRequest = function (email) {
+      authService.reset(email).then(
+        function(res) {
+          if (res.data.error) {
+            vm.errorMessage = res.data.message;
+            vm.successMessage = null;
+          } else {
+            vm.errorMessage = null;
+            vm.successMessage = 'A letter with the link for resetting password has been sent to your email.';
+          }
+        }
+      );
+    };
+
+    vm.setPassword = function (newPassword, confirmPassword) {
+      authService.setPassword(newPassword, confirmPassword, $routeParams.token).then(
+        function(res) {
+          if (res.data.error) {
+            vm.errorMessage = res.data.message;
+          } else {
+            $location.path('/');
+          }
+        }
+      );
+    };
   }
 })(angular);
