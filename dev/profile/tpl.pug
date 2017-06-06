@@ -86,9 +86,9 @@
             i.material-icons.mdl-list__item-icon work
             span(ng-hide="vm.editMod",
               ng-bind="vm.company.name"
-              ng-if="vm.company.name && vm.company.name != null && vm.company.name != 'undefined'")
+              ng-if="vm.company.name && vm.company.name != null && vm.company.name != undefined")
             span(ng-hide="vm.editMod",
-              ng-if="!vm.company.name || vm.company.name === null || vm.company.name === 'undefined'") Information is absent
+              ng-if="!vm.company.name || vm.company.name === null || vm.company.name === undefined") Information is absent
             input.mdl-textfield__input(
               ng-show="vm.editMod"
               type="text"
