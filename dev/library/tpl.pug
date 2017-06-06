@@ -37,16 +37,17 @@
       md-tab(label='conversations')
         md-content.md-padding.tubs-content(
           md-selected="vm.selectedIndex")
+
+          md-tabs(
+            md-dynamic-height=""
+            md-border-bottom=""
+            md-selected="vm.selectedIndex"
+            md-center-tabs="true")
           conversation-list(
             list="vm.conversationsList"
             on-indicator-click="vm.stopPropagation($event)"
             on-view-click="vm.viewConversation($data)"
             show-indicators="vm.showConversationIndicators")
-
-      //- Conversations to user
-      md-tab(label='conversations to me')
-        md-content.md-padding.tubs-content(
-          md-selected="vm.selectedIndex")
           conversation-list(
             list="vm.conversationsToUserList"
             on-indicator-click="vm.stopPropagation($event)"
