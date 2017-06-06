@@ -77,12 +77,12 @@
 
     vm.setPassword = function (newPassword, confirmPassword) {
       authService.setPassword(newPassword, confirmPassword, $routeParams.token).then(
-        function(res) {
+        function() {
           $location.path('/');
         },
         function(err) {
           vm.errorMessage = err.data.message;
-        });
+      });
     };
   }
 })(angular);
