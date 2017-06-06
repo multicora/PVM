@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('videoTile', {
     templateUrl: 'components/videoTile/tpl.html',
     controller: ctrl,
@@ -15,6 +15,5 @@
 
   ctrl.$inject = [];
   function ctrl() {
-    var vm = this;
   }
 })(angular);

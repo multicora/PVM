@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('chatList', {
     templateUrl: 'components/chatList/tpl.html',
     controller: ctrl,
@@ -10,10 +10,7 @@
     }
   });
 
-  ctrl.$inject = [
-  ];
-  function ctrl(
-  ) {
-    var vm = this;
+  ctrl.$inject = [];
+  function ctrl() {
   }
 })(angular);

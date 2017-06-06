@@ -1,4 +1,5 @@
 describe('templateService', function() {
+  'use strict';
   var templateService;
   var httpBackend;
 
@@ -24,7 +25,6 @@ describe('templateService', function() {
 
   describe('updateTemplate', function () {
     it('should send a request', function() {
-      var id = 'id';
       var url = '/api/update-template';
       templateService.updateTemplate({});
 
@@ -36,7 +36,6 @@ describe('templateService', function() {
 
   describe('createTemplate', function () {
     it('should send a request', function() {
-      var id = 'id';
       var url = '/api/template';
       templateService.createTemplate({});
 

@@ -5,7 +5,8 @@
   "private": true,
   "main": "backend/index.js",
   "scripts": {
-    "postinstall": "bower i"
+    "postinstall": "bower i",
+    "precommit": "gulp belint && gulp felint && gulp testOnce"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,9 @@
   "devDependencies": {
     "bower": "^1.8.0",
     "connect-modrewrite": "^0.9.0",
+    "eslint": "^3.19.0",
+    "eslint-config-angular": "^0.5.0",
+    "eslint-plugin-angular": "^2.4.1",
     "gulp": "^3.9.1",
     "gulp-api-doc": "^1.1.0",
     "gulp-autoprefixer": "^3.1.1",
@@ -40,6 +44,7 @@
     "gulp-sourcemaps": "^1.9.1",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.8",
+    "husky": "^0.13.4",
     "jasmine-core": "^2.6.2",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",

@@ -1,4 +1,5 @@
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.controller('libraryCtrl', ctrl);
@@ -47,7 +48,8 @@
         for (var i = 0; i < res.data.length; i++) {
           vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
         }
-      }, function (err) {
+      }, function () {
+        // TODO: implement it
       });
     };
 
@@ -73,7 +75,7 @@
 
     vm.uploadBtnClick = function () {
       uploadRecordPopupService.showUploadPopup();
-    }
+    };
 
     vm.recordBtnClick = function () {
       uploadRecordPopupService.showRecordPopup();
@@ -97,7 +99,7 @@
             type: 'video/mp4'
           }]
         };
-      })
+      });
       vm.showPreviewPopup = true;
     };
 
@@ -128,17 +130,16 @@
 
     // Confirm popup for delete template
     function showConfirmDeleteTemplate(id) {
-      $mdDialog
-        .show( confirmDeletePopup ).then(function() {
-          libraryService.deleteTemplate(id).then(function() {
-            getTemplates();
-            $mdToast.show(
-              $mdToast.simple()
-                .textContent('Template deleted!')
-                .position('bottom center')
-            );
-          });
-        })
+      $mdDialog.show( confirmDeletePopup ).then(function() {
+        libraryService.deleteTemplate(id).then(function() {
+          getTemplates();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Template deleted!')
+              .position('bottom center')
+          );
+        });
+      });
     };
 
     // Confirm popup for delete file
@@ -158,7 +159,7 @@
                 .position('bottom center')
                 .hideDelay(3000)
             );
-          }, function(err) {
+          }, function() {
             $mdDialog.show( alertErrorDelete );
           });
         });
@@ -171,20 +172,19 @@
         ok: 'Ok'
       });
 
-      $mdDialog
-        .show( confirmDeletePopup ).then(function() {
-          libraryService.deleteVideo(id).then(function() {
-            vm.getVideos();
-            $mdToast.show(
-              $mdToast.simple()
-                .textContent('Video deleted!')
-                .position('bottom center')
-                .hideDelay(3000)
-            );
-          }, function(err) {
-            $mdDialog.show( alertErrorDelete );
-          });
-        })
+      $mdDialog.show( confirmDeletePopup ).then(function() {
+        libraryService.deleteVideo(id).then(function() {
+          vm.getVideos();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Video deleted!')
+              .position('bottom center')
+              .hideDelay(3000)
+          );
+        }, function() {
+          $mdDialog.show( alertErrorDelete );
+        });
+      });
     };
 
     function getTemplates () {

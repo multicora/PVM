@@ -100,14 +100,14 @@
         //- USER ROLE
         p.user-role
           span.placeholder.btn(
-            ng-hide="vm.companyRole.editMode || vm.companyRole.role || vm.user.company_position"
+            ng-hide="vm.companyRole.editMode || vm.companyRole.role || vm.user.companyPosition"
             ng-click="vm.edit(vm.companyRole)") Add your company role
           span.btn(
             ng-if="vm.companyRole.role && !vm.companyRole.editMode && vm.companyRole.role != null"
             ng-click="vm.edit(vm.companyRole)") {{vm.companyRole.role}}
           span.btn(
-            ng-if="vm.user.company_position && !vm.companyRole.editMode && !vm.companyRole.role"
-            ng-click="vm.edit(vm.companyRole)") {{vm.user.company_position}}
+            ng-if="vm.user.companyPosition && !vm.companyRole.editMode && !vm.companyRole.role"
+            ng-click="vm.edit(vm.companyRole)") {{vm.user.companyPosition}}
           md-input-container.role-input-container(md-no-float="true")
             input.mdl-textfield__input.role-input(
               aria-label=" "

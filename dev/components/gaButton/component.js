@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('gaButton', {
     templateUrl: 'components/gaButton/tpl.html',
     controller: ctrl,
