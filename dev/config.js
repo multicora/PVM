@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.config(config);
@@ -8,15 +8,19 @@
     '$routeProvider',
     '$httpProvider',
     '$locationProvider',
-    'resolverProvider'
+    'resolverProvider',
+    'RollbarProvider'
   ];
   function config(
     $routeProvider,
     $httpProvider,
     $locationProvider,
-    resolverProvider
+    resolverProvider,
+    RollbarProvider
   ) {
     $locationProvider.html5Mode(true);
+
+    registerRollbar(RollbarProvider);
 
     $httpProvider.interceptors.push('interseptor');
     var resolver = resolverProvider.$get();
@@ -44,7 +48,10 @@
     }).when('/library', {
       controller: 'libraryCtrl',
       controllerAs: 'vm',
-      templateUrl: 'library/tpl.html'
+      templateUrl: 'library/tpl.html',
+      resolve: {
+        tokenChecker: resolver.tokenChecker()
+      }
     }).when('/conversation/:id', {
       controller: 'conversationCtrl',
       controllerAs: 'vm',
@@ -74,5 +81,20 @@
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });
+  }
+
+
+  function registerRollbar(RollbarProvider) {
+    RollbarProvider.init({
+      accessToken: 'f4b32574bf5047cdad7c4e1d8ecc7209',
+      captureUncaught: true,
+      payload: {
+        environment: getEnvironment(location)
+      }
+    });
+  }
+
+  function getEnvironment(location) {
+    return location.hostname === 'localhost' ? 'develop' : 'production';
   }
 })(angular);

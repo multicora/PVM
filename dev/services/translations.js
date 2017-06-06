@@ -1,6 +1,7 @@
-'use strict';
 (function(angular) {
+  'use strict';
   var app = angular.module('app');
+  var vocabulary;
 
   app.service('translations', service);
 
@@ -14,7 +15,7 @@
 
     this.txt = function (key) {
       return vocabulary[currentLang][key] || key;
-    }
+    };
   }
 
   var vocabularyEn = {
@@ -25,7 +26,7 @@
     CANCEL: 'Cancel',
   };
 
-  var vocabulary = {
+  vocabulary = {
     en: vocabularyEn
-  }
+  };
 })(angular);

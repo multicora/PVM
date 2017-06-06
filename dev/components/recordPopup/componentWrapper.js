@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('recordPopupWrapper', {
     templateUrl: 'components/recordPopup/tplWrapper.html',
     controller: ctrl,

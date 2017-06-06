@@ -65,4 +65,4 @@ var config = {
   }
 };
 
-module.exports = merge(config, userConfig);
+module.exports = merge.recursive(config, userConfig);
