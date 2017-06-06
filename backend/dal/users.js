@@ -86,7 +86,7 @@ module.exports = (connection) => {
     getForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, company, phone, photo, companyPosition, id ',
+          'SELECT firstName, secondName, email, company, phone, photo, company_position, id ',
           'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 

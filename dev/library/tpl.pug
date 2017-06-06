@@ -37,12 +37,6 @@
       md-tab(label='conversations')
         md-content.md-padding.tubs-content(
           md-selected="vm.selectedIndex")
-
-          md-tabs(
-            md-dynamic-height=""
-            md-border-bottom=""
-            md-selected="vm.selectedIndex"
-            md-center-tabs="true")
           conversation-list(
             list="vm.conversationsList"
             on-indicator-click="vm.stopPropagation($event)"
