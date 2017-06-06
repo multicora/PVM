@@ -86,7 +86,7 @@ module.exports = (connection) => {
     getForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
-          'SELECT firstName, secondName, email, company, phone, photo, company_position, id ',
+          'SELECT firstName, secondName, email, company, phone, photo, companyPosition, id ',
           'FROM `users` WHERE id = "' + id + '"'
         ].join('');
 
@@ -458,7 +458,7 @@ module.exports = (connection) => {
         'ALTER TABLE `users` ',
         'ADD `phone` VARCHAR(255), ',
         'ADD `company` int(255), ',
-        'ADD `company_position` VARCHAR(255), ',
+        'ADD `companyPosition` VARCHAR(255), ',
         'ADD `photo` VARCHAR(8000), ',
         'ADD FOREIGN KEY (company) REFERENCES company(id);'
       ].join('');

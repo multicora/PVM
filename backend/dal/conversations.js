@@ -53,7 +53,7 @@ module.exports = (connection) => {
           .field('id')
           .field('email')
           .field('viewed')
-          .field('video_is_watched')
+          .field('videoIsWatched')
           .field('title')
           .field('message')
           .field('updated')
@@ -187,7 +187,7 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE `conversations` ',
-          'SET video_is_watched=TRUE ',
+          'SET videoIsWatched=TRUE ',
           'WHERE id=' + id + ';'
         ].join('');
 
@@ -344,5 +344,13 @@ module.exports = (connection) => {
 
       return connection.query(request, cb);
     },
+
+    changeVideoIsWatchedFieldName: function (cb) {
+      const request = [
+        'ALTER TABLE conversations CHANGE video_is_watched videoIsWatched VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    }
   };
 };
