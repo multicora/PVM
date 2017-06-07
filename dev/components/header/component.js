@@ -30,6 +30,13 @@
         notification.date = new Date(notification.date).toLocaleTimeString();
         return notification;
       });
+      vm.notifications.sort( function(a, b) {
+        if (a.date < b.date) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
     });
 
     vm.isAuthenticated = !!tokenService.getToken();
