@@ -1,7 +1,22 @@
 'use strict';
+const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
+
+    getByUser: function (user) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.select()
+          .from('notifications')
+          .where('user = ' + user)
+          .toString();
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response[0]);
+        });
+      });
+    },
 
     // For migrations
     createTable: function(cb) {
