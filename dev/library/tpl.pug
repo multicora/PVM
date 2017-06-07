@@ -42,11 +42,6 @@
             on-indicator-click="vm.stopPropagation($event)"
             on-view-click="vm.viewConversation($data)"
             show-indicators="vm.showConversationIndicators")
-
-      //- Conversations to user
-      md-tab(label='conversations to me')
-        md-content.md-padding.tubs-content(
-          md-selected="vm.selectedIndex")
           conversation-list(
             list="vm.conversationsToUserList"
             on-indicator-click="vm.stopPropagation($event)"

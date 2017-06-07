@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('appHeader', {
     templateUrl: 'components/header/tpl.html',
     controller: ctrl,
@@ -11,20 +11,14 @@
   ctrl.$inject = [
     '$location',
     '$mdSidenav',
-    '$rootScope',
     'tokenService',
-    'profileService',
-    'conversationsService',
-    'pubSub'
+    'profileService'
   ];
   function ctrl(
     $location,
     $mdSidenav,
-    $rootScope,
     tokenService,
-    profileService,
-    conversationsService,
-    pubSub
+    profileService
   ) {
     var vm = this;
 

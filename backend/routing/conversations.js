@@ -214,7 +214,7 @@ module.exports = function (server, DAL) {
             let isWatched;
 
             DAL.conversations.getById(conversationId).then((res) => {
-              isWatched = res.video_is_watched;
+              isWatched = res.videoIsWatched;
 
               return usersCtrl.getUserByToken(token.value);
             }).then((user) => {
@@ -590,7 +590,7 @@ module.exports = function (server, DAL) {
    * @apiSuccess {String}   conversation.title                Conversation title.
    * @apiSuccess {String}   conversation.message              Conversation message.
    * @apiSuccess {String}   conversation.viwed                Conversation video url.
-   * @apiSuccess {String}   conversation.video_is_watched     Conversation video is watched status.
+   * @apiSuccess {String}   conversation.videoIsWatched     Conversation video is watched status.
    * @apiSuccess {String}   conversation.updated              Conversation updated.
    *
    *
@@ -602,7 +602,7 @@ module.exports = function (server, DAL) {
    *   message: null,
    *   viewed: 1,
    *   updated: '0000-00-00 00:00:00',
-   *   video_is_watched: 1
+   *   videoIsWatched: 1
    * ]}
    */
   server.route({
@@ -621,7 +621,7 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/conversations_to_user Request conversations
+   * @api {get} /api/conversations-to-user Request conversations
    * @apiName GetConversations
    * @apiGroup Conversations
    *
@@ -648,7 +648,7 @@ module.exports = function (server, DAL) {
    */
   server.route({
     method: 'GET',
-    path: '/api/conversations_to_user',
+    path: '/api/conversations-to-user',
     config: {
       auth: 'simple',
       handler: function (request, reply) {

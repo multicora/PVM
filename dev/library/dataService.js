@@ -1,5 +1,5 @@
-'use strict';
 (function(angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.service('libraryService', service);
@@ -23,7 +23,7 @@
     };
 
     this.getConversationsToUser = function () {
-      return $http.get('/api/conversations_to_user');
+      return $http.get('/api/conversations-to-user');
     };
 
     this.getFiles = function () {

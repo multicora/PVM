@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.config(config);
@@ -48,7 +48,10 @@
     }).when('/library', {
       controller: 'libraryCtrl',
       controllerAs: 'vm',
-      templateUrl: 'library/tpl.html'
+      templateUrl: 'library/tpl.html',
+      resolve: {
+        tokenChecker: resolver.tokenChecker()
+      }
     }).when('/conversation/:id', {
       controller: 'conversationCtrl',
       controllerAs: 'vm',

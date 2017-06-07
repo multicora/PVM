@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   angular.module('app').component('recordMobilePopup', {
     templateUrl: 'components/recordPopup/tplMobile.html',
     controller: ctrl,
@@ -35,7 +35,7 @@
     vm.sendRecordClick = function (name) {
       name = name || 'no name';
       uploadService.sendFile(
-        "/api/video",
+        '/api/video',
         vm.videoFile,
         name + '.' + tools.getExtension(vm.videoFile.name)
       ).then(function () {

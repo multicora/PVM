@@ -1,5 +1,5 @@
-'use strict';
 (function (angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.controller('conversationCtrl', ctrl);
@@ -35,7 +35,7 @@
     vm.incomeUserPhoto = null;
     vm.showUserHeader = true;
     vm.messageClassName = 'income';
-    vm.sendMessage;
+    vm.sendMessage = null;
 
     getProfile();
 
@@ -76,7 +76,7 @@
       var incomeChats = [];
 
       vm.chatList.map(function(chat) {
-        if (chat.authorId != vm.user.id) {
+        if (chat.authorId !== vm.user.id) {
           vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
           chat.className = 'income';
           incomeChats.push(chat);
@@ -90,7 +90,7 @@
           'message': message,
           'authorId': vm.user.id,
           'conversationId': vm.conversation.id
-        }
+        };
 
         chatInstance.send(sendObj, function() {
           sendObj.photo = vm.user.photo;
@@ -98,7 +98,7 @@
           $rootScope.$apply();
           scrollBottom();
         });
-      }
+      };
     });
 
     $scope.$on('vjsVideoReady', function (e, data) {
@@ -112,7 +112,7 @@
       $location.path('library');
     };
 
-    vm.contentClick = function (event) {
+    vm.contentClick = function () {
       vm.headerClass = 'showHeader';
     };
 

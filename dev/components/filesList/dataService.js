@@ -1,13 +1,15 @@
-'use strict';
 (function(angular) {
+  'use strict';
   var app = angular.module('app');
 
   app.service('filesService', service);
 
   service.$inject = [
+    '$q',
     'libraryService'
   ];
   function service(
+    $q,
     libraryService
   ) {
     var vm = this;
@@ -15,7 +17,7 @@
     vm.byteInKilobyte = 1024;
 
     vm.getFiles = function () {
-      return new Promise(function(resolve) {
+      return $q(function(resolve) {
 
         // TODO: add .catch() part
         libraryService.getFiles().then(function (res) {
