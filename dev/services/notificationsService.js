@@ -7,7 +7,7 @@
   service.$inject = ['$http'];
   function service($http) {
     this.getNotifications = function () {
-      return $http.get('/api/notifications/');
+      return $http.get('/api/notifications');
     };
   }
 })(angular);
