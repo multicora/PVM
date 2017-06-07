@@ -12,7 +12,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0] || null);
         });
       });
     },
@@ -24,21 +24,21 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0] || null);
         });
       });
     },
 
     add: () => {
-        return new Promise((resolve, reject) => {
-          const request = sqlBuilder.insert()
-            .into('company')
-            .set('name', null);
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.insert()
+          .into('company')
+          .set('name', null);
 
-          connection.query(request.toString(), (err, response) => {
-            err ? reject(err) : resolve(response);
-          });
+        connection.query(request.toString(), (err, response) => {
+          err ? reject(err) : resolve(response);
         });
+      });
     },
 
     update: (company) => {

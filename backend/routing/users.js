@@ -503,11 +503,11 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       handler: function (request, reply) {
         DAL.company.getById(request.payload).then(res => {
-          if (res.logo && res.logo !== null) {
+          if (res && res.logo) {
             res.logo = res.logo.toString();
           }
           reply(res);
-        }, err => {
+        }).catch(err => {
           reply(Boom.badImplementation(500, err));
         });
       }
