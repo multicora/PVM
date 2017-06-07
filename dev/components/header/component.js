@@ -12,13 +12,15 @@
     '$location',
     '$mdSidenav',
     'tokenService',
-    'profileService'
+    'profileService',
+    'notificationsService'
   ];
   function ctrl(
     $location,
     $mdSidenav,
     tokenService,
-    profileService
+    profileService,
+    notificationsService
   ) {
     var vm = this;
 
@@ -32,6 +34,10 @@
         return $location.path(url);
       }
     };
+
+    notificationsService.getNotifications().then( function(res) {
+      console.log(res);
+    });
 
     vm.openMenu = function () {
       $mdSidenav('left').toggle();

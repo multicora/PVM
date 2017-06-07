@@ -4,9 +4,7 @@ const Boom = require('boom');
 
 module.exports = function (server, DAL) {
   /**
-   * @api {get} /api/notifications/:user Request for user notifications
-   *
-   * @apiParam {string}   user                 User id.
+   * @api {get} /api/notifications Request for user notifications
    *
    * @apiName GetNotifications
    * @apiGroup Notifications
@@ -29,11 +27,11 @@ module.exports = function (server, DAL) {
    */
   server.route({
     method: 'GET',
-    path: '/api/notifications/{user}',
+    path: '/api/notifications',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.notifications.getByUser(request.params.user).then(res => {
+        DAL.notifications.getByUser(request.auth.credentials.id).then(res => {
           reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));
