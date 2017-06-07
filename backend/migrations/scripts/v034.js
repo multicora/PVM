@@ -7,7 +7,8 @@ module.exports = function(DAL) {
     script: function (next) {
       const usersId = [];
 
-      DAL.users.getAllUsers().then((users) => {
+      DAL.users.getAll().then((users) => {
+        console.log(users);
         users.map((user) => {
           if (!user.company || user.company === null) {
             usersId.push(user.id);
@@ -16,6 +17,7 @@ module.exports = function(DAL) {
         let promises = usersId.map(() => {
           return DAL.company.add();
         });
+
         return Promise.all(promises);
       }).then(company => {
         const usersArr = [];
@@ -26,6 +28,7 @@ module.exports = function(DAL) {
         let usersPromises = usersArr.map(user => {
           return DAL.users.updateUserCompany(user);
         });
+
         return Promise.all(usersPromises);
       }).then(() => {
         next();
