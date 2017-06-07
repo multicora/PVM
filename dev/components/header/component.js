@@ -24,6 +24,14 @@
   ) {
     var vm = this;
 
+    notificationsService.getNotifications().then( function(res) {
+      vm.notifications = res.data;
+      vm.notifications.map( function (notification) {
+        notification.date = new Date(notification.date).toLocaleTimeString();
+        return notification;
+      });
+    });
+
     vm.isAuthenticated = !!tokenService.getToken();
     getProfile();
 
@@ -34,10 +42,6 @@
         return $location.path(url);
       }
     };
-
-    notificationsService.getNotifications().then( function(res) {
-      console.log(res);
-    });
 
     vm.openMenu = function () {
       $mdSidenav('left').toggle();
