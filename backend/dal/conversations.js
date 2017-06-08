@@ -53,11 +53,30 @@ module.exports = (connection) => {
           .field('id')
           .field('email')
           .field('viewed')
-          .field('video_is_watched')
+          .field('videoIsWatched')
           .field('title')
           .field('message')
           .field('updated')
           .where('author = ' + author + ' AND is_template = 0')
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    getByEmail: (email) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.select()
+          .from('conversations')
+          .field('id')
+          .field('author')
+          .field('viewed')
+          .field('title')
+          .field('message')
+          .field('updated')
+          .where('email = "' + email + '" AND is_template = 0')
           .toString();
 
         connection.query(request, (err, response) => {
@@ -168,7 +187,7 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         let request = [
           'UPDATE `conversations` ',
-          'SET video_is_watched=TRUE ',
+          'SET videoIsWatched=TRUE ',
           'WHERE id=' + id + ';'
         ].join('');
 
@@ -325,5 +344,13 @@ module.exports = (connection) => {
 
       return connection.query(request, cb);
     },
+
+    changeVideoIsWatchedFieldName: function (cb) {
+      const request = [
+        'ALTER TABLE conversations CHANGE video_is_watched videoIsWatched VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    }
   };
 };

@@ -83,20 +83,7 @@ module.exports = (connection) => {
       });
     },
 
-    getUserForEdit: (id) => {
-      return new Promise((resolve, reject) => {
-        let request = [
-          'SELECT firstName, secondName, email, id ',
-          'FROM `users` WHERE id = "' + id + '"'
-        ].join('');
-
-        connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response);
-        });
-      });
-    },
-
-    getUserForEditProfile: (id) => {
+    getForEdit: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
           'SELECT firstName, secondName, email, company, phone, photo, companyPosition, id ',
@@ -104,7 +91,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0] || null);
         });
       });
     },
@@ -455,7 +442,7 @@ module.exports = (connection) => {
         'ALTER TABLE `users` ',
         'ADD `phone` VARCHAR(255), ',
         'ADD `company` int(255), ',
-        'ADD `company_position` VARCHAR(255), ',
+        'ADD `companyPosition` VARCHAR(255), ',
         'ADD `photo` VARCHAR(8000), ',
         'ADD FOREIGN KEY (company) REFERENCES company(id);'
       ].join('');
