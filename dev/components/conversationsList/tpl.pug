@@ -3,7 +3,9 @@
     .conversation(
       ng-repeat="item in vm.list | orderBy:'-updated'"
       ng-click="vm.onViewClick({$data: item.id})")
-      .indicators(ng-click="vm.onIndicatorClick({$event: $event})")
+      .indicators(
+        ng-if="vm.showIndicators"
+        ng-click="vm.onIndicatorClick({$event: $event})")
         .mail(ng-if="!item.viewed")
           md-tooltip(md-direction="right") Conversation hasn't been opened yet
           i.material-icons email
@@ -13,10 +15,10 @@
         .is-watching(ng-if="item.viwatching")
           md-tooltip(md-direction="right") Video is watching now
           i.material-icons remove_red_eye
-        .not-viewed(ng-if="!item.video_is_watched")
+        .not-viewed(ng-if="!item.videoIsWatched")
           md-tooltip(md-direction="right") Video hasn't been watched
           i.material-icons remove_red_eye
-        .viewed(ng-if="item.video_is_watched")
+        .viewed(ng-if="item.videoIsWatched")
           md-tooltip(md-direction="right") Video has been watched
           i.material-icons remove_red_eye
         .files
@@ -24,8 +26,9 @@
           i.material-icons insert_drive_file
 
       p.email
-        span(ng-if="item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
-        span(ng-if="!item.email || item.email === 'null' || item.email === 'undefined'") Public
+        span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
+        span(ng-if="!vm.toUser && !item.email || item.email === 'null' || item.email === 'undefined'") Public
+        span(ng-if="vm.toUser") from: {{item.author}}
       p.title
         span(
         ng-if="item.title && item.title != null && item.title != 'undefined'"
