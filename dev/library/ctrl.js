@@ -37,6 +37,8 @@
     vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
+    vm.showConversationIndicators = true;
+    vm.toUser = true;
 
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
@@ -189,6 +191,10 @@
       // TODO: add .catch() part
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
+
+        return libraryService.getConversationsToUser();
+      }).then(function (res) {
+        vm.conversationsToUserList = res.data;
       });
     };
 

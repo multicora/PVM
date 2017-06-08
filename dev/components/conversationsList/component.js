@@ -7,7 +7,9 @@
     bindings: {
       onViewClick: '&',
       onIndicatorClick: '&',
+      showIndicators: '<',
       list: '<',
+      toUser: '<'
     }
   });
 

@@ -22,6 +22,10 @@
       return $http.get('/api/conversations');
     };
 
+    this.getConversationsToUser = function () {
+      return $http.get('/api/conversations-to-user');
+    };
+
     this.getFiles = function () {
       return $http.get('/api/files');
     };

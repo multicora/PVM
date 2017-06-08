@@ -314,7 +314,7 @@ const usersController = require('../controllers/users.js')(DAL);
         permissions: ['users:edit']
       },
       handler: function (request, reply) {
-        DAL.users.getUserForEdit(request.params.id).then(function(res) {
+        DAL.users.getForEdit(request.params.id).then(function(res) {
           reply(res);
         }, function(err) {
           reply(Boom.badImplementation(500, err));
@@ -349,7 +349,7 @@ const usersController = require('../controllers/users.js')(DAL);
         }
       },
       handler: function (request, reply) {
-        DAL.users.updateUser(request.payload).then(function(res) {
+        DAL.users.updateProfile(request.payload).then(function(res) {
           reply(res);
         }, function(err) {
           reply(Boom.badImplementation(500, err));
@@ -462,7 +462,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.getUserForEditProfile(request.auth.credentials.id).then(res => {
+        DAL.users.getForEdit(request.auth.credentials.id).then(res => {
           if (res.photo && res.photo !== null) {
             res.photo = res.photo.toString();
           }
@@ -503,11 +503,11 @@ const usersController = require('../controllers/users.js')(DAL);
       auth: 'simple',
       handler: function (request, reply) {
         DAL.company.getById(request.payload).then(res => {
-          if (res.logo && res.logo !== null) {
+          if (res && res.logo) {
             res.logo = res.logo.toString();
           }
           reply(res);
-        }, err => {
+        }).catch(err => {
           reply(Boom.badImplementation(500, err));
         });
       }
@@ -546,7 +546,7 @@ const usersController = require('../controllers/users.js')(DAL);
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.users.updateUserProfile(request.payload)
+        DAL.users.updateProfile(request.payload)
         .then(() => {
           reply({'status': 'success'});
         }, err => {
