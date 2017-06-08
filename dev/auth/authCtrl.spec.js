@@ -83,6 +83,21 @@ describe('authCtrl', function() {
       expect(ctrl.errorRegister).toBe('');
       expect(ctrl.selectedIndex).toBe(0);
     });
+
+    it('"errorRegister" should be defined if response have error', function() {
+      var ctrl = $controller('authCtrl', dependency);
+
+      authService.register.and.returnValue($q.reject({
+        data: {
+          error: 'error',
+          message: 'message'
+        }
+      }));
+
+      ctrl.register('email', 'password', 'confirmPassword');
+      scope.$apply();
+      expect(ctrl.errorRegister).toBeTruthy();
+    });
   });
 
   describe('sendResetRequest', function() {
@@ -126,7 +141,7 @@ describe('authCtrl', function() {
     });
 
     it('should show error if response have error', function() {
-      authService.setPassword.and.returnValue($q.resolve({
+      authService.setPassword.and.returnValue($q.reject({
         data: {
           error: 'error',
           message: 'message'
