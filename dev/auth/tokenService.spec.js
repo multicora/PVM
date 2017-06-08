@@ -2,6 +2,7 @@ describe('tokenService', function() {
   'use strict';
   var tokenService;
   var localStorage;
+  var name = 'biz.authToken';
 
   beforeEach(module('app'));
   beforeEach(module(function ($provide) {
@@ -21,30 +22,26 @@ describe('tokenService', function() {
   describe('setToken', function () {
     it('should set token', function() {
       var token = 'token';
-      var name = 'name';
 
-      tokenService.setToken(name, token);
+      tokenService.setToken(token);
 
       expect(localStorage.setItem).toHaveBeenCalledWith(name, token);
     });
   });
 
-  // describe('getToken', function () {
-  //   it('should get token', function() {
-  //     var name = 'name';
+  describe('getToken', function () {
+    it('should get token', function() {
 
-  //     tokenService.getToken(name);
-  //     expect(localStorage.getItem).toHaveBeenCalledWith(name);
-  //   });
-  // });
+      tokenService.getToken();
+      expect(localStorage.getItem).toHaveBeenCalledWith(name);
+    });
+  });
 
-  // describe('clearToken', function () {
-  //   it('should remove token', function() {
-  //     var name = 'name';
+  describe('clearToken', function () {
+    it('should remove token', function() {
+      tokenService.clearToken();
 
-  //     tokenService.clearToken(name);
-
-  //     expect(localStorage.removeItem).toHaveBeenCalledWith(name);
-  //   });
-  // });
+      expect(localStorage.removeItem).toHaveBeenCalledWith(name);
+    });
+  });
 });

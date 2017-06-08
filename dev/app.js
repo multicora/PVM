@@ -3,6 +3,7 @@
 
   angular.module('app', [
     'ngRoute',
+    'ngStorage',
     'vjs.video',
     'ngMaterial',
     '720kb.socialshare',
