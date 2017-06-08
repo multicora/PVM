@@ -83,6 +83,19 @@ module.exports = function(DAL) {
       return DAL.conversations.markAsViewed(conversation.id).then(() => {
         return notificationsCtrl.conversationOpened(conversation, serverUrl + '/conversation/' + conversation.id);
       });
+    },
+    needToSendPromise: (conversation, token) => {
+      return new Promise((resolve) => {
+        usersCtrl.getUserByToken(token.value).then((user) => {
+          if (conversation.author === user.id) {
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        }, () => {
+          resolve(true);
+        });
+      });
     }
   };
 };

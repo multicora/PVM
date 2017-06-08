@@ -209,23 +209,9 @@ module.exports = function (server, DAL) {
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
 
-        let needToSendPromise = function() {
-          return new Promise((resolve) => {
-            usersCtrl.getUserByToken(token.value).then((user) => {
-              if (conversation.author === user.id) {
-                resolve(false);
-              } else {
-                resolve(true);
-              }
-            }, () => {
-              resolve(true);
-            });
-          });
-        };
-
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return needToSendPromise();
+          return conversationCtrl.needToSendPromise(conversation, token);
         }).then(res => {
           if (res) {
             return notificationsCtrl.videoIsWatching(conversation, serverUrl + '/conversation/' + conversation.id).then(() => {
