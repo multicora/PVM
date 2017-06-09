@@ -8,6 +8,7 @@ describe('appHeader component', function() {
   var rootScope;
   var tokenService;
   var notificationsService;
+  var profileService;
 
   beforeEach(module('app'));
   beforeEach(module(function ($provide) {
@@ -28,24 +29,38 @@ describe('appHeader component', function() {
     notificationsService = {
       getNotifications: jasmine.createSpy('getNotifications')
     };
+    profileService = {
+      getProfile: jasmine.createSpy('getProfile').and.callFake(function () {
+        return q.resolve({
+          data: {}
+        });
+      })
+    };
   }));
 
   it('should init component', function() {
     var scope = rootScope.$new();
-    var ctrl = componentController('appHeader', {
-      notificationsService: notificationsService,
-      tokenService: tokenService
-    }, bindings);
-
     notificationsService.getNotifications.and.callFake(function () {
       return q.resolve({
         data: [{
-          id: '',
-          message: '',
-          date: ''
+          id: '1',
+          message: 'message',
+          date: '0000-00-00 00:00:00'
+        },
+        {
+          id: '2',
+          message: 'message',
+          date: '0000-00-00 00:00:00'
         }]
       });
     });
+
+    var ctrl = componentController('appHeader', {
+      notificationsService: notificationsService,
+      tokenService: tokenService,
+      profileService: profileService
+    }, bindings);
+
 
     scope.$apply();
     expect(ctrl).toBeDefined();
