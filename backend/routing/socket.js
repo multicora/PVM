@@ -6,6 +6,7 @@ module.exports = function (server, DAL) {
 
   webSocket(server).then((socketService) => {
     socketService.on('chatMessage', function (data, socket) {
+      data.url = 'https://' + socket.handshake.headers.host + '/' + 'conversation/' + data.conversationId;
       chatCtrl.incomeMessage(data);
       socket.broadcast.emit('income', data);
     });

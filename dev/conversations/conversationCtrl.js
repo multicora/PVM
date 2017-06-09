@@ -102,8 +102,11 @@
     });
 
     $scope.$on('vjsVideoReady', function (e, data) {
-      data.player.on('ended', function() {
+      data.player.one('ended', function() {
         conversationsService.videoWatched(vm.conversation.id);
+      });
+      data.player.one('click', function() {
+        conversationsService.videoIsWatching(vm.conversation.id);
       });
     });
 
@@ -123,7 +126,6 @@
     vm.videoContentClick = function (event) {
       event.stopPropagation();
       vm.headerClass = 'hideHeader';
-      // conversationsService.videoWatched(vm.conversation.id);
     };
 
     function getProfile() {
