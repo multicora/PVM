@@ -5,12 +5,12 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 module.exports = function(connection) {
   return {
 
-    add: (data) => {
+    add: (message, user) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
           .into('notifications')
-          .set('message', data.message)
-          .set('user', data.user)
+          .set('message', message)
+          .set('user', user)
           .set('date', sqlBuilder.str('NOW()'))
           .toString();
 

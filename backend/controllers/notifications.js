@@ -2,6 +2,7 @@
 const mailer = require('../services/mailer.js');
 const config = require('../config.js');
 const templates = require('../services/templates.js')();
+const notificationsMessageGenerator = require('../services/notificationsMessageGenerator.js')();
 
 module.exports = function (DAL) {
 
@@ -12,6 +13,9 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.notifications.add(
+          notificationsMessageGenerator.conversationIsOpened(conversation.email), conversation.author);
+      }).then(() => {
         return templates.conversationOpened(link, user.firstName, 'Person with email: ' + conversation.email);
       }).then(template => {
         const message = 'Your conversation was viewed!';
@@ -33,6 +37,9 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.notifications.add(
+          notificationsMessageGenerator.videoIsWatched(conversation.email), conversation.author);
+      }).then(() => {
         return templates.videoWatched(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
       }).then((res) => {
@@ -53,6 +60,9 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.notifications.add(
+          notificationsMessageGenerator.videoIsWatching(conversation.email), conversation.author);
+      }).then(() => {
         return templates.videoIsWatching(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
       }).then((res) => {
@@ -73,6 +83,9 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.notifications.add(
+          notificationsMessageGenerator.fileIsDownloaded(conversation.email), conversation.author);
+      }).then(() => {
         return templates.fileDownloaded(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
       }).then((res) => {
