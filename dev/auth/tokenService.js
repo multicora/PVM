@@ -9,15 +9,17 @@
     this.tokenName = 'x-biz-token';
 
     this.setToken = function (token) {
-      return $localStorage.setItem('biz.authToken', token);
+      $localStorage['biz.authToken'] = token;
+
+      return $localStorage['biz.authToken'];
     };
 
     this.getToken = function () {
-      return $localStorage.getItem('biz.authToken');
+      return $localStorage['biz.authToken'];
     };
 
     this.clearToken = function () {
-      return $localStorage.removeItem('biz.authToken');
+      return delete $localStorage['biz.authToken'];
     };
   }
 })(angular);

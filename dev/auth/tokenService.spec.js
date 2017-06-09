@@ -6,11 +6,7 @@ describe('tokenService', function() {
 
   beforeEach(module('app'));
   beforeEach(module(function ($provide) {
-    $provide.value('$localStorage', {
-      getItem: jasmine.createSpy('getItem'),
-      setItem: jasmine.createSpy('setItem'),
-      removeItem: jasmine.createSpy('removeItem')
-    });
+    $provide.value('$localStorage', {});
   }));
   beforeEach(function() {
     inject(function($injector, $localStorage) {
@@ -25,15 +21,18 @@ describe('tokenService', function() {
 
       tokenService.setToken(token);
 
-      expect(localStorage.setItem).toHaveBeenCalledWith(name, token);
+      expect(localStorage[name]).toBe(token);
     });
   });
 
   describe('getToken', function () {
     it('should get token', function() {
+      var token = 'token';
+      var result;
 
-      tokenService.getToken();
-      expect(localStorage.getItem).toHaveBeenCalledWith(name);
+      tokenService.setToken(token);
+      result = tokenService.getToken();
+      expect(result).toBe(token);
     });
   });
 
@@ -41,7 +40,7 @@ describe('tokenService', function() {
     it('should remove token', function() {
       tokenService.clearToken();
 
-      expect(localStorage.removeItem).toHaveBeenCalledWith(name);
+      expect(localStorage.name).toBe(undefined);
     });
   });
 });
