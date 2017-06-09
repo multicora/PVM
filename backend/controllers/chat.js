@@ -7,14 +7,18 @@ module.exports = function (DAL) {
   const minute = 60000;
   let timersArr = {};
 
-  function createKey(conversationId, userId) {
+  function createKey (conversationId, userId) {
     return conversationId + '_' + userId;
   };
 
-  function createTimer(data) {
+  function createTimer (data) {
     let key = createKey(data.conversationId, data.userId);
 
-    timersArr[key] = setTimeout(function () { sendNotification(data); },
+    function timerFunction (data) {
+      sendNotification(data);
+    }
+
+    timersArr[key] = setTimeout(timerFunction.bind(null, data),
       config.notification.time * minute);
   };
 
@@ -24,7 +28,7 @@ module.exports = function (DAL) {
       user = res;
       return DAL.users.getUserById(data.authorId);
     }).then( res => {
-      return templates.newMessage('http://', user.firstName, res.firstName + ' ' + res.secondName);
+      return templates.newMessage(data.url, user.firstName, res.firstName + ' ' + res.secondName);
     }).then( template => {
 
       const mail = {
@@ -42,21 +46,22 @@ module.exports = function (DAL) {
     return DAL.chat.add(data);
   };
 
-  function startTimer (conversationId, userId) {
-    DAL.chat.getByConversationId(conversationId).then(res => {
+  function startTimer (data) {
+    DAL.chat.getByConversationId(data.conversationId).then( res => {
       var usersArr = [];
 
-      res.filter(data => {
-        if (usersArr.indexOf(data.authorId) === -1 && data.authorId !== userId) {
-          usersArr.push(data.authorId);
+      res.filter(chat => {
+        if (usersArr.indexOf(chat.authorId) === -1 && chat.authorId !== data.userId) {
+          usersArr.push(chat.authorId);
         }
       });
 
       usersArr.map(id => {
         createTimer({
-          conversationId: conversationId,
+          conversationId: data.conversationId,
           userId: id,
-          authorId: userId
+          authorId: data.authorId,
+          url: data.url
         });
       });
     });
@@ -71,7 +76,7 @@ module.exports = function (DAL) {
     incomeMessage: function(data) {
       sendChatToDb(data).then(res => {
         data.id = res.insertId;
-        startTimer(data.conversationId, data.authorId);
+        startTimer(data);
       });
     },
     clearTimer: clearTimer
