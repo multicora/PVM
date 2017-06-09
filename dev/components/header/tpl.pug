@@ -6,18 +6,18 @@ header.main-header
       i.material-icons menu
     img.logo.pointer(src='/files/images/logo_bizkonect.svg')
     .notification-container
-      .material-icons.mdl-badge.mdl-badge--overlap.email-notification(
-        data-badge=2
+      //- .material-icons.email-notification(
         ng-click="vm.redirect('/dashboard')") email
-      md-menu(md-position-mode="target-right target")
-        .material-icons.mdl-badge.mdl-badge--overlap.notifications(
-          data-badge=1
+      md-menu(
+        md-position-mode="target-right target"
+        ng-if="vm.notifications")
+        .material-icons.notifications(
           ng-click="$mdMenu.open()"
         ) notifications
-        md-menu-content(ng-mouseleave="$mdMenu.close()")
-          md-menu-item
-            p notification
-
+        md-menu-content.notification-menu-content
+          md-menu-item.notification-item(ng-repeat="item in vm.notifications")
+            span {{item.message}}
+            span {{item.date}}
 
   md-sidenav.md-sidenav-left(
     md-component-id="left"

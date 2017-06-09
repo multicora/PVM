@@ -12,15 +12,33 @@
     '$location',
     '$mdSidenav',
     'tokenService',
-    'profileService'
+    'profileService',
+    'notificationsService'
   ];
   function ctrl(
     $location,
     $mdSidenav,
     tokenService,
-    profileService
+    profileService,
+    notificationsService
   ) {
     var vm = this;
+
+    notificationsService.getNotifications().then( function(res) {
+      vm.notifications = res.data;
+      vm.notifications.map( function (notification) {
+        notification.date = new Date(notification.date).toLocaleTimeString();
+        return notification;
+      });
+      vm.notifications.sort( function(a, b) {
+        var result = 0;
+        if (a.date < b.date) {
+          result = 1;
+        }
+
+        return result;
+      });
+    });
 
     vm.isAuthenticated = !!tokenService.getToken();
     getProfile();

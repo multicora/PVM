@@ -36,4 +36,5 @@ module.exports.init = function (server, DAL) {
   require('./routing/socket.js')(server, DAL);
   require('./routing/feedbacks.js')(server, DAL);
   require('./routing/files.js')(server, DAL);
+  require('./routing/notifications.js')(server, DAL);
 };
