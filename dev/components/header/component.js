@@ -24,21 +24,7 @@
   ) {
     var vm = this;
 
-    notificationsService.getNotifications().then( function(res) {
-      vm.notifications = res.data;
-      vm.notifications.map( function (notification) {
-        notification.date = new Date(notification.date).toLocaleTimeString();
-        return notification;
-      });
-      vm.notifications.sort( function(a, b) {
-        var result = 0;
-        if (a.date < b.date) {
-          result = 1;
-        }
-
-        return result;
-      });
-    });
+    getNotifications();
 
     vm.isAuthenticated = !!tokenService.getToken();
     getProfile();
@@ -60,10 +46,35 @@
       $location.path('/login');
     };
 
+    vm.markAsReaded = function(id) {
+      notificationsService.markAsReaded(id).then( function () {
+        getNotifications();
+      });
+    };
+
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
       });
     };
+
+    function getNotifications () {
+      notificationsService.getNotifications().then( function(res) {
+        vm.notifications = res.data;
+        vm.notifications.map( function (notification) {
+          notification = notificationsService.messageGenerator(notification);
+          notification.date = new Date(notification.date).toLocaleTimeString();
+          return notification;
+        });
+        vm.notifications.sort( function(a, b) {
+          var result = 0;
+          if (a.date < b.date) {
+            result = 1;
+          }
+
+          return result;
+        });
+      });
+    }
   }
 })(angular);

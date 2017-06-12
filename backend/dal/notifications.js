@@ -21,6 +21,20 @@ module.exports = function(connection) {
       });
     },
 
+    markAsReaded: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('notifications')
+          .set('isReaded', true)
+          .where('id = ' + id)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getByUser: function (user) {
       return new Promise(function (resolve, reject) {
         const request = sqlBuilder.select()
@@ -57,6 +71,16 @@ module.exports = function(connection) {
         'ALTER TABLE `notifications` ',
         'ADD `metadata` varchar(255) ',
         'DEFAULT null;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnIsReaded: (cb) => {
+      const request = [
+        'ALTER TABLE `notifications` ',
+        'ADD `isReaded` BOOLEAN ',
+        'DEFAULT FALSE;'
       ].join('');
 
       return connection.query(request, cb);
