@@ -27,7 +27,26 @@ describe('appHeader component', function() {
       getToken: jasmine.createSpy('getToken')
     };
     notificationsService = {
-      getNotifications: jasmine.createSpy('getNotifications')
+      getNotifications: jasmine.createSpy('getNotifications'),
+      markAsReaded: jasmine.createSpy('markAsReaded').and.callFake(function () {
+        return q.resolve();
+      }),
+      messageGenerator: jasmine.createSpy('messageGenerator').and.callFake(function () {
+        return q.resolve({
+          data: [{
+            id: '1',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          },
+          {
+            id: '2',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          }]
+        });
+      })
     };
     profileService = {
       getProfile: jasmine.createSpy('getProfile').and.callFake(function () {
@@ -45,12 +64,14 @@ describe('appHeader component', function() {
         data: [{
           id: '1',
           message: 'message',
-          date: '0000-00-00 00:00:00'
+          date: '0000-00-00 00:00:00',
+          metadata: '{"email": "email"}'
         },
         {
           id: '2',
           message: 'message',
-          date: '0000-00-00 00:00:00'
+          date: '0000-00-00 00:00:00',
+          metadata: '{"email": "email"}'
         }]
       });
     });
@@ -83,6 +104,34 @@ describe('appHeader component', function() {
 
       ctrl.redirect(url, urlParam);
       expect(location.path).toHaveBeenCalledWith(url);
+    });
+  });
+
+  describe('markAsReaded', function() {
+    it('should call notificationsService.markAsReaded', function() {
+      var id = 'id';
+      notificationsService.getNotifications.and.callFake(function () {
+        return q.resolve({
+          data: [{
+            id: '1',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          },
+          {
+            id: '2',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          }]
+        });
+      });
+      var ctrl = componentController('appHeader', {
+        notificationsService: notificationsService
+      }, bindings);
+
+      ctrl.markAsReaded(id);
+      expect(notificationsService.markAsReaded).toHaveBeenCalled();
     });
   });
 
