@@ -48,6 +48,17 @@ module.exports = function(connection) {
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+
+
+    addColumnMetadata: function (cb) {
+      const request = [
+        'ALTER TABLE `notifications` ',
+        'ADD `metadata` mediumblob ',
+        'DEFAULT null;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
   };
 };
