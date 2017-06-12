@@ -3,20 +3,20 @@
 module.exports = () => {
 
   return {
-    fileIsDownloaded: function (email) {
-      return 'files in conversation with ' + email + ' were downloaded';
+    fileIsDownloaded: function () {
+      return 'FILE_IS_DOWNLOADED';
     },
-    videoIsWatched: function (email) {
-      return 'video in conversation with ' + email + ' is watched';
+    videoIsWatched: function () {
+      return 'VIDEO_IS_WATCHED';
     },
-    videoIsWatching: function (email) {
-      return 'video in conversation with ' + email + ' is watching';
+    videoIsWatching: function () {
+      return 'VIDEO_IS_WATCHING';
     },
-    conversationIsOpened: function (email) {
-      return 'conversation with ' + email + ' is opened';
+    conversationIsOpened: function () {
+      return 'CONVERSATION_IS_OPENED';
     },
-    newMessage: function (email) {
-      return 'you have new message in conversation with ' + email;
+    newMessage: function () {
+      return 'NEW_MESSAGE';
     },
   };
 };

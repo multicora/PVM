@@ -13,8 +13,10 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        let metadata = JSON.stringify({'email': conversation.email});
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(conversation.email), conversation.author);
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, metadata);
       }).then(() => {
         return templates.conversationOpened(link, user.firstName, 'Person with email: ' + conversation.email);
       }).then(template => {
@@ -37,8 +39,10 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        let metadata = JSON.stringify({'email': conversation.email});
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.videoIsWatched(conversation.email), conversation.author);
+          notificationsMessageGenerator.videoIsWatched(), conversation.author, metadata);
       }).then(() => {
         return templates.videoWatched(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
@@ -60,8 +64,10 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        let metadata = JSON.stringify({'email': conversation.email});
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.videoIsWatching(conversation.email), conversation.author);
+          notificationsMessageGenerator.videoIsWatching(), conversation.author, metadata);
       }).then(() => {
         return templates.videoIsWatching(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
@@ -83,8 +89,10 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        let metadata = JSON.stringify({'email': conversation.email});
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.fileIsDownloaded(conversation.email), conversation.author);
+          notificationsMessageGenerator.fileIsDownloaded(), conversation.author, metadata);
       }).then(() => {
         return templates.fileDownloaded(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');

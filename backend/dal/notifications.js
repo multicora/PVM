@@ -5,12 +5,13 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 module.exports = function(connection) {
   return {
 
-    add: (message, user) => {
+    add: (message, user, metadata) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
           .into('notifications')
           .set('message', message)
           .set('user', user)
+          .set('metadata', metadata)
           .set('date', sqlBuilder.str('NOW()'))
           .toString();
 
@@ -54,7 +55,7 @@ module.exports = function(connection) {
     addColumnMetadata: function (cb) {
       const request = [
         'ALTER TABLE `notifications` ',
-        'ADD `metadata` mediumblob ',
+        'ADD `metadata` varchar(255) ',
         'DEFAULT null;'
       ].join('');
 
