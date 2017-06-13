@@ -1,4 +1,5 @@
 'use strict';
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = (connection) => {
   return {
@@ -50,6 +51,65 @@ module.exports = (connection) => {
           'SELECT * ',
           'FROM chat_status ;'
         ].join('');
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    getStatus: function (conversationId, userId) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.select()
+          .from('chat_status')
+          .where('conversationId = ' + conversationId)
+          .where('userId = ' + userId)
+          .toString();
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    addStatus: (conversationId, userId) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.insert()
+          .into('chat_status')
+          .set('conversationId', conversationId)
+          .set('userId', userId)
+          .set('notified', true)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    markAsNotified: (conversationId, userId) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('chat_status')
+          .set('notified', true)
+          .where('conversationId = ' + conversationId)
+          .where('userId = ' + userId)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    markAsUnNotified: (conversationId, userId) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('chat_status')
+          .set('notified', false)
+          .where('conversationId = ' + conversationId)
+          .where('userId = ' + userId)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);

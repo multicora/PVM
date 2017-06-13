@@ -18,8 +18,23 @@ module.exports = function (DAL) {
       sendNotification(data);
     }
 
-    timersArr[key] = setTimeout(timerFunction.bind(null, data),
-      config.notification.time * minute);
+    DAL.chat.getStatus(data.conversationId, data.userId).then(res => {
+      return res;
+    }).then(status => {
+      let result = null;
+      if (!status.length) {
+        result = DAL.chat.addStatus(data.conversationId, data.userId);
+      } else {
+
+        if (!status.notified) {
+          result = DAL.chat.markAsNotified(data.conversationId, data.userId);
+          timersArr[key] = setTimeout(timerFunction.bind(null, data),
+            config.notification.time * minute);
+        }
+      }
+
+      return result;
+    });
   };
 
   function sendNotification (data) {
@@ -52,7 +67,7 @@ module.exports = function (DAL) {
 
       res.filter(chat => {
         if (usersArr.indexOf(chat.authorId) === -1 && chat.authorId !== data.userId) {
-          usersArr.push(chat.authorId);
+          usersArr.push(data.authorId);
         }
       });
 
@@ -70,6 +85,7 @@ module.exports = function (DAL) {
   function clearTimer (conversationId, userId) {
     let key = createKey(conversationId, userId);
     clearTimeout(timersArr[key]);
+    DAL.chat.markAsUnNotifiedStatus(conversationId, userId);
   };
 
   return {
