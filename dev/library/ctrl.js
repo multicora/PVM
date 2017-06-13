@@ -211,14 +211,14 @@
     };
 
     // For swiping
-    vm.selectedIndex = 0;
-    vm.changeTab = function (offset) {
-      var tabs = 3;
-      var newIndex = vm.selectedIndex + offset;
+    // vm.selectedIndex = 0;
+    // vm.changeTab = function (offset) {
+    //   var tabs = 3;
+    //   var newIndex = vm.selectedIndex + offset;
 
-      newIndex = newIndex >= tabs ? tabs - 1 : newIndex;
-      newIndex = newIndex < 0 ? 0 : newIndex;
-      vm.selectedIndex = newIndex;
-    };
+    //   newIndex = newIndex >= tabs ? tabs - 1 : newIndex;
+    //   newIndex = newIndex < 0 ? 0 : newIndex;
+    //   vm.selectedIndex = newIndex;
+    // };
   }
 })(angular);
