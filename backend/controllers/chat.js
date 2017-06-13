@@ -62,14 +62,23 @@ module.exports = function (DAL) {
   };
 
   function startTimer (data) {
-    DAL.chat.getByConversationId(data.conversationId).then( res => {
+    let conversation;
+    DAL.conversations.getById(data.conversationId).then( res => {
+      conversation = res;
+
+      return DAL.chat.getByConversationId(data.conversationId);
+    }).then( res => {
       var usersArr = [];
 
       res.filter(chat => {
-        if (usersArr.indexOf(chat.authorId) === -1 && chat.authorId !== data.userId) {
-          usersArr.push(data.authorId);
+        if (usersArr.indexOf(chat.authorId) === -1 && chat.authorId !== data.authorId) {
+          usersArr.push(chat.authorId);
         }
       });
+
+      if (usersArr.indexOf(conversation.author) === -1 && data.authorId !== conversation.author) {
+        usersArr.push(conversation.author);
+      }
 
       usersArr.map(id => {
         createTimer({
@@ -85,7 +94,7 @@ module.exports = function (DAL) {
   function clearTimer (conversationId, userId) {
     let key = createKey(conversationId, userId);
     clearTimeout(timersArr[key]);
-    DAL.chat.markAsUnNotifiedStatus(conversationId, userId);
+    DAL.chat.markAsUnNotified(conversationId, userId);
   };
 
   return {

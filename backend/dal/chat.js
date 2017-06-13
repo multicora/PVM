@@ -45,14 +45,14 @@ module.exports = (connection) => {
       });
     },
 
-    getAllStatus: () => {
-      return new Promise((resolve, reject) => {
-        let request = [
-          'SELECT * ',
-          'FROM chat_status ;'
-        ].join('');
+    getAllStatus: function (conversationId) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.select()
+          .from('chat_status')
+          .where('conversationId = ' + conversationId)
+          .toString();
 
-        connection.query(request, (err, response) => {
+        connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
         });
       });
