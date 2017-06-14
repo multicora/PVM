@@ -5,8 +5,8 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 module.exports = function(connection) {
   return {
 
-    add: (message, user, metadata) => {
-      metadata = JSON.stringify(metadata);
+    add: (message, user, data) => {
+      let metadata = JSON.stringify(data);
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
           .into('notifications')
