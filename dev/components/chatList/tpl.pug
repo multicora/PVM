@@ -1,6 +1,6 @@
 .chat-list-container
   .message-container(
-    ng-repeat="item in vm.list"
+    ng-repeat="item in vm.list track by $index"
     ng-class="item.className"
   )
     .photo(ng-style="{backgroundImage: 'url('+ item.photo + ')' }")
