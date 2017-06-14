@@ -5,7 +5,7 @@ const _ = require('lodash');
 module.exports = function (DAL, options) {
   options = options || {};
 
-  const DEBUG = true;
+  const DEBUG = false;
 
   options.getDbVersion(DAL, function (v) {
     if (v) {

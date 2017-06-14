@@ -32,9 +32,6 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         DAL.notifications.getByUser(request.auth.credentials.id).then(res => {
-          res = res.filter(notification => {
-            return !notification.isReaded;
-          });
 
           reply(res);
         }, err => {
@@ -45,9 +42,9 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/notification-readed/{id}  Request for mark notification as readed
+   * @api {get} /api/notification-read/{id}  Request for mark notification as read
    *
-   * @apiName MarkNotificationAsReaded
+   * @apiName MarkNotificationAsRead
    * @apiGroup Notifications
    *
    *
@@ -62,11 +59,11 @@ module.exports = function (server, DAL) {
    */
   server.route({
     method: 'GET',
-    path: '/api/notification-readed/{id}',
+    path: '/api/notification-read/{id}',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.notifications.markAsReaded(request.params.id).then(() => {
+        DAL.notifications.markAsRead(request.params.id).then(() => {
           reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(err, err));

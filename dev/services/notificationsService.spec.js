@@ -22,11 +22,11 @@ describe('notificationsService', function() {
     });
   });
 
-  describe('markAsReaded', function () {
+  describe('markAsRead', function () {
     it('should send a request', function() {
       var id = 'id';
-      var url = '/api/notification-readed/' + id;
-      notificationsService.markAsReaded(id);
+      var url = '/api/notification-read/' + id;
+      notificationsService.markAsRead(id);
 
       httpBackend.expect('GET', url).respond({});
 

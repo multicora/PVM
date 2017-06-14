@@ -64,10 +64,8 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
-        let metadata = JSON.stringify({'email': conversation.email});
-
         return DAL.notifications.add(
-          notificationsMessageGenerator.videoIsWatching(), conversation.author, metadata);
+          notificationsMessageGenerator.videoIsWatching(), conversation.author, {'email': conversation.email});
       }).then(() => {
         return templates.videoIsWatching(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
@@ -89,10 +87,8 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
-        let metadata = JSON.stringify({'email': conversation.email});
-
         return DAL.notifications.add(
-          notificationsMessageGenerator.fileIsDownloaded(), conversation.author, metadata);
+          notificationsMessageGenerator.fileIsDownloaded(), conversation.author, {'email': conversation.email});
       }).then(() => {
         return templates.fileDownloaded(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');

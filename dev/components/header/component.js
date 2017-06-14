@@ -46,8 +46,8 @@
       $location.path('/login');
     };
 
-    vm.markAsReaded = function(id) {
-      notificationsService.markAsReaded(id).then( function () {
+    vm.markAsRead = function(id) {
+      notificationsService.markAsRead(id).then( function () {
         getNotifications();
       });
     };
@@ -67,12 +67,7 @@
           return notification;
         });
         vm.notifications.sort( function(a, b) {
-          var result = 0;
-          if (a.date < b.date) {
-            result = 1;
-          }
-
-          return result;
+          return a.date < b.date ? 1 : -1;
         });
       });
     }

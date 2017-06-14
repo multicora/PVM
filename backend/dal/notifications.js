@@ -6,6 +6,7 @@ module.exports = function(connection) {
   return {
 
     add: (message, user, metadata) => {
+      metadata = JSON.stringify(metadata);
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
           .into('notifications')
@@ -21,11 +22,11 @@ module.exports = function(connection) {
       });
     },
 
-    markAsReaded: (id) => {
+    markAsRead: (id) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.update()
           .table('notifications')
-          .set('isReaded', true)
+          .set('isRead', true)
           .where('id = ' + id)
           .toString();
 
@@ -43,6 +44,10 @@ module.exports = function(connection) {
           .toString();
 
         connection.query(request, function (err, response) {
+          response = response.filter(notification => {
+            return !notification.isRead;
+          });
+
           err ? reject(err) : resolve(response);
         });
       });
@@ -76,10 +81,10 @@ module.exports = function(connection) {
       return connection.query(request, cb);
     },
 
-    addColumnIsReaded: (cb) => {
+    addColumnIsRead: (cb) => {
       const request = [
         'ALTER TABLE `notifications` ',
-        'ADD `isReaded` BOOLEAN ',
+        'ADD `isRead` BOOLEAN ',
         'DEFAULT FALSE;'
       ].join('');
 
