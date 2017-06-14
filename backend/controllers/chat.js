@@ -19,18 +19,13 @@ module.exports = function (DAL) {
     }
 
     DAL.chat.getStatus(data.conversationId, data.userId).then(res => {
-      return res;
-    }).then(status => {
       let result = null;
-      if (!status.length) {
+      if (!res.length) {
         result = DAL.chat.addStatus(data.conversationId, data.userId);
-      } else {
-
-        if (!status.notified) {
-          result = DAL.chat.markAsNotified(data.conversationId, data.userId);
-          timersArr[key] = setTimeout(timerFunction.bind(null, data),
-            config.notification.time * minute);
-        }
+      } else if (!res.notified) {
+        result = DAL.chat.markAsNotified(data.conversationId, data.userId);
+        timersArr[key] = setTimeout(timerFunction.bind(null, data),
+          config.notification.time * minute);
       }
 
       return result;

@@ -3,9 +3,9 @@
 module.exports = function(DAL) {
   return {
     version: 59,
-    message: 'Add "isReaded" to "notifications" table',
+    message: 'Add "isRead" to "notifications" table',
     script: function (next) {
-      DAL.notifications.addColumnIsReaded(next);
+      DAL.notifications.addColumnIsRead(next);
     }
   };
 };
