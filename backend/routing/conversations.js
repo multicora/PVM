@@ -39,16 +39,19 @@ module.exports = function (server, DAL) {
               conversationId, data.name, data.title, data.message);
           }).then(template => {
             try {
+              let fromInformation = author.email;
+              if (author.firstName && author.secondName) {
+                fromInformation = author.firstName + ' ' + author.secondName;
+              }
               const from = [
-                author.firstName + ' ',
-                author.secondName + ' ',
+                fromInformation + ' ',
                 config.mail.defaultFrom
               ].join('');
 
               const mail = {
                 from: from,
                 to: data.email,
-                subject: 'Video from ' + author.firstName + ' ' + author.secondName, // Subject line
+                subject: 'Video from ' + fromInformation, // Subject line
                 text: template.text,
                 html: template.html
               };

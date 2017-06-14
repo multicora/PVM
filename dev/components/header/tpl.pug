@@ -10,7 +10,7 @@ header.main-header
         ng-click="vm.redirect('/dashboard')") email
       md-menu(
         md-position-mode="target-right target"
-        ng-if="vm.notifications")
+        ng-if="vm.notifications.length")
         .material-icons.notifications(
           ng-click="$mdMenu.open()"
         ) notifications
