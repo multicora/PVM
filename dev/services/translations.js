@@ -24,6 +24,11 @@
     CONFIRM_YOUR_EMAIL: 'Confirm your email!',
     RESEND_CONFIRMATION: 'Resend confirmation',
     CANCEL: 'Cancel',
+    FILE_IS_DOWNLOADED: 'file is downloaded in conversation with ',
+    VIDEO_IS_WATCHED: 'video is watched in conversaion with ',
+    VIDEO_IS_WATCHING: 'video is watching in conversation with ',
+    CONVERSATION_IS_OPENED: 'conversation was opened by ',
+    NEW_MESSAGE: 'new message from '
   };
 
   vocabulary = {

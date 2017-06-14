@@ -21,4 +21,16 @@ describe('notificationsService', function() {
       httpBackend.flush();
     });
   });
+
+  describe('markAsRead', function () {
+    it('should send a request', function() {
+      var id = 'id';
+      var url = '/api/notification-read/' + id;
+      notificationsService.markAsRead(id);
+
+      httpBackend.expect('GET', url).respond({});
+
+      httpBackend.flush();
+    });
+  });
 });

@@ -138,6 +138,10 @@ md-menu-content.notification-menu-content {
   min-width: 100px;
 }
 
+md-menu-item.notification-item {
+  height: 100%;
+}
+
 md-menu-item.notification-item:hover {
   transition: .3s;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);

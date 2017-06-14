@@ -8,6 +8,7 @@ describe('appHeader component', function() {
   var rootScope;
   var tokenService;
   var notificationsService;
+  var profileService;
 
   beforeEach(module('app'));
   beforeEach(module(function ($provide) {
@@ -26,26 +27,61 @@ describe('appHeader component', function() {
       getToken: jasmine.createSpy('getToken')
     };
     notificationsService = {
-      getNotifications: jasmine.createSpy('getNotifications')
+      getNotifications: jasmine.createSpy('getNotifications'),
+      markAsReaded: jasmine.createSpy('markAsReaded').and.callFake(function () {
+        return q.resolve();
+      }),
+      messageGenerator: jasmine.createSpy('messageGenerator').and.callFake(function () {
+        return q.resolve({
+          data: [{
+            id: '1',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          },
+          {
+            id: '2',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          }]
+        });
+      })
+    };
+    profileService = {
+      getProfile: jasmine.createSpy('getProfile').and.callFake(function () {
+        return q.resolve({
+          data: {}
+        });
+      })
     };
   }));
 
   it('should init component', function() {
     var scope = rootScope.$new();
-    var ctrl = componentController('appHeader', {
-      notificationsService: notificationsService,
-      tokenService: tokenService
-    }, bindings);
-
     notificationsService.getNotifications.and.callFake(function () {
       return q.resolve({
         data: [{
-          id: '',
-          message: '',
-          date: ''
+          id: '1',
+          message: 'message',
+          date: '0000-00-00 00:00:00',
+          metadata: '{"email": "email"}'
+        },
+        {
+          id: '2',
+          message: 'message',
+          date: '0000-00-00 00:00:00',
+          metadata: '{"email": "email"}'
         }]
       });
     });
+
+    var ctrl = componentController('appHeader', {
+      notificationsService: notificationsService,
+      tokenService: tokenService,
+      profileService: profileService
+    }, bindings);
+
 
     scope.$apply();
     expect(ctrl).toBeDefined();
@@ -68,6 +104,34 @@ describe('appHeader component', function() {
 
       ctrl.redirect(url, urlParam);
       expect(location.path).toHaveBeenCalledWith(url);
+    });
+  });
+
+  describe('markAsReaded', function() {
+    it('should call notificationsService.markAsReaded', function() {
+      var id = 'id';
+      notificationsService.getNotifications.and.callFake(function () {
+        return q.resolve({
+          data: [{
+            id: '1',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          },
+          {
+            id: '2',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          }]
+        });
+      });
+      var ctrl = componentController('appHeader', {
+        notificationsService: notificationsService
+      }, bindings);
+
+      ctrl.markAsReaded(id);
+      expect(notificationsService.markAsReaded).toHaveBeenCalled();
     });
   });
 

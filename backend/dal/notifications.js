@@ -5,13 +5,29 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 module.exports = function(connection) {
   return {
 
-    add: (data) => {
+    add: (message, user, data) => {
+      let metadata = JSON.stringify(data);
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
           .into('notifications')
-          .set('message', data.message)
-          .set('user', data.user)
+          .set('message', message)
+          .set('user', user)
+          .set('metadata', metadata)
           .set('date', sqlBuilder.str('NOW()'))
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    markAsRead: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('notifications')
+          .set('isRead', true)
+          .where('id = ' + id)
           .toString();
 
         connection.query(request, (err, response) => {
@@ -28,6 +44,10 @@ module.exports = function(connection) {
           .toString();
 
         connection.query(request, function (err, response) {
+          response = response.filter(notification => {
+            return !notification.isRead;
+          });
+
           err ? reject(err) : resolve(response);
         });
       });
@@ -48,6 +68,27 @@ module.exports = function(connection) {
       ].join('');
 
       return connection.query(request, cb);
-    }
+    },
+
+
+    addColumnMetadata: function (cb) {
+      const request = [
+        'ALTER TABLE `notifications` ',
+        'ADD `metadata` varchar(255) ',
+        'DEFAULT null;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    addColumnIsRead: (cb) => {
+      const request = [
+        'ALTER TABLE `notifications` ',
+        'ADD `isRead` BOOLEAN ',
+        'DEFAULT FALSE;'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
   };
 };
