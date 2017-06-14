@@ -18,8 +18,18 @@ module.exports = function (DAL) {
       sendNotification(data);
     }
 
-    timersArr[key] = setTimeout(timerFunction.bind(null, data),
-      config.notification.time * minute);
+    DAL.chat.getStatus(data.conversationId, data.userId).then(res => {
+      let result = null;
+      if (!res.length) {
+        result = DAL.chat.addStatus(data.conversationId, data.userId);
+      } else if (!res.notified) {
+        result = DAL.chat.markAsNotified(data.conversationId, data.userId);
+        timersArr[key] = setTimeout(timerFunction.bind(null, data),
+          config.notification.time * minute);
+      }
+
+      return result;
+    });
   };
 
   function sendNotification (data) {
@@ -47,14 +57,23 @@ module.exports = function (DAL) {
   };
 
   function startTimer (data) {
-    DAL.chat.getByConversationId(data.conversationId).then( res => {
+    let conversation;
+    DAL.conversations.getById(data.conversationId).then( res => {
+      conversation = res;
+
+      return DAL.chat.getByConversationId(data.conversationId);
+    }).then( res => {
       var usersArr = [];
 
       res.filter(chat => {
-        if (usersArr.indexOf(chat.authorId) === -1 && chat.authorId !== data.userId) {
+        if (usersArr.indexOf(chat.authorId) === -1 && chat.authorId !== data.authorId) {
           usersArr.push(chat.authorId);
         }
       });
+
+      if (usersArr.indexOf(conversation.author) === -1 && data.authorId !== conversation.author) {
+        usersArr.push(conversation.author);
+      }
 
       usersArr.map(id => {
         createTimer({
@@ -70,6 +89,7 @@ module.exports = function (DAL) {
   function clearTimer (conversationId, userId) {
     let key = createKey(conversationId, userId);
     clearTimeout(timersArr[key]);
+    DAL.chat.markAsUnNotified(conversationId, userId);
   };
 
   return {
