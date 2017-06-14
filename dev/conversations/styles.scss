@@ -331,6 +331,8 @@
     width: 100%;
     text-align: right;
     margin-top: 16px;
+    box-sizing: border-box;
+    padding: 0 16px;
 
     .photo {
       float: right;
@@ -340,7 +342,7 @@
     .message {
       width: 500px;
       padding: 6px 6px 14px 6px;
-      margin: 10px 0 0 20px;
+      margin: 10px 0 0 0;
       word-wrap: break-word;
       background-color: #fff;
       box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -350,11 +352,11 @@
       display: inline-block;
 
       @media (max-width: 650px) {
-        width: 300px;
+        width: 270px;
       }
 
       @media (max-width: 450px) {
-        width: 200px;
+        width: 190px;
       }
     }
 
@@ -368,11 +370,11 @@
       left: 520px;
 
       @media (max-width: 650px) {
-        left: 320px;
+        left: 290px;
       }
 
       @media (max-width: 450px) {
-        left: 220px;
+        left: 210px;
       }
     }
   }
@@ -409,7 +411,7 @@
     }
 
     .message {
-      margin: 10px 20px 0 0;
+      margin: 10px 0 0 0;
       background-color: #f9f9f9;
     }
 
