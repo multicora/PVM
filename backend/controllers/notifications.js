@@ -13,10 +13,8 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
-        let metadata = JSON.stringify({'email': conversation.email});
-
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, metadata);
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {'email': conversation.email});
       }).then(() => {
         return templates.conversationOpened(link, user.firstName, 'Person with email: ' + conversation.email);
       }).then(template => {
@@ -39,10 +37,8 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
-        let metadata = JSON.stringify({'email': conversation.email});
-
         return DAL.notifications.add(
-          notificationsMessageGenerator.videoIsWatched(), conversation.author, metadata);
+          notificationsMessageGenerator.videoIsWatched(), conversation.author, {'email': conversation.email});
       }).then(() => {
         return templates.videoWatched(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
