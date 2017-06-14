@@ -1,6 +1,6 @@
 .chat-reply-container
   .chat-reply-box
-    form(ng-submit="vm.send()")
+    form
       label(for="messageBox")
         md-input-container.text-container(aria-label="text input")
           label Type here to reply
@@ -11,6 +11,7 @@
             ng-keydown="vm.onkeyDown($event)"
             ng-model="vm.message")
       button.btn.mdl-button.send(
-        type="submit"
+        ng-click="vm.send()"
+        type="button"
         ng-if="vm.message")
         | Send

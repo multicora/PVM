@@ -24,6 +24,7 @@
       event.stopPropagation();
       var keyCode = event.which || event.keyCode;
       if (keyCode === 13 && vm.message) {
+        event.preventDefault();
         vm.send();
       }
     };
