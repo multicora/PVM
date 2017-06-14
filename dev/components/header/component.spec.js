@@ -28,7 +28,7 @@ describe('appHeader component', function() {
     };
     notificationsService = {
       getNotifications: jasmine.createSpy('getNotifications'),
-      markAsReaded: jasmine.createSpy('markAsReaded').and.callFake(function () {
+      markAsRead: jasmine.createSpy('markAsRead').and.callFake(function () {
         return q.resolve();
       }),
       messageGenerator: jasmine.createSpy('messageGenerator').and.callFake(function () {
@@ -107,8 +107,8 @@ describe('appHeader component', function() {
     });
   });
 
-  describe('markAsReaded', function() {
-    it('should call notificationsService.markAsReaded', function() {
+  describe('markAsRead', function() {
+    it('should call notificationsService.markAsRead', function() {
       var id = 'id';
       notificationsService.getNotifications.and.callFake(function () {
         return q.resolve({
@@ -130,8 +130,8 @@ describe('appHeader component', function() {
         notificationsService: notificationsService
       }, bindings);
 
-      ctrl.markAsReaded(id);
-      expect(notificationsService.markAsReaded).toHaveBeenCalled();
+      ctrl.markAsRead(id);
+      expect(notificationsService.markAsRead).toHaveBeenCalled();
     });
   });
 
