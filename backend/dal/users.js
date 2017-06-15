@@ -101,7 +101,7 @@ module.exports = (connection) => {
           .toString();
 
         connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response);
+          err ? reject(err) : resolve(response[0]);
         });
       });
     },

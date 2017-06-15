@@ -224,6 +224,12 @@
       return vm.files;
     };
 
+    vm.getFiles = function() {
+      filesService.getFiles().then(function(res) {
+        vm.filesList = res;
+      });
+    };
+
     vm.deleteFile = function(index) {
       vm.files.splice(index, 1);
     };
