@@ -28,11 +28,11 @@
   ) {
     var vm = this;
     var sendObj;
+    var usersPhotos = {};
 
     vm.conversation = null;
     vm.media = null;
     vm.user = null;
-    vm.incomeUserPhoto = null;
     vm.showUserHeader = true;
     vm.messageClassName = 'income';
     vm.sendMessage = null;
@@ -41,19 +41,23 @@
 
     pubSub.on('incomeMessage', function(data) {
       data.className = 'income';
-      if (!vm.incomeUserPhoto) {
+      if (!usersPhotos[data.authorId]) {
         profileService.getProfilePhoto(data.authorId).then(function(res) {
-          vm.incomeUserPhoto = res.data;
-          data.photo = vm.incomeUserPhoto;
+          if (!res.data) {
+            usersPhotos[data.authorId] = 'no photo';
+          } else {
+            usersPhotos[data.authorId] = res.data;
+          }
+          data.photo = usersPhotos[data.authorId];
           vm.chatList.push(data);
-          scrollBottom();
         });
       } else {
-        data.photo = vm.incomeUserPhoto;
+        data.photo = usersPhotos[data.authorId];
         vm.chatList.push(data);
         reloadTemplate();
-        scrollBottom();
       }
+
+      scrollBottom();
     });
 
     conversationsService.get($routeParams.id).then(function (res) {
@@ -77,9 +81,12 @@
 
       vm.chatList.map(function(chat) {
         if (chat.authorId !== vm.user.id) {
-          vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
           chat.className = 'income';
           incomeChats.push(chat);
+        }
+
+        if (chat.photo) {
+          usersPhotos[chat.authorId] = chat.photo;
         }
       });
     });
