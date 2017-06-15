@@ -13,6 +13,8 @@ module.exports = () => {
         let videoWatchedTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, videoWatchedTemplateDir);
         let letter = new EmailTemplate(templateDir);
+
+        authorName ? authorName = authorName + ', ' : authorName = authorName;
         let props = {
           authorName: authorName,
           userName: userName,
@@ -32,6 +34,8 @@ module.exports = () => {
         let videoIsWatchingTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, videoIsWatchingTemplateDir);
         let letter = new EmailTemplate(templateDir);
+
+        authorName ? authorName = authorName + ', ' : authorName = authorName;
         let props = {
           authorName: authorName,
           userName: userName,
@@ -51,6 +55,8 @@ module.exports = () => {
         let fileDownloadedTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, fileDownloadedTemplateDir);
         let letter = new EmailTemplate(templateDir);
+
+        authorName ? authorName = authorName + ', ' : authorName = authorName;
         let props = {
           authorName: authorName,
           userName: userName,
@@ -71,6 +77,7 @@ module.exports = () => {
         let conversationOpendTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
+        authorName ? authorName = authorName + ', ' : authorName = authorName;
         let props = {
           authorName: authorName,
           userName: userName,
