@@ -85,3 +85,28 @@
 
   //- Feedback form
   feedback.conversation
+
+  //- LOGIN POPUP
+  popup.login-popup-container(
+    ng-if="vm.showLoginPopup"
+    close-popup="vm.closeLoginPopup()") 
+    form.login-form(layout="column")
+      p.popup-title Sign in
+      md-input-container
+        label Login
+        input(
+          ng-model="login"
+          required)
+      md-input-container
+        label Password
+        input(
+          type="password"
+          ng-model="password"
+          required)
+      p.error(ng-if="vm.loginErrorMessage") Login failed: {{vm.loginErrorMessage}}
+
+      .button-container
+        a.pointer.forgot-password-btn(ng-click="redirect('/reset-password')") Forgot password
+        button.mdl-button.mdl-js-button.mdl-js-ripple-effect.login-btn(
+          ng-click="vm.authenticate(login, password)")
+          | login

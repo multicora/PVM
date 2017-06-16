@@ -426,3 +426,61 @@
     }
   }
 }
+
+.login-popup-container {
+  .login-form {
+    width: 250px;
+    background-color: #fdfdfd;
+    text-align: left;
+    padding: 32px 16px;
+    box-sizing: border-box;
+
+    .popup-title {
+      text-align: center;
+      font-size: 24px;
+    }
+
+    input {
+      outline: none;
+      width: 100%;
+    }
+
+    .button-container {
+      width: 100%;
+
+      a {
+        margin-right: 10px;
+      }
+    }
+
+    .forgot-password-btn {
+      line-height: 36px;
+      float: left;
+      vertical-align: middle;
+      margin-left: 16px;
+    }
+
+    .forgot-password-btn {
+      font-size: 12px;
+      color: rgba(0,0,0,.24);
+      transition: .1s;
+    }
+
+    .forgot-password-btn:hover {
+      font-size: 13px;
+      color: rgba(0,0,0,.54);
+      text-decoration: underline;
+    }
+
+    .login-btn,
+    .register-btn {
+      float: right;
+      margin-right: 16px;
+    }
+
+    .error {
+      color: #B71C1C;
+      font-size: 14px;
+    }
+  }
+}
