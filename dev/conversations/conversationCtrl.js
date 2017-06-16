@@ -10,15 +10,11 @@
     '$rootScope',
     '$document',
     '$scope',
-    '$mdDialog',
     '$localStorage',
     'conversationsService',
     'profileService',
     'chat',
-    'pubSub',
-    'authService',
-    'tokenService',
-    'translations'
+    'pubSub'
   ];
   function ctrl(
     $routeParams,
@@ -26,26 +22,14 @@
     $rootScope,
     $document,
     $scope,
-    $mdDialog,
     $localStorage,
     conversationsService,
     profileService,
     chat,
-    pubSub,
-    authService,
-    tokenService,
-    translations
+    pubSub
   ) {
     var vm = this;
     var sendObj;
-
-    var EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
-    var unconfirmedEmailPopup = $mdDialog.confirm({
-      title: translations.txt('CONFIRM_YOUR_EMAIL'),
-      textContent: translations.txt('LOGIN_PAGE_CONFIRM_YOUR_EMAIL_MESSAGE'),
-      ok: translations.txt('RESEND_CONFIRMATION'),
-      cancel: translations.txt('CANCEL')
-    });
 
     vm.sendMessage = null;
     vm.conversation = null;
@@ -57,6 +41,7 @@
     vm.showLoginPopup = false;
 
     getProfile();
+    getConversation();
 
     pubSub.on('incomeMessage', function(data) {
       data.className = 'income';
@@ -151,30 +136,41 @@
       vm.showLoginPopup = false;
     };
 
-    vm.login = function(login, password) {
-      authService.login(login, password).then(function (res) {
-        tokenService.setToken(res.data.token);
-        vm.showLoginPopup = false;
-      }, function(err) {
-        if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
-          $mdDialog
-            .show( unconfirmedEmailPopup ).then(function() {
-              authService.resendConfirmMail(login);
-            });
-        } else {
-          vm.errorLogin = translations.txt(err.data.message);
-        }
-      });
+    vm.onSuccessLogin = function () {
+      vm.closeLoginPopup();
+      getProfile();
+      getConversation();
     };
 
-    vm.register = function(email, password, confirmPassword) {
-      authService.register(email, password, confirmPassword).then(function() {
-        vm.errorRegister = '';
-        vm.selectedIndex = 0;
-      }, function(err) {
-        vm.errorRegister = err.data.message;
+    function getConversation() {
+      conversationsService.get($routeParams.id).then(function (res) {
+        vm.conversation = res.data;
+        if (vm.user && vm.conversation.author === vm.user.id) {
+          vm.showUserHeader = false;
+          vm.messageClassName = '';
+        }
+        vm.media = {
+          sources: [{
+            src: vm.conversation.url,
+            type: 'video/mp4'
+          }]
+        };
+
+      }).then(function() {
+        return conversationsService.getChat($routeParams.id);
+      }).then(function(res) {
+        vm.chatList = res.data;
+        var incomeChats = [];
+
+        vm.chatList.map(function(chat) {
+          if (chat.authorId !== vm.user.id) {
+            vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
+            chat.className = 'income';
+            incomeChats.push(chat);
+          }
+        });
       });
-    };
+    }
 
     function getProfile() {
       profileService.getProfile().then(function(res) {
