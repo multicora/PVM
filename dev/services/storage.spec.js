@@ -38,7 +38,7 @@ describe('storage', function() {
 
   describe('clearToken', function () {
     it('should remove token', function() {
-      storage.clearToken();
+      storage.clear(name);
 
       expect(localStorage.name).toBe(undefined);
     });
