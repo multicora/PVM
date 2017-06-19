@@ -6,27 +6,21 @@
     controllerAs: 'vm',
     transclude: true,
     bindings: {
-      sendMessage: '&'
+      sendMessage: '&',
+      message: '='
     }
   });
 
   ctrl.$inject = [
-    '$localStorage'
   ];
   function ctrl(
-    $localStorage
   ) {
     var vm = this;
 
-    if ($localStorage.message) {
-      vm.message = $localStorage.message;
-      delete $localStorage.message;
-    }
-
     vm.send = function () {
+      vm.message = vm.message;
       vm.sendMessage({$data: vm.message});
       vm.message = null;
-      vm.savedMessage = null;
     };
 
     vm.onkeyDown = function(event) {

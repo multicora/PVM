@@ -9,19 +9,20 @@
     '$routeParams',
     '$mdDialog',
     'authService',
-    'tokenService'
+    'storage'
   ];
   function ctrl(
     $location,
     $routeParams,
     authService,
-    tokenService
+    storage
   ) {
     var vm = this;
+    var tokenName = 'x-biz-token';
 
     if ($routeParams.confirmToken) {
       authService.loginConfirm($routeParams.confirmToken).then(function (res) {
-        tokenService.setToken(res.data.token);
+        storage.set(tokenName, res.data.token);
         $location.path('/');
       });
     }

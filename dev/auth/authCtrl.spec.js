@@ -6,7 +6,7 @@ describe('authCtrl', function() {
   var $rootScope;
   var $location;
   var authService;
-  var tokenService;
+  var storage;
   var dependency;
   var scope;
   var $routeParams;
@@ -32,8 +32,8 @@ describe('authCtrl', function() {
       path: jasmine.createSpy('path')
     };
 
-    tokenService = {
-      setToken: jasmine.createSpy('setToken').and.callFake(function () {
+    storage = {
+      setToken: jasmine.createSpy('set').and.callFake(function () {
         return $q.resolve();
       })
     };
@@ -45,7 +45,7 @@ describe('authCtrl', function() {
     dependency = {
       $scope: scope,
       authService: authService,
-      tokenService: tokenService,
+      storage: storage,
       $location: $location,
       $routeParams: $routeParams
     };

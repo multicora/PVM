@@ -14,17 +14,18 @@
     '$location',
     '$mdDialog',
     'authService',
-    'tokenService',
+    'storage',
     'translations'
   ];
   function ctrl(
     $location,
     $mdDialog,
     authService,
-    tokenService,
+    storage,
     translations
   ) {
     var vm = this;
+    var tokenName = 'x-biz-token';
     var EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
     var unconfirmedEmailPopup = $mdDialog.confirm({
       title: translations.txt('CONFIRM_YOUR_EMAIL'),
@@ -35,7 +36,7 @@
 
     vm.authenticate = function(login, password) {
       authService.login(login, password).then(function (res) {
-        tokenService.setToken(res.data.token);
+        storage.set(tokenName, res.data.token);
         vm.onSuccessLogin();
       }, function(err) {
         if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
