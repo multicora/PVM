@@ -44,7 +44,7 @@
       if (!usersPhotos[data.authorId]) {
         profileService.getProfilePhoto(data.authorId).then(function(res) {
           if (!res.data) {
-            usersPhotos[data.authorId] = 'no photo';
+            usersPhotos[data.authorId] = undefined;
           } else {
             usersPhotos[data.authorId] = res.data;
           }
@@ -87,6 +87,8 @@
 
         if (chat.photo) {
           usersPhotos[chat.authorId] = chat.photo;
+        } else {
+          usersPhotos[chat.authorId] = undefined;
         }
       });
     });
