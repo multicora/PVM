@@ -227,6 +227,13 @@
     vm.getFiles = function() {
       filesService.getFiles().then(function(res) {
         vm.filesList = res;
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     };
 
