@@ -7,7 +7,6 @@
   ctrl.$inject = [
     '$location',
     '$routeParams',
-    '$mdDialog',
     'authService',
     'storage'
   ];

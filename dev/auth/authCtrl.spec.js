@@ -49,17 +49,14 @@ describe('authCtrl', function() {
     };
   }));
 
-  // it('should lead to path "/" if confirmToken is set and correct', function () {
-  //   $routeParams.confirmToken = 'confirmToken';
-  //   var ctrl = $controller('authCtrl', dependency);
+  it('should lead to path "/" if confirmToken is set and correct', function () {
+    $routeParams.confirmToken = 'confirmToken';
+    authService.loginConfirm.and.returnValue($q.resolve({data: {}}));
+    $controller('authCtrl', dependency);
+    scope.$apply();
 
-  //   authService.loginConfirm.and.callFake(function() {
-  //     return $q.resolve({data: {}});
-  //   });
-  //   scope.$apply();
-
-  //   expect($location.path).toHaveBeenCalledWith('/');
-  // });
+    expect($location.path).toHaveBeenCalledWith('/');
+  });
 
   describe('sendResetRequest', function() {
     it('should be defined "successMessage" and "errorMessage" should be "null" if response haven\'t error', function() {
@@ -73,49 +70,59 @@ describe('authCtrl', function() {
       expect(ctrl.successMessage).toBeTruthy();
     });
 
-    // it('should be defined "errorMessage" and "successMessage" should be "null" if response have error', function() {
-    //   var ctrl = $controller('authCtrl', dependency);
+    it('should be defined "errorMessage" and "successMessage" should be "null" if response have error', function() {
+      var ctrl = $controller('authCtrl', dependency);
 
-    //   authService.reset.and.returnValue($q.resolve({
-    //     data: {
-    //       error: 'error',
-    //       message: 'message'
-    //     }
-    //   }));
+      authService.reset.and.returnValue($q.resolve({
+        data: {
+          error: 'error',
+          message: 'message'
+        }
+      }));
 
-    //   ctrl.sendResetRequest('email');
-    //   scope.$apply();
-    //   expect(ctrl.errorMessage).toBeTruthy();
-    //   expect(ctrl.successMessage).toBe(null);
-    // });
+      ctrl.sendResetRequest('email');
+      scope.$apply();
+      expect(ctrl.errorMessage).toBeTruthy();
+      expect(ctrl.successMessage).toBe(null);
+    });
   });
 
-  // describe('setPassword', function() {
-  //   it('should call "location.path" with parametr "/" if response haven\'t error', function() {
-  //     var ctrl = $controller('authCtrl', dependency);
+  describe('setPassword', function() {
+    it('should call "location.path" with parametr "/" if response haven\'t error', function() {
+      var ctrl = $controller('authCtrl', dependency);
 
-  //     authService.setPassword.and.returnValue($q.resolve({data: {}}));
+      authService.setPassword.and.returnValue($q.resolve({data: {}}));
 
-  //     ctrl.setPassword('newPassword', 'confirmPassword');
-  //     scope.$apply();
-  //     expect($location.path).toHaveBeenCalledWith('/');
-  //   });
+      ctrl.setPassword('newPassword', 'confirmPassword');
+      scope.$apply();
+      expect($location.path).toHaveBeenCalledWith('/');
+    });
 
-  //   it('should show error if response have error', function() {
-  //     authService.setPassword.and.returnValue($q.reject({
-  //       data: {
-  //         error: 'error',
-  //         message: 'message'
-  //       }
-  //     }));
+    it('should show error if response have error', function() {
+      authService.setPassword.and.returnValue($q.reject({
+        data: {
+          error: 'error',
+          message: 'message'
+        }
+      }));
 
-  //     var ctrl = $controller('authCtrl', dependency);
-  //     var newPassword;
-  //     var confirmPassword;
+      var ctrl = $controller('authCtrl', dependency);
+      var newPassword;
+      var confirmPassword;
 
-  //     ctrl.setPassword(newPassword, confirmPassword);
-  //     scope.$apply();
-  //     expect(ctrl.errorMessage).toBeTruthy();
-  //   });
-  // });
+      ctrl.setPassword(newPassword, confirmPassword);
+      scope.$apply();
+      expect(ctrl.errorMessage).toBeTruthy();
+    });
+  });
+
+  describe('onSuccessLogin', function() {
+    it('should call "location.path" with parametr "/"', function() {
+      var ctrl = $controller('authCtrl', dependency);
+
+      ctrl.onSuccessLogin();
+      scope.$apply();
+      expect($location.path).toHaveBeenCalledWith('/');
+    });
+  });
 });
