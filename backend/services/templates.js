@@ -14,7 +14,7 @@ module.exports = () => {
         let templateDir = path.join(__dirname, templatesDir, videoWatchedTemplateDir);
         let letter = new EmailTemplate(templateDir);
 
-        authorName ? authorName = authorName + ', ' : authorName = authorName;
+        authorName = authorName ? authorName + ',' : '';
         let props = {
           text: authorName + userName + 'just watched your conversation video',
           link: link
@@ -32,7 +32,7 @@ module.exports = () => {
         let templateDir = path.join(__dirname, templatesDir, videoIsWatchingTemplateDir);
         let letter = new EmailTemplate(templateDir);
 
-        authorName ? authorName = authorName + ', ' : authorName = authorName;
+        authorName = authorName ? authorName + ',' : '';
         let props = {
           text: authorName + userName + 'is watching your conversation video now',
           link: link
@@ -50,7 +50,7 @@ module.exports = () => {
         let templateDir = path.join(__dirname, templatesDir, fileDownloadedTemplateDir);
         let letter = new EmailTemplate(templateDir);
 
-        authorName ? authorName = authorName + ', ' : authorName = authorName;
+        authorName = authorName ? authorName + ',' : '';
         let props = {
           text: authorName + userName + 'just downloaded your conversation files',
           link: link
@@ -68,7 +68,8 @@ module.exports = () => {
         let conversationOpendTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
-        authorName ? authorName = authorName + ', ' : authorName = authorName;
+
+        authorName = authorName ? authorName + ',' : '';
         let props = {
           text: authorName + userName + 'just opened your conversation',
           link: link
