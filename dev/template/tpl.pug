@@ -139,11 +139,10 @@
             ng-if="vm.user.photo && vm.user.photo != null"
             ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
           .message
-            md-input-container.text-container(aria-label="text input")
-              label Add your message
+            md-input-container.text-container(md-no-float="true")
               textarea.chat-reply-text(
-                aria-label="text input"
                 maxlength="300"
+                placeholder="Add your message"
                 ng-model="vm.messageObj.message")
             .files
               .template-file(
