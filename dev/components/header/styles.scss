@@ -2,7 +2,7 @@ $mobile-width: 567px;
 
 .main-header {
   background-color: #fff;
-  box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 3px 5px 0px rgba(112, 157, 228, .25);
   line-height: 64px;
   vertical-align: middle;
   width: 100%;
@@ -18,6 +18,10 @@ $mobile-width: 567px;
   .navigation-components {
     display: inline-block;
     width: 100%;
+
+    .menu-icon {
+      color: rgba(93, 144, 226, 1);
+    }
   }
 
   .notification-container {

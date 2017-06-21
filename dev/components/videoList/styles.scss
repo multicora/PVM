@@ -4,17 +4,13 @@
   .videos-container,
   .files-container {
     margin: 0 auto;
-    max-width: 920px;
+    max-width: 904px;
 
-    @media (max-width: 910px) {
-      max-width: 695px;
+    @media (max-width: 930px) {
+      max-width: 606px;
     }
 
-    @media (max-width: 695px) {
-      max-width: 470px;
-    }
-
-    @media (max-width: 470px) {
+    @media (max-width: 640px) {
       text-align: center;
     }
 
@@ -23,13 +19,13 @@
       box-sizing: border-box;
       color: #757575;
       display: inline-block;
-      height: 204px;
+      height: 188px;
       margin: 0 0 10px 10px;
       overflow: hidden;
       position: relative;
       text-align: center;
       vertical-align: top;
-      width: 215px;
+      width: 288px;
 
       .buttons {
         margin-top: 60px;

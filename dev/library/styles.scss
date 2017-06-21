@@ -9,6 +9,20 @@
   .library-content {
     width: 100%;
     background: none;
+
+    .md-tab.md-active {
+      color: rgba(93, 144, 226, 1);
+      font-weight: 400;
+    }
+
+    md-tabs md-tabs-wrapper {
+      border-color: rgba(93, 144, 226, .3);
+    }
+
+    md-tabs md-ink-bar {
+      color: rgba(93, 144, 226, 1);
+      background-color: rgba(93, 144, 226, 1);
+    }
   }
 
   .tubs-content {
