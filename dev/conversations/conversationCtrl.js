@@ -41,22 +41,9 @@
 
     pubSub.on('incomeMessage', function(data) {
       data.className = 'income';
-      if (!usersPhotos[data.authorId]) {
-        profileService.getProfilePhoto(data.authorId).then(function(res) {
-          if (!res.data) {
-            usersPhotos[data.authorId] = undefined;
-          } else {
-            usersPhotos[data.authorId] = res.data;
-          }
-          data.photo = usersPhotos[data.authorId];
-          vm.chatList.push(data);
-        });
-      } else {
-        data.photo = usersPhotos[data.authorId];
-        vm.chatList.push(data);
-        reloadTemplate();
-      }
-
+      data.photo = usersPhotos[data.authorId];
+      vm.chatList.push(data);
+      reloadTemplate();
       scrollBottom();
     });
 
