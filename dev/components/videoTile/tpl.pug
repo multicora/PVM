@@ -23,5 +23,6 @@
           md-button(ng-click="vm.onDeleteVideo()") Delete
     md-button.md-icon-button.send(
       ng-if="vm.showSendButton"
-      ng-click="vm.onSendClick()")
+      ng-click="vm.onSendClick()"
+      aria-label="send")
       .fa.fa-paper-plane(aria-hidden="true")
