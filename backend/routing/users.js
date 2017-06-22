@@ -296,7 +296,7 @@ const usersController = require('../controllers/users.js')(DAL);
         }
       },
       handler: function (request, reply) {
-        DAL.users.getAllUsers().then(function(res) {
+        DAL.users.getAll().then(function(res) {
           reply(res);
         }, function(err) {
           reply(Boom.badImplementation(500, err));
