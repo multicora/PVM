@@ -32,7 +32,9 @@ header.main-header
         .photo(
           ng-if="vm.user.photo && vm.user.photo != 'null'"
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-        p.name.ellipsis {{vm.user.firstName + ' ' + vm.user.secondName}}
+        p.name.ellipsis
+          span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
+          span(ng-if="vm.user.secondName") {{vm.user.secondName}}
         .gradient-photo
       md-list-item.md-2-line.mobile-photos
         .md-avatar.photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")

@@ -13,11 +13,10 @@ module.exports = () => {
         let videoWatchedTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, videoWatchedTemplateDir);
         let letter = new EmailTemplate(templateDir);
+
+        authorName = authorName ? authorName + ',' : '';
         let props = {
-          authorName: authorName,
-          userName: userName,
-          text1: '',
-          text2: 'just watched your conversation video',
+          text: authorName + userName + 'just watched your conversation video',
           link: link
         };
         letter.render(props, function (err, result) {
@@ -32,11 +31,10 @@ module.exports = () => {
         let videoIsWatchingTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, videoIsWatchingTemplateDir);
         let letter = new EmailTemplate(templateDir);
+
+        authorName = authorName ? authorName + ',' : '';
         let props = {
-          authorName: authorName,
-          userName: userName,
-          text1: '',
-          text2: 'is watching your conversation video now',
+          text: authorName + userName + 'is watching your conversation video now',
           link: link
         };
         letter.render(props, function (err, result) {
@@ -51,11 +49,10 @@ module.exports = () => {
         let fileDownloadedTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, fileDownloadedTemplateDir);
         let letter = new EmailTemplate(templateDir);
+
+        authorName = authorName ? authorName + ',' : '';
         let props = {
-          authorName: authorName,
-          userName: userName,
-          text1: '',
-          text2: 'just downloaded your conversation files',
+          text: authorName + userName + 'just downloaded your conversation files',
           link: link
         };
 
@@ -71,11 +68,10 @@ module.exports = () => {
         let conversationOpendTemplateDir = '/conversationNotification';
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
+
+        authorName = authorName ? authorName + ',' : '';
         let props = {
-          authorName: authorName,
-          userName: userName,
-          text1: '',
-          text2: 'just opened your conversation',
+          text: authorName + userName + 'just opened your conversation',
           link: link
         };
 
@@ -109,10 +105,7 @@ module.exports = () => {
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
         let props = {
-          authorName: authorName,
-          userName: userName,
-          text1: 'You have new message from',
-          text2: '',
+          text: authorName + 'You have new message from' + userName,
           link: link
         };
 

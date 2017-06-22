@@ -14,6 +14,8 @@ module.exports = (connection) => {
           .into('users')
           .set('email', email)
           .set('password', password)
+          .set('firstName', '')
+          .set('secondName', '')
           .set('company', company)
           .toString();
 
@@ -85,10 +87,18 @@ module.exports = (connection) => {
 
     getForEdit: (id) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'SELECT firstName, secondName, email, company, phone, photo, companyPosition, id ',
-          'FROM `users` WHERE id = "' + id + '"'
-        ].join('');
+        const request = sqlBuilder.select()
+          .from('users')
+          .field('id')
+          .field('firstName')
+          .field('secondName')
+          .field('email')
+          .field('phone')
+          .field('company')
+          .field('companyPosition')
+          .field('photo')
+          .where('id = ' + id)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response[0] || null);
@@ -96,27 +106,23 @@ module.exports = (connection) => {
       });
     },
 
-    getAll: function () {
-      return new Promise(function (resolve, reject) {
-        let request = [
-          'SELECT * ',
-          'FROM `users`;'
-        ].join('');
+    getAll: () => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.select()
+          .from('users')
+          .field('id')
+          .field('firstName')
+          .field('secondname')
+          .field('email')
+          .field('blocked')
+          .field('phone')
+          .field('company')
+          .field('companyPosition')
+          .field('photo')
+          .field('confirmed')
+          .toString();
 
-        connection.query(request, function (err, response) {
-          err ? reject(err) : resolve(response);
-        });
-      });
-    },
-
-    getAllUsers: function () {
-      return new Promise(function (resolve, reject) {
-        let request = [
-          'SELECT firstName, secondName, email, blocked, id, permanent, company, companyPosition, phone ',
-          'FROM `users`;'
-        ].join('');
-
-        connection.query(request, function (err, response) {
+        connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);
         });
       });

@@ -1,11 +1,13 @@
 //CONTENT
 .content {
   //VIDEOS
-  .videos-container,
-  .files-container {
+  .videos-container {
     margin: 0 auto;
     max-width: 904px;
-
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     @media (max-width: 930px) {
       max-width: 606px;
     }
@@ -18,7 +20,7 @@
       border: 2px dashed #757575;
       box-sizing: border-box;
       color: #757575;
-      display: inline-block;
+
       height: 188px;
       margin: 0 0 10px 10px;
       overflow: hidden;
@@ -73,11 +75,6 @@
       @media (max-width: 567px) {
         display: none;
       }
-    }
-
-    .video-container,
-    .file-container {
-      display: inline-block;
     }
   }
 }
