@@ -75,7 +75,9 @@
 
         chat-list(list="vm.chatList")
 
-      chat-reply-box(send-message="vm.sendMessage($data)")
+      chat-reply-box(
+        message="vm.savedMessage"
+        send-message="vm.sendMessage($data)")
 
   footer
     .logo-container
@@ -85,3 +87,10 @@
 
   //- Feedback form
   feedback.conversation
+
+  //- LOGIN POPUP
+  popup.login-popup-container(
+    ng-if="vm.showLoginPopup"
+    close-popup="vm.closeLoginPopup()")
+    .login-popup-content
+      login-form(on-success-login="vm.onSuccessLogin()")

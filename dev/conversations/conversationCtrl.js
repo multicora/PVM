@@ -13,7 +13,8 @@
     'conversationsService',
     'profileService',
     'chat',
-    'pubSub'
+    'pubSub',
+    'storage'
   ];
   function ctrl(
     $routeParams,
@@ -24,20 +25,24 @@
     conversationsService,
     profileService,
     chat,
-    pubSub
+    pubSub,
+    storage
   ) {
     var vm = this;
     var sendObj;
+    var chatInstance;
 
+    vm.sendMessage = null;
     vm.conversation = null;
     vm.media = null;
     vm.user = null;
     vm.incomeUserPhoto = null;
     vm.showUserHeader = true;
     vm.messageClassName = 'income';
-    vm.sendMessage = null;
+    vm.showLoginPopup = false;
 
     getProfile();
+    getConversation();
 
     pubSub.on('incomeMessage', function(data) {
       data.className = 'income';
@@ -56,49 +61,8 @@
       }
     });
 
-    conversationsService.get($routeParams.id).then(function (res) {
-      vm.conversation = res.data;
-      if (vm.user && vm.conversation.author === vm.user.id) {
-        vm.showUserHeader = false;
-        vm.messageClassName = '';
-      }
-      vm.media = {
-        sources: [{
-          src: vm.conversation.url,
-          type: 'video/mp4'
-        }]
-      };
-
-    }).then(function() {
-      return conversationsService.getChat($routeParams.id);
-    }).then(function(res) {
-      vm.chatList = res.data;
-      var incomeChats = [];
-
-      vm.chatList.map(function(chat) {
-        if (chat.authorId !== vm.user.id) {
-          vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
-          chat.className = 'income';
-          incomeChats.push(chat);
-        }
-      });
-    });
-
-    chat.connect().then(function (chatInstance) {
-      vm.sendMessage = function(message) {
-        sendObj = {
-          'message': message,
-          'authorId': vm.user.id,
-          'conversationId': vm.conversation.id
-        };
-
-        chatInstance.send(sendObj, function() {
-          sendObj.photo = vm.user.photo;
-          vm.chatList.push(sendObj);
-          $rootScope.$apply();
-          scrollBottom();
-        });
-      };
+    chat.connect().then(function (res) {
+      chatInstance = res;
     });
 
     $scope.$on('vjsVideoReady', function (e, data) {
@@ -119,7 +83,7 @@
       vm.headerClass = 'showHeader';
     };
 
-    vm.onFileClick = function() {
+    vm.onFileClick = function () {
       conversationsService.fileDownloaded(vm.conversation.id);
     };
 
@@ -128,11 +92,74 @@
       vm.headerClass = 'hideHeader';
     };
 
+    vm.closeLoginPopup = function () {
+      vm.showLoginPopup = false;
+    };
+
+    vm.onSuccessLogin = function () {
+      vm.closeLoginPopup();
+      getProfile();
+      getConversation();
+    };
+
+    function getConversation() {
+      conversationsService.get($routeParams.id).then(function (res) {
+        vm.conversation = res.data;
+        if (vm.user && vm.conversation.author === vm.user.id) {
+          vm.showUserHeader = false;
+          vm.messageClassName = '';
+        }
+        vm.media = {
+          sources: [{
+            src: vm.conversation.url,
+            type: 'video/mp4'
+          }]
+        };
+
+      }).then(function() {
+        return conversationsService.getChat($routeParams.id);
+      }).then(function(res) {
+        vm.chatList = res.data;
+        var incomeChats = [];
+
+        vm.chatList.map(function(chat) {
+          if (chat.authorId !== vm.user.id) {
+            vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
+            chat.className = 'income';
+            incomeChats.push(chat);
+          }
+        });
+
+        vm.savedMessage = storage.get('message') || null;
+        if (vm.savedMessage) {
+          storage.clear('message');
+        }
+      });
+    }
+
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
+        vm.sendMessage = function(message) {
+          sendObj = {
+            'message': message,
+            'authorId': vm.user.id,
+            'conversationId': vm.conversation.id
+          };
+
+          chatInstance.send(sendObj, function() {
+            sendObj.photo = vm.user.photo;
+            vm.chatList.push(sendObj);
+            reloadTemplate();
+            scrollBottom();
+          });
+        };
       }).catch(function () {
         vm.user = null;
+        vm.sendMessage = function(data) {
+          vm.showLoginPopup = true;
+          storage.set('message', data);
+        };
       });
     }
 
