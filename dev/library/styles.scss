@@ -10,6 +10,10 @@
     background: none;
     width: calc(100% - 280px);
 
+    @media (max-width: 910px) {
+      width: 100%;
+    }
+
     .md-tab.md-active {
       color: rgba(93, 144, 226, 1);
       font-weight: 400;

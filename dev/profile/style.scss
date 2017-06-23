@@ -6,6 +6,10 @@
     position: relative;
     display: inline-block;
     width: calc(100% - 280px);
+
+    @media (max-width: 910px) {
+      width: 100%;
+    }
   }
 
   .title-container {

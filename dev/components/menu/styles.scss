@@ -38,3 +38,14 @@
     transition: .5s;
   }
 }
+
+.desktop-menu {
+  @media (max-width: 910px) {
+    display: none;
+  }
+}
+
+.mobile-menu {
+  width: 100%;
+  line-height: 24px;
+}

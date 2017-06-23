@@ -5,6 +5,7 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
+      className: '@'
     }
   });
 

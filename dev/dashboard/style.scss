@@ -7,6 +7,14 @@
   .dashboard-container {
     width: calc(100% - 280px);
     display: inline-block;
+
+    @media (max-width: 910px) {
+      width: 100%;
+
+      .app-menu {
+        display: none;
+      }
+    }
   }
 
   .dashboard-header {

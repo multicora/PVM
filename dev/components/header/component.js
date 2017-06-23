@@ -41,11 +41,6 @@
       $mdSidenav('left').toggle();
     };
 
-    vm.invalidateSession = function () {
-      tokenService.clearToken();
-      $location.path('/login');
-    };
-
     vm.markAsRead = function(id) {
       notificationsService.markAsRead(id).then( function () {
         getNotifications();
