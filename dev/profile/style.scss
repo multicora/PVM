@@ -2,6 +2,12 @@
   width: 100%;
   min-height: 100%;
 
+  .profile-container {
+    position: relative;
+    display: inline-block;
+    width: calc(100% - 280px);
+  }
+
   .title-container {
     text-align: center;
 
@@ -10,10 +16,6 @@
       font-size: 24px;
       line-height: 24px;
     }
-  }
-
-  .profile-container {
-    position: relative;
   }
 
   .button-container { 

@@ -4,6 +4,11 @@
   padding-bottom: 85px;
   width: 100%;
 
+  .dashboard-container {
+    width: calc(100% - 280px);
+    display: inline-block;
+  }
+
   .dashboard-header {
     width: 100%;
     background-color:  #fff;

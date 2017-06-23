@@ -8,7 +8,7 @@
 
   .library-content {
     background: none;
-    display: inline-block;
+    width: calc(100% - 280px);
 
     .md-tab.md-active {
       color: rgba(93, 144, 226, 1);

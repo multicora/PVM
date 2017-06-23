@@ -8,12 +8,13 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-    @media (max-width: 930px) {
+
+    @media (max-width: 1225px) {
       max-width: 606px;
     }
 
     @media (max-width: 640px) {
-      text-align: center;
+      max-width: 300px;
     }
 
     .add-button {
