@@ -37,7 +37,6 @@
     vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
-    vm.showConversationIndicators = true;
     vm.toUser = true;
 
     vm.getVideos = function () {
@@ -56,7 +55,6 @@
     vm.getVideos();
     getFiles();
     getTemplates();
-    getConversations();
 
     // Delete video
     vm.deleteVideo = function (id) {
@@ -122,10 +120,6 @@
 
     vm.useTemplate = function (id) {
       $location.path('template/' + id);
-    };
-
-    vm.viewConversation = function (id) {
-      $location.path('conversation/' + id);
     };
 
     // Confirm popup for delete template
@@ -203,12 +197,6 @@
         vm.filesList = res;
       });
     }
-
-    function getConversations () {
-      libraryService.getConversations().then(function (res) {
-        vm.conversationsList = res.data;
-      });
-    };
 
     // For swiping
     // vm.selectedIndex = 0;

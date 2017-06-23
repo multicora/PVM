@@ -1,10 +1,13 @@
 .app-menu
-  .menu-button(ng-click="vm.redirect('/library')")
-    i.material-icons video_library
-    span Library
   .menu-button(ng-click="vm.redirect('/dashboard')")
     i.material-icons dashboard
     span Dashbord
+  .menu-button(ng-click="vm.redirect('/conversations')")
+    i.material-icons message
+    span Conversations
+  .menu-button(ng-click="vm.redirect('/library')")
+    i.material-icons video_library
+    span Library
   .menu-button
     i.material-icons contacts
     span Contacts

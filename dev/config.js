@@ -41,6 +41,10 @@
       controller: 'authCtrl',
       controllerAs: 'vm',
       templateUrl: 'auth/newPassword.html'
+    }).when('/conversations', {
+      controller: 'conversationsCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'conversations/tpl.html'
     }).when('/dashboard', {
       controller: 'dashboardCtrl',
       controllerAs: 'vm',
@@ -55,7 +59,7 @@
     }).when('/conversation/:id', {
       controller: 'conversationCtrl',
       controllerAs: 'vm',
-      templateUrl: 'conversations/tpl.html'
+      templateUrl: 'conversation/tpl.html'
     }).when('/users', {
       controller: 'usersCtrl',
       controllerAs: 'vm',
