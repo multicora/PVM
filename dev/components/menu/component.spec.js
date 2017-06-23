@@ -44,7 +44,7 @@ describe('appMenu component', function() {
 
   describe('invalidateSession', function() {
     it('should call "tokenService.clearToken" and redirect to "/login"', function() {
-      var ctrl = componentController('appHeader', {
+      var ctrl = componentController('appMenu', {
         tokenService: tokenService
       }, bindings);
 

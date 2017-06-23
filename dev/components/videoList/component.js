@@ -5,8 +5,6 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      onUploadClick: '&',
-      onRecordClick: '&',
       onSendClick: '&',
       onDeleteVideo: '&',
       onThumbnailClick: '&',
@@ -15,7 +13,16 @@
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = ['uploadRecordPopupService'];
+  function ctrl(uploadRecordPopupService) {
+    var vm = this;
+
+    vm.onUploadBtnClick = function () {
+      uploadRecordPopupService.showUploadPopup();
+    };
+
+    vm.onRecordBtnClick = function () {
+      uploadRecordPopupService.showRecordPopup();
+    };
   }
 })(angular);

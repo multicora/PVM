@@ -9,9 +9,7 @@
     '$mdToast',
     '$mdDialog',
     'libraryService',
-    'uploadService',
     'conversationsService',
-    'uploadRecordPopupService',
     'filesService'
   ];
   function ctrl(
@@ -19,9 +17,7 @@
     $mdToast,
     $mdDialog,
     libraryService,
-    uploadService,
     conversationsService,
-    uploadRecordPopupService,
     filesService
   ) {
     var vm = this;
@@ -32,9 +28,6 @@
       cancel: 'Cancel'
     });
 
-    vm.showUploadPopup = true;
-    vm.showSendPopup = false;
-    vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
     vm.toUser = true;
@@ -69,18 +62,6 @@
     //Delete file
     vm.deleteFile = function (id) {
       showConfirmDeleteFile(id);
-    };
-
-    vm.uploadBtnClick = function () {
-      uploadRecordPopupService.showUploadPopup();
-    };
-
-    vm.recordBtnClick = function () {
-      uploadRecordPopupService.showRecordPopup();
-    };
-
-    vm.finishRecord = function (data) {
-      vm.recordedData = data;
     };
 
     vm.stopPropagation = function($event) {
@@ -185,12 +166,8 @@
       // TODO: add .catch() part
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
-
-        return libraryService.getConversationsToUser();
-      }).then(function (res) {
-        vm.conversationsToUserList = res.data;
       });
-    };
+    }
 
     function getFiles () {
       filesService.getFiles().then(function(res) {

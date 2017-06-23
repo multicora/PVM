@@ -6,36 +6,18 @@
 
   ctrl.$inject = [
     '$location',
-    'libraryService',
-    'uploadService',
-    'uploadRecordPopupService'
+    'libraryService'
   ];
   function ctrl(
     $location,
-    libraryService,
-    uploadService,
-    uploadRecordPopupService
+    libraryService
   ) {
     var vm = this;
 
-    vm.showUploadPopup = true;
-    vm.recordedData = null;
     vm.showConversationIndicators = true;
     vm.toUser = true;
 
     getConversations();
-
-    vm.uploadBtnClick = function () {
-      uploadRecordPopupService.showUploadPopup();
-    };
-
-    vm.recordBtnClick = function () {
-      uploadRecordPopupService.showRecordPopup();
-    };
-
-    vm.finishRecord = function (data) {
-      vm.recordedData = data;
-    };
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
@@ -48,6 +30,9 @@
     function getConversations () {
       libraryService.getConversations().then(function (res) {
         vm.conversationsList = res.data;
+        return libraryService.getConversationsToUser();
+      }).then(function (res) {
+        vm.conversationsToUserList = res.data;
       });
     };
   }

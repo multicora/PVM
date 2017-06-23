@@ -134,16 +134,4 @@ describe('appHeader component', function() {
       expect(notificationsService.markAsRead).toHaveBeenCalled();
     });
   });
-
-  describe('invalidateSession', function() {
-    it('should call "tokenService.clearToken" and redirect to "/login"', function() {
-      var ctrl = componentController('appHeader', {
-        tokenService: tokenService
-      }, bindings);
-
-      ctrl.invalidateSession();
-      expect(location.path).toHaveBeenCalledWith('/login');
-      expect(tokenService.clearToken).toHaveBeenCalled();
-    });
-  });
 });

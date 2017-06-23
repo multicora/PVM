@@ -8,21 +8,15 @@
     '$scope',
     '$location',
     '$mdToast',
-    'conversationsService',
-    'uploadRecordPopupService',
-    'uploadService',
+    'conversationsService'
   ];
   function ctrl(
     $scope,
     $location,
     $mdToast,
-    conversationsService,
-    uploadRecordPopupService,
-    uploadService
+    conversationsService
   ) {
     var vm = this;
-    vm.showRecordPopup = false;
-    vm.showUploadPopup = false;
     vm.sentConversation = 0;
     vm.openedConversation = 0;
     vm.messages = null;
@@ -72,36 +66,6 @@
     //   "innerRadius": '39',
     //   "colors" : ['#8BC34A', '#F1F8E9']
     // }
-
-    vm.uploadBtnClick = function () {
-      uploadRecordPopupService.showUploadPopup();
-    };
-
-    vm.recordBtnClick = function () {
-      uploadRecordPopupService.showRecordPopup();
-    };
-
-    vm.finishRecord = function (data) {
-      vm.recordedData = data;
-    };
-
-    vm.sendRecordClick = function (name) {
-      name = name || 'no name';
-      uploadService.sendFile(
-        '/api/video',
-        vm.recordedData.video,
-        name + '.wmv'
-      ).then(function () {
-        vm.closeRecordPopup();
-        vm.getVideos();
-        vm.videoName = null;
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Video saved!')
-            .position('bottom center')
-        );
-      });
-    };
 
     vm.redirectToConversation = function (id) {
       $location.path('conversation/' + id);

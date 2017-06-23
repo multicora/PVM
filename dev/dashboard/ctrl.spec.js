@@ -11,7 +11,6 @@ describe('dashboardCtrl', function() {
   var uploadRecordPopupService = {
     showUploadPopup: jasmine.createSpy('showUploadPopup'),
   };
-  var uploadService = {};
 
   beforeEach(module('app'));
   beforeEach(inject(function(_$controller_, _$rootScope_, _$q_){
@@ -52,44 +51,12 @@ describe('dashboardCtrl', function() {
     });
   });
 
-  describe('uploadBtnClick', function() {
-    it('should show upload popup', function() {
-      var dependency = getDependency();
-
-      dependency.$scope = $rootScope.$new();
-      dependency.conversationsService.getByAuthor.and.callFake(function () {
-        return $q.resolve({
-          data: []
-        });
-      });
-      dependency.conversationsService.getChatForDashboard.and.callFake(function () {
-        return $q.resolve({
-          data: [{
-            date: 1
-          }, {
-            date: 3
-          }, {
-            date: 2
-          }]
-        });
-      });
-
-      var ctrl = $controller('dashboardCtrl', dependency);
-
-      dependency.$scope.$apply();
-      ctrl.uploadBtnClick();
-
-      expect(dependency.uploadRecordPopupService.showUploadPopup).toHaveBeenCalled();
-    });
-  });
-
   // TODO: test message sorting
 
   function getDependency() {
     return {
       uploadRecordPopupService: uploadRecordPopupService,
-      conversationsService: conversationsService,
-      uploadService: uploadService,
+      conversationsService: conversationsService
     };
   }
 });

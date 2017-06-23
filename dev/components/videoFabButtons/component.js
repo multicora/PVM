@@ -5,13 +5,19 @@
     controller: ctrl,
     controllerAs: 'vm',
     transclude: true,
-    bindings: {
-      uploadBtnClick: '&',
-      recordBtnClick: '&',
-    }
+    bindings: {}
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = ['uploadRecordPopupService'];
+  function ctrl(uploadRecordPopupService) {
+    var vm = this;
+
+    vm.uploadBtnClick = function () {
+      uploadRecordPopupService.showUploadPopup();
+    };
+
+    vm.recordBtnClick = function () {
+      uploadRecordPopupService.showRecordPopup();
+    };
   }
 })(angular);

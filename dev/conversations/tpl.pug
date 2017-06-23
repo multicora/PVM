@@ -27,16 +27,5 @@
             on-view-click="vm.viewConversation($data)"
             to-user="vm.toUser")
 
-  //- Video record & upload fab button
-  video-fab-buttons(
-    upload-btn-click="vm.uploadBtnClick()"
-    record-btn-click="vm.recordBtnClick()")
-
-  //- Record popup
-  record-popup-wrapper(get-videos="vm.getVideos()")
-
-  //- Upload popup
-  upload-popup-wrapper(get-videos="vm.getVideos()")
-
   //- Feedback form
   feedback
