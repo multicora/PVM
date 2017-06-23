@@ -52,11 +52,4 @@ describe('dashboardCtrl', function() {
   });
 
   // TODO: test message sorting
-
-  function getDependency() {
-    return {
-      uploadRecordPopupService: uploadRecordPopupService,
-      conversationsService: conversationsService
-    };
-  }
 });
