@@ -7,8 +7,8 @@
   overflow-y: scroll;
 
   .library-content {
-    width: 100%;
     background: none;
+    display: inline-block;
 
     .md-tab.md-active {
       color: rgba(93, 144, 226, 1);
