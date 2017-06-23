@@ -4,8 +4,6 @@ describe('appMenu component', function() {
   var componentController;
   var bindings;
   var location;
-  var q;
-  var rootScope;
   var tokenService;
 
   beforeEach(module('app'));
@@ -14,11 +12,9 @@ describe('appMenu component', function() {
       path: jasmine.createSpy('path')
     });
   }));
-  beforeEach(inject(function($componentController, $location, $q, $rootScope) {
+  beforeEach(inject(function($componentController, $location, $rootScope) {
     componentController = $componentController;
     location = $location;
-    rootScope = $rootScope;
-    q = $q;
     bindings = {};
     tokenService = {
       clearToken: jasmine.createSpy('clearToken'),
