@@ -12,7 +12,7 @@ describe('appMenu component', function() {
       path: jasmine.createSpy('path')
     });
   }));
-  beforeEach(inject(function($componentController, $location, $rootScope) {
+  beforeEach(inject(function($componentController, $location) {
     componentController = $componentController;
     location = $location;
     bindings = {};
