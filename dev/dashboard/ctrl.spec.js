@@ -8,9 +8,6 @@ describe('dashboardCtrl', function() {
     getByAuthor: jasmine.createSpy('getByAuthor'),
     getChatForDashboard: jasmine.createSpy('getChatForDashboard'),
   };
-  var uploadRecordPopupService = {
-    showUploadPopup: jasmine.createSpy('showUploadPopup'),
-  };
 
   beforeEach(module('app'));
   beforeEach(inject(function(_$controller_, _$rootScope_, _$q_){
