@@ -42,17 +42,8 @@ header.main-header
           ng-if="vm.user.photo && vm.user.photo != 'null'"
           ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
         .md-list-item-text
-          h3 {{vm.user.firstName + ' ' + vm.user.secondName}}
+          h3 
+            span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
+            span(ng-if="vm.user.secondName") {{vm.user.secondName}}
           p {{vm.user.email}}
-    md-list-item(ng-click="vm.redirect('/dashboard')")
-      md-icon dashboard
-      p Dashbord
-    md-list-item(ng-click="vm.redirect('/library')")
-      md-icon video_library
-      p Library
-    md-list-item(ng-click="vm.redirect('/profile')")
-      md-icon account_circle
-      p Profile
-    md-list-item.logout-list-item(ng-click="vm.invalidateSession()")
-      md-icon exit_to_app
-      p Logout
+    app-menu
