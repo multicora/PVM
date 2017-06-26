@@ -1,6 +1,6 @@
-describe('tokenService', function() {
+describe('storage', function() {
   'use strict';
-  var tokenService;
+  var storage;
   var localStorage;
   var name = 'biz.authToken';
 
@@ -10,7 +10,7 @@ describe('tokenService', function() {
   }));
   beforeEach(function() {
     inject(function($injector, $localStorage) {
-      tokenService = $injector.get('tokenService');
+      storage = $injector.get('storage');
       localStorage = $localStorage;
     });
   });
@@ -19,7 +19,7 @@ describe('tokenService', function() {
     it('should set token', function() {
       var token = 'token';
 
-      tokenService.setToken(token);
+      storage.set(name, token);
 
       expect(localStorage[name]).toBe(token);
     });
@@ -30,15 +30,15 @@ describe('tokenService', function() {
       var token = 'token';
       var result;
 
-      tokenService.setToken(token);
-      result = tokenService.getToken();
+      storage.set(name, token);
+      result = storage.get(name);
       expect(result).toBe(token);
     });
   });
 
   describe('clearToken', function () {
     it('should remove token', function() {
-      tokenService.clearToken();
+      storage.clear(name);
 
       expect(localStorage.name).toBe(undefined);
     });

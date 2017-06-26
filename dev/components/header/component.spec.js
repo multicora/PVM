@@ -6,7 +6,7 @@ describe('appHeader component', function() {
   var location;
   var q;
   var rootScope;
-  var tokenService;
+  var storage;
   var notificationsService;
   var profileService;
 
@@ -22,9 +22,9 @@ describe('appHeader component', function() {
     rootScope = $rootScope;
     q = $q;
     bindings = {};
-    tokenService = {
-      clearToken: jasmine.createSpy('clearToken'),
-      getToken: jasmine.createSpy('getToken')
+    storage = {
+      clear: jasmine.createSpy('clear'),
+      get: jasmine.createSpy('get')
     };
     notificationsService = {
       getNotifications: jasmine.createSpy('getNotifications'),
@@ -78,7 +78,7 @@ describe('appHeader component', function() {
 
     var ctrl = componentController('appHeader', {
       notificationsService: notificationsService,
-      tokenService: tokenService,
+      storage: storage,
       profileService: profileService
     }, bindings);
 

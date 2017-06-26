@@ -3,5 +3,8 @@
     ng-repeat="item in vm.list track by $index"
     ng-class="item.className"
   )
-    .photo(ng-style="{backgroundImage: 'url('+ item.photo + ')' }")
+    .photo(ng-if="!item.photo")
+    .photo(
+      ng-if="item.photo"
+      ng-style="{backgroundImage: 'url('+ item.photo + ')' }")
     .message {{item.message}}

@@ -7,58 +7,27 @@
   ctrl.$inject = [
     '$location',
     '$routeParams',
-    '$mdDialog',
     'authService',
-    'tokenService',
-    'translations'
+    'storage'
   ];
   function ctrl(
     $location,
     $routeParams,
-    $mdDialog,
     authService,
-    tokenService,
-    translations
+    storage
   ) {
     var vm = this;
-    var EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
-    var unconfirmedEmailPopup = $mdDialog.confirm({
-      title: translations.txt('CONFIRM_YOUR_EMAIL'),
-      textContent: translations.txt('LOGIN_PAGE_CONFIRM_YOUR_EMAIL_MESSAGE'),
-      ok: translations.txt('RESEND_CONFIRMATION'),
-      cancel: translations.txt('CANCEL')
-    });
+    var tokenName = 'x-biz-token';
 
     if ($routeParams.confirmToken) {
       authService.loginConfirm($routeParams.confirmToken).then(function (res) {
-        tokenService.setToken(res.data.token);
+        storage.set(tokenName, res.data.token);
         $location.path('/');
       });
     }
 
-    vm.authenticate = function(login, password) {
-      authService.login(login, password).then(function (res) {
-        tokenService.setToken(res.data.token);
-        $location.path('/');
-      }, function(err) {
-        if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
-          $mdDialog
-            .show( unconfirmedEmailPopup ).then(function() {
-              authService.resendConfirmMail(login);
-            });
-        } else {
-          vm.errorMessage = translations.txt(err.data.message);
-        }
-      });
-    };
-
-    vm.register = function(email, password, confirmPassword) {
-      authService.register(email, password, confirmPassword).then(function() {
-        vm.errorRegister = '';
-        vm.selectedIndex = 0;
-      }, function(err) {
-        vm.errorRegister = err.data.message;
-      });
+    vm.onSuccessLogin = function() {
+      $location.path('/');
     };
 
     vm.sendResetRequest = function (email) {

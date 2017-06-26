@@ -1,0 +1,52 @@
+md-tabs(
+  md-dynamic-height=""
+  flex=""
+  md-center-tabs="true"
+  md-border-bottom=""
+  md-selected="vm.selectedIndex")
+  md-tab(label="Login")
+    form.login-form(layout="column")
+      md-input-container
+        label Login
+        input(
+          ng-model="login"
+          required)
+      md-input-container
+        label Password
+        input(
+          type="password"
+          ng-model="password"
+          required)
+      p.error(ng-if="vm.errorLogin") Login failed: {{vm.errorLogin}}
+
+      .button-container
+        a.pointer.forgot-password-btn(ng-click="vm.forgotPassword()") Forgot password
+        button.mdl-button.mdl-js-button.mdl-js-ripple-effect.login-btn(
+          ng-click="vm.authenticate(login, password)")
+          | login
+
+  md-tab(label="Register")
+    form.login-form(layout="column")
+      md-input-container
+        label Email
+        input(
+          type="email"
+          ng-model="registerEmail"
+          required)
+      md-input-container
+        label Password
+        input(
+          type="password"
+          ng-model="registerPassword"
+          required)
+      md-input-container
+        label Confirm password
+        input(
+          type="password"
+          ng-model="registerConfirmPassword"
+          required)
+      p.error(ng-if="vm.errorRegister") Register failed: {{vm.errorRegister}}
+      .button-container
+        button.mdl-button.mdl-js-button.mdl-js-ripple-effect.register-btn(
+          ng-click="vm.register(registerEmail, registerPassword, registerConfirmPassword)")
+          | Register

@@ -11,22 +11,23 @@
   ctrl.$inject = [
     '$location',
     '$mdSidenav',
-    'tokenService',
+    'storage',
     'profileService',
     'notificationsService'
   ];
   function ctrl(
     $location,
     $mdSidenav,
-    tokenService,
+    storage,
     profileService,
     notificationsService
   ) {
     var vm = this;
+    var tokenName = 'x-biz-token';
 
     getNotifications();
 
-    vm.isAuthenticated = !!tokenService.getToken();
+    vm.isAuthenticated = !!storage.get(tokenName);
     getProfile();
 
     vm.redirect = function(url, urlParam) {
