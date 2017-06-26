@@ -4,7 +4,7 @@ describe('appMenu component', function() {
   var componentController;
   var bindings;
   var location;
-  var tokenService;
+  var storage;
 
   beforeEach(module('app'));
   beforeEach(module(function ($provide) {
@@ -16,9 +16,9 @@ describe('appMenu component', function() {
     componentController = $componentController;
     location = $location;
     bindings = {};
-    tokenService = {
-      clearToken: jasmine.createSpy('clearToken'),
-      getToken: jasmine.createSpy('getToken')
+    storage = {
+      clear: jasmine.createSpy('clear'),
+      get: jasmine.createSpy('get')
     };
   }));
 
@@ -43,14 +43,14 @@ describe('appMenu component', function() {
   });
 
   describe('invalidateSession', function() {
-    it('should call "tokenService.clearToken" and redirect to "/login"', function() {
+    it('should call "storage.clear" and redirect to "/login"', function() {
       var ctrl = componentController('appMenu', {
-        tokenService: tokenService
+        storage: storage
       }, bindings);
 
       ctrl.invalidateSession();
       expect(location.path).toHaveBeenCalledWith('/login');
-      expect(tokenService.clearToken).toHaveBeenCalled();
+      expect(storage.clear).toHaveBeenCalled();
     });
   });
 });

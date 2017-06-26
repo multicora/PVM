@@ -23,7 +23,7 @@ describe('loginForm component', function() {
     q = $q;
     bindings = {};
     storage = {
-      set: jasmine.createSpy('clear')
+      set: jasmine.createSpy('set')
     };
 
     authService = {

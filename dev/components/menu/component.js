@@ -11,13 +11,14 @@
 
   ctrl.$inject = [
     '$location',
-    'tokenService'
+    'storage'
   ];
   function ctrl(
     $location,
-    tokenService
+    storage
   ) {
     var vm = this;
+    var tokenName = 'x-biz-token';
 
     vm.redirect = function(url, urlParam) {
       if (urlParam) {
@@ -28,7 +29,7 @@
     };
 
     vm.invalidateSession = function () {
-      tokenService.clearToken();
+      storage.clear(tokenName);
       $location.path('/login');
     };
   }

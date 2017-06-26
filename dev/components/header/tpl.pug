@@ -26,15 +26,16 @@ header.main-header
     md-component-id="left"
     md-whiteframe="4"
   )
-    .photo-container
-      md-list-item.md-2-line.mobile-photos
-        .md-avatar.photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
-        .md-avatar.photo(
-          ng-if="vm.user.photo && vm.user.photo != 'null'"
-          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-        .md-list-item-text
-          h3 
-            span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
-            span(ng-if="vm.user.secondName") {{vm.user.secondName}}
-          p {{vm.user.email}}
-    app-menu(class-name="mobile-menu")
+    md-content
+      .photo-container
+        md-list-item.md-2-line.mobile-photos
+          .md-avatar.photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+          .md-avatar.photo(
+            ng-if="vm.user.photo && vm.user.photo != 'null'"
+            ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+          .md-list-item-text
+            h3 
+              span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
+              span(ng-if="vm.user.secondName") {{vm.user.secondName}}
+            p {{vm.user.email}}
+      app-menu(class-name="mobile-menu")
