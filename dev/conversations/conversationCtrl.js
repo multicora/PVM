@@ -30,13 +30,13 @@
   ) {
     var vm = this;
     var sendObj;
+    var usersPhotos = {};
     var chatInstance;
 
     vm.sendMessage = null;
     vm.conversation = null;
     vm.media = null;
     vm.user = null;
-    vm.incomeUserPhoto = null;
     vm.showUserHeader = true;
     vm.messageClassName = 'income';
     vm.showLoginPopup = false;
@@ -46,19 +46,10 @@
 
     pubSub.on('incomeMessage', function(data) {
       data.className = 'income';
-      if (!vm.incomeUserPhoto) {
-        profileService.getProfilePhoto(data.authorId).then(function(res) {
-          vm.incomeUserPhoto = res.data;
-          data.photo = vm.incomeUserPhoto;
-          vm.chatList.push(data);
-          scrollBottom();
-        });
-      } else {
-        data.photo = vm.incomeUserPhoto;
-        vm.chatList.push(data);
-        reloadTemplate();
-        scrollBottom();
-      }
+      data.photo = usersPhotos[data.authorId];
+      vm.chatList.push(data);
+      reloadTemplate();
+      scrollBottom();
     });
 
     chat.connect().then(function (res) {
@@ -124,9 +115,14 @@
 
         vm.chatList.map(function(chat) {
           if (chat.authorId !== vm.user.id) {
-            vm.incomeUserPhoto = vm.incomeUserPhoto || chat.photo;
             chat.className = 'income';
             incomeChats.push(chat);
+          }
+
+          if (chat.photo) {
+            usersPhotos[chat.authorId] = chat.photo;
+          } else {
+            usersPhotos[chat.authorId] = undefined;
           }
         });
 
