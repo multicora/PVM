@@ -10,7 +10,7 @@
     '$q',
     'authService',
     'UserCheckingService',
-    'tokenService'
+    'storage'
   ];
 
   function service(
@@ -18,8 +18,10 @@
     $q,
     authService,
     UserCheckingService,
-    tokenService
+    storage
   ) {
+    var tokenName = 'x-biz-token';
+
     this.get = function (action, path) {
       return _.bind(function () {
         return resolve(action, path);
@@ -29,7 +31,7 @@
     this.tokenChecker = function () {
       return _.bind(function () {
         return $q(function (resolve) {
-          tokenService.getToken() ? resolve() : redirect('/login');
+          storage.get(tokenName) ? resolve() : redirect('/login');
         });
       }, this);
     };

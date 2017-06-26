@@ -39,10 +39,10 @@
       .contacts
         .phone
           img(src='/files/images/phone.png', alt='phone')
-          p {{vm.user.phone}}
+          span.ellipsis {{vm.user.phone}}
         .email
           img(src='/files/images/email.png', alt='email')
-          p {{vm.user.email}}
+          span.ellipsis {{vm.user.email}}
 
   //- TITLE
   .title-container
@@ -129,7 +129,7 @@
       button.edit-button.btn.btn-circle(
         type="button"
         ng-click="vm.showSelectPopup = true")
-        i.material-icons mode_edit
+        i.material-icons video_library
 
     //- VIDEO FOOTER
     .videoFooter
@@ -139,11 +139,10 @@
             ng-if="vm.user.photo && vm.user.photo != null"
             ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
           .message
-            md-input-container.text-container(aria-label="text input")
-              label Add your message
+            md-input-container.text-container(md-no-float="true")
               textarea.chat-reply-text(
-                aria-label="text input"
                 maxlength="300"
+                placeholder="Add your message"
                 ng-model="vm.messageObj.message")
             .files
               .template-file(
