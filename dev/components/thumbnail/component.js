@@ -22,6 +22,6 @@
       videoElement, 0, 0, 300, 150);
       vm.showPlayer = false;
       return canvas;
-    }
+    };
   }
 })(angular);

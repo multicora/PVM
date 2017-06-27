@@ -48,8 +48,6 @@
       // document.getElementById('canvas').getContext('2d').drawImage(
       // videoElement, 0, 0, 300, 150);
 
-      scope.thumbnailGenerate({$data: player.recordedData});
-
       scope.finish({$data: player.recordedData});
       scope.$apply();
     });
