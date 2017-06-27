@@ -14,6 +14,7 @@
       }
     };
   }
+
   function link(scope) {
     var player = videojs(
       'record',
@@ -42,10 +43,12 @@
     player.on('finishRecord', function() {
       // thumbnails.generate(document.getElementById('record_html5_api'));
 
-      player.currentTime(5);
-      var videoElement = document.getElementById('record_html5_api');
-      document.getElementById('canvas').getContext('2d').drawImage(
-      videoElement, 0, 0, 300, 150);
+      // player.currentTime(5);
+      // var videoElement = document.getElementById('record_html5_api');
+      // document.getElementById('canvas').getContext('2d').drawImage(
+      // videoElement, 0, 0, 300, 150);
+
+      scope.thumbnailGenerate({$data: player.recordedData});
 
       scope.finish({$data: player.recordedData});
       scope.$apply();
