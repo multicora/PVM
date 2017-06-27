@@ -36,6 +36,9 @@
         vm.recordedData.video,
         name + '.wmv'
       ).then(function () {
+        
+
+        vm.generateThumbnail();
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
