@@ -3,7 +3,7 @@
     ng-if="!vm.video.attributes.thumbnail"
     ng-click="vm.onThumbnailClick()")
     img(src="/files/images/videoPlaceholder.svg")
-    p Preview is not available.
+    p Thumbnail is not available.
   img.photo(
     ng-if="vm.video.attributes.thumbnail"
     ng-src='data:image/png;base64,{{vm.video.attributes.thumbnail}}',
