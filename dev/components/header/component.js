@@ -42,7 +42,8 @@
       $mdSidenav('left').toggle();
     };
 
-    vm.markAsRead = function(id) {
+    vm.onClose = function(id) {
+      event.stopPropagation();
       notificationsService.markAsRead(id).then( function () {
         getNotifications();
       });
@@ -57,11 +58,13 @@
     function getNotifications () {
       notificationsService.getNotifications().then( function(res) {
         vm.notifications = res.data;
+
         vm.notifications.map( function (notification) {
           notification = notificationsService.messageGenerator(notification);
           notification.date = new Date(notification.date).toLocaleTimeString();
           return notification;
         });
+
         vm.notifications.sort( function(a, b) {
           return a.date < b.date ? 1 : -1;
         });

@@ -130,18 +130,73 @@ md-list-item {
 }
 
 md-menu-content.notification-menu-content {
-  max-height: 400px;
-  padding: 0;
-  min-width: 100px;
+  padding: 8px;
+  max-width: 380px;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 2px 2px 32px rgba(0,0,144,.2);
+  background: #eee;
 }
 
 md-menu-item.notification-item {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  max-width: 380px;
+  width: 100%;
   height: 100%;
+  border-radius: 4px;
+  margin-bottom: 2px;
+
+  .name,
+  .text {
+    text-align: left;
+    color: rgba(0,0,0,.87);
+  }
+
+  .name {
+    font-size: 16px;
+    max-width: 150px;
+  }
+
+  .second-name {
+    margin-left: 5px;
+  }
+
+  .text,
+  .date {
+    font-size: 14px;
+  }
+
+  .date {
+    margin-right: 18px;
+  }
+
+  .colomn {
+    padding: 0;
+    padding: 16px 0 16px 16px;
+    min-width: 200px;
+  }
+
+  .rigth-colomn {
+    padding: 0 0 16px 0;
+    text-align: right;
+    color: rgba(0,0,0,.54);
+    max-width: 90px;
+  }
+
+  .md-button.md-icon-button.button-close {
+    background: none;
+  }
+}
+
+md-menu-item.notification-item {
+  transition: .3s;
+  box-shadow: 1px 1px 4px rgba(0,0,144,.05);
 }
 
 md-menu-item.notification-item:hover {
   transition: .3s;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   z-index: 2;
   cursor: pointer;
 }

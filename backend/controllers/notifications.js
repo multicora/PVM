@@ -13,8 +13,17 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.users.getUserByEmail(conversation.email);
+      }).then(res => {
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {'email': conversation.email});
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+            'email': conversation.email,
+            // 'photo': res.photo,
+            'firstName': res.firstName,
+            'secondName': res.secondName
+          }
+        );
       }).then(() => {
         return templates.conversationOpened(link, user.firstName, 'Person with email: ' + conversation.email);
       }).then(template => {
@@ -37,8 +46,17 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.users.getUserByEmail(conversation.email);
+      }).then(res => {
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.videoIsWatched(), conversation.author, {'email': conversation.email});
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+            'email': conversation.email,
+            // 'photo': res.photo,
+            'firstName': res.firstName,
+            'secondName': res.secondName
+          }
+        );
       }).then(() => {
         return templates.videoWatched(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
@@ -60,8 +78,17 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.users.getUserByEmail(conversation.email);
+      }).then(res => {
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.videoIsWatching(), conversation.author, {'email': conversation.email});
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+            'email': conversation.email,
+            // 'photo': res.photo,
+            'firstName': res.firstName,
+            'secondName': res.secondName
+          }
+        );
       }).then(() => {
         return templates.videoIsWatching(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
@@ -83,8 +110,17 @@ module.exports = function (DAL) {
         user = res;
         user.firstName = user.firstName || '';
 
+        return DAL.users.getUserByEmail(conversation.email);
+      }).then(res => {
+
         return DAL.notifications.add(
-          notificationsMessageGenerator.fileIsDownloaded(), conversation.author, {'email': conversation.email});
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+            'email': conversation.email,
+            // 'photo': res.photo,
+            'firstName': res.firstName,
+            'secondName': res.secondName
+          }
+        );
       }).then(() => {
         return templates.fileDownloaded(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
