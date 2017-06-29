@@ -34,6 +34,7 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         let feedback = request.payload;
+        feedback.email = request.auth.credentials.email;
 
         DAL.feedbacks.add(feedback).then(() => {
           return templates.feedbackIncome(feedback.email, feedback.message, new Date());
@@ -44,8 +45,6 @@ module.exports = function (server, DAL) {
               text: template.text,
               html: template.html
             };
-
-            console.log(mail);
 
             mailer(config).send(mail).then(
               () => {
