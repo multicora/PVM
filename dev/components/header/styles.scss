@@ -139,11 +139,11 @@ md-menu-content.notification-menu-content {
 }
 
 md-menu-item.notification-item {
+  min-height: 92px;
   background: #fff;
   border: 1px solid rgba(0,0,0,.08);
   max-width: 380px;
   width: 100%;
-  height: 100%;
   border-radius: 4px;
   margin-bottom: 2px;
 
@@ -174,7 +174,11 @@ md-menu-item.notification-item {
   .colomn {
     padding: 0;
     padding: 16px 0 16px 16px;
-    min-width: 200px;
+    width: 280px;
+
+    @media(max-width: 600px) {
+      width: 200px;
+    }
   }
 
   .rigth-colomn {
