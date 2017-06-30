@@ -17,7 +17,7 @@ module.exports = function (DAL) {
       }).then(res => {
 
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
             'firstName': res.firstName,
@@ -50,7 +50,7 @@ module.exports = function (DAL) {
       }).then(res => {
 
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
             'firstName': res.firstName,
@@ -82,7 +82,7 @@ module.exports = function (DAL) {
       }).then(res => {
 
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
             'firstName': res.firstName,
@@ -114,7 +114,7 @@ module.exports = function (DAL) {
       }).then(res => {
 
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, {
+          notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
             'firstName': res.firstName,
