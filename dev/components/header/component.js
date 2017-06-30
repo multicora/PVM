@@ -42,11 +42,14 @@
       $mdSidenav('left').toggle();
     };
 
+    vm.openConversation = function(conversationId, notificationId) {
+      markAsRead(notificationId);
+      $location.path('conversation/' + conversationId);
+    };
+
     vm.onClose = function(id) {
       event.stopPropagation();
-      notificationsService.markAsRead(id).then( function () {
-        getNotifications();
-      });
+      markAsRead(id);
     };
 
     function getProfile() {
@@ -68,8 +71,12 @@
         vm.notifications.sort( function(a, b) {
           return a.date < b.date ? 1 : -1;
         });
+      });
+    }
 
-        console.log(vm.notifications);
+    function markAsRead (id) {
+      notificationsService.markAsRead(id).then( function () {
+        getNotifications();
       });
     }
   }

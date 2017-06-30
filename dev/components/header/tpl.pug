@@ -18,7 +18,7 @@ header.main-header
         md-menu-content.notification-menu-content
           md-menu-item.notification-item(
             ng-repeat="item in vm.notifications"
-            ng-click="")
+            ng-click="vm.openConversation(item.conversationId, item.id)")
             .colomn
               .name.ellipsis
                 span(ng-if="item.metadata.firstName") {{item.metadata.firstName}}
