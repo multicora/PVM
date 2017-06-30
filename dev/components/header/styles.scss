@@ -132,6 +132,7 @@ md-list-item {
 md-menu-content.notification-menu-content {
   padding: 8px;
   max-width: 380px;
+  max-height: 308px;
   align-items: center;
   flex-direction: column;
   box-shadow: 2px 2px 32px rgba(0,0,144,.2);
@@ -139,7 +140,7 @@ md-menu-content.notification-menu-content {
 }
 
 md-menu-item.notification-item {
-  min-height: 92px;
+  min-height: 75px;
   background: #fff;
   border: 1px solid rgba(0,0,0,.08);
   max-width: 380px;
@@ -151,11 +152,11 @@ md-menu-item.notification-item {
   .text {
     text-align: left;
     color: rgba(0,0,0,.87);
+    max-width: 250px;
   }
 
   .name {
     font-size: 16px;
-    max-width: 150px;
   }
 
   .second-name {
@@ -175,6 +176,7 @@ md-menu-item.notification-item {
     padding: 0;
     padding: 16px 0 16px 16px;
     width: 280px;
+    margin: 0;
 
     @media(max-width: 600px) {
       width: 200px;
@@ -182,6 +184,7 @@ md-menu-item.notification-item {
   }
 
   .rigth-colomn {
+    margin: 0;
     padding: 0 0 16px 0;
     text-align: right;
     color: rgba(0,0,0,.54);

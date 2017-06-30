@@ -23,7 +23,7 @@ header.main-header
               .name.ellipsis
                 span(ng-if="item.metadata.firstName") {{item.metadata.firstName}}
                 span.second-name(ng-if="item.metadata.secondName") {{item.metadata.secondName}}
-              .text {{item.message}}
+              .text.ellipsis {{item.message}}
             .rigth-colomn
               md-button.md-icon-button.md-accent.button-close(
                 aria-label="close"
