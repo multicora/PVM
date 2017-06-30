@@ -24,11 +24,11 @@
     CONFIRM_YOUR_EMAIL: 'Confirm your email!',
     RESEND_CONFIRMATION: 'Resend confirmation',
     CANCEL: 'Cancel',
-    FILE_IS_DOWNLOADED: 'Downloaded attachments',
+    FILE_IS_DOWNLOADED: 'Downloaded your attachment',
     VIDEO_IS_WATCHED: 'Watched the video',
-    VIDEO_IS_WATCHING: 'Is watching video right now',
-    CONVERSATION_IS_OPENED: 'Clicked the link to your conversation',
-    NEW_MESSAGE: 'Send you a message'
+    VIDEO_IS_WATCHING: 'Is watching your video right now',
+    CONVERSATION_IS_OPENED: 'Followed the link from the email',
+    NEW_MESSAGE: 'Sent you a message'
   };
 
   vocabulary = {
