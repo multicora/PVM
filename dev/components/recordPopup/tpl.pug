@@ -4,6 +4,8 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
       p.popup-title Record your video
       .record-video
         record-video(finish="vm.finishRecord($data)")
+      video#video-for-thumbnail(src="vm.recordedData")
+      canvas#canvas
       .video-name-container
         md-input-container.video-name(md-no-float="true")
           input(
@@ -17,4 +19,6 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
           ng-click="vm.sendRecordClick(vm.videoName)"
           ng-disabled="!vm.recordedData") save
 
-  thumbnail(video-data='vm.recordedData.video')
+  thumbnail(
+    show-generator='vm.showGenerator'
+    data="vm.recordedData")

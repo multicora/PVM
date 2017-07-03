@@ -5,23 +5,13 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      videoData: '@'
+      showGenerator: '@',
+      data: '@'
     }
   });
 
   ctrl.$inject = [];
   function ctrl() {
     var vm = this;
-
-    vm.generate = function() {
-      vm.showPlayer = true;
-      var videoElement = document.getElementById('video-for-thumbnail');
-      var canvas = document.getElementById('canvas');
-      canvas.getContext('2d').drawImage(
-      videoElement, 0, 0, 300, 150);
-      vm.showPlayer = false;
-
-      return canvas;
-    }
   }
 })(angular);
