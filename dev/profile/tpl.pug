@@ -3,81 +3,28 @@
   app-menu(class-name="desktop-menu")
   .profile-container
     .title-container
-      h2.title My profile
-    .profile-photo(
-      ng-if="vm.user.photo && vm.user.photo != 'null'"
-      ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-    .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
-    div(ng-show="vm.editMod")
-      label(for="photo")
-        .upload-photo.btn
-          input.hidden(
-            type="file"
-            id="photo"
-            onchange="angular.element(this).scope().convertToBase64Photo()")
-          i.material-icons file_upload
-    p.errorMessage(ng-if="vm.photoError"
-      ng-bind="vm.photoError")
-    .button-container
-      button.button-edit.btn.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(
-      type="button"
-      ng-click="vm.save()")
-        span(ng-if="vm.editMod") Save information
-        span(ng-if="!vm.editMod") Edit my profile
-    .personal-info
-      ul.mdl-list.info-content
-        li.mdl-list__item
-          .mdl-list__item-primary-content Personal information
+      .title-content
+        p.title Edit profile
+        p.sub-title Complete your profile
+    
+    .content
+      md-input
+    //- .profile-photo(
+    //-   ng-if="vm.user.photo && vm.user.photo != 'null'"
+    //-   ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+    //- .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+    //- div
+    //-   label(for="photo")
+    //-     .upload-photo.btn
+    //-       input.hidden(
+    //-         type="file"
+    //-         id="photo"
+    //-         onchange="angular.element(this).scope().convertToBase64Photo()")
+    //-       i.material-icons file_upload
+    //- p.errorMessage(ng-if="vm.photoError"
+    //-   ng-bind="vm.photoError")
 
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon person
-            span(ng-hide="vm.editMod",
-              ng-bind="vm.user.firstName"
-              ng-if="vm.user.firstName && vm.user.firstName != 'null'")
-            span(ng-hide="vm.editMod",
-              ng-if="!vm.user.firstName || vm.user.firstName === 'null'") Information is absent
-            input.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.user.firstName"
-              placeholder="Name")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            span.second-name(ng-hide="vm.editMod",
-              ng-bind="vm.user.secondName"
-              ng-if="vm.user.secondName && vm.user.secondName != null")
-            span.second-name(ng-hide="vm.editMod",
-              ng-if="!vm.user.secondName || vm.user.secondName === null") Information is absent
-            input.second-name.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.user.secondName"
-              placeholder="Second Name")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon phone
-            span(ng-hide="vm.editMod",
-              ng-bind="vm.user.phone"
-              ng-if="vm.user.phone && vm.user.phone != null")
-            span(ng-hide="vm.editMod",
-              ng-if="!vm.user.phone || vm.user.phone === null") Information is absent
-            input.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.user.phone"
-              placeholder="Phone")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon mail
-            span(ng-bind="vm.user.email"
-              ng-if="vm.user.email && vm.user.email != null")
-            span(ng-if="!vm.user.email || vm.user.email === null") Information is absent
-
-    .company-info
+    //- .company-info
       ul.mdl-list.info-content
         li.mdl-list__item
           .mdl-list__item-primary-content Company information

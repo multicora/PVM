@@ -6,24 +6,38 @@
     position: relative;
     display: inline-block;
     width: calc(100% - 280px);
+    background-color: #fff;
+    height: 200px;
+    margin-top: 50px;
 
     @media (max-width: 910px) {
       width: 100%;
     }
-  }
 
-  .title-container {
-    text-align: center;
+    .title-container {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 40px;
+      margin-top: -30px;
+    }
+
+    .title-content {
+      border-radius: 4px;
+      background-color: #5d90e2;
+      padding: 16px 32px;
+      color: #fff;
+      box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2);
+    }
 
     .title {
-      margin: 16px 0;
-      font-size: 24px;
-      line-height: 24px;
+      font-size: 18px;
+      margin: 0;
     }
-  }
 
-  .button-container { 
-    text-align: center;
+    .sub-title {
+      font-size: 16px;
+      margin: 0;
+    }
   }
 
   .profile-photo,
@@ -58,42 +72,6 @@
 
     i {
       vertical-align: middle;
-    }
-  }
-
-  .info-content {
-    @media (min-width: 600px) {
-      width: 300px;
-      margin-right: auto;
-      margin-left: auto;
-    }
-  }
-
-  .second-name {
-    margin-left: 56px;
-  }
-
-  .errorMessage {
-    text-align: center;
-  }
-
-  .personal-info,
-  .company-info {
-    padding: 0 25px;
-    @media (min-width: 600px) {
-      padding: 0px;
-      width: 50%;
-      display: inline-block;
-      vertical-align: top;
-    }
-  }
-
-  .personal-info {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.26);
-    @media (min-width: 600px) {
-      box-sizing: border-box;
-      border-bottom: none;
-      border-right: 1px solid rgba(0, 0, 0, 0.26);
     }
   }
 
