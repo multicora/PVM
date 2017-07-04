@@ -1,12 +1,27 @@
+.feedback-form {
+  .popup {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
 .feedback-form-container {
   background-color:  #f8f8f8;
   border-radius: 2px;
-  max-width: 500px;
-  width: 100%;
   padding: 16px 16px 24px 16px;
   outline: none;
   box-sizing: border-box;
   outline: none;
+
+  .title {
+    font-size: 24px;
+    text-align: center;
+    font-family: 'Roboto Thin';
+  }
+
+  .text {
+    color: rgba(0, 0, 0, .6);
+  }
 
   .message-container {
     width: 100%;

@@ -2,12 +2,8 @@
   popup(ng-if="vm.showFeedbackPopup"
     close-popup="vm.close()")
     .feedback-form-container
-      md-input-container
-        label Your email
-        input(
-          ng-model="vm.feedback.email"
-          type="email"
-          required="")
+      p.title Leave your feedback
+      p.text The app is at alpha-testing stage. We diligently gather and value every opinion about how we can improve Bizkonect app.
       md-input-container.message-container
         label Your feedback
         textarea(
@@ -17,7 +13,7 @@
       .button-container
         button.btn.mdl-button.mdl-js-button(ng-click="vm.close()") close
         button.btn.mdl-button.mdl-js-button(
-          ng-disabled="!vm.feedback.email"
+          ng-disabled="!vm.feedback.message"
           ng-click="vm.sendClickHandler(vm.feedback)") send
 md-button.md-fab.md-mini.feedback-buton(
   ng-click="vm.showFeedbackPopup=true"

@@ -1,27 +1,29 @@
 'use strict';
 
-module.exports = function(DAL) {
+const sqlBuilder = require('../../services/sqlBuilder.js');
+const connectDB = require('../../dataConnection.js');
+
+module.exports = function() {
   return {
     version: 24,
     message: 'Add author to all videos',
     script: function (next) {
-      let userId;
 
-      DAL.users.getAll().then((users) => {
-        userId = users[0].id;
-      }).then(() => {
-        return DAL.videos.getAll();
-      }).then((videos) => {
-        let promises = videos.map((video) => {
-          return DAL.videos.setAuthor(video.v_id, userId);
+      const request = sqlBuilder.update()
+      .table('videos')
+      .set(
+        'author',
+        sqlBuilder.select().field('id').from('users')
+      )
+      .limit(1)
+      .toString();
+
+      connectDB().then(function (connection) {
+        connection.query(request, (err) => {
+          next(err);
         });
-
-        return Promise.all(promises);
-      }).then(() => {
-        next();
-      }).catch((err) => {
-        next(err);
       });
+
     }
   };
 };

@@ -473,14 +473,6 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    },
-
-    changeCompanyPositionFieldName: function (cb) {
-      const request = [
-        'ALTER TABLE users CHANGE company_position companyPosition VARCHAR(255);'
-      ].join('');
-
-      return connection.query(request, cb);
     }
 
   };
