@@ -1,98 +1,31 @@
-.watchVideoContainer(ng-click="vm.contentClick()")
-  header.user-header(ng-if="vm.showUserHeader")
-    .logoContainer
-      .logo
-        //- DEFAULT LOGO
-        .default-logo(ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === 'undefined'")
-          span.logoText Powered by
-          img(src='/files/images/logo_bizkonect.svg'
-            alt='logo')
+.library-wrapper()
+  //- md-swipe-left="vm.changeTab(1)"
+  //- md-swipe-right="vm.changeTab(-1)"
+  //- md-swipe-down=""
+  //- md-swipe-up="")
+  app-header
+  app-menu(class-name="desktop-menu")
+  md-content.library-content
+    md-tabs(
+      md-dynamic-height=""
+      md-border-bottom=""
+      md-selected="vm.selectedIndex"
+      md-center-tabs="true")
 
-        //- USER LOGO
-        .logo-user(
-          ng-if="vm.conversation.logo && vm.conversation.logo != null && vm.conversation.logo != 'undefined'"
-          ng-style="{backgroundImage: 'url('+ vm.conversation.logo + ')' }")
-
-    .socialContainer
-      //- .social
-      //-   a.linkedin(href='')
-      //-     img(src='/files/images/linkedin.png', alt='linkedin')
-      //-   a.twitter(href='')
-      //-     img(src='/files/images/twitter.png', alt='twitter')
-      //-   a.facebook(href='')
-      //-     img(src='files/images/facebook.png', alt='facebook')
-      .contacts
-        .phone
-          a(ng-href="tel: {{vm.conversation.authorPhone}}")
-            img(src='/files/images/phone.png', alt='phone')
-            span.ellipsis {{vm.conversation.authorPhone}}
-        .email
-          a(ng-href="mailto: {{vm.conversation.authorEmail}}")
-            img(src='/files/images/email.png', alt='email')
-            span.ellipsis {{vm.conversation.authorEmail}}
-  header.default-header(ng-if="!vm.showUserHeader")
-    button.btn.mdl-button.mdl-js-button.mdl-button--raised.back(ng-click="vm.back($event)")
-      |Back
-    p.title(ng-if="!vm.conversation.email || vm.conversation.email === 'null' || vm.conversation.email === 'undefined'") Public conversation
-    p.title(ng-if="vm.conversation.email && vm.conversation.email != 'null' && vm.conversation.email != 'undefined'") Conversation with 
-      span.email {{vm.conversation.email}}
-  .content
-    //- TITLE
-    .title-container
-      p.title
-        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
-
-    .video
-      .videoHeader.showHeader(ng-class="vm.headerClass")
-        .photo(
-          ng-if="vm.conversation.authorPhoto && vm.conversation.authorPhoto != null"
-          ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
-        //- USER NAME
-        .text
-          p.user-name
-            span(ng-if="vm.conversation.name && vm.conversation.name != null") {{vm.conversation.name}}
-          //- USER ROLE
-          p.user-role
-            span(ng-if="vm.conversation.company_role && vm.conversation.company_role != null") {{vm.conversation.company_role}}
-      .videoContent(ng-click="vm.videoContentClick($event)")
-        video.video-js.vjs-default-skin(
-          vjs-video
-          controls
-          preload="auto"
-          vjs-media="vm.media")
-      .videoFooter
-        .chat-container(ng-if="vm.conversation.message")
-          .message-container(ng-class="vm.messageClassName")
-            .photo(ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
-            .message
-              p {{vm.conversation.message}}
-              .files-container(ng-if="vm.conversation.files")
-                a.file(
-                  ng-repeat="item in vm.conversation.files"
-                  download="{{item.name}}"
-                  ng-href="{{item.url}}"
-                  ng-click="vm.onFileClick()")
-                  i.material-icons.file-icon insert_drive_file
-                  p.file-name.ellipsis {{item.name}}
-
-        chat-list(list="vm.chatList")
-
-      chat-reply-box(
-        message="vm.savedMessage"
-        send-message="vm.sendMessage($data)")
-
-  footer
-    .logo-container
-      span.powered Powered by
-      img.logo(src='/files/images/logo_bizkonect.svg', alt='Bizkonect')
-    .rights 2016 All rights reserved
+      //- Conversations
+      md-tab(label='conversations')
+        md-content.md-padding.tubs-content(
+          md-selected="vm.selectedIndex")
+          conversation-list(
+            list="vm.conversationsList"
+            on-indicator-click="vm.stopPropagation($event)"
+            on-view-click="vm.viewConversation($data)"
+            show-indicators="vm.showConversationIndicators")
+          conversation-list(
+            list="vm.conversationsToUserList"
+            on-indicator-click="vm.stopPropagation($event)"
+            on-view-click="vm.viewConversation($data)"
+            to-user="vm.toUser")
 
   //- Feedback form
-  feedback.conversation
-
-  //- LOGIN POPUP
-  popup.login-popup-container(
-    ng-if="vm.showLoginPopup"
-    close-popup="vm.closeLoginPopup()")
-    .login-popup-content
-      login-form(on-success-login="vm.onSuccessLogin()")
+  feedback

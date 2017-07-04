@@ -4,6 +4,7 @@
   //- md-swipe-down=""
   //- md-swipe-up="")
   app-header
+  app-menu(class-name="desktop-menu")
   md-content.library-content
     md-tabs(
       md-dynamic-height=""
@@ -33,21 +34,6 @@
             on-use-click="vm.useTemplate($data)"
             on-delete="vm.deleteTemplate($data, $event)")
 
-      //- Conversations
-      md-tab(label='conversations')
-        md-content.md-padding.tubs-content(
-          md-selected="vm.selectedIndex")
-          conversation-list(
-            list="vm.conversationsList"
-            on-indicator-click="vm.stopPropagation($event)"
-            on-view-click="vm.viewConversation($data)"
-            show-indicators="vm.showConversationIndicators")
-          conversation-list(
-            list="vm.conversationsToUserList"
-            on-indicator-click="vm.stopPropagation($event)"
-            on-view-click="vm.viewConversation($data)"
-            to-user="vm.toUser")
-
       //- Files
       md-tab(label='files')
         md-content.md-padding.tubs-content(
@@ -61,9 +47,7 @@
             on-delete="vm.deleteFile($data)")
 
   //- Video record & upload fab button
-  video-fab-buttons(
-    upload-btn-click="vm.uploadBtnClick()"
-    record-btn-click="vm.recordBtnClick()")
+  video-fab-buttons
 
   //- Record popup
   record-popup-wrapper(get-videos="vm.getVideos()")

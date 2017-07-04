@@ -1,0 +1,19 @@
+.app-menu(ng-class="vm.className")
+  .menu-button(ng-click="vm.redirect('/dashboard')")
+    i.material-icons dashboard
+    span Dashbord
+  .menu-button(ng-click="vm.redirect('/conversations')")
+    i.material-icons message
+    span Conversations
+  .menu-button(ng-click="vm.redirect('/library')")
+    i.material-icons video_library
+    span Library
+  .menu-button
+    i.material-icons contacts
+    span Contacts
+  .menu-button(ng-click="vm.redirect('/profile')")
+    i.material-icons account_box
+    span My profile
+  .menu-button(ng-click="vm.invalidateSession()")
+    i.material-icons exit_to_app
+    span Log out

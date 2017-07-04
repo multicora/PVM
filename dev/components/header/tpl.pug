@@ -1,9 +1,9 @@
 header.main-header
   .navigation-components
-    md-button.md-icon-button(
+    md-button.md-icon-button.header-menu-button(
       aria-label="Open menu"
       ng-click="vm.openMenu()")
-      i.material-icons menu
+      i.material-icons.menu-icon menu
     img.logo.pointer(src='/files/images/logo_bizkonect.svg')
     .notification-container
       //- .material-icons.email-notification(
@@ -11,9 +11,10 @@ header.main-header
       md-menu(
         md-position-mode="target-right target"
         ng-if="vm.notifications.length")
-        .material-icons.notifications(
+        i.fa.fa-bell-o.notifications.mdl-badge.mdl-badge--overlap(
+          aria-hidden="true"
           ng-click="$mdMenu.open()"
-        ) notifications
+          data-badge="{{vm.notifications.length}}")
         md-menu-content.notification-menu-content
           md-menu-item.notification-item(
             ng-repeat="item in vm.notifications"
@@ -21,37 +22,20 @@ header.main-header
             span {{item.message}}
             span {{item.date}}
 
-  md-sidenav.md-sidenav-left(
+  md-sidenav.md-sidenav-left.header-menu(
     md-component-id="left"
     md-whiteframe="4"
   )
-    .photo-container
-      .desktop-photos
-        .photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
-        .photo(
-          ng-if="vm.user.photo && vm.user.photo != 'null'"
-          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-        p.name.ellipsis
-          span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
-          span(ng-if="vm.user.secondName") {{vm.user.secondName}}
-        .gradient-photo
-      md-list-item.md-2-line.mobile-photos
-        .md-avatar.photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
-        .md-avatar.photo(
-          ng-if="vm.user.photo && vm.user.photo != 'null'"
-          ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-        .md-list-item-text
-          h3 {{vm.user.firstName + ' ' + vm.user.secondName}}
-          p {{vm.user.email}}
-    md-list-item(ng-click="vm.redirect('/dashboard')")
-      md-icon dashboard
-      p Dashbord
-    md-list-item(ng-click="vm.redirect('/library')")
-      md-icon video_library
-      p Library
-    md-list-item(ng-click="vm.redirect('/profile')")
-      md-icon account_circle
-      p Profile
-    md-list-item.logout-list-item(ng-click="vm.invalidateSession()")
-      md-icon exit_to_app
-      p Logout
+    md-content
+      .photo-container
+        md-list-item.md-2-line.mobile-photos
+          .md-avatar.photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+          .md-avatar.photo(
+            ng-if="vm.user.photo && vm.user.photo != 'null'"
+            ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+          .md-list-item-text
+            h3 
+              span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
+              span(ng-if="vm.user.secondName") {{vm.user.secondName}}
+            p {{vm.user.email}}
+      app-menu(class-name="mobile-menu")

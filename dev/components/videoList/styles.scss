@@ -3,35 +3,32 @@
   //VIDEOS
   .videos-container {
     margin: 0 auto;
-    max-width: 920px;
+    max-width: 904px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
 
-    @media (max-width: 910px) {
-      max-width: 695px;
+    @media (max-width: 1225px) {
+      max-width: 606px;
     }
 
-    @media (max-width: 695px) {
-      max-width: 470px;
-    }
-
-    @media (max-width: 470px) {
-      text-align: center;
+    @media (max-width: 640px) {
+      max-width: 300px;
     }
 
     .add-button {
       border: 2px dashed #757575;
       box-sizing: border-box;
       color: #757575;
-      height: 204px;
+
+      height: 188px;
       margin: 0 0 10px 10px;
       overflow: hidden;
       position: relative;
       text-align: center;
       vertical-align: top;
-      width: 215px;
+      width: 288px;
 
       .buttons {
         margin-top: 60px;

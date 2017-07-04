@@ -1,0 +1,50 @@
+.app-menu {
+  width: 240px;
+  float: left;
+  box-sizing: border-box;
+  padding: 0 10px;
+  margin-top: 28px;
+
+  .menu-button {
+    padding: 10px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+
+    span {
+      margin-left: 20px;
+      vertical-align: middle;
+    }
+
+    i {
+      vertical-align: middle;
+    }
+  }
+
+  .menu-button {
+    box-shadow: none;
+    background-color: none;
+    color: #757575;
+    transition: .5s;
+  }
+
+  .menu-button:hover {
+    box-shadow: 4px 4px 10px 0 rgba(112, 157, 228, .5);
+    background-color: rgba(93, 144, 226, 1);
+    color: #fff;
+    transition: .5s;
+  }
+}
+
+.desktop-menu {
+  @media (max-width: 910px) {
+    display: none;
+  }
+}
+
+.mobile-menu {
+  width: 100%;
+  line-height: 24px;
+  margin-top: 0;
+}

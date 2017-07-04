@@ -1,8 +1,9 @@
 .profile-wrap
   app-header
-  .title-container
-    h2.title My profile
+  app-menu(class-name="desktop-menu")
   .profile-container
+    .title-container
+      h2.title My profile
     .profile-photo(
       ng-if="vm.user.photo && vm.user.photo != 'null'"
       ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")

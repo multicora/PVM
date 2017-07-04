@@ -9,9 +9,7 @@
     '$mdToast',
     '$mdDialog',
     'libraryService',
-    'uploadService',
     'conversationsService',
-    'uploadRecordPopupService',
     'filesService'
   ];
   function ctrl(
@@ -19,9 +17,7 @@
     $mdToast,
     $mdDialog,
     libraryService,
-    uploadService,
     conversationsService,
-    uploadRecordPopupService,
     filesService
   ) {
     var vm = this;
@@ -32,12 +28,8 @@
       cancel: 'Cancel'
     });
 
-    vm.showUploadPopup = true;
-    vm.showSendPopup = false;
-    vm.recordedData = null;
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
-    vm.showConversationIndicators = true;
     vm.toUser = true;
 
     vm.getVideos = function () {
@@ -56,7 +48,6 @@
     vm.getVideos();
     getFiles();
     getTemplates();
-    getConversations();
 
     // Delete video
     vm.deleteVideo = function (id) {
@@ -71,18 +62,6 @@
     //Delete file
     vm.deleteFile = function (id) {
       showConfirmDeleteFile(id);
-    };
-
-    vm.uploadBtnClick = function () {
-      uploadRecordPopupService.showUploadPopup();
-    };
-
-    vm.recordBtnClick = function () {
-      uploadRecordPopupService.showRecordPopup();
-    };
-
-    vm.finishRecord = function (data) {
-      vm.recordedData = data;
     };
 
     vm.stopPropagation = function($event) {
@@ -122,10 +101,6 @@
 
     vm.useTemplate = function (id) {
       $location.path('template/' + id);
-    };
-
-    vm.viewConversation = function (id) {
-      $location.path('conversation/' + id);
     };
 
     // Confirm popup for delete template
@@ -191,24 +166,14 @@
       // TODO: add .catch() part
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
-
-        return libraryService.getConversationsToUser();
-      }).then(function (res) {
-        vm.conversationsToUserList = res.data;
       });
-    };
+    }
 
     function getFiles () {
       filesService.getFiles().then(function(res) {
         vm.filesList = res;
       });
     }
-
-    function getConversations () {
-      libraryService.getConversations().then(function (res) {
-        vm.conversationsList = res.data;
-      });
-    };
 
     // For swiping
     // vm.selectedIndex = 0;

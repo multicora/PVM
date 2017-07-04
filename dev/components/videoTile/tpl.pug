@@ -3,26 +3,26 @@
     ng-if="!vm.video.attributes.thumbnail"
     ng-click="vm.onThumbnailClick()")
     img(src="/files/images/videoPlaceholder.svg")
-    p Preview is not available.
+    p Thumbnail is not available.
   img.photo(
     ng-if="vm.video.attributes.thumbnail"
     ng-src='data:image/png;base64,{{vm.video.attributes.thumbnail}}',
     alt=''
     ng-click="vm.onThumbnailClick()")
-  p.text.ellipsis(title='{{vm.video.attributes.name}}') {{vm.video.attributes.name}}
-  .buttons-container
+  .navigation-bar
+    p.name.ellipsis(title='{{vm.video.attributes.name}}') {{vm.video.attributes.name}}
     md-menu.menu(
       ng-if="vm.showSendButton"
       md-position-mode="target-right target")
-      md-button.menu-button(
+      md-button.menu-button.md-icon-button(
         ng-click="$mdMenu.open()"
         aria-label="Open menu")
-        img(src='/files/images/dots.png', alt='')
+        i.material-icons more_vert
       md-menu-content(ng-mouseleave="$mdMenu.close()")
         md-menu-item
           md-button(ng-click="vm.onDeleteVideo()") Delete
-    .inlineBlock(
+    md-button.md-icon-button.send(
       ng-if="vm.showSendButton"
-      ng-click="vm.onSendClick()")
-      .send
-        .fa.fa-paper-plane(aria-hidden="true")
+      ng-click="vm.onSendClick()"
+      aria-label="send")
+      .fa.fa-paper-plane(aria-hidden="true")

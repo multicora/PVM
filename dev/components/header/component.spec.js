@@ -134,16 +134,4 @@ describe('appHeader component', function() {
       expect(notificationsService.markAsRead).toHaveBeenCalled();
     });
   });
-
-  describe('invalidateSession', function() {
-    it('should call "storage.clear" and redirect to "/login"', function() {
-      var ctrl = componentController('appHeader', {
-        storage: storage
-      }, bindings);
-
-      ctrl.invalidateSession();
-      expect(location.path).toHaveBeenCalledWith('/login');
-      expect(storage.clear).toHaveBeenCalled();
-    });
-  });
 });
