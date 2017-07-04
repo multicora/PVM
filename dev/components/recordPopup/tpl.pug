@@ -4,8 +4,6 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
       p.popup-title Record your video
       .record-video
         record-video(finish="vm.finishRecord($data)")
-      video#video-for-thumbnail(src="vm.recordedData")
-      canvas#canvas
       .video-name-container
         md-input-container.video-name(md-no-float="true")
           input(

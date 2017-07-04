@@ -29,22 +29,14 @@
 
     vm.finishRecord = function (data) {
       vm.recordedData = data;
-      console.log(data);
       vm.showGenerator = true;
       var videoElement = document.getElementById('video-for-thumbnail');
-      videoElement.setAttribute('src', {
-        sources: [{
-          src: data.video,
-          type: 'video/mp4'
-        }]
-      });
+      videoElement.setAttribute('src', data.video);
       var canvas = document.getElementById('canvas');
       canvas.getContext('2d').drawImage(
       videoElement, 0, 0, 300, 150);
       canvas = canvas.toDataURL("image/png");
       vm.showGenerator = false;
-
-      console.log(canvas, '------------------------------------');
     };
 
     vm.sendRecordClick = function (name) {
