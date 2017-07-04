@@ -95,6 +95,7 @@
         return profileService.getCompany(vm.user.company);
       }).then(function(res) {
         vm.company = res.data;
+        vm.company.name = vm.company.name || '';
       });
     };
   }
