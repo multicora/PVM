@@ -5,10 +5,87 @@
     .title-container
       .title-content
         p.title Edit profile
-        p.sub-title Complete your profile
+        p.sub-title(ng-if="!vm.user.firstName || !vm.user.secondName || !vm.user.phone || !vm.user.photo || !vm.user.companyPosition || !vm.company.name") Complete your profile
+      .upload-photo
+        div.upload-label
+          label(for="photo")
+            .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+            .profile-photo(
+              ng-if="vm.user.photo && vm.user.photo != 'null'"
+              ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+            input.hidden(
+              type="file"
+              id="photo"
+              onchange="angular.element(this).scope().convertToBase64Photo()")
+      p.errorMessage(ng-if="vm.photoError"
+        ng-bind="vm.photoError")
     
     .content
-      md-input
+      md-input-container
+        label First name
+        input(
+          type="text"
+          ng-model="vm.user.firstName")
+      md-input-container
+        label Last name
+        input(
+          type="text"
+          ng-model="vm.user.secondName")
+      md-input-container
+        label Phone
+        input(
+          type="text"
+          pattern="-?[0-9]*(.[0-9]+)?"
+          ng-model="vm.user.phone")
+      md-input-container
+        label Email
+        input(
+          type="email"
+          ng-readonly="true"
+          ng-model="vm.user.email")
+      md-input-container
+        label Company name
+        input(
+          type="text"
+          ng-model="vm.company.name")
+      md-input-container
+        label Company position
+        input(
+          type="text"
+          ng-model="vm.user.companyPosition")
+      .company-logo-container
+        .company-logo-upload
+          label(for="logo")
+            p.logo-label(ng-if="vm.company.logo && vm.company.logo != null") Company logo
+            .upload-logo
+              span.logo-placeholder(ng-if="!vm.company.logo || vm.company.logo === null") Company logo
+              input.hidden(
+                type="file"
+                id="logo"
+                onchange="angular.element(this).scope().convertToBase64Logo()")
+              .company-logo(
+                  ng-if="vm.company.logo && vm.company.logo != null"
+                  ng-style="{backgroundImage: 'url('+ vm.company.logo + ')' }")
+        .errorMessage(
+          ng-if="vm.logoError"
+          ng-bind="vm.logoError")
+
+    .button-container
+      md-button.md-raised.edit-btn(ng-click="vm.save()") Edit profile
+    //- .profile-photo(
+    //-   ng-if="vm.user.photo && vm.user.photo != 'null'"
+    //-   ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+    //- .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+    //- div
+    //-   label(for="photo")
+    //-     .upload-photo.btn
+    //-       input.hidden(
+    //-         type="file"
+    //-         id="photo"
+    //-         onchange="angular.element(this).scope().convertToBase64Photo()")
+    //-       i.material-icons file_upload
+    //- p.errorMessage(ng-if="vm.photoError"
+    //-   ng-bind="vm.photoError")
     //- .profile-photo(
     //-   ng-if="vm.user.photo && vm.user.photo != 'null'"
     //-   ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
