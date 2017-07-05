@@ -177,7 +177,7 @@
         //-   li.mdl-menu__item(ng-click="vm.save()") SAVE
         //-   li.mdl-menu__item(ng-click="vm.save()") SAVE AS NEW
 
-        button.btn.mdl-button.mdl-js-button.mdl-button--raised(
+        md-button.md-raised.md-primary.blue-btn(
           type="button"
           ng-click="vm.showSendPopup = true")
             | Send
@@ -200,8 +200,8 @@
           placeholder="Type recipient email here"
           required="")
       .button-container
-        button.btn.mdl-button.mdl-js-button(ng-click="vm.closeSendPopup()") close
-        button.btn.mdl-button.mdl-js-button(
+        md-button(ng-click="vm.closeSendPopup()") close
+        md-button.md-raised.md-primary.blue-btn(
           ng-click="vm.sendTemplate(email)"
           ng-disabled="!email") send
     md-button.md-icon-button(
