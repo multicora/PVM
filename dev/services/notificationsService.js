@@ -25,7 +25,7 @@
       notification.metadata = JSON.parse(notification.metadata);
 
       if (notification.metadata) {
-        notification.message = translations.txt(notification.message) + notification.metadata.email;
+        notification.message = translations.txt(notification.message);
       }
 
       return notification;

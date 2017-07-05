@@ -5,7 +5,7 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 module.exports = function(connection) {
   return {
 
-    add: (message, user, data) => {
+    add: (message, user, conversationId, data) => {
       let metadata = JSON.stringify(data);
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
@@ -13,6 +13,7 @@ module.exports = function(connection) {
           .set('message', message)
           .set('user', user)
           .set('metadata', metadata)
+          .set('conversationId', conversationId)
           .set('date', sqlBuilder.str('NOW()'))
           .toString();
 
