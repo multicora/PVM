@@ -23,11 +23,13 @@
       //-     img(src='files/images/facebook.png', alt='facebook')
       .contacts
         .phone
-          img(src='/files/images/phone.png', alt='phone')
-          p {{vm.conversation.authorPhone}}
+          a(ng-href="tel: {{vm.conversation.authorPhone}}")
+            img(src='/files/images/phone.png', alt='phone')
+            span.ellipsis {{vm.conversation.authorPhone}}
         .email
-          img(src='/files/images/email.png', alt='email')
-          p {{vm.conversation.authorEmail}}
+          a(ng-href="mailto: {{vm.conversation.authorEmail}}")
+            img(src='/files/images/email.png', alt='email')
+            span.ellipsis {{vm.conversation.authorEmail}}
   header.default-header(ng-if="!vm.showUserHeader")
     button.btn.mdl-button.mdl-js-button.mdl-button--raised.back(ng-click="vm.back($event)")
       |Back
@@ -75,7 +77,9 @@
 
         chat-list(list="vm.chatList")
 
-      chat-reply-box(send-message="vm.sendMessage($data)")
+      chat-reply-box(
+        message="vm.savedMessage"
+        send-message="vm.sendMessage($data)")
 
   footer
     .logo-container
@@ -85,3 +89,10 @@
 
   //- Feedback form
   feedback.conversation
+
+   //- LOGIN POPUP
+  popup.login-popup-container(
+    ng-if="vm.showLoginPopup"
+    close-popup="vm.closeLoginPopup()")
+    .login-popup-content
+      login-form(on-success-login="vm.onSuccessLogin()")
