@@ -68,7 +68,7 @@
 
     vm.back = function (event) {
       event.stopPropagation();
-      $location.path('library');
+      $location.path('conversations');
     };
 
     vm.contentClick = function () {

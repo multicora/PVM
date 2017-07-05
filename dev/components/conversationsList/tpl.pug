@@ -21,8 +21,11 @@
         .viewed(ng-if="item.videoIsWatched")
           md-tooltip(md-direction="right") Video has been watched
           i.material-icons remove_red_eye
-        .files
+        .files(ng-if="!item.file_is_downloaded")
           md-tooltip(md-direction="right") Files haven't been downloaded yet
+          i.material-icons insert_drive_file
+        .files-downloaded(ng-if="item.file_is_downloaded")
+          md-tooltip(md-direction="right") Files have been downloaded
           i.material-icons insert_drive_file
 
       p.email

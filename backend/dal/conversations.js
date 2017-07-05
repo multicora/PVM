@@ -54,6 +54,7 @@ module.exports = (connection) => {
           .field('email')
           .field('viewed')
           .field('videoIsWatched')
+          .field('file_is_downloaded')
           .field('title')
           .field('message')
           .field('updated')
