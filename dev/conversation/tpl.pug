@@ -81,7 +81,7 @@
         message="vm.savedMessage"
         send-message="vm.sendMessage($data)")
 
-  footer
+  footer(ng-if="vm.showUserFooter")
     .logo-container
       span.powered Powered by
       img.logo(src='/files/images/logo_bizkonect.svg', alt='Bizkonect')
