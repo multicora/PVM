@@ -55,6 +55,12 @@
     display: inline-block;
   }
 
+  .menu {
+    .md-button.md-icon-button {
+      margin: 0;
+    }
+  }
+
   .menu,
   .send {
     margin: 0;

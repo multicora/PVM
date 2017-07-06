@@ -21,7 +21,9 @@ describe('profileCtrl', function() {
       }),
       getCompany: jasmine.createSpy('getCompany').and.callFake(function () {
         return $q.resolve({
-          data: {}
+          data: {
+            name: ''
+          }
         });
       }),
       updateProfile: jasmine.createSpy('updateProfile'),
@@ -44,7 +46,7 @@ describe('profileCtrl', function() {
   });
 
   describe('save', function() {
-    it('should save data if "editMod" === true', function() {
+    it('should call profileService.updateCompany', function() {
       var scope = $rootScope.$new();
       var ctrl = $controller('profileCtrl', {
         $scope: scope,
@@ -57,25 +59,12 @@ describe('profileCtrl', function() {
         });
       });
 
-      ctrl.editMod = true;
       ctrl.user = {};
+      ctrl.company = {};
       ctrl.save();
       scope.$apply();
 
-      expect(ctrl.editMod).toBe(false);
-    });
-
-    it('should set "editMod" = true if it isn/`t', function() {
-      var scope = $rootScope.$new();
-      var ctrl = $controller('profileCtrl', {
-        $scope: scope,
-        profileService: profileService,
-      });
-
-      ctrl.save();
-      scope.$apply();
-
-      expect(ctrl.editMod).toBe(true);
+      expect(profileService.updateCompany).toHaveBeenCalled();
     });
   });
 });

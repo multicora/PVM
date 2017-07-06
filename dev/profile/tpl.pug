@@ -3,130 +3,75 @@
   app-menu(class-name="desktop-menu")
   .profile-container
     .title-container
-      h2.title My profile
-    .profile-photo(
-      ng-if="vm.user.photo && vm.user.photo != 'null'"
-      ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-    .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
-    div(ng-show="vm.editMod")
-      label(for="photo")
-        .upload-photo.btn
-          input.hidden(
-            type="file"
-            id="photo"
-            onchange="angular.element(this).scope().convertToBase64Photo()")
-          i.material-icons file_upload
-    p.errorMessage(ng-if="vm.photoError"
-      ng-bind="vm.photoError")
+      .title-content
+        p.title Edit profile
+        p.sub-title(ng-if="!vm.user.firstName || !vm.user.secondName || !vm.user.phone || !vm.user.photo || !vm.user.companyPosition || !vm.company.name") Complete your profile
+      .upload-photo
+        div.upload-label
+          label(for="photo")
+            .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+            .profile-photo(
+              ng-if="vm.user.photo && vm.user.photo != 'null'"
+              ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+            input.hidden(
+              type="file"
+              id="photo"
+              onchange="angular.element(this).scope().convertToBase64Photo()")
+      p.errorMessage(ng-if="vm.photoError"
+        ng-bind="vm.photoError")
+    
+    .content
+      md-input-container
+        label First name
+        input(
+          type="text"
+          ng-model="vm.user.firstName")
+      md-input-container
+        label Last name
+        input(
+          type="text"
+          ng-model="vm.user.secondName")
+      md-input-container
+        label Phone
+        input(
+          type="text"
+          pattern="-?[0-9]*(.[0-9]+)?"
+          ng-model="vm.user.phone")
+      md-input-container
+        label Email
+        input(
+          type="email"
+          ng-readonly="true"
+          ng-model="vm.user.email")
+      md-input-container
+        label Company name
+        input(
+          type="text"
+          ng-model="vm.company.name")
+      md-input-container
+        label Company position
+        input(
+          type="text"
+          ng-model="vm.user.companyPosition")
+      .company-logo-container
+        .company-logo-upload
+          label(for="logo")
+            p.logo-label(ng-if="vm.company.logo && vm.company.logo != null") Company logo
+            .upload-logo
+              span.logo-placeholder(ng-if="!vm.company.logo || vm.company.logo === null") Company logo
+              input.hidden(
+                type="file"
+                id="logo"
+                onchange="angular.element(this).scope().convertToBase64Logo()")
+              .company-logo(
+                  ng-if="vm.company.logo && vm.company.logo != null"
+                  ng-style="{backgroundImage: 'url('+ vm.company.logo + ')' }")
+        .errorMessage(
+          ng-if="vm.logoError"
+          ng-bind="vm.logoError")
+
     .button-container
-      button.button-edit.btn.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(
-      type="button"
-      ng-click="vm.save()")
-        span(ng-if="vm.editMod") Save information
-        span(ng-if="!vm.editMod") Edit my profile
-    .personal-info
-      ul.mdl-list.info-content
-        li.mdl-list__item
-          .mdl-list__item-primary-content Personal information
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon person
-            span(ng-hide="vm.editMod",
-              ng-bind="vm.user.firstName"
-              ng-if="vm.user.firstName && vm.user.firstName != 'null'")
-            span(ng-hide="vm.editMod",
-              ng-if="!vm.user.firstName || vm.user.firstName === 'null'") Information is absent
-            input.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.user.firstName"
-              placeholder="First name")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            span.second-name(ng-hide="vm.editMod",
-              ng-bind="vm.user.secondName"
-              ng-if="vm.user.secondName && vm.user.secondName != null")
-            span.second-name(ng-hide="vm.editMod",
-              ng-if="!vm.user.secondName || vm.user.secondName === null") Information is absent
-            input.second-name.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.user.secondName"
-              placeholder="Last Name")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon phone
-            span(ng-hide="vm.editMod",
-              ng-bind="vm.user.phone"
-              ng-if="vm.user.phone && vm.user.phone != null")
-            span(ng-hide="vm.editMod",
-              ng-if="!vm.user.phone || vm.user.phone === null") Information is absent
-            input.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.user.phone"
-              placeholder="Phone")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon mail
-            span(ng-bind="vm.user.email"
-              ng-if="vm.user.email && vm.user.email != null")
-            span(ng-if="!vm.user.email || vm.user.email === null") Information is absent
-
-    .company-info
-      ul.mdl-list.info-content
-        li.mdl-list__item
-          .mdl-list__item-primary-content Company information
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon work
-            span(ng-hide="vm.editMod",
-              ng-bind="vm.company.name"
-              ng-if="vm.company.name && vm.company.name != null && vm.company.name != undefined")
-            span(ng-hide="vm.editMod",
-              ng-if="!vm.company.name || vm.company.name === null || vm.company.name === undefined") Information is absent
-            input.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.company.name"
-              placeholder="Company Name")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            .company-logo(
-              ng-if="vm.company.logo && vm.company.logo != null"
-              ng-style="{backgroundImage: 'url('+ vm.company.logo + ')' }")
-            .company-logo(ng-if="!vm.company.logo || vm.company.logo === null")
-            div(ng-show="vm.editMod")
-              label(for="logo")
-                .upload-logo
-                  input.hidden(
-                    type="file"
-                    id="logo"
-                    onchange="angular.element(this).scope().convertToBase64Logo()")
-                  i.material-icons.btn file_upload
-        li.errorMessage(
-            ng-if="vm.logoError"
-            ng-bind="vm.logoError")
-
-        li.mdl-list__item
-          .mdl-list__item-primary-content
-            i.material-icons.mdl-list__item-icon work
-            span(ng-hide="vm.editMod",
-              ng-bind="vm.user.companyPosition"
-              ng-if="vm.user.companyPosition && vm.user.companyPosition != null")
-            span(ng-hide="vm.editMod",
-              ng-if="!vm.user.companyPosition || vm.user.companyPosition === null") Information is absent
-            input.mdl-textfield__input(
-              ng-show="vm.editMod"
-              type="text"
-              ng-model="vm.user.companyPosition"
-              placeholder="Company Position")
+      md-button.md-raised.edit-btn(ng-click="vm.save()") Edit profile
 
   //- Feedback form
   feedback.profile
