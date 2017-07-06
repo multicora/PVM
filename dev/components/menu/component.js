@@ -20,17 +20,7 @@
     var vm = this;
     var tokenName = 'x-biz-token';
 
-    if ($location.url() === '/dashboard') {
-      vm.dashboardClass = 'active-button';
-    } else if ($location.url() === '/conversations') {
-      vm.conversationsClass = 'active-button';
-    } else if ($location.url() === '/library') {
-      vm.libraryClass = 'active-button';
-    } else if ($location.url() === '/contacts') {
-      vm.contactsClass = 'active-button';
-    } else if ($location.url() === '/profile') {
-      vm.profileClass = 'active-button';
-    }
+    vm.url = $location.url();
 
     vm.redirect = function(url, urlParam) {
       if (urlParam) {
