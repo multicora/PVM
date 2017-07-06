@@ -20,6 +20,8 @@
     var vm = this;
     var tokenName = 'x-biz-token';
 
+    vm.url = $location.url();
+
     vm.redirect = function(url, urlParam) {
       if (urlParam) {
         return $location.path(url + '/' + urlParam);

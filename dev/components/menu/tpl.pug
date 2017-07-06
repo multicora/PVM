@@ -1,17 +1,25 @@
 .app-menu(ng-class="vm.className")
-  .menu-button(ng-click="vm.redirect('/dashboard')")
+  .menu-button(
+    ng-click="vm.redirect('/dashboard')"
+    ng-class="{active: vm.url === '/dashboard'}")
     i.material-icons dashboard
     span Dashbord
-  .menu-button(ng-click="vm.redirect('/conversations')")
+  .menu-button(
+    ng-click="vm.redirect('/conversations')"
+    ng-class="{active: vm.url === '/conversations'}")
     i.material-icons message
     span Conversations
-  .menu-button(ng-click="vm.redirect('/library')")
+  .menu-button(
+    ng-click="vm.redirect('/library')"
+    ng-class="{active: vm.url === '/library'}")
     i.material-icons video_library
     span Library
   .menu-button
     i.material-icons contacts
     span Contacts
-  .menu-button(ng-click="vm.redirect('/profile')")
+  .menu-button(
+    ng-click="vm.redirect('/profile')"
+    ng-class="{active: vm.url === '/profile'}")
     i.material-icons account_box
     span My profile
   .menu-button(ng-click="vm.invalidateSession()")
