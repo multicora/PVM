@@ -38,6 +38,7 @@
     vm.media = null;
     vm.user = null;
     vm.showUserHeader = true;
+    vm.showUserFooter = true;
     vm.messageClassName = 'income';
     vm.showLoginPopup = false;
 
@@ -98,6 +99,7 @@
         vm.conversation = res.data;
         if (vm.user && vm.conversation.author === vm.user.id) {
           vm.showUserHeader = false;
+          vm.showUserFooter = false;
           vm.messageClassName = '';
         }
         vm.media = {
