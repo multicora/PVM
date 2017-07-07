@@ -325,33 +325,28 @@ module.exports = function (server, DAL) {
    */
 
   server.route({
-    method: 'GET',
-    path: '/api/file-downloaded/{id}',
+    method: 'POST',
+    path: '/api/file-downloaded',
     config: {
+      auth: 'simple',
       handler: function (request, reply) {
-        let conversationId = request.params.id;
+        let conversationId = request.payload.conversationId;
+        let fileId = request.payload.fileId;
         let serverUrl = utils.getServerUrl(request);
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
+        let user;
 
         let needToMarkPromise = function() {
           return new Promise((resolve) => {
-            let isDownloaded;
-
-            DAL.conversations.getById(conversationId).then((res) => {
-              isDownloaded = res.file_is_downloaded;
-
-              return usersCtrl.getUserByToken(token.value);
-            }).then((user) => {
+            usersCtrl.getUserByToken(token.value).then(res => {
+              user = res;
 
               if (conversation.author === user.id) {
                 resolve(false);
               } else {
-                resolve(!isDownloaded);
+                resolve(true);
               }
-            }, () => {
-
-              resolve(!isDownloaded);
             });
           });
         };
@@ -360,12 +355,29 @@ module.exports = function (server, DAL) {
           conversation = res;
           return needToMarkPromise();
         }).then(res => {
-
           if (res) {
-            return DAL.conversations.markAsDownloaded(conversation.id).then(() => {
-              return notificationsCtrl.fileDownloaded(conversation, serverUrl +
-                '/conversation/' +
-                conversation.id);
+            return DAL.events.get(DAL.events.types().FILE_IS_DOWNLOADED, user.id, conversation.id).then(res => {
+              let result = null;
+              let isDownloaded = false;
+
+              for (let i = 0; i < res.length; i++) {
+                if (JSON.parse(res[i].metadata).fileId === fileId) {
+                  isDownloaded = true;
+                  break;
+                }
+              }
+
+              if (isDownloaded) {
+                result = notificationsCtrl.fileDownloaded(conversation, serverUrl +
+                  '/conversation/' +
+                  conversation.id);
+              }
+
+              return result;
+            }).then(() => {
+              return DAL.events.add(DAL.events.types().FILE_IS_DOWNLOADED, user.id, conversation.id, {
+                'fileId': fileId
+              });
             }).then(() => {
               return DAL.conversations.updateTime(conversation.id);
             });

@@ -4,12 +4,26 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
-    events: () => {
+    types: () => {
       return {
         'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
         'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
         'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
       };
+    },
+
+    get: (type, userId, conversationId) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.select()
+          .from('events')
+          .field('metadata')
+          .where('type = "' + type + '" AND userId = ' + userId + ' AND conversationId = ' + conversationId)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
     },
 
     add: (type, userId, conversationId, data) => {

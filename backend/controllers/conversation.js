@@ -50,7 +50,10 @@ module.exports = function(DAL) {
         conversation.files = [];
 
         res.forEach(file => {
-          conversation.files.push({name: file.name});
+          conversation.files.push({
+            name: file.name,
+            id: file.id
+          });
         });
 
         filesArr.forEach(id => {

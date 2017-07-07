@@ -64,7 +64,7 @@
                   ng-repeat="item in vm.conversation.files"
                   download="{{item.name}}"
                   ng-href="{{item.url}}"
-                  ng-click="vm.onFileClick()")
+                  ng-click="vm.onFileClick(item.id)")
                   i.material-icons.file-icon insert_drive_file
                   p.file-name.ellipsis {{item.name}}
 

@@ -75,8 +75,11 @@
       vm.headerClass = 'showHeader';
     };
 
-    vm.onFileClick = function () {
-      conversationsService.fileDownloaded(vm.conversation.id);
+    vm.onFileClick = function (fileId) {
+      conversationsService.fileDownloaded({
+        conversationId: vm.conversation.id,
+        fileId: fileId
+      });
     };
 
     vm.videoContentClick = function (event) {

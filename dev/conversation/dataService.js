@@ -38,8 +38,8 @@
       return $http.get('/api/video-is-watching/' + id);
     };
 
-    this.fileDownloaded = function (id) {
-      return $http.get('/api/file-downloaded/' + id);
+    this.fileDownloaded = function (data) {
+      return $http.post('/api/file-downloaded', data);
     };
 
     this.getChatForDashboard = function () {
