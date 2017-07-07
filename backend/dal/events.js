@@ -9,8 +9,8 @@ module.exports = function(connection) {
         'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
         'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
         'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
-      }
-    }
+      };
+    },
 
     add: (type, userId, conversationId, data) => {
       let metadata = JSON.stringify(data);
@@ -40,7 +40,7 @@ module.exports = function(connection) {
           'type varchar(255) NOT NULL, ',
           'conversationId int(255), ',
           'userId int(255), ',
-          'metadata varchar(255), ',
+          'metadata varchar(255) NOT NULL, ',
           'date datetime, ',
           'FOREIGN KEY (userId) REFERENCES users(id), ',
           'FOREIGN KEY (conversationId) REFERENCES conversations(id) ',
