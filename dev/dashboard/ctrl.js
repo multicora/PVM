@@ -19,6 +19,7 @@
     var vm = this;
     vm.sentConversation = 0;
     vm.openedConversation = 0;
+    vm.videoIsWatched = 0;
     vm.messages = null;
 
     getConversation();
@@ -80,6 +81,10 @@
         vm.conversations.map(function(conversation) {
           if (conversation.viewed) {
             vm.openedConversation++;
+          }
+
+          if (conversation.videoIsWatched) {
+            vm.videoIsWatched++;
           }
         });
 

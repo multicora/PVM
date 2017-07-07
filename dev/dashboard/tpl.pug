@@ -4,6 +4,30 @@
   .dashboard-container
     .performance-container
       h2.title Dashboard
+      .cards
+        dashboard-card(
+          class-name="messages"
+          icon="message"
+          title="Messages send"
+          data="vm.sentConversation")
+        dashboard-card(
+          title="Messages opend"
+          data="vm.openedConversation")
+        dashboard-card(
+          class-name="videos"
+          icon="videocam"
+          title="Video watched"
+          data="vm.videoIsWatched")
+        dashboard-card(
+          class-name="replies"
+          title="Replies received"
+          data="0")
+        dashboard-card(
+          class-name="files"
+          icon="insert_drive_file"
+          title="Files downloaded"
+          data="0")
+
       p.content-title Your weekly performance
       .content
         .info-container
