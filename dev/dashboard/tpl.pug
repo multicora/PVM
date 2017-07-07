@@ -27,29 +27,6 @@
           icon="insert_drive_file"
           title="Files downloaded"
           data="0")
-
-      p.content-title Your weekly performance
-      .content
-        .info-container
-          .info
-            p.name Messages sent
-            p.number(ng-bind="vm.sentConversation")
-          .info
-            p.name Messages opened
-            p.number(ng-bind="vm.openedConversation")
-          .info
-            p.name Videos watched
-            p.number 0
-          .info
-            p.name Replies received
-            p.number 0
-          .info
-            p.name Files downloaded
-            p.number 0
-        .diagram-content
-          .chart-message(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configMessage")
-          //- Will be using when will be implemented video watched notificatio
-          //- .chart-video(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configVideo")
     .messages-container
       p.content-title Recent activities
       .message-content(ng-repeat="item in vm.messages")

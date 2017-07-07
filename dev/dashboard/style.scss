@@ -37,37 +37,6 @@
     font-family: 'Roboto Thin';
   }
 
-  .performance-container {
-    .info-container {
-      display: inline-block;
-      text-align: right;
-      border-right: 1px solid rgba(0, 0, 0, .14);
-      width: 50%;
-      box-sizing: border-box;
-      padding-right: 5px;
-      vertical-align: top;
-
-      .info {
-        margin-bottom: 5px;
-
-        .name {
-          display: inline-block;
-          text-align: left;
-          width: 120px;
-          padding: 0;
-          margin: 0;
-        }
-
-        .number {
-          margin: 0;
-          display: inline-block;
-          width: 20px;
-          text-align: center;
-        }
-      }
-    }
-  }
-
   .cards {
     margin: 20px auto;
     display: flex;
@@ -151,12 +120,3 @@
   box-sizing: border-box;
   padding-left: 10px;
 }
-
-// Will be using when will be implemented video watched notificatio
-// .chart-video {
-//   width: 144px;
-//   height: 125px;
-//   position: absolute;
-//   top: 15px;
-//   left: 16px;
-// }

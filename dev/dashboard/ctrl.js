@@ -53,21 +53,6 @@
 
     });
 
-    vm.configMessage = {
-      labels: false,
-      title: '',
-      innerRadius: '45',
-      colors: ['#2196F3', '#E3F2FD']
-    };
-
-    // Will be using when will be implemented video watched notificatio
-    // vm.configVideo = {
-    //   "labels": false,
-    //   "title": '',
-    //   "innerRadius": '39',
-    //   "colors" : ['#8BC34A', '#F1F8E9']
-    // }
-
     vm.redirectToConversation = function (id) {
       $location.path('conversation/' + id);
     };
@@ -87,24 +72,6 @@
             vm.videoIsWatched++;
           }
         });
-
-        vm.data = {
-          series: ['Sent', 'Opened'],
-          data: [{
-            x: 'Sent',
-            y: [
-              50
-            ],
-            tooltip: 'Sent'
-          },
-          {
-            x: 'Opened',
-            y: [
-              10
-            ],
-            tooltip: 'Opened'
-          }]
-        };
       });
     }
 
