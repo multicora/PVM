@@ -30,8 +30,8 @@
       return $http.get('/api/chat/' + id);
     };
 
-    this.videoWatched = function (id) {
-      return $http.get('/api/video-watched/' + id);
+    this.videoWatched = function (data) {
+      return $http.post('/api/video-watched', data);
     };
 
     this.videoIsWatching = function (id) {

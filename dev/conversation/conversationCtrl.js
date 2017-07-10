@@ -59,7 +59,10 @@
 
     $scope.$on('vjsVideoReady', function (e, data) {
       data.player.one('ended', function() {
-        conversationsService.videoWatched(vm.conversation.id);
+        conversationsService.videoWatched({
+          conversationId: vm.conversation.id,
+          videoId: vm.conversation.videoId
+        });
       });
       data.player.one('click', function() {
         conversationsService.videoIsWatching(vm.conversation.id);

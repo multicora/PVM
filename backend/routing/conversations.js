@@ -252,33 +252,27 @@ module.exports = function (server, DAL) {
    */
 
   server.route({
-    method: 'GET',
-    path: '/api/video-watched/{id}',
+    method: 'POST',
+    path: '/api/video-watched',
     config: {
       handler: function (request, reply) {
-        let conversationId = request.params.id;
+        let conversationId = request.payload.conversationId;
+        let videoId = request.payload.videoId;
         let serverUrl = utils.getServerUrl(request);
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
+        let user;
 
         let needToMarkPromise = function() {
           return new Promise((resolve) => {
-            let isWatched;
-
-            DAL.conversations.getById(conversationId).then((res) => {
-              isWatched = res.videoIsWatched;
-
-              return usersCtrl.getUserByToken(token.value);
-            }).then((user) => {
+            usersCtrl.getUserByToken(token.value).then(res => {
+              user = res;
 
               if (conversation.author === user.id) {
                 resolve(false);
               } else {
-                resolve(!isWatched);
+                resolve(true);
               }
-            }, () => {
-
-              resolve(!isWatched);
             });
           });
         };
@@ -288,8 +282,28 @@ module.exports = function (server, DAL) {
           return needToMarkPromise();
         }).then(res => {
           if (res) {
-            return DAL.conversations.markAsWatched(conversation.id).then(() => {
-              return notificationsCtrl.videoWatched(conversation, serverUrl + '/conversation/' + conversation.id);
+            return DAL.events.get(DAL.events.types().VIDEO_IS_WATCHED, user.id, conversation.id).then(res => {
+              let result = null;
+              let isWatched = false;
+
+              for (let i = 0; i < res.length; i++) {
+                if (JSON.parse(res[i].metadata).videoId === videoId) {
+                  isWatched = true;
+                  break;
+                }
+              }
+
+              if (isWatched) {
+                result = notificationsCtrl.videoWatched(conversation, serverUrl +
+                  '/conversation/' +
+                  conversation.id);
+              }
+
+              return result;
+            }).then(() => {
+              return DAL.events.add(DAL.events.types().VIDEO_IS_WATCHED, user.id, conversation.id, {
+                'videoId': videoId
+              });
             }).then(() => {
               return DAL.conversations.updateTime(conversation.id);
             });
