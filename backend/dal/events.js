@@ -27,6 +27,24 @@ module.exports = function(connection) {
       });
     },
 
+    getByConversationId: (conversationId) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.select()
+          .from('events')
+          .field('conversationId')
+          .field('userId')
+          .field('date')
+          .field('type')
+          .field('metadata')
+          .where('conversationId = ' + conversationId)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     add: (type, userId, conversationId, data) => {
       let metadata = JSON.stringify(data);
       return new Promise((resolve, reject) => {
