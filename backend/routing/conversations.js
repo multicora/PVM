@@ -163,17 +163,46 @@ module.exports = function (server, DAL) {
         let token = usersCtrl.parseToken(request.headers.authorization);
         let serverUrl = utils.getServerUrl(request);
         let conversation;
+        let user;
+
+        let needToMarkPromise = function() {
+          return new Promise((resolve) => {
+            usersCtrl.getUserByToken(token.value).then(res => {
+              user = res;
+
+              if (conversation.author === user.id) {
+                resolve(false);
+              } else {
+                resolve(true);
+              }
+            });
+          });
+        };
 
         conversationCtrl.get(request.params.id).then((res) => {
           conversation = res;
 
-          return conversationCtrl.needToMarkAsViewed(conversation, token.value).then((res) => {
-            let result;
-            if (res) {
-              result = conversationCtrl.markAsViewed(conversation, serverUrl);
-            }
-            return result;
-          });
+          return needToMarkPromise();
+        }).then(res => {
+          if (res) {
+            return DAL.events.get(DAL.events.types().CONVERSATION_IS_VIEWED, user.id, conversation.id).then(res => {
+              let result = null;
+
+              if (!res.length) {
+                result = notificationsCtrl.conversationOpened(conversation, serverUrl +
+                  '/conversation/' +
+                  conversation.id);
+              }
+
+              return result;
+            }).then(() => {
+              return DAL.events.add(DAL.events.types().CONVERSATION_IS_VIEWED, user.id, conversation.id, {});
+            }).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
+            });
+          } else {
+            return Promise.resolve();
+          }
         }).then(() => {
           reply(conversation);
         }).catch((err) => {
@@ -310,16 +339,8 @@ module.exports = function (server, DAL) {
           if (res) {
             return DAL.events.get(DAL.events.types().VIDEO_IS_WATCHED, user.id, conversation.id).then(res => {
               let result = null;
-              let isWatched = false;
 
-              for (let i = 0; i < res.length; i++) {
-                if (JSON.parse(res[i].metadata).videoId === videoId) {
-                  isWatched = true;
-                  break;
-                }
-              }
-
-              if (!isWatched) {
+              if (!res.length) {
                 result = notificationsCtrl.videoWatched(conversation, serverUrl +
                   '/conversation/' +
                   conversation.id);

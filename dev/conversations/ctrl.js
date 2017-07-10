@@ -46,8 +46,6 @@
           });
         });
 
-        console.log(vm.conversationsList);
-
         return libraryService.getConversationsToUser();
       }).then(function (res) {
         vm.conversationsToUserList = res.data;
