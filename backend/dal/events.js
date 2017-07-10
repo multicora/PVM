@@ -18,7 +18,7 @@ module.exports = function(connection) {
         const request = sqlBuilder.select()
           .from('events')
           .field('metadata')
-          .where('type = "' + type + '" AND userId = ' + userId + ' AND conversationId = ' + conversationId)
+          .where(`type = "${type}" AND userId = ${userId} AND conversationId = ${conversationId}`)
           .toString();
 
         connection.query(request, (err, response) => {
@@ -36,7 +36,7 @@ module.exports = function(connection) {
           .field('date')
           .field('type')
           .field('metadata')
-          .where('conversationId = ' + conversationId)
+          .where(`conversationId = ${conversationId}`)
           .toString();
 
         connection.query(request, (err, response) => {
