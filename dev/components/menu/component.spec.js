@@ -9,7 +9,8 @@ describe('appMenu component', function() {
   beforeEach(module('app'));
   beforeEach(module(function ($provide) {
     $provide.value('$location', {
-      path: jasmine.createSpy('path')
+      path: jasmine.createSpy('path'),
+      url: jasmine.createSpy('url')      
     });
   }));
   beforeEach(inject(function($componentController, $location) {

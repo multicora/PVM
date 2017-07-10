@@ -106,11 +106,10 @@ describe('conversationsService', function() {
 
   describe('fileDownloaded', function () {
     it('should send a request', function() {
-      var id = 'id';
-      var url = '/api/file-downloaded/' + id;
-      conversationsService.fileDownloaded(id);
+      var url = '/api/file-downloaded';
+      conversationsService.fileDownloaded({});
 
-      httpBackend.expect('GET', url).respond({});
+      httpBackend.expect('POST', url).respond({});
 
       httpBackend.flush();
     });
