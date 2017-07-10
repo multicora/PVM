@@ -18,6 +18,7 @@ const DB = {
 };
 
 var config = {
+  debugMode: false,
   db: {
     type: DB.TYPES.MySQL,
     dbName: 'pvmdb',
