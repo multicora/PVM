@@ -82,11 +82,10 @@ describe('conversationsService', function() {
 
   describe('videoWatched', function () {
     it('should send a request', function() {
-      var id = 'id';
-      var url = '/api/video-watched/' + id;
-      conversationsService.videoWatched(id);
+      var url = '/api/video-watched';
+      conversationsService.videoWatched();
 
-      httpBackend.expect('GET', url).respond({});
+      httpBackend.expect('POST', url).respond({});
 
       httpBackend.flush();
     });
@@ -94,11 +93,10 @@ describe('conversationsService', function() {
 
   describe('videoIsWatching', function () {
     it('should send a request', function() {
-      var id = 'id';
-      var url = '/api/video-is-watching/' + id;
-      conversationsService.videoIsWatching(id);
+      var url = '/api/video-is-watching';
+      conversationsService.videoIsWatching();
 
-      httpBackend.expect('GET', url).respond({});
+      httpBackend.expect('POST', url).respond({});
 
       httpBackend.flush();
     });
