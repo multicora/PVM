@@ -34,8 +34,8 @@
       return $http.post('/api/video-watched', data);
     };
 
-    this.videoIsWatching = function (id) {
-      return $http.get('/api/video-is-watching/' + id);
+    this.videoIsWatching = function (data) {
+      return $http.post('/api/video-is-watching', data);
     };
 
     this.fileDownloaded = function (data) {

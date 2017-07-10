@@ -8,6 +8,7 @@ module.exports = function(connection) {
       return {
         'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
         'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
+        'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
         'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
       };
     },

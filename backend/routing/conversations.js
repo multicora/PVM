@@ -184,9 +184,10 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/video-watched/:id Request for send notification about watching video.
+   * @api {post} /api/video-is-watching Request for send notification about watching video.
    *
-   * @apiParam {String}   id               conversation id.
+   * @apiParam {String}   conversationId               conversation id.
+   * @apiParam {String}   videoId                      video id.
    *
    * @apiName VideoIsWatching
    * @apiGroup Conversations
@@ -203,26 +204,50 @@ module.exports = function (server, DAL) {
    */
 
   server.route({
-    method: 'GET',
-    path: '/api/video-is-watching/{id}',
+    method: 'POST',
+    path: '/api/video-is-watching',
     config: {
       handler: function (request, reply) {
-        let conversationId = request.params.id;
+        let conversationId = request.payload.conversationId;
+        let videoId = request.payload.videoId;
         let serverUrl = utils.getServerUrl(request);
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
+        let user;
+
+        let needToMarkPromise = function() {
+          return new Promise((resolve) => {
+            usersCtrl.getUserByToken(token.value).then(res => {
+              user = res;
+
+              if (conversation.author === user.id) {
+                resolve(false);
+              } else {
+                resolve(true);
+              }
+            });
+          });
+        };
 
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return conversationCtrl.needToSendPromise(conversation, token);
+          return needToMarkPromise();
         }).then(res => {
+          let result = null;
+
           if (res) {
-            return notificationsCtrl.videoIsWatching(conversation, serverUrl + '/conversation/' + conversation.id).then(() => {
-              return DAL.conversations.updateTime(conversation.id);
-            });
-          } else {
-            return Promise.resolve();
+            result = notificationsCtrl.videoIsWatching(conversation, serverUrl +
+              '/conversation/' +
+              conversation.id);
           }
+
+          return result;
+        }).then(() => {
+          return DAL.events.add(DAL.events.types().VIDEO_IS_WATCHING, user.id, conversation.id, {
+            'videoId': videoId
+          });
+        }).then(() => {
+          return DAL.conversations.updateTime(conversation.id);
         }).then(() => {
           reply({'status': 'success'});
         }, err => {
@@ -233,9 +258,10 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/video-watched/:id Request for update conversation video watched status
+   * @api {post} /api/video-watched Request for update conversation video watched status
    *
-   * @apiParam {String}   id               conversation id.
+   * @apiParam {String}   conversationId               conversation id.
+   * @apiParam {String}   videoId                      video id.
    *
    * @apiName VideoWatched
    * @apiGroup Templates
@@ -293,7 +319,7 @@ module.exports = function (server, DAL) {
                 }
               }
 
-              if (isWatched) {
+              if (!isWatched) {
                 result = notificationsCtrl.videoWatched(conversation, serverUrl +
                   '/conversation/' +
                   conversation.id);
@@ -320,9 +346,10 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/file-downloaded/:id Request for update conversation file downloaded status
+   * @api {post} /api/file-downloaded Request for update conversation file downloaded status
    *
-   * @apiParam {String}   id               conversation id.
+   * @apiParam {String}   conversationId               conversation id.
+   * @apiParam {String}   fileId                       file id.
    *
    * @apiName VideoWatched
    * @apiGroup Templates
@@ -381,7 +408,7 @@ module.exports = function (server, DAL) {
                 }
               }
 
-              if (isDownloaded) {
+              if (!isDownloaded) {
                 result = notificationsCtrl.fileDownloaded(conversation, serverUrl +
                   '/conversation/' +
                   conversation.id);

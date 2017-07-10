@@ -65,7 +65,10 @@
         });
       });
       data.player.one('click', function() {
-        conversationsService.videoIsWatching(vm.conversation.id);
+        conversationsService.videoIsWatching({
+          conversationId: vm.conversation.id,
+          videoId: vm.conversation.videoId
+        });
       });
     });
 
