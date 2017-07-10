@@ -52,9 +52,6 @@ module.exports = (connection) => {
           .from('conversations')
           .field('id')
           .field('email')
-          .field('viewed')
-          .field('videoIsWatched')
-          .field('file_is_downloaded')
           .field('title')
           .field('message')
           .field('updated')
@@ -73,7 +70,6 @@ module.exports = (connection) => {
           .from('conversations')
           .field('id')
           .field('author')
-          .field('viewed')
           .field('title')
           .field('message')
           .field('updated')
@@ -165,49 +161,6 @@ module.exports = (connection) => {
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response[0]);
-        });
-      });
-    },
-
-    markAsViewed: (id) => {
-      return new Promise((resolve, reject) => {
-        const request = sqlBuilder.update()
-          .table('conversations')
-          .set('viewed', true)
-          .set('updated', sqlBuilder.str('NOW()'))
-          .where('id = ' + id)
-          .toString();
-
-        connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response);
-        });
-      });
-    },
-
-    markAsWatched: (id) => {
-      return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE `conversations` ',
-          'SET videoIsWatched=TRUE ',
-          'WHERE id=' + id + ';'
-        ].join('');
-
-        connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response);
-        });
-      });
-    },
-
-    markAsDownloaded: (id) => {
-      return new Promise((resolve, reject) => {
-        const request = sqlBuilder.update()
-          .table('conversations')
-          .set('file_is_downloaded', true)
-          .where('id = ' + id)
-          .toString();
-
-        connection.query(request, (err, response) => {
-          err ? reject(err) : resolve(response);
         });
       });
     },
@@ -349,6 +302,17 @@ module.exports = (connection) => {
     changeVideoIsWatchedFieldName: function (cb) {
       const request = [
         'ALTER TABLE conversations CHANGE video_is_watched videoIsWatched VARCHAR(255);'
+      ].join('');
+
+      return connection.query(request, cb);
+    },
+
+    deleteColomns: function (cb) {
+      const request = [
+        'ALTER TABLE `conversations` ',
+        'DROP `viewed`, ',
+        'DROP `videoIsWatched`, ',
+        'DROP `file_is_downloaded`;'
       ].join('');
 
       return connection.query(request, cb);
