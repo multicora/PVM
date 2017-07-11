@@ -133,8 +133,6 @@ module.exports = function (DAL) {
         };
 
         return mailer(config).send(mail);
-      }, err => {
-        return err;
       });
     }
   };

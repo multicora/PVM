@@ -69,17 +69,22 @@ module.exports = function(DAL) {
         return conversation;
       });
     },
-    needToMarkAsViewed: function (conversation, token) {
-      const isViewed = !!conversation.viewed;
+    needToMarkPromise: function(token, author) {
+      return new Promise((resolve) => {
+        usersCtrl.getUserByToken(token).then(res => {
 
-      return usersCtrl.getUserByToken(token).then((user) => {
-        if (conversation.author === user.id) {
-          return false;
-        } else {
-          return !isViewed;
-        }
-      }).catch(() => {
-        return !isViewed;
+          if (author === res.id) {
+            resolve({
+              user: res,
+              result: false
+            });
+          } else {
+            resolve({
+              user: res,
+              result: true
+            });
+          }
+        });
       });
     },
     markAsViewed: (conversation, serverUrl) => {

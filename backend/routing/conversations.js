@@ -165,27 +165,15 @@ module.exports = function (server, DAL) {
         let conversation;
         let user;
 
-        let needToMarkPromise = function() {
-          return new Promise((resolve) => {
-            usersCtrl.getUserByToken(token.value).then(res => {
-              user = res;
-
-              if (conversation.author === user.id) {
-                resolve(false);
-              } else {
-                resolve(true);
-              }
-            });
-          });
-        };
-
         conversationCtrl.get(request.params.id).then((res) => {
           conversation = res;
 
-          return needToMarkPromise();
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
-          if (res) {
-            return DAL.events.get(DAL.events.types().CONVERSATION_IS_VIEWED, user.id, conversation.id).then(res => {
+          user = res.user;
+
+          if (res.result) {
+            return DAL.events.get(DAL.events.types.CONVERSATION_IS_VIEWED, user.id, conversation.id).then(res => {
               let result = null;
 
               if (!res.length) {
@@ -196,7 +184,7 @@ module.exports = function (server, DAL) {
 
               return result;
             }).then(() => {
-              return DAL.events.add(DAL.events.types().CONVERSATION_IS_VIEWED, user.id, conversation.id, {});
+              return DAL.events.add(DAL.events.types.CONVERSATION_IS_VIEWED, user.id, conversation.id, {});
             }).then(() => {
               return DAL.conversations.updateTime(conversation.id);
             });
@@ -244,23 +232,9 @@ module.exports = function (server, DAL) {
         let conversation;
         let user;
 
-        let needToMarkPromise = function() {
-          return new Promise((resolve) => {
-            usersCtrl.getUserByToken(token.value).then(res => {
-              user = res;
-
-              if (conversation.author === user.id) {
-                resolve(false);
-              } else {
-                resolve(true);
-              }
-            });
-          });
-        };
-
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return needToMarkPromise();
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
           let result = null;
 
@@ -272,7 +246,7 @@ module.exports = function (server, DAL) {
 
           return result;
         }).then(() => {
-          return DAL.events.add(DAL.events.types().VIDEO_IS_WATCHING, user.id, conversation.id, {
+          return DAL.events.add(DAL.events.types.VIDEO_IS_WATCHING, user.id, conversation.id, {
             'videoId': videoId
           });
         }).then(() => {
@@ -318,26 +292,12 @@ module.exports = function (server, DAL) {
         let conversation;
         let user;
 
-        let needToMarkPromise = function() {
-          return new Promise((resolve) => {
-            usersCtrl.getUserByToken(token.value).then(res => {
-              user = res;
-
-              if (conversation.author === user.id) {
-                resolve(false);
-              } else {
-                resolve(true);
-              }
-            });
-          });
-        };
-
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return needToMarkPromise();
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
           if (res) {
-            return DAL.events.get(DAL.events.types().VIDEO_IS_WATCHED, user.id, conversation.id).then(res => {
+            return DAL.events.get(DAL.events.types.VIDEO_IS_WATCHED, user.id, conversation.id).then(res => {
               let result = null;
 
               if (!res.length) {
@@ -348,7 +308,7 @@ module.exports = function (server, DAL) {
 
               return result;
             }).then(() => {
-              return DAL.events.add(DAL.events.types().VIDEO_IS_WATCHED, user.id, conversation.id, {
+              return DAL.events.add(DAL.events.types.VIDEO_IS_WATCHED, user.id, conversation.id, {
                 'videoId': videoId
               });
             }).then(() => {
@@ -399,26 +359,12 @@ module.exports = function (server, DAL) {
         let conversation;
         let user;
 
-        let needToMarkPromise = function() {
-          return new Promise((resolve) => {
-            usersCtrl.getUserByToken(token.value).then(res => {
-              user = res;
-
-              if (conversation.author === user.id) {
-                resolve(false);
-              } else {
-                resolve(true);
-              }
-            });
-          });
-        };
-
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return needToMarkPromise();
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
           if (res) {
-            return DAL.events.get(DAL.events.types().FILE_IS_DOWNLOADED, user.id, conversation.id).then(res => {
+            return DAL.events.get(DAL.events.types.FILE_IS_DOWNLOADED, user.id, conversation.id).then(res => {
               let result = null;
               let isDownloaded = false;
 
@@ -437,7 +383,7 @@ module.exports = function (server, DAL) {
 
               return result;
             }).then(() => {
-              return DAL.events.add(DAL.events.types().FILE_IS_DOWNLOADED, user.id, conversation.id, {
+              return DAL.events.add(DAL.events.types.FILE_IS_DOWNLOADED, user.id, conversation.id, {
                 'fileId': fileId
               });
             }).then(() => {
@@ -454,7 +400,6 @@ module.exports = function (server, DAL) {
       }
     }
   });
-
 
   /**
    * @api {get} /api/template/:id Request template

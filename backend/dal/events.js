@@ -4,13 +4,11 @@ const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
-    types: () => {
-      return {
-        'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
-        'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
-        'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
-        'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
-      };
+    types: {
+      'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
+      'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
+      'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
+      'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
     },
 
     get: (type, userId, conversationId) => {
