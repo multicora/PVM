@@ -305,17 +305,6 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    },
-
-    deleteColomns: function (cb) {
-      const request = [
-        'ALTER TABLE `conversations` ',
-        'DROP `viewed`, ',
-        'DROP `videoIsWatched`, ',
-        'DROP `file_is_downloaded`;'
-      ].join('');
-
-      return connection.query(request, cb);
     }
   };
 };

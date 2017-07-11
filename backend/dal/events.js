@@ -59,26 +59,6 @@ module.exports = function(connection) {
           err ? reject(err) : resolve(response);
         });
       });
-    },
-
-    // For migrations
-    createTable: function(cb) {
-      let request = [
-        'CREATE TABLE ',
-        'events ',
-        '(',
-          'id int(255) NOT NULL AUTO_INCREMENT UNIQUE, ',
-          'type varchar(255) NOT NULL, ',
-          'conversationId int(255), ',
-          'userId int(255), ',
-          'metadata varchar(255) NOT NULL, ',
-          'date datetime, ',
-          'FOREIGN KEY (userId) REFERENCES users(id), ',
-          'FOREIGN KEY (conversationId) REFERENCES conversations(id) ',
-        ') '
-      ].join('');
-
-      return connection.query(request, cb);
     }
   };
 };
