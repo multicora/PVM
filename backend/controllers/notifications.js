@@ -9,12 +9,15 @@ module.exports = function (DAL) {
   return {
     conversationOpened: (conversation, link) => {
       let user;
+      let sender;
+
       return DAL.users.getUserById(conversation.author).then(res => {
         user = res;
         user.firstName = user.firstName || '';
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        sender = res.firstName + ' ' + res.secondName;
 
         return DAL.notifications.add(
           notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
@@ -33,7 +36,8 @@ module.exports = function (DAL) {
           to: user.email,
           subject: 'Notification from conversation',
           text: message,
-          html: template.html
+          html: template.html,
+          from: sender || 'Bizkonect'
         };
 
         return mailer(config).send(mail);
@@ -42,12 +46,15 @@ module.exports = function (DAL) {
 
     videoWatched: (conversation, link) => {
       let user;
+      let sender;
+
       return DAL.users.getUserById(conversation.author).then((res) => {
         user = res;
         user.firstName = user.firstName || '';
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        sender = res.firstName + ' ' + res.secondName;
 
         return DAL.notifications.add(
           notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
@@ -65,7 +72,8 @@ module.exports = function (DAL) {
           to: user.email,
           subject: 'Notification from conversation',
           text: res.text,
-          html: res.html
+          html: res.html,
+          from: sender || 'Bizkonect'
         };
 
         return mailer(config).send(mail);
@@ -74,12 +82,15 @@ module.exports = function (DAL) {
 
     videoIsWatching: (conversation, link) => {
       let user;
+      let sender;
+
       return DAL.users.getUserById(conversation.author).then((res) => {
         user = res;
         user.firstName = user.firstName || '';
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        sender = res.firstName + ' ' + res.secondName;
 
         return DAL.notifications.add(
           notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
@@ -97,7 +108,8 @@ module.exports = function (DAL) {
           to: user.email,
           subject: 'Notification from conversation',
           text: res.text,
-          html: res.html
+          html: res.html,
+          from: sender || 'Bizkonect'
         };
 
         return mailer(config).send(mail);
@@ -106,12 +118,15 @@ module.exports = function (DAL) {
 
     fileDownloaded: (conversation, link) => {
       let user;
+      let sender;
+
       return DAL.users.getUserById(conversation.author).then((res) => {
         user = res;
         user.firstName = user.firstName || '';
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        sender = res.firstName + ' ' + res.secondName;
 
         return DAL.notifications.add(
           notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
@@ -129,7 +144,8 @@ module.exports = function (DAL) {
           to: user.email,
           subject: 'Notification from conversation',
           text: res.text,
-          html: res.html
+          html: res.html,
+          from: sender || 'Bizkonect'
         };
 
         return mailer(config).send(mail);
