@@ -7,10 +7,12 @@
       .cards
         dashboard-card(
           class-name="messages"
-          icon="message"
+          icon="send"
           title="Messages send"
           data="vm.sentConversation")
         dashboard-card(
+          class-name="opend-message"
+          icon="drafts"
           title="Messages opend"
           data="vm.openedConversation")
         dashboard-card(
@@ -20,11 +22,12 @@
           data="vm.videoIsWatched")
         dashboard-card(
           class-name="replies"
+          icon="reply"
           title="Replies received"
           data="0")
         dashboard-card(
           class-name="files"
-          icon="insert_drive_file"
+          icon="attach_file"
           title="Files downloaded"
           data="0")
     .messages-container
