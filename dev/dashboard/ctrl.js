@@ -8,18 +8,27 @@
     '$scope',
     '$location',
     '$mdToast',
-    'conversationsService'
+    'conversationsService',
+    'libraryService'
   ];
   function ctrl(
     $scope,
     $location,
     $mdToast,
-    conversationsService
+    conversationsService,
+    libraryService
   ) {
     var vm = this;
+    var types = {
+      'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
+      'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
+      'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
+      'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
+    };
     vm.sentConversation = 0;
     vm.openedConversation = 0;
     vm.videoIsWatched = 0;
+    vm.fileIsDownloaded = 0;
     vm.messages = null;
 
     getConversation();
@@ -60,16 +69,22 @@
     function getConversation() {
       // TODO: add .catch() part
       conversationsService.getByAuthor().then(function (res) {
+        let conversationsId = [];
         vm.conversations = res.data;
-
         vm.sentConversation = vm.conversations.length;
-        vm.conversations.map(function(conversation) {
-          if (conversation.viewed) {
-            vm.openedConversation++;
-          }
 
-          if (conversation.videoIsWatched) {
+        vm.conversations.forEach(function(conversation) {
+          conversationsId.push(conversation.id);
+        });
+        return libraryService.getEvents(conversationsId);
+      }).then(function(res) {
+        res.data.forEach(function(event) {
+          if (event.type === types.CONVERSATION_IS_VIEWED) {
+            vm.openedConversation++;
+          } else  if (event.type === types.VIDEO_IS_WATCHED) {
             vm.videoIsWatched++;
+          } else  if (event.type === types.FILE_IS_DOWNLOADED) {
+            vm.fileIsDownloaded++;
           }
         });
       });

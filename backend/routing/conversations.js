@@ -237,8 +237,9 @@ module.exports = function (server, DAL) {
           return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
           let result = null;
+          user = res.user;
 
-          if (res) {
+          if (res.result) {
             result = notificationsCtrl.videoIsWatching(conversation, serverUrl +
               '/conversation/' +
               conversation.id);
@@ -296,7 +297,9 @@ module.exports = function (server, DAL) {
           conversation = res;
           return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
-          if (res) {
+          user = res.user;
+
+          if (res.result) {
             return DAL.events.get(DAL.events.types.VIDEO_IS_WATCHED, user.id, conversation.id).then(res => {
               let result = null;
 
@@ -363,7 +366,9 @@ module.exports = function (server, DAL) {
           conversation = res;
           return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
-          if (res) {
+          user = res.user;
+
+          if (res.result) {
             return DAL.events.get(DAL.events.types.FILE_IS_DOWNLOADED, user.id, conversation.id).then(res => {
               let result = null;
               let isDownloaded = false;
