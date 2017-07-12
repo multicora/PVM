@@ -312,7 +312,7 @@
         vm.companyRole.role = res.data.companyRole;
         vm.messageObj.message = res.data.message;
         vm.titleObj.title = res.data.title;
-        vm.logo = res.data.logo;
+        vm.logo = res.data.logo || vm.logo;
         vm.videoId = res.data.videoId;
         vm.filesArr = res.data.files;
         vm.media = {
@@ -360,6 +360,10 @@
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
         vm.user.name = res.data.firstName + ' ' + res.data.secondName;
+
+        return profileService.getCompany(vm.user.company);
+      }).then(function(res) {
+        vm.logo = res.data.logo;
       });
     };
 
