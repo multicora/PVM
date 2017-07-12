@@ -69,7 +69,7 @@
     function getConversation() {
       // TODO: add .catch() part
       conversationsService.getByAuthor().then(function (res) {
-        let conversationsId = [];
+        var conversationsId = [];
         vm.conversations = res.data;
         vm.sentConversation = vm.conversations.length;
 
@@ -87,6 +87,13 @@
             vm.fileIsDownloaded++;
           }
         });
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     }
 

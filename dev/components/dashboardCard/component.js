@@ -7,11 +7,10 @@
     bindings: {
       className: '@',
       title: '@',
-      icon: '@',      
+      icon: '@',
       data: '<'
     }
   });
-
   ctrl.$inject = [
   ];
   function ctrl(
