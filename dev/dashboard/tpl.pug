@@ -4,28 +4,32 @@
   .dashboard-container
     .performance-container
       h2.title Dashboard
-      p.content-title Your weekly performance
-      .content
-        .info-container
-          .info
-            p.name Messages sent
-            p.number(ng-bind="vm.sentConversation")
-          .info
-            p.name Messages opened
-            p.number(ng-bind="vm.openedConversation")
-          .info
-            p.name Videos watched
-            p.number 0
-          .info
-            p.name Replies received
-            p.number 0
-          .info
-            p.name Files downloaded
-            p.number 0
-        .diagram-content
-          .chart-message(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configMessage")
-          //- Will be using when will be implemented video watched notificatio
-          //- .chart-video(ac-chart="'pie'" ac-data="vm.data" ac-config="vm.configVideo")
+      .cards
+        dashboard-card(
+          class-name="messages"
+          icon="send"
+          title="Messages send"
+          data="vm.sentConversation")
+        dashboard-card(
+          class-name="opend-message"
+          icon="drafts"
+          title="Messages opend"
+          data="vm.openedConversation")
+        dashboard-card(
+          class-name="videos"
+          icon="videocam"
+          title="Video watched"
+          data="vm.videoIsWatched")
+        dashboard-card(
+          class-name="replies"
+          icon="reply"
+          title="Replies received"
+          data="0")
+        dashboard-card(
+          class-name="files"
+          icon="attach_file"
+          title="Files downloaded"
+          data="vm.fileIsDownloaded")
     .messages-container
       p.content-title Recent activities
       .message-content(ng-repeat="item in vm.messages")
@@ -33,7 +37,6 @@
         p.message.ellipsis {{item.message}}
         .button-container
           md-button.message-button(ng-click="vm.redirectToConversation(item.conversationId)") reply
-          //- md-button.message-button view
 
     //- Record popup
     record-popup-wrapper

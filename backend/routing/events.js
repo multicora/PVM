@@ -13,8 +13,12 @@ module.exports = function (server, DAL) {
    * @apiGroup Events
    *
    *
-   * @apiSuccess {Object[]}   events           Events.
-   * @apiSuccess {String}   status.status    Status.
+   * @apiSuccess {Object[]}   events                       Events.
+   * @apiSuccess {String}     event.id                     Event id.
+   * @apiSuccess {String}     event.userId                 Event user id.
+   * @apiSuccess {String}     event.conversationId         Event conversation id.
+   * @apiSuccess {String}     event.date                   Event date.
+   * @apiSuccess {String}     event.metadata               Event metadata.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -60,3 +64,4 @@ module.exports = function (server, DAL) {
     }
   });
 };
+

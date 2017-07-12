@@ -8,17 +8,27 @@
     '$scope',
     '$location',
     '$mdToast',
-    'conversationsService'
+    'conversationsService',
+    'libraryService'
   ];
   function ctrl(
     $scope,
     $location,
     $mdToast,
-    conversationsService
+    conversationsService,
+    libraryService
   ) {
     var vm = this;
+    var types = {
+      'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
+      'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
+      'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
+      'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
+    };
     vm.sentConversation = 0;
     vm.openedConversation = 0;
+    vm.videoIsWatched = 0;
+    vm.fileIsDownloaded = 0;
     vm.messages = null;
 
     getConversation();
@@ -52,21 +62,6 @@
 
     });
 
-    vm.configMessage = {
-      labels: false,
-      title: '',
-      innerRadius: '45',
-      colors: ['#2196F3', '#E3F2FD']
-    };
-
-    // Will be using when will be implemented video watched notificatio
-    // vm.configVideo = {
-    //   "labels": false,
-    //   "title": '',
-    //   "innerRadius": '39',
-    //   "colors" : ['#8BC34A', '#F1F8E9']
-    // }
-
     vm.redirectToConversation = function (id) {
       $location.path('conversation/' + id);
     };
@@ -74,32 +69,31 @@
     function getConversation() {
       // TODO: add .catch() part
       conversationsService.getByAuthor().then(function (res) {
+        var conversationsId = [];
         vm.conversations = res.data;
-
         vm.sentConversation = vm.conversations.length;
-        vm.conversations.map(function(conversation) {
-          if (conversation.viewed) {
+
+        vm.conversations.forEach(function(conversation) {
+          conversationsId.push(conversation.id);
+        });
+        return libraryService.getEvents(conversationsId);
+      }).then(function(res) {
+        res.data.forEach(function(event) {
+          if (event.type === types.CONVERSATION_IS_VIEWED) {
             vm.openedConversation++;
+          } else if (event.type === types.VIDEO_IS_WATCHED) {
+            vm.videoIsWatched++;
+          } else if (event.type === types.FILE_IS_DOWNLOADED) {
+            vm.fileIsDownloaded++;
           }
         });
-
-        vm.data = {
-          series: ['Sent', 'Opened'],
-          data: [{
-            x: 'Sent',
-            y: [
-              50
-            ],
-            tooltip: 'Sent'
-          },
-          {
-            x: 'Opened',
-            y: [
-              10
-            ],
-            tooltip: 'Opened'
-          }]
-        };
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     }
 
