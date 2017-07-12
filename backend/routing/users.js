@@ -163,7 +163,7 @@ const usersController = require('../controllers/users.js')(DAL);
           Boom.badImplementation('Server error')
         ).then(() => {
           reply();
-        }, (err) => {
+        }).catch((err) => {
           reply(Boom.badImplementation('Error while resetting password', err));
         });
       }

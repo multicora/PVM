@@ -32,7 +32,7 @@
       padding: 16px 32px;
       color: #fff;
       height: 48px;
-      box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2);
+      box-shadow: 0 12px 20px -10px rgba(112, 157, 228, .28), 0 4px 20px 0px rgba(0, 0, 0, .12), 0 7px 8px -5px rgba(112, 157, 228, .2);
     }
 
     .title {
@@ -87,20 +87,29 @@
     }
   }
 
-  .profile-photo {
-    width: 120px;
-    height: 120px;
+  .profile-photo-container {
+    background-color: #fff;
     position: absolute;
     right: 0px;
-    border-radius: 50%;
-    background-size: cover;
-    background-image: url('/files/images/account_photo.svg');
     cursor: pointer;
+    border-radius: 50%;    
+    box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0, 0, 0, 0.2);
+    width: 120px;
+    height: 120px;
 
     @media (max-width: 600px) {
       width: 100px;
       height: 100px;
     }
+
+  }
+
+  .profile-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;    
+    background-size: cover;
+    background-image: url('/files/images/account_photo.svg');
   }
 
   .profile-photo {

@@ -107,7 +107,37 @@ describe('appHeader component', function() {
     });
   });
 
-  describe('markAsRead', function() {
+  describe('openConversation', function() {
+    it('should call notificationsService.markAsRead && redirect to conversation', function() {
+      var notificationId = 'id';
+      var conversationId = 'id';
+      notificationsService.getNotifications.and.callFake(function () {
+        return q.resolve({
+          data: [{
+            id: '1',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          },
+          {
+            id: '2',
+            message: 'message',
+            date: '0000-00-00 00:00:00',
+            metadata: '{"email": "email"}'
+          }]
+        });
+      });
+      var ctrl = componentController('appHeader', {
+        notificationsService: notificationsService
+      }, bindings);
+
+      ctrl.openConversation(conversationId, notificationId);
+      expect(notificationsService.markAsRead).toHaveBeenCalled();
+      expect(location.path).toHaveBeenCalledWith('conversation/' + conversationId);
+    });
+  });
+
+  describe('onClose', function() {
     it('should call notificationsService.markAsRead', function() {
       var id = 'id';
       notificationsService.getNotifications.and.callFake(function () {
@@ -130,7 +160,7 @@ describe('appHeader component', function() {
         notificationsService: notificationsService
       }, bindings);
 
-      ctrl.markAsRead(id);
+      ctrl.onClose(id);
       expect(notificationsService.markAsRead).toHaveBeenCalled();
     });
   });

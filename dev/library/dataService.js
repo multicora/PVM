@@ -45,5 +45,9 @@
     this.deleteFile = function (id) {
       return $http.post('/api/delete-file', id);
     };
+
+    this.getEvents = function (data) {
+      return $http.post('/api/events', data);
+    };
   }
 })(angular);
