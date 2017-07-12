@@ -81,9 +81,9 @@
         res.data.forEach(function(event) {
           if (event.type === types.CONVERSATION_IS_VIEWED) {
             vm.openedConversation++;
-          } else  if (event.type === types.VIDEO_IS_WATCHED) {
+          } else if (event.type === types.VIDEO_IS_WATCHED) {
             vm.videoIsWatched++;
-          } else  if (event.type === types.FILE_IS_DOWNLOADED) {
+          } else if (event.type === types.FILE_IS_DOWNLOADED) {
             vm.fileIsDownloaded++;
           }
         });
