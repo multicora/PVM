@@ -14,13 +14,6 @@
           ng-style="{backgroundImage: 'url('+ vm.conversation.logo + ')' }")
 
     .socialContainer
-      //- .social
-      //-   a.linkedin(href='')
-      //-     img(src='/files/images/linkedin.png', alt='linkedin')
-      //-   a.twitter(href='')
-      //-     img(src='/files/images/twitter.png', alt='twitter')
-      //-   a.facebook(href='')
-      //-     img(src='files/images/facebook.png', alt='facebook')
       .contacts
         .phone
           a(ng-href="tel: {{vm.conversation.authorPhone}}")
@@ -71,7 +64,7 @@
                   ng-repeat="item in vm.conversation.files"
                   download="{{item.name}}"
                   ng-href="{{item.url}}"
-                  ng-click="vm.onFileClick()")
+                  ng-click="vm.onFileClick(item.id)")
                   i.material-icons.file-icon insert_drive_file
                   p.file-name.ellipsis {{item.name}}
 

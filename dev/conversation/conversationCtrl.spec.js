@@ -102,7 +102,7 @@ describe('conversationCtrl', function() {
   });
 
   describe('back', function() {
-    it('should call "location.path" with parametr "/library"', function() {
+    it('should call "location.path" with parametr "/conversations"', function() {
       var scope = $rootScope.$new();
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
@@ -113,7 +113,7 @@ describe('conversationCtrl', function() {
 
       ctrl.back(event);
 
-      expect($location.path()).toBe('/library');
+      expect($location.path()).toBe('/conversations');
     });
   });
 
