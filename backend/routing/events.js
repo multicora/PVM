@@ -13,8 +13,12 @@ module.exports = function (server, DAL) {
    * @apiGroup Events
    *
    *
-   * @apiSuccess {Object[]}   events           Events.
-   * @apiSuccess {String}   status.status    Status.
+   * @apiSuccess {Object[]}   events                       Events.
+   * @apiSuccess {String}     event.id                     Event id.
+   * @apiSuccess {String}     event.userId                 Event user id.
+   * @apiSuccess {String}     event.conversationId         Event conversation id.
+   * @apiSuccess {String}     event.date                   Event date.
+   * @apiSuccess {String}     event.metadata               Event metadata.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -53,6 +57,45 @@ module.exports = function (server, DAL) {
           });
 
           reply(result);
+        }).catch( err => {
+          reply(Boom.badImplementation(500, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {get} /api/events Request getting events by user
+   *
+   * @apiName GetEventsByUser
+   * @apiGroup Events
+   *
+   *
+   * @apiSuccess {Object[]}   events                       Events.
+   * @apiSuccess {String}     event.id                     Event id.
+   * @apiSuccess {String}     event.userId                 Event user id.
+   * @apiSuccess {String}     event.conversationId         Event conversation id.
+   * @apiSuccess {String}     event.date                   Event date.
+   * @apiSuccess {String}     event.metadata               Event metadata.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     [{
+   *       "id": 1,
+   *       "userId": "1",
+   *       "conversationId": "1",
+   *       "date": "0000-00-00 00:00:00",
+   *       "metadata": "JSON"
+   *     }]
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/events',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.events.getByUser(request.auth.credentials.id).then( res => {
+          reply(res);
         }).catch( err => {
           reply(Boom.badImplementation(500, err));
         });
