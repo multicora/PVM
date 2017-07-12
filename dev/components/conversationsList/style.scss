@@ -8,7 +8,7 @@
   }
 
   .conversation {
-    padding: 16px 16px 24px 16px;
+    padding: 16px;
     background-color: #fff;
     position: relative;
     outline: none;
@@ -20,6 +20,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 80%;
+      opacity: .54;
+      font-size: 12px;
     }
 
     .title,
@@ -28,11 +30,11 @@
       overflow: hidden;
       text-overflow: ellipsis;
       margin-bottom: 0;
+      font-size: 14px;
       max-width: 55%;
     }
 
     .title {
-      font-size: 18px;
       font-family: 'Roboto Medium';
     }
 
@@ -43,15 +45,17 @@
     .button-container {
       position: absolute;
       right: 16px;
-      bottom: 45px;
+      bottom: 40px;
       text-align: right;
+
+      
     }
 
     .indicators {
       float: left;
       width: 20px;
       padding-right: 16px;
-      color: rgba(0, 0, 0, .87);
+      color: rgba(0, 0, 0, .54);
       border-right: 1px solid rgba(0, 0, 0, .14);
       margin-right: 16px;
       outline: none;
@@ -84,6 +88,7 @@
     .btn {
       outline: none;
       border: none;
+      color: rgba(0, 0, 0, .54);
     }
   }
 

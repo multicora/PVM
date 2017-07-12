@@ -173,8 +173,8 @@ input {
 }
 
 .app-version {
-  position: absolute;
-  bottom: 10px;
+  position: fixed;
+  bottom: 70px;
   left: 10px;
   font-family: 'Roboto Bold';
 }

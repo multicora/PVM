@@ -50,7 +50,7 @@ module.exports = function (DAL) {
       }).then(res => {
 
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
+          notificationsMessageGenerator.videoIsWatched(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
             'firstName': res.firstName,
@@ -82,7 +82,7 @@ module.exports = function (DAL) {
       }).then(res => {
 
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
+          notificationsMessageGenerator.videoIsWatching(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
             'firstName': res.firstName,
@@ -106,15 +106,15 @@ module.exports = function (DAL) {
 
     fileDownloaded: (conversation, link) => {
       let user;
+
       return DAL.users.getUserById(conversation.author).then((res) => {
         user = res;
         user.firstName = user.firstName || '';
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
-
         return DAL.notifications.add(
-          notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
+          notificationsMessageGenerator.fileIsDownloaded(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
             'firstName': res.firstName,
@@ -124,7 +124,7 @@ module.exports = function (DAL) {
       }).then(() => {
         return templates.fileDownloaded(link, user.firstName,
           ('Person with email: ' + conversation.email) || '');
-      }).then((res) => {
+      }).then(res => {
         const mail = {
           to: user.email,
           subject: 'Notification from conversation',
