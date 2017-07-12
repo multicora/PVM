@@ -3,9 +3,12 @@
 module.exports = function (config) {
   const Promise = require('promise');
 
-  let apiKey = config.mailGun.apiKey;
-  let domain = config.mailGun.domain;
-  let mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
+  const logger = require('./logger.js');
+
+  const apiKey = config.mailGun.apiKey;
+  const domain = config.mailGun.domain;
+  const mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
+
 
   return {
     /**
@@ -19,13 +22,13 @@ module.exports = function (config) {
      */
     send: (mail) => {
       return new Promise((resolve, reject) => {
-        let defaultHtml = [
+        const defaultHtml = [
           '<div style="white-space: pre;">',
             mail.text || '',
           '</div>'
         ].join('');
 
-        let data = {
+        const data = {
           from: mail.from || config.mail.defaultFrom,
           to: mail.to,
           subject: mail.subject || config.mail.defaultSubject,
@@ -33,9 +36,17 @@ module.exports = function (config) {
           html: mail.html || defaultHtml
         };
 
-        mailgun.messages().send(data, function (error, body) {
-          error ? reject(error) : resolve(body);
-        });
+        if (!config.debugMode) {
+          mailgun.messages().send(data, function (error, body) {
+            error ? reject(error) : resolve(body);
+          });
+        } else {
+          logger.print('========== Mailer stub ==========');
+          logger.print(`New message for ${mail.to}`);
+          logger.print(`${mail.text}`);
+          logger.print('========== Mailer stub end ==========');
+          resolve();
+        }
       });
     }
   };

@@ -30,16 +30,16 @@
       return $http.get('/api/chat/' + id);
     };
 
-    this.videoWatched = function (id) {
-      return $http.get('/api/video-watched/' + id);
+    this.videoWatched = function (data) {
+      return $http.post('/api/video-watched', data);
     };
 
-    this.videoIsWatching = function (id) {
-      return $http.get('/api/video-is-watching/' + id);
+    this.videoIsWatching = function (data) {
+      return $http.post('/api/video-is-watching', data);
     };
 
-    this.fileDownloaded = function (id) {
-      return $http.get('/api/file-downloaded/' + id);
+    this.fileDownloaded = function (data) {
+      return $http.post('/api/file-downloaded', data);
     };
 
     this.getChatForDashboard = function () {

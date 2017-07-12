@@ -14,7 +14,7 @@ module.exports = function (DAL) {
   return {
     verifyPassword: verifyPassword,
 
-    resetPassword: (email, serverUrl, dataError, serverError) => {
+    resetPassword: (email, serverUrl) => {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();
         DAL.users.addResetToken(resetToken, email).then((response) => {
@@ -40,8 +40,8 @@ module.exports = function (DAL) {
                 reject(err);
               }
             );
-        }, () => {
-          reject(serverError);
+        }).catch((err) => {
+          reject(err);
         });
       });
     },

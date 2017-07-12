@@ -9,10 +9,11 @@
       .upload-photo
         div.upload-label
           label(for="photo")
-            .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
-            .profile-photo(
-              ng-if="vm.user.photo && vm.user.photo != 'null'"
-              ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
+            .profile-photo-container
+              .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+              .profile-photo(
+                ng-if="vm.user.photo && vm.user.photo != 'null'"
+                ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
             input.hidden(
               type="file"
               id="photo"

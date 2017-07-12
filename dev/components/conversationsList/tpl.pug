@@ -6,25 +6,25 @@
       .indicators(
         ng-if="vm.showIndicators"
         ng-click="vm.onIndicatorClick({$event: $event})")
-        .mail(ng-if="!item.viewed")
+        .mail(ng-if="!item.CONVERSATION_IS_VIEWED")
           md-tooltip(md-direction="right") Conversation hasn't been opened yet
           i.material-icons email
-        .mail-opend(ng-if="item.viewed")
+        .mail-opend(ng-if="item.CONVERSATION_IS_VIEWED")
           md-tooltip(md-direction="right") Conversation has been opened
           i.material-icons drafts
         .is-watching(ng-if="item.viwatching")
           md-tooltip(md-direction="right") Video is watching now
           i.material-icons remove_red_eye
-        .not-viewed(ng-if="!item.videoIsWatched")
+        .not-viewed(ng-if="!item.VIDEO_IS_WATCHED")
           md-tooltip(md-direction="right") Video hasn't been watched
           i.material-icons remove_red_eye
-        .viewed(ng-if="item.videoIsWatched")
+        .viewed(ng-if="item.VIDEO_IS_WATCHED")
           md-tooltip(md-direction="right") Video has been watched
           i.material-icons remove_red_eye
-        .files(ng-if="!item.file_is_downloaded")
+        .files(ng-if="!item.FILE_IS_DOWNLOADED")
           md-tooltip(md-direction="right") Files haven't been downloaded yet
           i.material-icons insert_drive_file
-        .files-downloaded(ng-if="item.file_is_downloaded")
+        .files-downloaded(ng-if="item.FILE_IS_DOWNLOADED")
           md-tooltip(md-direction="right") Files have been downloaded
           i.material-icons insert_drive_file
 

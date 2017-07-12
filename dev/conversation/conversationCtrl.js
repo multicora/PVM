@@ -59,10 +59,16 @@
 
     $scope.$on('vjsVideoReady', function (e, data) {
       data.player.one('ended', function() {
-        conversationsService.videoWatched(vm.conversation.id);
+        conversationsService.videoWatched({
+          conversationId: vm.conversation.id,
+          videoId: vm.conversation.videoId
+        });
       });
       data.player.one('click', function() {
-        conversationsService.videoIsWatching(vm.conversation.id);
+        conversationsService.videoIsWatching({
+          conversationId: vm.conversation.id,
+          videoId: vm.conversation.videoId
+        });
       });
     });
 
@@ -75,8 +81,11 @@
       vm.headerClass = 'showHeader';
     };
 
-    vm.onFileClick = function () {
-      conversationsService.fileDownloaded(vm.conversation.id);
+    vm.onFileClick = function (fileId) {
+      conversationsService.fileDownloaded({
+        conversationId: vm.conversation.id,
+        fileId: fileId
+      });
     };
 
     vm.videoContentClick = function (event) {
