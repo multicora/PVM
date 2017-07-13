@@ -1,4 +1,24 @@
 .release-notes-page {
   width: 100%;
   min-height: 100%;
+
+  .title {
+    text-align: center;
+  }
+
+  .mdl-grid {
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+  
+  li:last-child {
+    padding-bottom: 16px;
+    border-bottom: 1px dotted rgba(0,0,0,.2);
+  }
+
+  .container {
+    max-width: 1024px;
+  }
 }
