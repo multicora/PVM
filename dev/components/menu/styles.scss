@@ -26,14 +26,19 @@
     box-shadow: none;
     background-color: none;
     color: #757575;
-    transition: .5s;
+    transition: .3s;
   }
 
   .menu-button:hover {
+    background-color: rgba(93, 144, 226, .54);
+    color: #fff;
+    transition: .3s;
+  }
+
+  .active {
     box-shadow: 4px 4px 10px 0 rgba(112, 157, 228, .5);
     background-color: rgba(93, 144, 226, 1);
     color: #fff;
-    transition: .5s;
   }
 }
 

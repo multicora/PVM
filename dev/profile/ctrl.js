@@ -21,37 +21,32 @@
     getProfile();
 
     vm.save = function() {
-      if (vm.editMod) {
-        vm.user.company = vm.user.company || '';
-        vm.user.companyPosition = vm.user.companyPosition || '';
-        vm.user.firstName = vm.user.firstName || '';
-        vm.user.secondName = vm.user.secondName || '';
-        vm.user.phone = vm.user.phone || '';
-        vm.user.photo = vm.user.photo || '';
+      vm.company.name = vm.company.name || '';
+      vm.user.companyPosition = vm.user.companyPosition || '';
+      vm.user.firstName = vm.user.firstName || '';
+      vm.user.secondName = vm.user.secondName || '';
+      vm.user.phone = vm.user.phone || '';
+      vm.user.photo = vm.user.photo || '';
 
-        profileService.updateProfile(vm.user).then(function() {
-          profileService.updateCompany(vm.company);
-        }).then(function() {
-          vm.editMod = false;
-          getProfile();
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent('Saved successfully!')
-              .position('bottom center')
-              .hideDelay(3000)
-          );
-        }).catch(function (err) {
-          // TODO: add error style
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent(err.data.error)
-              .position('bottom center')
-              .hideDelay(3000)
-          );
-        });
-      } else {
-        vm.editMod = true;
-      }
+      profileService.updateProfile(vm.user).then(function() {
+        profileService.updateCompany(vm.company);
+      }).then(function() {
+        getProfile();
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Saved successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      }).catch(function (err) {
+        // TODO: add error style
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      });
     };
 
     $scope.convertToBase64Photo = function() {
@@ -100,6 +95,7 @@
         return profileService.getCompany(vm.user.company);
       }).then(function(res) {
         vm.company = res.data;
+        vm.company.name = vm.company.name || '';
       });
     };
   }

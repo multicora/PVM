@@ -2,6 +2,7 @@
 const config = require('../config.js');
 const mailer = require('../services/mailer.js');
 const templates = require('../services/templates.js')();
+const notificationsMessageGenerator = require('../services/notificationsMessageGenerator.js')();
 
 module.exports = function (DAL) {
   const minute = 60000;
@@ -34,18 +35,31 @@ module.exports = function (DAL) {
 
   function sendNotification (data) {
     let user;
+    let author;
     DAL.users.getUserById(data.userId).then((res) => {
       user = res;
       return DAL.users.getUserById(data.authorId);
     }).then( res => {
-      return templates.newMessage(data.url, user.firstName, res.firstName + ' ' + res.secondName);
+      author = res;
+      author.firstName = author.firstName || '';
+      author.secondName = author.secondName || '';
+
+      return DAL.notifications.add(
+        notificationsMessageGenerator.newMessage(), user.id, data.conversationId, {
+          'firstName': author.firstName,
+          'secondName': author.secondName
+        }
+      );
+    }).then( () => {
+      return templates.newMessage(data.url, user.firstName, author.firstName + ' ' + author.secondName);
     }).then( template => {
 
       const mail = {
         to: user.email,
         subject: 'Notification about new message!',
         text: template.text,
-        html: template.html
+        html: template.html,
+        from: author.firstName + ' ' + author.secondName || 'Bizkonect'
       };
 
       mailer(config).send(mail);

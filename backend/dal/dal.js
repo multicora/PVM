@@ -39,5 +39,8 @@ module.exports = function(connection){
   // Notifications
   DAL.notifications = require('./notifications.js')(connection);
 
+  // Events
+  DAL.events = require('./events.js')(connection);
+
   return DAL;
 };

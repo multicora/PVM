@@ -11,7 +11,7 @@ module.exports = function(DAL) {
     get: (id) => {
       let conversationId = id;
       let conversation;
-      let filesArr = [];
+      let filesArr;
 
       // Finding conversation
       return DAL.conversations.getById(conversationId).then((res) => {
@@ -34,30 +34,22 @@ module.exports = function(DAL) {
 
         return DAL.files.getFilesByConversation(conversationId);
       }).then( res => {
-        let promises = [];
+        filesArr = res.map(file => file.id_file);
 
-        res.forEach(file => {
-          filesArr.push(file.id_file);
-        });
-
-        filesArr.forEach(id => {
-          promises.push(DAL.files.getById(id));
-        });
-
-        return Promise.all(promises);
+        return Promise.all(
+          filesArr.map(id => DAL.files.getById(id))
+        );
       }).then( res => {
-        let promises = [];
-        conversation.files = [];
-
-        res.forEach(file => {
-          conversation.files.push({name: file.name});
+        conversation.files = res.map((file) => {
+          return {
+            name: file.name,
+            id: file.id
+          };
         });
 
-        filesArr.forEach(id => {
-          promises.push(storageCtrl.getFile(id));
-        });
-
-        return Promise.all(promises);
+        return Promise.all(
+          filesArr.map(id => storageCtrl.getFile(id))
+        );
       }).then(res => {
         for (let i = 0; i < conversation.files.length; i++) {
           conversation.files[i].url = res[i];
@@ -66,17 +58,22 @@ module.exports = function(DAL) {
         return conversation;
       });
     },
-    needToMarkAsViewed: function (conversation, token) {
-      const isViewed = !!conversation.viewed;
+    needToMarkPromise: function(token, author) {
+      return new Promise((resolve) => {
+        usersCtrl.getUserByToken(token).then(res => {
 
-      return usersCtrl.getUserByToken(token).then((user) => {
-        if (conversation.author === user.id) {
-          return false;
-        } else {
-          return !isViewed;
-        }
-      }).catch(() => {
-        return !isViewed;
+          if (author === res.id) {
+            resolve({
+              user: res,
+              result: false
+            });
+          } else {
+            resolve({
+              user: res,
+              result: true
+            });
+          }
+        });
       });
     },
     markAsViewed: (conversation, serverUrl) => {

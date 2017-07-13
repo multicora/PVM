@@ -117,6 +117,13 @@
               .hideDelay(3000)
           );
           $location.path('template/' + res.data.templateId);
+        }, function(err) {
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Error: ' + err.data.message)
+              .position('bottom center')
+              .hideDelay(3000)
+          );
         });
       }
     };
@@ -162,6 +169,13 @@
             .hideDelay(3000)
         );
         $location.path('/library');
+      }, function(err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Error: ' + err.data.message)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     };
 

@@ -18,6 +18,10 @@
     width: 100%;
     padding: 2px;
     box-sizing: border-box;
+
+    .textarea-placeholder {
+      padding-left: 16px;
+    }
   }
 
   .chat-reply-text {
@@ -25,10 +29,6 @@
     width: 100%;
     border-bottom: none;
     max-height: 80px;
-  }
-
-  .chat-reply-text::placeholder {
-    font-size: 14px;
   }
 
   .send {

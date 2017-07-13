@@ -38,6 +38,7 @@
     vm.media = null;
     vm.user = null;
     vm.showUserHeader = true;
+    vm.showUserFooter = true;
     vm.messageClassName = 'income';
     vm.showLoginPopup = false;
 
@@ -58,24 +59,33 @@
 
     $scope.$on('vjsVideoReady', function (e, data) {
       data.player.one('ended', function() {
-        conversationsService.videoWatched(vm.conversation.id);
+        conversationsService.videoWatched({
+          conversationId: vm.conversation.id,
+          videoId: vm.conversation.videoId
+        });
       });
       data.player.one('click', function() {
-        conversationsService.videoIsWatching(vm.conversation.id);
+        conversationsService.videoIsWatching({
+          conversationId: vm.conversation.id,
+          videoId: vm.conversation.videoId
+        });
       });
     });
 
     vm.back = function (event) {
       event.stopPropagation();
-      $location.path('library');
+      $location.path('conversations');
     };
 
     vm.contentClick = function () {
       vm.headerClass = 'showHeader';
     };
 
-    vm.onFileClick = function () {
-      conversationsService.fileDownloaded(vm.conversation.id);
+    vm.onFileClick = function (fileId) {
+      conversationsService.fileDownloaded({
+        conversationId: vm.conversation.id,
+        fileId: fileId
+      });
     };
 
     vm.videoContentClick = function (event) {
@@ -98,6 +108,7 @@
         vm.conversation = res.data;
         if (vm.user && vm.conversation.author === vm.user.id) {
           vm.showUserHeader = false;
+          vm.showUserFooter = false;
           vm.messageClassName = '';
         }
         vm.media = {
