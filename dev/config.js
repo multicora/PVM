@@ -82,6 +82,10 @@
       controller: 'templateCtrl',
       controllerAs: 'vm',
       templateUrl: 'template/tpl.html'
+    }).when('/release-notes', {
+      controller: 'releaseNotesCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'release-notes/tpl.html'
     }).when('/', {
       redirectTo: '/library'
     }).otherwise({ redirectTo: '/' });
