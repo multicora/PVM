@@ -168,9 +168,9 @@ module.exports = function (server, DAL) {
         conversationCtrl.get(request.params.id).then((res) => {
           conversation = res;
 
-          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
         }).then(res => {
-          user = res.user;
+          user = res.user || {id: null};
 
           if (res.result) {
             return DAL.events.get(DAL.events.types.CONVERSATION_IS_VIEWED, user.id, conversation.id).then(res => {
@@ -234,7 +234,7 @@ module.exports = function (server, DAL) {
 
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
         }).then(res => {
           let result = null;
           user = res.user;
@@ -295,7 +295,7 @@ module.exports = function (server, DAL) {
 
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
         }).then(res => {
           user = res.user;
 
