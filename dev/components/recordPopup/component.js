@@ -28,14 +28,15 @@
     };
 
     vm.finishRecord = function (data) {
+      var thambnail;
+      var videoElement;
+      var canvas;
       vm.recordedData = data;
       vm.showGenerator = true;
-      var videoElement = document.getElementById('video-for-thumbnail');
-      videoElement.setAttribute('src', data.video);
-      var canvas = document.getElementById('canvas');
+      canvas = document.getElementById('canvas');
       canvas.getContext('2d').drawImage(
       videoElement, 0, 0, 300, 150);
-      canvas = canvas.toDataURL("image/png");
+      thumbnail = canvas.toDataURL("image/png");
       vm.showGenerator = false;
     };
 

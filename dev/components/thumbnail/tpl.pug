@@ -1,3 +1,7 @@
 .thumbnai-generator-container(ng-if="vm.showGenerator")
-  video#video-for-thumbnail(src="vm.data")
+  video.video-js.vjs-default-skin#video-for-thumbnail(
+    vjs-video
+    controls
+    preload="auto"
+    vjs-media="vm.data")
   canvas#canvas
