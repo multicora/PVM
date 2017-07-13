@@ -53,3 +53,15 @@
   line-height: 24px;
   margin-top: 0;
 }
+
+.app-version {
+  position: fixed;
+  bottom: 30px;
+  left: 20px;
+  font-family: 'Roboto Bold';
+
+  @media (max-width: 910px) {
+    position: static;
+    margin-left: 20px;
+  }
+}
