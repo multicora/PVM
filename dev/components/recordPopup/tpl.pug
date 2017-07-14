@@ -17,6 +17,4 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
           ng-click="vm.sendRecordClick(vm.videoName)"
           ng-disabled="!vm.recordedData") save
 
-  thumbnail(
-    show-generator='vm.showGenerator'
-    record-data="vm.recordedData")
+  thumbnail(record-data="vm.recordedData")
