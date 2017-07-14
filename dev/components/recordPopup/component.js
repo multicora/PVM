@@ -30,7 +30,7 @@
     };
 
     vm.finishRecord = function (data) {
-      var thambnail;
+      var thumbnail;
       var videoElement;
       var canvas;
       vm.recordedData = data;
@@ -39,11 +39,10 @@
       canvas = document.getElementById('canvas');
 
       console.log(vm.recordedData);
-      canvas.getContext('2d').drawImage(
-      videoElement, 0, 0, 300, 150);
+      canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
       thumbnail = canvas.toDataURL("image/png");
       vm.showGenerator = false;
-      console.log(thambnail);
+      console.log(thumbnail);
     };
 
     vm.sendRecordClick = function (name) {
