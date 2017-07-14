@@ -5,16 +5,12 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      recordData: '<'
+      media: '<'
     }
   });
 
   ctrl.$inject = [];
   function ctrl() {
     var vm = this;
-
-    vm.show = function () {
-      console.log(vm.recordData, '--------------');
-    };
   }
 })(angular);

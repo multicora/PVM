@@ -17,8 +17,21 @@ module.exports = function(connection) {
           .set('thumbnail', thumbnail)
           .toString();
 
-        connection.query(request, function (err) {
-          err ? reject(err) : resolve();
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+    addThumbnail: function (data) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.update()
+          .table('videos')
+          .set('thumbnail', data.thumbnail)
+          .where('v_id = ' + data.vieo)
+          .toString();
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
         });
       });
     },
