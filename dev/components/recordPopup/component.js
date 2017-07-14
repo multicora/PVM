@@ -35,12 +35,12 @@
       var canvas;
       vm.recordedData = data;
       vm.showGenerator = true;
+
       videoElement = document.getElementById('video-for-thumbnail');
       canvas = document.getElementById('canvas');
 
-      console.log(vm.recordedData);
       canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
-      thumbnail = canvas.toDataURL("image/png");
+      thumbnail = canvas.toDataURL('image/png');
       vm.showGenerator = false;
       console.log(thumbnail);
     };

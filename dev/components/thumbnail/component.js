@@ -11,6 +11,5 @@
 
   ctrl.$inject = [];
   function ctrl() {
-    var vm = this;
   }
 })(angular);
