@@ -6,12 +6,14 @@
     controllerAs: 'vm',
     bindings: {
       showGenerator: '@',
-      data: '@'
+      recordData: '<'
     }
   });
 
   ctrl.$inject = [];
   function ctrl() {
     var vm = this;
+
+    console.log(vm.recordData, '-----------------', vm.showGenerator);
   }
 })(angular);
