@@ -40,14 +40,14 @@ module.exports = function (server, DAL) {
           reply( Boom.badRequest('Property "file" is absent') );
         } else {
           let name;
-          if (request.payload.data && request.payload.data !== 'undefined') {
-            name = request.payload.data;
+          if (request.payload.data.name && request.payload.data.name !== undefined) {
+            name = request.payload.data.name;
           } else {
             name = request.payload.file.hapi.filename;
           }
 
           storageCtrl.addVideo(request.payload.file._data, name,
-              user.id, user.firstName + user.secondName).then( () => {
+              user.id, user.firstName + user.secondName, request.payload.data.thumbnail).then( () => {
             reply({'status': 'success'});
           }).catch( err => {
             console.error(err);

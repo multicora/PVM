@@ -23,6 +23,7 @@
   ) {
     var vm = this;
     vm.recordedData = null;
+    vm.thumbnail = null;
     vm.showGenerator = false;
 
     vm.closeRecordPopup = function () {
@@ -30,7 +31,6 @@
     };
 
     vm.finishRecord = function (data) {
-      var thumbnail;
       var videoElement;
       var canvas;
       vm.recordedData = data;
@@ -40,17 +40,21 @@
       canvas = document.getElementById('canvas');
 
       canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
-      thumbnail = canvas.toDataURL('image/png');
+      vm.thumbnail = canvas.toDataURL('image/png');
       vm.showGenerator = false;
-      console.log(thumbnail);
+      console.log(vm.thumbnail);
     };
 
     vm.sendRecordClick = function (name) {
       name = name || 'no name';
+
       uploadService.sendFile(
         '/api/video',
         vm.recordedData.video,
-        name + '.wmv'
+        {
+          name: name + '.wmv',
+          thumbnail: vm.thumbnail
+        }
       ).then(function () {
 
         vm.closeRecordPopup();

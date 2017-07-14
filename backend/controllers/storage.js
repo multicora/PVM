@@ -6,7 +6,7 @@ module.exports = function(DAL){
   const b2 = require('../services/backblaze.js');
 
   return {
-    addVideo: (fileBuffer, name, authorId, authorName) => {
+    addVideo: (fileBuffer, name, authorId, authorName, thumbnail) => {
       return b2().then( storage => {
         const id = uuid.v1();
         const newName = id + separator + name;
@@ -14,7 +14,7 @@ module.exports = function(DAL){
         console.log('Start uploading to storage');
         return storage.addVideo(fileBuffer, newName, authorId, authorName).then((fileInfo) => {
           console.log('Finish uploading');
-          return DAL.videos.add(name, authorId, newName, fileInfo.data.fileId);
+          return DAL.videos.add(name, authorId, newName, fileInfo.data.fileId, thumbnail);
         });
       });
     },
