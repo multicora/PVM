@@ -163,7 +163,7 @@ server.route({
           reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(err, err));
-        })
+        });
       }
     }
   });
