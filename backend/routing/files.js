@@ -97,6 +97,7 @@ module.exports = function (server, DAL) {
     method: 'GET',
     path: '/api/file/{id}',
     config: {
+      auth: 'simple',
       handler: function (request, reply) {
         let file;
         storageCtrl.getFile(request.params.id).then( res => {

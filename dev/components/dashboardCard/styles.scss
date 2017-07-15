@@ -1,0 +1,46 @@
+.dashboard-card {
+  width: 250px;
+  margin: 0 16px 26px 0;
+
+  .card-content {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.87);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
+    font-family: 'Roboto Thin';
+    border-radius: 2px;
+  }
+
+  .card-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    top: -20px;
+    left: 12px;
+    width: 90px;
+    height: 90px;
+    box-shadow: 0 12px 20px -10px rgba(112, 157, 228, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(112, 157, 228, 0.2);
+    background: linear-gradient(60deg, rgba(112, 157, 228, .84), rgba(112, 157, 228, 1));
+
+    i {
+      font-size: 48px;
+      color: #fff;
+    }
+  }
+
+  .card-title {
+    padding: 16px;
+    font-size: 16px;
+    text-align: right;
+  }
+
+  .card-data {
+    padding: 16px;
+    font-size: 24px;
+    text-align: right;
+  }
+}

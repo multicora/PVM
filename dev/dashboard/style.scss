@@ -37,34 +37,33 @@
     font-family: 'Roboto Thin';
   }
 
-  .performance-container {
-    .info-container {
-      display: inline-block;
-      text-align: right;
-      border-right: 1px solid rgba(0, 0, 0, .14);
-      width: 50%;
-      box-sizing: border-box;
-      padding-right: 5px;
-      vertical-align: top;
+  .cards {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    max-width: 1064px;
+    width: 100%;
 
-      .info {
-        margin-bottom: 5px;
+    @media (max-width: 1355px) {
+      max-width: 798px;
+    }
 
-        .name {
-          display: inline-block;
-          text-align: left;
-          width: 120px;
-          padding: 0;
-          margin: 0;
-        }
+    @media (max-width: 1090px) {
+      max-width: 532px;
+    }
 
-        .number {
-          margin: 0;
-          display: inline-block;
-          width: 20px;
-          text-align: center;
-        }
-      }
+    @media (max-width: 910px) {
+      max-width: 798px;
+    }
+
+    @media (max-width: 825px) {
+      max-width: 532px;
+    }
+
+    @media (max-width: 556px) {
+      max-width: 266px;
     }
   }
 
@@ -84,6 +83,11 @@
     .message-content {
       width: 100%;
       position: relative;
+      background-color: #fff;
+      margin-bottom: 5px;
+      padding: 6px;
+      box-sizing: border-box;
+      box-shadow: 2px 2px 8px rgba(0,0,0,.05);
     }
 
     .time {
@@ -105,8 +109,8 @@
 
     .button-container {
       position: absolute;
-      right: 0;
-      top: 0;
+      right: 6px;
+      top: 6px;
       .message-button {
         margin: 0;
         padding: 0;
@@ -121,12 +125,3 @@
   box-sizing: border-box;
   padding-left: 10px;
 }
-
-// Will be using when will be implemented video watched notificatio
-// .chart-video {
-//   width: 144px;
-//   height: 125px;
-//   position: absolute;
-//   top: 15px;
-//   left: 16px;
-// }

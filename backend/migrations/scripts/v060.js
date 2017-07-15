@@ -12,8 +12,6 @@ module.exports = function() {
         'ADD `conversationId` int(255);'
       ].join('');
 
-      console.log(request);
-
       connectDB().then( connection => {
         connection.query(request, err => {
           next(err);

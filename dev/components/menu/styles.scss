@@ -26,14 +26,13 @@
     box-shadow: none;
     background-color: none;
     color: #757575;
-    transition: .5s;
+    transition: .3s;
   }
 
   .menu-button:hover {
-    box-shadow: 4px 4px 10px 0 rgba(112, 157, 228, .5);
-    background-color: rgba(93, 144, 226, 1);
+    background-color: rgba(93, 144, 226, .54);
     color: #fff;
-    transition: .5s;
+    transition: .3s;
   }
 
   .active {
@@ -53,4 +52,16 @@
   width: 100%;
   line-height: 24px;
   margin-top: 0;
+}
+
+.app-version {
+  position: fixed;
+  bottom: 30px;
+  left: 20px;
+  font-family: 'Roboto Bold';
+
+  @media (max-width: 910px) {
+    position: static;
+    margin-left: 20px;
+  }
 }

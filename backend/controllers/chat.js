@@ -58,7 +58,8 @@ module.exports = function (DAL) {
         to: user.email,
         subject: 'Notification about new message!',
         text: template.text,
-        html: template.html
+        html: template.html,
+        from: author.firstName + ' ' + author.secondName || 'Bizkonect'
       };
 
       mailer(config).send(mail);

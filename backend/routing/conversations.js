@@ -163,17 +163,34 @@ module.exports = function (server, DAL) {
         let token = usersCtrl.parseToken(request.headers.authorization);
         let serverUrl = utils.getServerUrl(request);
         let conversation;
+        let user;
 
         conversationCtrl.get(request.params.id).then((res) => {
           conversation = res;
 
-          return conversationCtrl.needToMarkAsViewed(conversation, token.value).then((res) => {
-            let result;
-            if (res) {
-              result = conversationCtrl.markAsViewed(conversation, serverUrl);
-            }
-            return result;
-          });
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
+        }).then(res => {
+          user = res.user || {id: null};
+
+          if (res.result) {
+            return DAL.events.get(DAL.events.types.CONVERSATION_IS_VIEWED, user.id, conversation.id).then(res => {
+              let result = null;
+
+              if (!res.length) {
+                result = notificationsCtrl.conversationOpened(conversation, serverUrl +
+                  '/conversation/' +
+                  conversation.id);
+              }
+
+              return result;
+            }).then(() => {
+              return DAL.events.add(DAL.events.types.CONVERSATION_IS_VIEWED, user.id, conversation.id, {});
+            }).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
+            });
+          } else {
+            return Promise.resolve();
+          }
         }).then(() => {
           reply(conversation);
         }).catch((err) => {
@@ -184,9 +201,10 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/video-watched/:id Request for send notification about watching video.
+   * @api {post} /api/video-is-watching Request for send notification about watching video.
    *
-   * @apiParam {String}   id               conversation id.
+   * @apiParam {String}   conversationId               conversation id.
+   * @apiParam {String}   videoId                      video id.
    *
    * @apiName VideoIsWatching
    * @apiGroup Conversations
@@ -203,26 +221,37 @@ module.exports = function (server, DAL) {
    */
 
   server.route({
-    method: 'GET',
-    path: '/api/video-is-watching/{id}',
+    method: 'POST',
+    path: '/api/video-is-watching',
     config: {
       handler: function (request, reply) {
-        let conversationId = request.params.id;
+        let conversationId = request.payload.conversationId;
+        let videoId = request.payload.videoId;
         let serverUrl = utils.getServerUrl(request);
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
+        let user;
 
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return conversationCtrl.needToSendPromise(conversation, token);
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
         }).then(res => {
-          if (res) {
-            return notificationsCtrl.videoIsWatching(conversation, serverUrl + '/conversation/' + conversation.id).then(() => {
-              return DAL.conversations.updateTime(conversation.id);
-            });
-          } else {
-            return Promise.resolve();
+          let result = null;
+          user = res.user;
+
+          if (res.result) {
+            result = notificationsCtrl.videoIsWatching(conversation, serverUrl +
+              '/conversation/' +
+              conversation.id);
           }
+
+          return result;
+        }).then(() => {
+          return DAL.events.add(DAL.events.types.VIDEO_IS_WATCHING, user.id, conversation.id, {
+            'videoId': videoId
+          });
+        }).then(() => {
+          return DAL.conversations.updateTime(conversation.id);
         }).then(() => {
           reply({'status': 'success'});
         }, err => {
@@ -233,9 +262,10 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/video-watched/:id Request for update conversation video watched status
+   * @api {post} /api/video-watched Request for update conversation video watched status
    *
-   * @apiParam {String}   id               conversation id.
+   * @apiParam {String}   conversationId               conversation id.
+   * @apiParam {String}   videoId                      video id.
    *
    * @apiName VideoWatched
    * @apiGroup Templates
@@ -252,44 +282,38 @@ module.exports = function (server, DAL) {
    */
 
   server.route({
-    method: 'GET',
-    path: '/api/video-watched/{id}',
+    method: 'POST',
+    path: '/api/video-watched',
     config: {
       handler: function (request, reply) {
-        let conversationId = request.params.id;
+        let conversationId = request.payload.conversationId;
+        let videoId = request.payload.videoId;
         let serverUrl = utils.getServerUrl(request);
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
-
-        let needToMarkPromise = function() {
-          return new Promise((resolve) => {
-            let isWatched;
-
-            DAL.conversations.getById(conversationId).then((res) => {
-              isWatched = res.videoIsWatched;
-
-              return usersCtrl.getUserByToken(token.value);
-            }).then((user) => {
-
-              if (conversation.author === user.id) {
-                resolve(false);
-              } else {
-                resolve(!isWatched);
-              }
-            }, () => {
-
-              resolve(!isWatched);
-            });
-          });
-        };
+        let user;
 
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return needToMarkPromise();
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
         }).then(res => {
-          if (res) {
-            return DAL.conversations.markAsWatched(conversation.id).then(() => {
-              return notificationsCtrl.videoWatched(conversation, serverUrl + '/conversation/' + conversation.id);
+          user = res.user;
+
+          if (res.result) {
+            return DAL.events.get(DAL.events.types.VIDEO_IS_WATCHED, user.id, conversation.id).then(res => {
+              let result = null;
+
+              if (!res.length) {
+                result = notificationsCtrl.videoWatched(conversation, serverUrl +
+                  '/conversation/' +
+                  conversation.id);
+              }
+
+              return result;
+            }).then(() => {
+              return DAL.events.add(DAL.events.types.VIDEO_IS_WATCHED, user.id, conversation.id, {
+                'videoId': videoId
+              });
             }).then(() => {
               return DAL.conversations.updateTime(conversation.id);
             });
@@ -306,9 +330,10 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/file-downloaded/:id Request for update conversation file downloaded status
+   * @api {post} /api/file-downloaded Request for update conversation file downloaded status
    *
-   * @apiParam {String}   id               conversation id.
+   * @apiParam {String}   conversationId               conversation id.
+   * @apiParam {String}   fileId                       file id.
    *
    * @apiName VideoWatched
    * @apiGroup Templates
@@ -325,47 +350,47 @@ module.exports = function (server, DAL) {
    */
 
   server.route({
-    method: 'GET',
-    path: '/api/file-downloaded/{id}',
+    method: 'POST',
+    path: '/api/file-downloaded',
     config: {
+      auth: 'simple',
       handler: function (request, reply) {
-        let conversationId = request.params.id;
+        let conversationId = request.payload.conversationId;
+        let fileId = request.payload.fileId;
         let serverUrl = utils.getServerUrl(request);
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
-
-        let needToMarkPromise = function() {
-          return new Promise((resolve) => {
-            let isDownloaded;
-
-            DAL.conversations.getById(conversationId).then((res) => {
-              isDownloaded = res.file_is_downloaded;
-
-              return usersCtrl.getUserByToken(token.value);
-            }).then((user) => {
-
-              if (conversation.author === user.id) {
-                resolve(false);
-              } else {
-                resolve(!isDownloaded);
-              }
-            }, () => {
-
-              resolve(!isDownloaded);
-            });
-          });
-        };
+        let user;
 
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return needToMarkPromise();
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author);
         }).then(res => {
+          user = res.user;
 
-          if (res) {
-            return DAL.conversations.markAsDownloaded(conversation.id).then(() => {
-              return notificationsCtrl.fileDownloaded(conversation, serverUrl +
-                '/conversation/' +
-                conversation.id);
+          if (res.result) {
+            return DAL.events.get(DAL.events.types.FILE_IS_DOWNLOADED, user.id, conversation.id).then(res => {
+              let result = null;
+              let isDownloaded = false;
+
+              for (let i = 0; i < res.length; i++) {
+                if (JSON.parse(res[i].metadata).fileId === fileId) {
+                  isDownloaded = true;
+                  break;
+                }
+              }
+
+              if (!isDownloaded) {
+                result = notificationsCtrl.fileDownloaded(conversation, serverUrl +
+                  '/conversation/' +
+                  conversation.id);
+              }
+
+              return result;
+            }).then(() => {
+              return DAL.events.add(DAL.events.types.FILE_IS_DOWNLOADED, user.id, conversation.id, {
+                'fileId': fileId
+              });
             }).then(() => {
               return DAL.conversations.updateTime(conversation.id);
             });
@@ -380,7 +405,6 @@ module.exports = function (server, DAL) {
       }
     }
   });
-
 
   /**
    * @api {get} /api/template/:id Request template

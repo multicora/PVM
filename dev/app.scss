@@ -172,13 +172,6 @@ input {
   outline: none;
 }
 
-.app-version {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  font-family: 'Roboto Bold';
-}
-
 // video-js button
 .video-js .vjs-big-play-button {
   width: 50px;
@@ -191,4 +184,9 @@ input {
 
 .main-view {
   height: 100%;
+}
+
+.md-raised.md-primary.blue-btn {
+  background-color: #5d90e2;
+  color: #fff;
 }
