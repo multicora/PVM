@@ -42,5 +42,8 @@
         "src/css/videojs.record.css"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "1.6.5"
   }
 }
