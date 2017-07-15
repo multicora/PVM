@@ -64,6 +64,7 @@
     "hapi-auth-header": "^2.2.0",
     "hapi-route-acl": "^1.0.3",
     "inert": "^4.0.2",
+    "is-ci": "^1.0.10",
     "lodash": "^4.16.4",
     "merge": "^1.2.0",
     "mysql": "^2.12.0",

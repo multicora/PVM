@@ -1,6 +1,9 @@
 'use strict';
 
-var merge = require('merge');
+const merge = require('merge');
+const isCI = require('is-ci');
+
+const logger = require('./services/logger.js');
 
 var userConfig;
 
@@ -17,7 +20,7 @@ const DB = {
   }
 };
 
-var config = {
+let config = {
   debugMode: false,
   db: {
     type: DB.TYPES.MySQL,
@@ -61,7 +64,11 @@ var config = {
 
 const fullConfig = merge.recursive(config, userConfig);
 
-validate(fullConfig);
+if (!isCI) {
+  validate(fullConfig);
+} else {
+  logger.print('The code is running on a CI server. Skip config valiation');
+}
 
 function validate(conf) {
   if (!conf.debugMode) {
