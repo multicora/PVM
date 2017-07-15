@@ -41,16 +41,9 @@ var config = {
     APIkey: ''
   },
   mail: {
-    host: 'smtp.gmail.com',
-    port: 465,
-    user: '',
-    pass: '',
     defaultSubject: 'BizKonect',
-    defaultFrom: 'No reply <No-reply@bizkonect.com>'
-  },
-  mailGun: {
-    apiKey: '',
-    domain: ''
+    defaultFrom: 'No reply <No-reply@bizkonect.com>',
+    apiKey: ''
   },
   notification: {
     time: 5 // Should be in minutes
@@ -66,4 +59,25 @@ var config = {
   }
 };
 
-module.exports = merge.recursive(config, userConfig);
+const fullConfig = merge.recursive(config, userConfig);
+
+validate(fullConfig);
+
+function validate(conf) {
+  if (!conf.debugMode) {
+    validateProperty(conf.mail.apiKey, '"config.mail.apiKey" key should be exist and not empty');
+  }
+  validateProperty(conf.mail.defaultFrom, '"config.mail.defaultFrom" key should be exist and not empty');
+}
+
+function showError(msg) {
+  throw new Error(msg);
+}
+
+function validateProperty(property, message) {
+  if (!property) {
+    showError(message);
+  }
+}
+
+module.exports = fullConfig;
