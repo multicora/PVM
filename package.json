@@ -5,7 +5,7 @@
   "private": true,
   "main": "backend/index.js",
   "scripts": {
-    "postinstall": "bower i",
+    "bower": "bower i",
     "precommit": "gulp belint && gulp felint && gulp testOnce",
     "start": "gulp dev"
   },
