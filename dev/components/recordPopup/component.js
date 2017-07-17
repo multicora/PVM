@@ -43,16 +43,14 @@
       uploadService.sendFile(
         '/api/video',
         vm.recordedData.video,
-        {
-          name: name + '.wmv'
-        }
+        name + '.wmv'
       ).then(function (res) {
-        console.log(res.data);
 
         return conversationsService.getVideo(res.data.insertId);
       }).then(function(res) {
+        vm.showGenerator = true;
         var videoElement = document.getElementById('video-for-thumbnail');;
-        var canvas = document.getElementById('canvas');;
+        var canvas = document.getElementById('canvas');
 
         vm.media = {
           sources: [{
@@ -61,10 +59,10 @@
           }]
         };
 
-      vm.showGenerator = true;
-      canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
-      vm.thumbnail = canvas.toDataURL('image/png');
-      vm.showGenerator = false;
+        canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
+        vm.thumbnail = canvas.toDataURL('image/png');
+        console.log(vm.thumbnail);
+        vm.showGenerator = false;
 
       // return uploadService.sendThumbnail(
         // {

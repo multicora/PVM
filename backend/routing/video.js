@@ -40,8 +40,8 @@ module.exports = function (server, DAL) {
           reply( Boom.badRequest('Property "file" is absent') );
         } else {
           let name;
-          if (request.payload.data.name && request.payload.data.name !== undefined) {
-            name = request.payload.data.name;
+          if (request.payload.data && request.payload.data !== 'undefined') {
+            name = request.payload.data;
           } else {
             name = request.payload.file.hapi.filename;
           }
