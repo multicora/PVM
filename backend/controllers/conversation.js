@@ -58,10 +58,9 @@ module.exports = function(DAL) {
         return conversation;
       });
     },
-    needToMarkPromise: function(token, author) {
+    needToMarkPromise: function(token, author, email) {
       return new Promise((resolve) => {
         usersCtrl.getUserByToken(token).then(res => {
-
           if (author === res.id) {
             resolve({
               user: res,
@@ -73,6 +72,18 @@ module.exports = function(DAL) {
               result: true
             });
           }
+        }, () => {
+          return DAL.users.getUserByEmail(email);
+        }).then( res => {
+            resolve({
+              user: res,
+              result: true
+            });
+        }, () => {
+            resolve({
+              user: null,
+              result: true
+            });
         });
       });
     },

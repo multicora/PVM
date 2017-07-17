@@ -10,7 +10,7 @@
         div.upload-label
           label(for="photo")
             .profile-photo-container
-              .profile-photo(ng-if="!vm.user.photo || vm.user.photo === 'null'")
+              .profile-photo(ng-if="!vm.user.photo")
               .profile-photo(
                 ng-if="vm.user.photo && vm.user.photo != 'null'"
                 ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
@@ -50,7 +50,7 @@
           type="text"
           ng-model="vm.company.name")
       md-input-container
-        label Company position
+        label Company role
         input(
           type="text"
           ng-model="vm.user.companyPosition")
