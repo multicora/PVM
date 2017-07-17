@@ -26,9 +26,9 @@
     CANCEL: 'Cancel',
     FILE_IS_DOWNLOADED: 'Downloaded your attachment',
     VIDEO_IS_WATCHED: 'Watched the video',
-    VIDEO_IS_WATCHING: 'Is watching your video right now',
-    CONVERSATION_IS_OPENED: 'Followed the link from the email',
-    NEW_MESSAGE: 'Sent you a message'
+    VIDEO_IS_WATCHING: 'Is watching your video',
+    CONVERSATION_IS_OPENED: 'Followed your email link',
+    NEW_MESSAGE: 'Message Sent!'
   };
 
   vocabulary = {
