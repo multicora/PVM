@@ -119,6 +119,9 @@ server.route({
 
               // Remove extension from video
               res.name = res.name.replace(/\.([0-9a-z]+)(?:[\?#]|$)/, '');
+              if (res.thumbnail) {
+                res.thumbnail = res.thumbnail.toString();
+              }
               return {
                 'type': 'video',
                 'id': res.v_id,

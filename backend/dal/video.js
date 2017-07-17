@@ -27,7 +27,7 @@ module.exports = function(connection) {
         const request = sqlBuilder.update()
           .table('videos')
           .set('thumbnail', data.thumbnail)
-          .where('v_id = ' + data.vieo)
+          .where('v_id = ' + data.video)
           .toString();
 
         connection.query(request, function (err, response) {

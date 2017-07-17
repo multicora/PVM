@@ -18,5 +18,6 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
           ng-disabled="!vm.recordedData") save
 
   thumbnail(
-    ng-if="vm.showGenerator"
+    on-generated="vm.generatedThumbnail()"
+    video-id="vm.videoIdThumbnail"
     media="vm.media")

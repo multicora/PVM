@@ -6,7 +6,7 @@
     p Thumbnail is not available.
   img.photo(
     ng-if="vm.video.attributes.thumbnail"
-    ng-src='data:image/png;base64,{{vm.video.attributes.thumbnail}}',
+    ng-style="{backgroundImage: 'url('+ vm.video.attributes.thumbnail + ')' }"
     alt=''
     ng-click="vm.onThumbnailClick()")
   .navigation-bar
