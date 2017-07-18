@@ -16,7 +16,7 @@
   ) {
     var vm = this;
 
-    vm.showFeedbackPopup = false;    
+    vm.showFeedbackPopup = false;
     vm.photoError = '';
     vm.logoError = '';
 
