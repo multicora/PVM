@@ -12,9 +12,11 @@
   });
 
   ctrl.$inject = [
+    '$timeout',
     'uploadService'
   ];
   function ctrl(
+    $timeout,
     uploadService
   ) {
     var vm = this;
@@ -24,17 +26,20 @@
 
     videoElement.onloadeddata = function() {
       this.currentTime = time;
-      canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
+      $timeout(function () {
+        canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
 
-      var thumbnail = canvas.toDataURL('image/png');
-      uploadService.sendThumbnail(
-        {
-          thumbnail: thumbnail,
-          video: vm.videoId
-        }
-      ).then(function() {
-        vm.onGenerated();
-      });
+        var thumbnail = canvas.toDataURL('image/png');
+        uploadService.sendThumbnail(
+          {
+            thumbnail: thumbnail,
+            video: vm.videoId
+          }
+        ).then(function() {
+          vm.onGenerated();
+        });
+        // TODO: add catch
+      }, 100);
     };
   }
 })(angular);
