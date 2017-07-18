@@ -27,7 +27,12 @@
 
       input.on('change', function (event) {
         if (event.target.files[0]) {
-          uploadService.sendFile('/api' + scope.url, event.target.files[0]).then(uploadEnd, onError);
+          uploadService.sendFile('/api' + scope.url, event.target.files[0]).then(function(res) {
+            console.log(res);
+            uploadEnd;
+          }, function() {
+            onError;
+          });
         }
         event.target.value = null;
         scope.uploadStart();
