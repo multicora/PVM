@@ -37,9 +37,9 @@
         vm.videosList = res.data;
         return libraryService.getThumbnails();
       }).then(function (res) {
-        for (var i = 0; i < res.data.length; i++) {
-          vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
-        }
+        // for (var i = 0; i < res.data.length; i++) {
+        //   vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
+        // }
       }, function () {
         // TODO: implement it
       });

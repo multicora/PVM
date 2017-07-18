@@ -11,15 +11,23 @@
 
   ctrl.$inject = [
     '$mdToast',
+    '$rootScope',
     'uploadService',
-    'uploadRecordPopupService'
+    'uploadRecordPopupService',
+    'conversationsService'
   ];
   function ctrl(
     $mdToast,
+    $rootScope,
     uploadService,
-    uploadRecordPopupService
+    uploadRecordPopupService,
+    conversationsService
   ) {
     var vm = this;
+    vm.recordedData = null;
+    vm.media = null;
+    vm.thumbnail = null;
+    vm.showGenerator = false;
 
     vm.closeRecordPopup = function () {
       uploadRecordPopupService.hideRecordPopup();
@@ -31,28 +39,54 @@
 
     vm.sendRecordClick = function (name) {
       name = name || 'no name';
+
       uploadService.sendFile(
         '/api/video',
         vm.recordedData.video,
         name + '.wmv'
-      ).then(function () {
-        vm.closeRecordPopup();
-        vm.getVideos();
-        vm.videoName = null;
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Video saved successfully!')
-            .position('bottom center')
-            .hideDelay(3000)
-        );
-      }).catch(function (err) {
-        // TODO: add error style
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(err.data.error)
-            .position('bottom center')
-            .hideDelay(3000)
-        );
+      ).then(function (res) {
+
+        return conversationsService.getVideo(res.data.insertId);
+      }).then(function(res) {
+        vm.showGenerator = true;
+        var videoElement = document.getElementById('video-for-thumbnail');;
+        var canvas = document.getElementById('canvas');
+
+        vm.media = {
+          sources: [{
+            src: res.data.attributes.url,
+            type: 'video/mp4'
+          }]
+        };
+
+        canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
+        vm.thumbnail = canvas.toDataURL('image/png');
+        console.log(vm.thumbnail);
+        vm.showGenerator = false;
+
+      // return uploadService.sendThumbnail(
+        // {
+          // thumbnail: vm.thumbnai,
+          // video: res.data.id
+        // });
+      // }).then(function() {
+        // vm.closeRecordPopup();
+        // vm.getVideos();
+        // vm.videoName = null;
+        // $mdToast.show(
+        //   $mdToast.simple()
+        //     .textContent('Video saved successfully!')
+        //     .position('bottom center')
+        //     .hideDelay(3000)
+        // );
+      // }).catch(function (err) {
+      //   // TODO: add error style
+      //   $mdToast.show(
+      //     $mdToast.simple()
+      //       .textContent(err.data.error)
+      //       .position('bottom center')
+      //       .hideDelay(3000)
+      //   );
       });
     };
   }
