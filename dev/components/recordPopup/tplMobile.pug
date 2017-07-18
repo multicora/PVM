@@ -23,3 +23,8 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.save(
           ng-click="vm.sendRecordClick(vm.videoName)"
           ng-disabled="!vm.videoFile") save
+
+  thumbnail(
+    on-generated="vm.generatedThumbnail()"
+    video-id="vm.videoIdThumbnail"
+    media="vm.media")

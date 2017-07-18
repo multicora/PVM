@@ -26,6 +26,7 @@
     var vm = this;
     vm.recordedData = null;
     vm.media = null;
+    vm.videoIdThumbnail = null;
 
     vm.closeRecordPopup = function () {
       uploadRecordPopupService.hideRecordPopup();
@@ -47,7 +48,7 @@
         return conversationsService.getVideo(res.data.insertId);
       }).then(function(res) {
         vm.media = res.data.attributes.url;
-        vm.videoIdThumbnail = res.data.id
+        vm.videoIdThumbnail = res.data.id;
       }).catch(function (err) {
         // TODO: add error style
         $mdToast.show(
@@ -68,7 +69,7 @@
             .position('bottom center')
             .hideDelay(3000)
         );
-      }
+      };
     };
   }
 })(angular);

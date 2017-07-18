@@ -18,15 +18,13 @@
     uploadService
   ) {
     var vm = this;
-    var time = 5; //time for geting thumbnail
-    var videoElement = document.getElementById('video-for-thumbnail');;
+    var time = 1; //time for geting thumbnail
+    var videoElement = document.getElementById('video-for-thumbnail');
     var canvas = document.getElementById('canvas');
 
     videoElement.onloadeddata = function() {
       this.currentTime = time;
       canvas.getContext('2d').drawImage(videoElement, 0, 0, 300, 150);
-      // var thumbnail = new Image();
-      // thumbnail.setAttribute('crossOrigin', 'Anonymous');
 
       var thumbnail = canvas.toDataURL('image/png');
       uploadService.sendThumbnail(
@@ -37,6 +35,6 @@
       ).then(function() {
         vm.onGenerated();
       });
-    }
+    };
   }
 })(angular);
