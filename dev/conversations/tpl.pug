@@ -3,8 +3,12 @@
   //- md-swipe-right="vm.changeTab(-1)"
   //- md-swipe-down=""
   //- md-swipe-up="")
-  app-header
-  app-menu(class-name="desktop-menu")
+  app-header(
+    show-feedback="vm.showFeedback()"
+    close-feedback="vm.closeFeedback()")
+  app-menu(
+    class-name="desktop-menu"
+    show-feedback="vm.showFeedback()")
   md-content.library-content
     md-tabs(
       md-dynamic-height=""
@@ -27,5 +31,6 @@
             on-view-click="vm.viewConversation($data)"
             to-user="vm.toUser")
 
-  //- Feedback form
-  feedback
+  feedback(
+    ng-if="vm.showFeedbackPopup"
+    close-feedback="vm.closeFeedback()")

@@ -1,6 +1,10 @@
 .dashboard-wrapper
-  app-header
-  app-menu(class-name="desktop-menu")
+  app-header(
+    show-feedback="vm.showFeedback()"
+    close-feedback="vm.closeFeedback()")
+  app-menu(
+    class-name="desktop-menu"
+    show-feedback="vm.showFeedback()")
   .dashboard-container
     .performance-container
       h2.title Dashboard
@@ -44,5 +48,6 @@
     //- Upload popup
     upload-popup-wrapper
 
-    //- Feedback form
-    feedback
+    feedback(
+      ng-if="vm.showFeedbackPopup"
+      close-feedback="vm.closeFeedback()")

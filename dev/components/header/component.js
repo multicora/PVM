@@ -5,6 +5,8 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
+      showFeedback: '&',
+      closeFeedback: '&'
     }
   });
 

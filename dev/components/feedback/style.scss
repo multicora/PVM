@@ -39,50 +39,14 @@
   }
 }
 
-.feedback-buton {
-  position: fixed;
-  right: 50px;
-  bottom: 20px;
-
-  @media (max-width: 567px) {
-    right: 80px;
-  }
-}
-
-.conversation {
+.app-menu {
   .feedback-buton {
     position: fixed;
-    right: 50px;
-    bottom: 50px;
-
-    @media (max-width: 567px) {
-      right: 20px;
-      bottom: 10px;
-    }
-  }
-}
-
-.template {
-  .feedback-buton {
-    position: fixed;
-    right: 50px;
-    bottom: 60px;
-
-    @media (max-width: 567px) {
-      right: 10px;
-    }
-  }
-}
-
-.profile {
-  .feedback-buton {
-    position: fixed;
-    right: 50px;
-    bottom: 30px;
+    left: 80px;
+    bottom: 20px;
 
     @media (max-width: 650px) {
-      right: 10px;
-      bottom: 70px;
+      bottom: 0;
     }
   }
 }
