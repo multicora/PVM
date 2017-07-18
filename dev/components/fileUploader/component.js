@@ -28,10 +28,10 @@
 
       input.on('change', function (event) {
         if (event.target.files[0]) {
-          uploadService.sendFile('/api' + scope.url, event.target.files[0]).then(function(res) {
-            scope.uploadEnd();
+          uploadService.sendFile('/api' + scope.url, event.target.files[0]).then(function() {
+            uploadEnd();
           }, function() {
-            scope.onError();
+            onError();
           });
         }
         event.target.value = null;
