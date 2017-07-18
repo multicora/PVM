@@ -62,7 +62,7 @@
       vm.generatedThumbnail = function() {
         vm.getVideos();
         vm.videoName = null;
-        vm.closeRecordPopup();
+        // vm.closeRecordPopup();
         $mdToast.show(
           $mdToast.simple()
             .textContent('Video saved successfully!')

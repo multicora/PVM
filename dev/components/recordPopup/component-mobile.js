@@ -10,13 +10,17 @@
   });
 
   ctrl.$inject = [
+    '$mdToast',
     'uploadService',
     'uploadRecordPopupService',
+    'conversationsService',
     'tools'
   ];
   function ctrl(
+    $mdToast,
     uploadService,
     uploadRecordPopupService,
+    conversationsService,
     tools
   ) {
     var vm = this;
@@ -40,7 +44,7 @@
         '/api/video',
         vm.videoFile,
         name + '.' + tools.getExtension(vm.videoFile.name)
-      ).then(function () {
+      ).then(function (res) {
         return conversationsService.getVideo(res.data.insertId);
       }).then(function(res) {
         vm.media = res.data.attributes.url;
