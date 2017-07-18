@@ -8,8 +8,7 @@ popup.upload-form(close-popup="vm.closeUploadPopup()")
           input-id="upload-video"
           upload-end="vm.uploadEnd()"
           upload-start=""
-          on-error=""
-          response="vm.response")
+          on-error="")
     p.popup-title Select files to upload
     p.popup-sub-title Or drag and drop video files
     p.error(ng-if="errorMessage") Error: {{errorMessage}}
