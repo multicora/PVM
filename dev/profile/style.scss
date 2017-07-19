@@ -143,7 +143,16 @@
 
   .company-logo-container {
     width: 100%;
+    height: 145px;
     text-align: left;
+
+    .company-logo-upload {
+      position: relative;
+
+      label {
+        position: absolute;
+      }
+    }
 
     .errorMessage {
       text-align: left;
