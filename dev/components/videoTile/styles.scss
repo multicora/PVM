@@ -7,6 +7,7 @@
   margin: 0 0 12px 10px;
   width: 288px;
   position: relative;
+  overflow: hidden;
 
   .video-placeholder {
     width: 100%;
@@ -27,6 +28,10 @@
       font-size: 14px;
       color: rgba(0, 0, 0, 0.54);
      }
+  }
+
+  .video-thumbnail {
+    cursor: pointer;
   }
 
   .photo {
