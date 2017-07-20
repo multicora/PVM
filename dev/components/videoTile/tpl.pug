@@ -1,14 +1,19 @@
 .video-tile
   .video-placeholder(
-    ng-if="!vm.video.attributes.thumbnail"
+    ng-if="!vm.video.attributes.url"
     ng-click="vm.onThumbnailClick()")
     img(src="/files/images/videoPlaceholder.svg")
     p Thumbnail is not available.
-  img.photo(
-    ng-if="vm.video.attributes.thumbnail"
-    ng-src='data:image/png;base64,{{vm.video.attributes.thumbnail}}',
-    alt=''
-    ng-click="vm.onThumbnailClick()")
+  //- img.photo(
+  //-   ng-if="vm.video.attributes.thumbnail"
+  //-   ng-src='data:image/png;base64,{{vm.video.attributes.thumbnail}}',
+  //-   alt=''
+  //-   ng-click="vm.onThumbnailClick()")
+  video.video-thumbnail(
+    width="288"
+    src="{{vm.video.attributes.url}}"
+    ng-click="vm.onThumbnailClick()"
+    preload="metadata")
   .navigation-bar
     p.name.ellipsis(title='{{vm.video.attributes.name}}') {{vm.video.attributes.name}}
     md-menu.menu(
