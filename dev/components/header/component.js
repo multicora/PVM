@@ -25,6 +25,8 @@
     var vm = this;
     var tokenName = 'x-biz-token';
 
+    vm.user = null;
+
     getNotifications();
 
     vm.isAuthenticated = !!storage.get(tokenName);
@@ -55,6 +57,8 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
+      }).catch(function () {
+        vm.user = null;
       });
     };
 

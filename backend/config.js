@@ -59,6 +59,9 @@ let config = {
   },
   suport: {
     email: ''
+  },
+  logging: {
+    key: ''
   }
 };
 
