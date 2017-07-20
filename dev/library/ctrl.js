@@ -35,8 +35,13 @@
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data;
-      }, function () {
-        // TODO: implement it
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
       });
     };
 
@@ -158,15 +163,28 @@
     };
 
     function getTemplates () {
-      // TODO: add .catch() part
       libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
       });
     }
 
     function getFiles () {
       filesService.getFiles().then(function(res) {
         vm.filesList = res;
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
       });
     }
 
