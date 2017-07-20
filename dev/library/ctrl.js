@@ -31,15 +31,11 @@
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
     vm.toUser = true;
+    vm.showFeedbackPopup = false;
 
     vm.getVideos = function () {
       libraryService.getVideos().then(function (res) {
         vm.videosList = res.data;
-        return libraryService.getThumbnails();
-      }).then(function (res) {
-        for (var i = 0; i < res.data.length; i++) {
-          vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
-        }
       }, function () {
         // TODO: implement it
       });
@@ -66,6 +62,14 @@
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
+    };
+
+    vm.showFeedback = function () {
+      vm.showFeedbackPopup = true;
+    };
+
+    vm.closeFeedback = function () {
+      vm.showFeedbackPopup = false;
     };
 
     //Preview popup
