@@ -11,15 +11,22 @@
 
   ctrl.$inject = [
     '$mdToast',
+    '$rootScope',
     'uploadService',
-    'uploadRecordPopupService'
+    'uploadRecordPopupService',
+    'conversationsService'
   ];
   function ctrl(
     $mdToast,
+    $rootScope,
     uploadService,
-    uploadRecordPopupService
+    uploadRecordPopupService,
+    conversationsService
   ) {
     var vm = this;
+    vm.recordedData = null;
+    vm.media = null;
+    vm.videoIdThumbnail = null;
 
     vm.closeRecordPopup = function () {
       uploadRecordPopupService.hideRecordPopup();
@@ -31,20 +38,17 @@
 
     vm.sendRecordClick = function (name) {
       name = name || 'no name';
+
       uploadService.sendFile(
         '/api/video',
         vm.recordedData.video,
         name + '.wmv'
-      ).then(function () {
-        vm.closeRecordPopup();
-        vm.getVideos();
-        vm.videoName = null;
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Video saved successfully!')
-            .position('bottom center')
-            .hideDelay(3000)
-        );
+      ).then(function (res) {
+
+        return conversationsService.getVideo(res.data.insertId);
+      }).then(function(res) {
+        vm.media = res.data.attributes.url;
+        vm.videoIdThumbnail = res.data.id;
       }).catch(function (err) {
         // TODO: add error style
         $mdToast.show(
@@ -54,6 +58,18 @@
             .hideDelay(3000)
         );
       });
+
+      vm.generatedThumbnail = function() {
+        vm.getVideos();
+        vm.videoName = null;
+        vm.closeRecordPopup();
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Video saved successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      };
     };
   }
 })(angular);

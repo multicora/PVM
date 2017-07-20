@@ -10,19 +10,25 @@
   });
 
   ctrl.$inject = [
+    '$mdToast',
     'uploadService',
     'uploadRecordPopupService',
+    'conversationsService',
     'tools'
   ];
   function ctrl(
+    $mdToast,
     uploadService,
     uploadRecordPopupService,
+    conversationsService,
     tools
   ) {
     var vm = this;
 
     vm.videoFile = null;
     vm.videoName = null;
+    vm.media = null;
+    vm.videoIdThumbnail = null;
 
     vm.closeRecordPopup = function () {
       uploadRecordPopupService.hideRecordPopup();
@@ -38,11 +44,32 @@
         '/api/video',
         vm.videoFile,
         name + '.' + tools.getExtension(vm.videoFile.name)
-      ).then(function () {
-        vm.closeRecordPopup();
+      ).then(function (res) {
+        return conversationsService.getVideo(res.data.insertId);
+      }).then(function(res) {
+        vm.media = res.data.attributes.url;
+        vm.videoIdThumbnail = res.data.id;
+      }).catch(function (err) {
+        // TODO: add error style
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      });
+
+      vm.generatedThumbnail = function() {
         vm.getVideos();
         vm.videoName = null;
-      });
+        vm.closeRecordPopup();
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Video saved successfully!')
+            .position('bottom center')
+            .hideDelay(3000)
+        );
+      };
     };
   }
 })(angular);

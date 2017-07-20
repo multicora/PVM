@@ -14,6 +14,7 @@
       }
     };
   }
+
   function link(scope) {
     var player = videojs(
       'record',
