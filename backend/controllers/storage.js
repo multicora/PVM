@@ -12,9 +12,12 @@ module.exports = function(DAL){
         const newName = id + separator + name;
 
         console.log('Start uploading to storage');
-        return storage.addVideo(fileBuffer, newName, authorId, authorName).then((fileInfo) => {
+        return storage.addVideo(fileBuffer, newName, authorId, authorName).then((res) => {
           console.log('Finish uploading');
-          return DAL.videos.add(name, authorId, newName, fileInfo.data.fileId);
+
+          return DAL.videos.add(name, authorId, newName, res.data.fileId);
+        }).then((fileInfo) => {
+          return fileInfo;
         });
       });
     },

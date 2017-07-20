@@ -15,6 +15,8 @@
     profileService
   ) {
     var vm = this;
+
+    vm.showFeedbackPopup = false;
     vm.photoError = '';
     vm.logoError = '';
 
@@ -47,6 +49,14 @@
             .hideDelay(3000)
         );
       });
+    };
+
+    vm.showFeedback = function () {
+      vm.showFeedbackPopup = true;
+    };
+
+    vm.closeFeedback = function () {
+      vm.showFeedbackPopup = false;
     };
 
     $scope.convertToBase64Photo = function() {

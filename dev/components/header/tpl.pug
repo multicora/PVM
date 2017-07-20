@@ -46,4 +46,6 @@ header.main-header
               span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
               span(ng-if="vm.user.secondName") {{vm.user.secondName}}
             p {{vm.user.email}}
-      app-menu(class-name="mobile-menu")
+      app-menu(
+        class-name="mobile-menu"
+        show-feedback="vm.showFeedback()")

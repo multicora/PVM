@@ -1,19 +1,37 @@
 'use strict';
 
 const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
-    add: function (name, userId, externalName, id) {
+    add: function (name, userId, externalName, id, thumbnail) {
       return new Promise(function (resolve, reject) {
-        let request = [
-          'INSERT INTO ',
-            '`videos` (`v_id`, `name`, `url`, `external_file_name`, `external_file_id`, `author`) ',
-            'VALUES (NULL, "' + name + '", NULL, "' + externalName + '", "' + id + '", "' + userId + '");'
-        ].join('');
+        const request = sqlBuilder.insert()
+          .into('videos')
+          .set('v_id', null)
+          .set('name', name)
+          .set('external_file_name', externalName)
+          .set('external_file_id', id)
+          .set('author', userId)
+          .set('thumbnail', thumbnail)
+          .toString();
 
-        connection.query(request, function (err) {
-          err ? reject(err) : resolve();
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+    addThumbnail: function (data) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.update()
+          .table('videos')
+          .set('thumbnail', data.thumbnail)
+          .where('v_id = ' + data.video)
+          .toString();
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
         });
       });
     },

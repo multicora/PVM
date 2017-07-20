@@ -18,16 +18,21 @@
         inputId: '@',
         uploadEnd: '&',
         uploadStart: '&',
-        onError: '&'
+        onError: '&',
       }
     };
 
     function link(scope, element) {
       var input = element.find('input');
+      scope.result = 2;
 
       input.on('change', function (event) {
         if (event.target.files[0]) {
-          uploadService.sendFile('/api' + scope.url, event.target.files[0]).then(uploadEnd, onError);
+          uploadService.sendFile('/api' + scope.url, event.target.files[0]).then(function() {
+            uploadEnd();
+          }, function() {
+            onError();
+          });
         }
         event.target.value = null;
         scope.uploadStart();

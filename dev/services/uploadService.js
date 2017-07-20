@@ -23,9 +23,13 @@
             'Keep-Alive': 'timeout=2000, max=10000'
           },
           transformRequest: angular.identity,
-          responseType: 'arraybuffer'
+          responseType: 'JSON'
         }
       );
+    };
+
+    this.sendThumbnail = function (data) {
+      return $http.post('/api/thumbnail', data);
     };
   }
 })(angular);
