@@ -12,7 +12,8 @@
   video.video-thumbnail(
     width="288"
     src="{{vm.video.attributes.url}}"
-    ng-click="vm.onThumbnailClick()")
+    ng-click="vm.onThumbnailClick()"
+    preload="metadata")
   .navigation-bar
     p.name.ellipsis(title='{{vm.video.attributes.name}}') {{vm.video.attributes.name}}
     md-menu.menu(
