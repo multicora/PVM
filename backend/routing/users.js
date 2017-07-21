@@ -191,40 +191,41 @@ const usersController = require('../controllers/users.js')(DAL);
    *       "status": "success"
    *     }
    */
-  server.route({
-    method: 'POST',
-    path: '/api/register',
-    config: {
-      handler: function (request, reply) {
-        usersController.isUserExist(request.payload.email).then(res => {
-          let confirmToken = utils.newToken();
-          let result = null;
-          let serverUrl = utils.getServerUrl(request) + '/login/' + confirmToken;
-          if (res) {
-            result = Promise.reject({
-              'statusCode': 400,
-              'message': 'This email already in use!'
-            });
-          } else {
-            result = usersController.register(request.payload.email,
-              request.payload.password,
-              request.payload.confirmPassword,
-              confirmToken,
-              serverUrl);
-          }
-          return result;
-        }).then(() => {
-          reply({'status': 'success'});
-        }, err => {
-          if (err.statusCode === 400){
-            reply(Boom.badRequest(err.message, err));
-          } else {
-            reply(Boom.badImplementation(err.message, err));
-          }
-        });
-      }
-    }
-  });
+  // Temporary hidden
+  // server.route({
+  //   method: 'POST',
+  //   path: '/api/register',
+  //   config: {
+  //     handler: function (request, reply) {
+  //       usersController.isUserExist(request.payload.email).then(res => {
+  //         let confirmToken = utils.newToken();
+  //         let result = null;
+  //         let serverUrl = utils.getServerUrl(request) + '/login/' + confirmToken;
+  //         if (res) {
+  //           result = Promise.reject({
+  //             'statusCode': 400,
+  //             'message': 'This email already in use!'
+  //           });
+  //         } else {
+  //           result = usersController.register(request.payload.email,
+  //             request.payload.password,
+  //             request.payload.confirmPassword,
+  //             confirmToken,
+  //             serverUrl);
+  //         }
+  //         return result;
+  //       }).then(() => {
+  //         reply({'status': 'success'});
+  //       }, err => {
+  //         if (err.statusCode === 400){
+  //           reply(Boom.badRequest(err.message, err));
+  //         } else {
+  //           reply(Boom.badImplementation(err.message, err));
+  //         }
+  //       });
+  //     }
+  //   }
+  // });
 
   server.route({
     method: 'POST',
