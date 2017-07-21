@@ -72,6 +72,19 @@ module.exports = (connection) => {
       });
     },
 
+    getStatusByUser: function (userId) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.select()
+          .from('chat_status')
+          .where('userId = ' + userId)
+          .toString();
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     addStatus: (conversationId, userId) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()

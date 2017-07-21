@@ -71,4 +71,49 @@ module.exports = function (server, DAL) {
       }
     }
   });
+
+  /**
+   * @api {get} /api/unreaded-message  Request for get unreaded message
+   *
+   * @apiName GetUnreadedMessage
+   * @apiGroup Notifications
+   *
+   *
+   * @apiSuccess {Array}    status                    Status array.
+   * @apiSuccess {Object}   status                    Status object.
+   * @apiSuccess {String}   status.conversationId     conversation id.
+   * @apiSuccess {String}   status.userId             user id.
+   * @apiSuccess {String}   status.messageId          message id.
+   * @apiSuccess {String}   status.notified           notified status.
+   * @apiSuccess {String}   status.read               read status
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     [{
+   *       "id": "1",
+   *       "conversatinId": "1",
+   *       "userId": "1",
+   *       "messageId": "1",
+   *       "notified": "1",
+   *       "read": "0",
+   *     }]
+   */
+  server.route({
+    method: 'GET',
+    path: '/api/unreaded-message',
+    config: {
+      auth: 'simple',
+      handler: function (request, reply) {
+        DAL.chat.getStatusByUse(request.auth.credentials.id).then(res => {
+          reply(
+            res.filter(status => {
+              status.read === 0;
+            })
+          );
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
 };
