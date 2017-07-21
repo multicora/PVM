@@ -66,7 +66,7 @@
 module.exports = function() {
   var config = {
     autoprefixer: {
-      browsers: ['last 2 versions'],
+      browsers: ['> 1%', 'last 4 versions', 'Firefox >= 20', 'iOS >=7'],
       cascade: false
     },
     scssOrder: ['**/app.scss'],
