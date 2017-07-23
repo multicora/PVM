@@ -158,13 +158,15 @@ const usersController = require('../controllers/users.js')(DAL);
 
         usersController.resetPassword(
           request.payload.email,
-          serverUrl,
-          Boom.badData('Invalid email'),
-          Boom.badImplementation('Server error')
+          serverUrl
         ).then(() => {
           reply();
         }).catch((err) => {
-          reply(Boom.badImplementation('Error while resetting password', err));
+          if (err.type === 404) {
+            reply(Boom.badRequest('Invalid email'));
+          } else {
+            reply(Boom.badImplementation('Error while resetting password', err));
+          }
         });
       }
     }
