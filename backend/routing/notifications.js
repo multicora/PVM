@@ -104,10 +104,10 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.chat.getStatusByUse(request.auth.credentials.id).then(res => {
+        DAL.chat.getStatusByUser(request.auth.credentials.id).then(res => {
           reply(
             res.filter(status => {
-              status.read === 0;
+              return status.read === 0;
             })
           );
         }, err => {

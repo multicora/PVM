@@ -17,6 +17,10 @@
       return $http.get('/api/notifications');
     };
 
+    this.getUnreadedMessage = function () {
+      return $http.get('/api/unreaded-message');
+    };
+
     this.markAsRead = function (id) {
       return $http.get('/api/notification-read/' + id);
     };
