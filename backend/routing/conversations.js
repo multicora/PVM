@@ -189,7 +189,8 @@ module.exports = function (server, DAL) {
               return DAL.conversations.updateTime(conversation.id);
             });
           } else {
-            return Promise.resolve();
+            console.log(user, '===============');
+            return DAL.chat.markAsRead(request.params.id, user.id);
           }
         }).then(() => {
           reply(conversation);
