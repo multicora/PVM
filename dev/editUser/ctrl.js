@@ -9,7 +9,7 @@
     var vm = this;
 
     usersService.getUserById($routeParams.id).then(function (res) {
-      vm.user = res.data[0];
+      vm.user = res.data;
     });
 
     vm.editUser = function () {

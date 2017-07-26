@@ -4,8 +4,14 @@
 
   app.controller('usersCtrl', ctrl);
 
-  ctrl.$inject = ['usersService'];
-  function ctrl(usersService) {
+  ctrl.$inject = [
+    '$location',
+    'usersService'
+  ];
+  function ctrl(
+    $location,
+    usersService
+  ) {
     var vm = this;
 
     vm.showAddPopup = false;
@@ -13,7 +19,6 @@
     var getUsers = function () {
       usersService.getUsers().then(function (res) {
         vm.users = res.data;
-        console.log(vm.users);
       });
     };
 
@@ -27,10 +32,14 @@
       vm.showAddPopup = false;
     };
 
+    vm.redirect = function (id) {
+      $location.path('user/' + id);
+    };
+
     vm.inviteUser = function (email, name) {
       usersService.inviteUser({
         email: email,
-        name: name
+        name: name || ''
       }).then(function () {
         vm.closeAddPopup();
         getUsers();
@@ -38,7 +47,6 @@
     };
 
     vm.blockUser = function (id) {
-      console.log(id);
       usersService.blockUser(id).then(function () {
         getUsers();
       });

@@ -9,24 +9,26 @@
       p.email Email
     .user(ng-repeat="user in vm.users")
       p.name(ng-bind="user.firstName") Name
-      p.name(ng-bind="user.secondname") Name
+      p.name(ng-bind="user.secondName") Name
       p.email(ng-bind="user.email") Email
       .buttons
         .blocked-buttons(ng-if="!user.permanent")
-          button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="!user.blocked"
+          md-button.md-raised.md-primary.blue-btn(ng-if="!user.blocked"
           ng-click="vm.blockUser(user.id)")
             | Block
-          button.mdl-button.mdl-js-button.mdl-button--raised(ng-if="user.blocked"
+          md-button.md-raised.md-primary.red-btn(ng-if="user.blocked"
           ng-click="vm.unblockUser(user.id)")
             | Unblock
-        a.mdl-button.mdl-js-button.mdl-button--raised(ng-href="#!/user/{{user.id}}")
+        md-button.md-raised.md-primary.blue-btn(ng-click="vm.redirect(user.id)")
           | Edit
   .add-user.fab-buttons
     button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--colored(ng-click="vm.addUser()")
       i.material-icons add
 
   //- Add user popup
-  popup.add-popup-container(ng-if="vm.showAddPopup")
+  popup.add-popup-container(
+    ng-if="vm.showAddPopup"
+    close-popup="vm.closeAddPopup()")
     form.add-form({{action='', on='submit', }}='')
       p.popupTitle Add user
       md-input-container
@@ -41,7 +43,7 @@
           ng-model="email"
           required)
       .button-container
-        button.mdl-button.mdl-js-button.mdl-button--raised.close(ng-click="vm.closeAddPopup()") close
-        button.mdl-button.mdl-js-button.mdl-button--raised.save(
+        md-button.md-raised.md-primary.blue-btn.close(ng-click="vm.closeAddPopup()") close
+        md-button.md-raised.md-primary.blue-btn.save(
           ng-disabled="!email"
           ng-click="vm.inviteUser(email, name)") send
