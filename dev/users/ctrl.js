@@ -13,6 +13,7 @@
     var getUsers = function () {
       usersService.getUsers().then(function (res) {
         vm.users = res.data;
+        console.log(vm.users);
       });
     };
 
@@ -26,8 +27,11 @@
       vm.showAddPopup = false;
     };
 
-    vm.inviteUser = function (email) {
-      usersService.inviteUser(email).then(function () {
+    vm.inviteUser = function (email, name) {
+      usersService.inviteUser({
+        email: email,
+        name: name
+      }).then(function () {
         vm.closeAddPopup();
         getUsers();
       });

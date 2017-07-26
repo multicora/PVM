@@ -73,14 +73,15 @@
       text-align: center;
     }
 
+    md-input-container {
+      width: 80%;
+      margin: 0;
+      text-align: left;
+    }
+
     .add-form {
       text-align: center;
       width: 100%;
-
-      input {
-        display: inline-block;
-        width: 80%;
-      }
     }
 
     .button-container {
@@ -91,6 +92,7 @@
 
       button:last-child {
         margin-right: 15px;
+        margin-left: 10px;
       }
     }
   }
