@@ -19,6 +19,8 @@
     vm.showFeedbackPopup = false;
     vm.photoError = '';
     vm.logoError = '';
+    vm.user = null;
+    vm.company = null;
 
     getProfile();
 
@@ -106,6 +108,9 @@
       }).then(function(res) {
         vm.company = res.data;
         vm.company.name = vm.company.name || '';
+      }).catch(function () {
+        vm.user = null;
+        vm.company = null;
       });
     };
   }

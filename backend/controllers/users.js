@@ -22,6 +22,10 @@ module.exports = function (DAL) {
 
           if (response.affectedRows) {
             result = templates.resetPassword(serverUrl + '/new-password/' + resetToken);
+          } else {
+            result = Promise.reject({
+              type: 404
+            });
           }
 
           return result;

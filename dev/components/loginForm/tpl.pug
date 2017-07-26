@@ -25,28 +25,29 @@ md-tabs(
           ng-click="vm.authenticate(login, password)")
           | login
 
-  md-tab(label="Register")
-    form.login-form(layout="column")
-      md-input-container
-        label Email
-        input(
-          type="email"
-          ng-model="registerEmail"
-          required)
-      md-input-container
-        label Password
-        input(
-          type="password"
-          ng-model="registerPassword"
-          required)
-      md-input-container
-        label Confirm password
-        input(
-          type="password"
-          ng-model="registerConfirmPassword"
-          required)
-      p.error(ng-if="vm.errorRegister") Register failed: {{vm.errorRegister}}
-      .button-container
-        button.mdl-button.mdl-js-button.mdl-js-ripple-effect.register-btn(
-          ng-click="vm.register(registerEmail, registerPassword, registerConfirmPassword)")
-          | Register
+  //- Temporary hidden
+  //- md-tab(label="Register")
+  //-   form.login-form(layout="column")
+  //-     md-input-container
+  //-       label Email
+  //-       input(
+  //-         type="email"
+  //-         ng-model="registerEmail"
+  //-         required)
+  //-     md-input-container
+  //-       label Password
+  //-       input(
+  //-         type="password"
+  //-         ng-model="registerPassword"
+  //-         required)
+  //-     md-input-container
+  //-       label Confirm password
+  //-       input(
+  //-         type="password"
+  //-         ng-model="registerConfirmPassword"
+  //-         required)
+  //-     p.error(ng-if="vm.errorRegister") Register failed: {{vm.errorRegister}}
+  //-     .button-container
+  //-       button.mdl-button.mdl-js-button.mdl-js-ripple-effect.register-btn(
+  //-         ng-click="vm.register(registerEmail, registerPassword, registerConfirmPassword)")
+  //-         | Register

@@ -174,11 +174,11 @@ module.exports = (connection) => {
 
     addResetToken: (resetToken, email) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'UPDATE `users` ',
-          'SET resetToken="' + resetToken + '" ',
-          'WHERE email="' + email + '";'
-        ].join('');
+        const request = sqlBuilder.update()
+          .table('users')
+          .set('resetToken', resetToken)
+          .where(`email = "${email}"`)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response);

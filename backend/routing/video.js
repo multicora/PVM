@@ -113,19 +113,30 @@ server.route({
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.videos.getByAuthor(request.auth.credentials.id).then(function(res) {
-          reply(res.map(
-            function(res) {
+        let videoList = [];
 
-              // Remove extension from video
-              res.name = res.name.replace(/\.([0-9a-z]+)(?:[\?#]|$)/, '');
-              return {
-                'type': 'video',
-                'id': res.v_id,
-                'attributes': res
-              };
-            }
-          ));
+        DAL.videos.getByAuthor(request.auth.credentials.id).then(function(res) {
+          let promises = [];
+
+          res.forEach( video => {
+            video.name = video.name.replace(/\.([0-9a-z]+)(?:[\?#]|$)/, '');
+
+            videoList.push({
+              type: 'video',
+              id: video.v_id,
+              attributes: video
+            });
+            promises.push(storageCtrl.getVideo(video.v_id));
+          });
+
+          return Promise.all(promises);
+        }).then( res => {
+
+          for (let i = 0; i < videoList.length; i++) {
+            videoList[i].attributes.url = res[i];
+          }
+
+          reply(videoList);
         }, function(err) {
           reply(Boom.badImplementation(500, err));
         });

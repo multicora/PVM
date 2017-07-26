@@ -44,6 +44,7 @@
     vm.templateId = null;
     vm.videoId = null;
     vm.files = [];
+    vm.user = null;
 
     if ($routeParams.templateId) {
       vm.templateId = $routeParams.templateId;
@@ -364,6 +365,8 @@
         return profileService.getCompany(vm.user.company);
       }).then(function(res) {
         vm.logo = res.data.logo;
+      }).catch(function () {
+        vm.user = null;
       });
     };
 
