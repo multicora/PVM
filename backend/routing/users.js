@@ -237,7 +237,8 @@ const usersController = require('../controllers/users.js')(DAL);
         }
       },
       handler: function (request, reply) {
-        usersController.inviteUser(request.payload.email).then(
+        let serverUrl = utils.getServerUrl(request);
+        usersController.inviteUser(request.payload, serverUrl).then(
           (res) => {
             reply(res);
           },

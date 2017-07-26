@@ -274,13 +274,14 @@ module.exports = (connection) => {
       });
     },
 
-    addUserInvite: (email) => {
+    addUserInvite: (data) => {
       return new Promise((resolve, reject) => {
-        let request = [
-          'INSERT INTO ',
-          '`users` (`id`, `email`) ',
-          'VALUES (NULL, "' + email + '");'
-        ].join('');
+        const request = sqlBuilder.insert()
+          .into('users')
+          .set('email', data.email)
+          .set('firstName', data.name)
+          .set('company', data.company)
+          .toString();
 
         connection.query(request, (err, response) => {
           err ? reject(err) : resolve(response[0]);
