@@ -148,6 +148,24 @@ module.exports = () => {
       });
     },
 
+    invite: (link, user) => {
+      user = user || 'User';
+
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let inviteTemplateDir = '/invite';
+        let templateDir = path.join(__dirname, templatesDir, inviteTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          link: link,
+          user: user
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
     registration: (link) => {
       return new Promise( (resolve, reject) => {
         const path = require('path');

@@ -112,7 +112,7 @@ module.exports = (connection) => {
           .from('users')
           .field('id')
           .field('firstName')
-          .field('secondname')
+          .field('secondName')
           .field('email')
           .field('blocked')
           .field('phone')

@@ -97,15 +97,12 @@ module.exports = function (DAL) {
         let resetToken = utils.newToken();
 
         DAL.company.add().then((res) => {
-          console.log(res);
-
           data.company = res.insertId;
           return DAL.users.addUserInvite(data);
         }).then(function() {
           return DAL.users.addResetToken(resetToken, data.email);
         }).then(() => {
-
-          return templates.invite(serverUrl + '/new-password/' + resetToken);
+          return templates.invite(serverUrl + '/new-password/' + resetToken, data.name);
         }).then(template => {
           const mail = {
             to: data.email,
