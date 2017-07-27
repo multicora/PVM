@@ -49,6 +49,8 @@
         return libraryService.getConversationsToUser();
       }).then(function (res) {
         vm.conversationsToUserList = res.data;
+        console.log(vm.conversationsList, 111111);
+        console.log(vm.conversationsToUserList, 2222222);
       });
     };
   }

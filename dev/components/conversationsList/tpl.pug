@@ -3,45 +3,64 @@
     .conversation(
       ng-repeat="item in vm.list | orderBy:'-updated'"
       ng-click="vm.onViewClick({$data: item.id})")
-      .indicators(
-        ng-if="vm.showIndicators"
-        ng-click="vm.onIndicatorClick({$event: $event})")
-        .mail(ng-if="!item.CONVERSATION_IS_VIEWED")
-          md-tooltip(md-direction="right") Conversation hasn't been opened yet
-          i.material-icons email
-        .mail-opend(ng-if="item.CONVERSATION_IS_VIEWED")
-          md-tooltip(md-direction="right") Conversation has been opened
-          i.material-icons drafts
-        .is-watching(ng-if="item.viwatching")
-          md-tooltip(md-direction="right") Video is watching now
-          i.material-icons remove_red_eye
-        .not-viewed(ng-if="!item.VIDEO_IS_WATCHED")
-          md-tooltip(md-direction="right") Video hasn't been watched
-          i.material-icons remove_red_eye
-        .viewed(ng-if="item.VIDEO_IS_WATCHED")
-          md-tooltip(md-direction="right") Video has been watched
-          i.material-icons remove_red_eye
-        .files(ng-if="!item.FILE_IS_DOWNLOADED")
-          md-tooltip(md-direction="right") Files haven't been downloaded yet
-          i.material-icons insert_drive_file
-        .files-downloaded(ng-if="item.FILE_IS_DOWNLOADED")
-          md-tooltip(md-direction="right") Files have been downloaded
-          i.material-icons insert_drive_file
-
-      p.email
-        span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
-        span(ng-if="!vm.toUser && !item.email || item.email === 'null' || item.email === 'undefined'") Public
-        span(ng-if="vm.toUser") from: {{item.author}}
-      p.title
-        span(
-        ng-if="item.title && item.title != null && item.title != 'undefined'"
-        ng-bind="item.title")
-        span(ng-if="!item.title || item.title === null || item.title === 'undefined'") Untitle
-      p.message
-        span(
-        ng-if="item.message && item.message != null && item.message != 'undefined'"
-        ng-bind="item.message")
-        span(ng-if="!item.message || item.message === null || item.message === 'undefined'") No message
-      .button-container
-        button.btn.mdl-button.mdl-js-button.view(ng-click="vm.onViewClick({$data: item.id})") 
+      //- .indicators(
+      //-   ng-if="vm.showIndicators"
+      //-   ng-click="vm.onIndicatorClick({$event: $event})")
+      //-   .mail(ng-if="!item.CONVERSATION_IS_VIEWED")
+      //-     md-tooltip(md-direction="right") Conversation hasn't been opened yet
+      //-     i.material-icons email
+      //-   .mail-opend(ng-if="item.CONVERSATION_IS_VIEWED")
+      //-     md-tooltip(md-direction="right") Conversation has been opened
+      //-     i.material-icons drafts
+      //-   .is-watching(ng-if="item.viwatching")
+      //-     md-tooltip(md-direction="right") Video is watching now
+      //-     i.material-icons remove_red_eye
+      //-   .not-viewed(ng-if="!item.VIDEO_IS_WATCHED")
+      //-     md-tooltip(md-direction="right") Video hasn't been watched
+      //-     i.material-icons remove_red_eye
+      //-   .viewed(ng-if="item.VIDEO_IS_WATCHED")
+      //-     md-tooltip(md-direction="right") Video has been watched
+      //-     i.material-icons remove_red_eye
+      //-   .files(ng-if="!item.FILE_IS_DOWNLOADED")
+      //-     md-tooltip(md-direction="right") Files haven't been downloaded yet
+      //-     i.material-icons insert_drive_file
+      //-   .files-downloaded(ng-if="item.FILE_IS_DOWNLOADED")
+      //-     md-tooltip(md-direction="right") Files have been downloaded
+      //-     i.material-icons insert_drive_file
+      .content
+        .message-info.ellipsis
+          span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
+          span(ng-if="!vm.toUser && !item.email || item.email === 'null' || item.email === 'undefined'") Public
+          span(ng-if="vm.toUser") from: {{item.author}} dddddddddddddddddddddddddddddddddddddddddddddddd
+        .message
+          .bubble(ng-if="vm.toUser")
+          .subject.ellipsis
+            span Hello friend
+          .person.ellipsis
+            span - BOB:
+          .last-message.ellipsis
+            span Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati cum asperiores aliquid tempore totam, fuga quo repellat. Culpa harum sit illo nulla? Minus, velit optio suscipit reiciendis incidunt tempora illo.
+        .progress-bar
+          .icon.blue 
+            i.material-icons send
+          .icon.blue
+            i.material-icons drafts
+          .icon.blue.done
+            i.fa.fa-hand-pointer-o(aria-hidden="true")
+          .icon.blue.done
+            i.material-icons remove_red_eye
+          .icon.blue.done
+            i.material-icons pause_circle_outline
+          .icon.blue.done
+            i.material-icons attachment
+          .icon.blue.in-progress
+            i.material-icons chat
+            .bubble-green
+          .done-all
+            i.material-icons done
+            span.success Contact!
+      .btn-container
+        md-button.view
           | view
+        //- button.btn.mdl-button.mdl-js-button.view(ng-click="vm.onViewClick({$data: item.id})") 
+        //-   | view
