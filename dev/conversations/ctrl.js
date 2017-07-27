@@ -69,10 +69,12 @@
           chats.push(lastChat);
         });
 
-        conversationsList.forEach(function(conversation) {
+        vm.conversationsList.forEach(function(conversation) {
           chats.forEach(function(chat) {
-            if (conversation.id === chat.conversationId) {
+
+            if (chat && chat.conversationId === conversation.id) {
               conversation.lastMessage = chat.message;
+              conversation.lastMessageAuthor = chat.authorId;
             }
           })
         });

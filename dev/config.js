@@ -92,13 +92,15 @@
 
 
   function registerRollbar(RollbarProvider) {
-    RollbarProvider.init({
-      accessToken: 'f4b32574bf5047cdad7c4e1d8ecc7209',
-      captureUncaught: true,
-      payload: {
-        environment: getEnvironment(location)
-      }
-    });
+    if (getEnvironment(location) !== 'develop') {
+      RollbarProvider.init({
+        accessToken: 'f4b32574bf5047cdad7c4e1d8ecc7209',
+        captureUncaught: true,
+        payload: {
+          environment: getEnvironment(location)
+        }
+      });
+    }
   }
 
   function getEnvironment(location) {

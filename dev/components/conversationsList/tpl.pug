@@ -35,8 +35,8 @@
         .message
           .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
           .subject.ellipsis {{item.title || 'Untitled'}}
-          .person.ellipsis(ng-if="item.author") - {{item.author}} :
-          .last-message.ellipsis(ng-if="item.message") {{item.message}}
+          .person.ellipsis(ng-if="item.author") - {{item.lastMessageAuthor}} :
+          .last-message.ellipsis(ng-if="item.lastMessage || item.message") {{item.lastMessage || item.message}}
         .progress-bar
           .icon.blue 
             i.material-icons send
