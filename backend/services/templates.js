@@ -149,7 +149,7 @@ module.exports = () => {
     },
 
     invite: (link, user) => {
-      user = user || 'User';
+      user = user || 'friend';
 
       return new Promise( (resolve, reject) => {
         const path = require('path');
