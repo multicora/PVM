@@ -55,6 +55,7 @@
 
       .subject {
         max-width: 100px;
+        min-width: 50px;
         margin-right: 5px;
 
         @media(max-width: 780px) {
@@ -68,6 +69,7 @@
 
       .person {
         max-width: 100px;
+        min-width: 50px;
         margin-right: 5px;
 
         @media(max-width: 780px) {

@@ -31,15 +31,12 @@
         .message-info.ellipsis
           span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
           span(ng-if="!vm.toUser && !item.email || item.email === 'null' || item.email === 'undefined'") Public
-          span(ng-if="vm.toUser") from: {{item.author}} dddddddddddddddddddddddddddddddddddddddddddddddd
+          span(ng-if="vm.toUser") from: {{item.author}}
         .message
-          .bubble(ng-if="vm.toUser")
-          .subject.ellipsis
-            span Hello friend
-          .person.ellipsis
-            span - BOB:
-          .last-message.ellipsis
-            span Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati cum asperiores aliquid tempore totam, fuga quo repellat. Culpa harum sit illo nulla? Minus, velit optio suscipit reiciendis incidunt tempora illo.
+          .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
+          .subject.ellipsis {{item.title || 'Untitled'}}
+          .person.ellipsis(ng-if="item.author") - {{item.author}} :
+          .last-message.ellipsis(ng-if="item.message") {{item.message}}
         .progress-bar
           .icon.blue 
             i.material-icons send
