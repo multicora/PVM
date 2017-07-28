@@ -74,8 +74,6 @@
             }
           });
         });
-
-        console.log(vm.conversationsList, vm.conversationsToUserList);
       });
     };
   }
