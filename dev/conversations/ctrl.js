@@ -56,29 +56,7 @@
         });
 
         return Promise.all(promisses);
-      }).then(function (res) {
-        var chats = [];
-        res.map(function(chat) {
-          var lastChat = chat.data[0];
-          for (var i = 0; i < chat.data.length; i++) {
-            if (lastChat.date < chat.data[i].date) {
-              lastChat = chat.data[i];
-            }
-          }
-
-          chats.push(lastChat);
-        });
-
-        vm.conversationsList.forEach(function(conversation) {
-          chats.forEach(function(chat) {
-
-            if (chat && chat.conversationId === conversation.id) {
-              conversation.lastMessage = chat.message;
-              conversation.lastMessageAuthor = chat.authorId;
-            }
-          })
-        });
-
+      }).then(function () {
         return libraryService.getConversationsToUser();
       }).then(function (res) {
         vm.conversationsToUserList = res.data;

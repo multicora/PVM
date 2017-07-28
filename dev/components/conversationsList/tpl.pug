@@ -31,12 +31,12 @@
         .message-info.ellipsis
           span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
           span(ng-if="!vm.toUser && !item.email || item.email === 'null' || item.email === 'undefined'") Public
-          span(ng-if="vm.toUser") from: {{item.author}}
+          span(ng-if="vm.toUser") from: {{item.author}}dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
         .message
           .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
-          .subject.ellipsis {{item.title || 'Untitled'}}
-          .person.ellipsis(ng-if="item.author") - {{item.lastMessageAuthor}} :
-          .last-message.ellipsis(ng-if="item.lastMessage || item.message") {{item.lastMessage || item.message}}
+          .subject.ellipsis {{item.title || 'Untitled'}}dddddddddddddddddddddddddddddddddd
+          .person.ellipsis - aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:
+          .last-message.ellipsis(ng-if="item.lastMessage || item.message") {{item.lastMessage || item.message}}  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta natus officia non sit, corporis porro cupiditate cumque voluptatum. Ab, repellat iure. Corporis earum aspernatur dolorum, at dolor illo, sunt atque.
         .progress-bar
           .icon.blue 
             i.material-icons send

@@ -45,6 +45,10 @@
       color: rgba(0, 0, 0, 0.87);
       font-size: 14px;
 
+      @media(max-width: 910px) {
+        flex-wrap: wrap;
+      }
+
       .bubble {
         margin: 4px 4px 0 0;
         width: 12px;
@@ -53,60 +57,25 @@
         border-radius: 50%;
       }
 
-      .subject {
-        max-width: 100px;
-        min-width: 50px;
-        margin-right: 5px;
-
-        @media(max-width: 780px) {
-          max-width: 80px;
-        }
-
-        @media(max-width: 540px) {
-          max-width: 50px;
-        }
-      }
-
+      .subject,
       .person {
         max-width: 100px;
-        min-width: 50px;
         margin-right: 5px;
-
-        @media(max-width: 780px) {
-          max-width: 80px;
-        }
-
-        @media(max-width: 540px) {
-          max-width: 50px;
-        }
       }
 
       .last-message {
         max-width: 400px;
-        width: 100%;
 
-        @media(max-width: 1055px) {
+        @media(max-width: 1070px) {
           max-width: 300px;
-        }
-
-        @media(max-width: 950px) {
-          max-width: 250px;
         }
 
         @media(max-width: 910px) {
           max-width: 400px;
         }
 
-        @media(max-width: 780px) {
-          max-width: 300px;
-        }
-
-        @media(max-width: 620px) {
-          max-width: 200px;
-        }
-
-        @media(max-width: 540px) {
-          max-width: 85px;
+        @media(max-width: 470px) {
+          max-width: 250px;
         }
       }
     }
@@ -132,6 +101,10 @@
         .bubble-green {
           display: none;
         }
+      }
+
+      .blue {
+        color: rgba(0,0,0,.54);
       }
 
       .fa {
@@ -189,31 +162,22 @@
         margin-left: 0px;
 
         i {
-          padding: 2px 2px 0 2px;
           font-size: 16px;
         }
 
         .fa {
           font-size: 16px;
-          padding: 2px 2px 0 3px;
         }
 
         .done-all {
-          margin-left: 2px;
-
           i {
             font-size: 14px;
-          }
-
-          .success {
-            font-size: 10px;
-            margin-left: 2px;
           }
         }
 
         .in-progress {
           .bubble-green {
-            margin-left: 4px;
+            margin-left: 6px;
           }
         }
       }
@@ -225,6 +189,10 @@
       justify-content: center;
       color: #709de4;
       font-family: 'Roboto Bold';
+
+      @media(max-width: 910px) {
+        display: none;
+      }
 
       .view {
         height: 36px;
