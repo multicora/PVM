@@ -14,6 +14,7 @@
   ) {
     var vm = this;
     var conversationsId = [];
+    vm.showFeedbackPopup = false;
 
     vm.showConversationIndicators = true;
     vm.toUser = true;
@@ -26,6 +27,14 @@
 
     vm.viewConversation = function (id) {
       $location.path('conversation/' + id);
+    };
+
+    vm.showFeedback = function () {
+      vm.showFeedbackPopup = true;
+    };
+
+    vm.closeFeedback = function () {
+      vm.showFeedbackPopup = false;
     };
 
     function getConversations () {

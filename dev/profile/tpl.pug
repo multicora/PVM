@@ -1,6 +1,10 @@
 .profile-wrap
-  app-header
-  app-menu(class-name="desktop-menu")
+  app-header(
+    show-feedback="vm.showFeedback()"
+    close-feedback="vm.closeFeedback()")
+  app-menu(
+    class-name="desktop-menu"
+    show-feedback="vm.showFeedback()")
   .profile-container
     .title-container
       .title-content
@@ -74,5 +78,6 @@
     .button-container
       md-button.md-raised.edit-btn(ng-click="vm.save()") Save
 
-  //- Feedback form
-  feedback.profile
+  feedback(
+    ng-if="vm.showFeedbackPopup"
+    close-feedback="vm.closeFeedback()")

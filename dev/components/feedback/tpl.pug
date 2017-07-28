@@ -1,6 +1,5 @@
 .feedback-form
-  popup(ng-if="vm.showFeedbackPopup"
-    close-popup="vm.close()")
+  popup(close-popup="vm.closeFeedback()")
     .feedback-form-container
       p.title Leave your feedback
       p.text The app is at alpha-testing stage. We diligently gather and value every opinion about how we can improve Bizkonect app.
@@ -11,13 +10,7 @@
           maxlength="300"
           aria-label="text input")
       .button-container
-        button.btn.mdl-button.mdl-js-button(ng-click="vm.close()") close
+        button.btn.mdl-button.mdl-js-button(ng-click="vm.closeFeedback()") close
         button.btn.mdl-button.mdl-js-button(
           ng-disabled="!vm.feedback.message"
           ng-click="vm.sendClickHandler(vm.feedback)") send
-md-button.md-fab.md-mini.feedback-buton(
-  ng-click="vm.showFeedbackPopup=true"
-  ga-click="button"
-  ga-click-action="click"
-  ga-click-label="feedback")
-  md-icon.material-icons feedback
