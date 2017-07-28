@@ -25,6 +25,8 @@
       'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
       'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
     };
+
+    vm.showFeedbackPopup = false;
     vm.sentConversation = 0;
     vm.openedConversation = 0;
     vm.videoIsWatched = 0;
@@ -64,6 +66,14 @@
 
     vm.redirectToConversation = function (id) {
       $location.path('conversation/' + id);
+    };
+
+    vm.showFeedback = function () {
+      vm.showFeedbackPopup = true;
+    };
+
+    vm.closeFeedback = function () {
+      vm.showFeedbackPopup = false;
     };
 
     function getConversation() {
