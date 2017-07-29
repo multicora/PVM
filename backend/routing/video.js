@@ -107,7 +107,7 @@ module.exports = function (server, DAL) {
     }
   });
 
-server.route({
+  server.route({
     method: 'GET',
     path: '/api/videos',
     config: {
