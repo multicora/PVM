@@ -74,7 +74,7 @@ module.exports = function (DAL) {
             return DAL.users.addConfirmToken(confirmToken, email);
           }).then(() => {
             return templates.registration(link);
-          }).then((template) => {
+          }).then(template => {
             const mail = {
               to: email,
               subject: 'Register',
@@ -96,21 +96,23 @@ module.exports = function (DAL) {
       });
     },
 
-    inviteUser: (email) => {
+    inviteUser: (data, serverUrl) => {
       return new Promise((resolve, reject) => {
         let resetToken = utils.newToken();
-        DAL.users.addUserInvite(email).then(function() {
-           return DAL.users.addResetToken(resetToken, email);
-        }).then(() => {
-          const message = [
-            // TODO: config.mail.linkForNewPassword should get server addres from request
-            'Enter password for your login: ' + config.mail.linkForNewPassword + resetToken
-          ].join('\n');
 
+        DAL.company.add().then((res) => {
+          data.company = res.insertId;
+          return DAL.users.addUserInvite(data);
+        }).then(function() {
+          return DAL.users.addResetToken(resetToken, data.email);
+        }).then(() => {
+          return templates.invite(serverUrl + '/new-password/' + resetToken, data.name);
+        }).then(template => {
           const mail = {
-            to: email,
-            subject: 'Invitation',
-            text: message
+            to: data.email,
+            subject: 'Invite',
+            text: template.text,
+            html: template.html
           };
 
           mailer(config).send(mail).then(

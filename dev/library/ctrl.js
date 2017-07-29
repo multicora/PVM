@@ -31,6 +31,7 @@
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
     vm.toUser = true;
+    vm.showFeedbackPopup = false;
 
     getVideos();
     getFiles();
@@ -55,6 +56,14 @@
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
+    };
+
+    vm.showFeedback = function () {
+      vm.showFeedbackPopup = true;
+    };
+
+    vm.closeFeedback = function () {
+      vm.showFeedbackPopup = false;
     };
 
     //Preview popup

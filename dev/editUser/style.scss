@@ -14,6 +14,11 @@
   .edit-user-form {
     width: 500px;
     margin: 0 auto;
+
+    md-input-container {
+      width: 100%;
+      margin: 0;
+    }
   }
 
   .button-container {

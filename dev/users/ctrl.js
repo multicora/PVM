@@ -4,8 +4,14 @@
 
   app.controller('usersCtrl', ctrl);
 
-  ctrl.$inject = ['usersService'];
-  function ctrl(usersService) {
+  ctrl.$inject = [
+    '$location',
+    'usersService'
+  ];
+  function ctrl(
+    $location,
+    usersService
+  ) {
     var vm = this;
 
     vm.showAddPopup = false;
@@ -26,15 +32,21 @@
       vm.showAddPopup = false;
     };
 
-    vm.inviteUser = function (email) {
-      usersService.inviteUser(email).then(function () {
+    vm.redirect = function (id) {
+      $location.path('user/' + id);
+    };
+
+    vm.inviteUser = function (email, name) {
+      usersService.inviteUser({
+        email: email,
+        name: name || ''
+      }).then(function () {
         vm.closeAddPopup();
         getUsers();
       });
     };
 
     vm.blockUser = function (id) {
-      console.log(id);
       usersService.blockUser(id).then(function () {
         getUsers();
       });
