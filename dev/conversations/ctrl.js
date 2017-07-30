@@ -6,13 +6,11 @@
 
   ctrl.$inject = [
     '$location',
-    'libraryService',
-    'conversationsService'
+    'libraryService'
   ];
   function ctrl(
     $location,
-    libraryService,
-    conversationsService
+    libraryService
   ) {
     var vm = this;
     var conversationsToId = [];
