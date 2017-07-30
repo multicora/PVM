@@ -2,13 +2,11 @@
 
 module.exports = function (config) {
   const Promise = require('promise');
+  const SparkPost = require('sparkpost');
 
   const logger = require('./logger.js');
 
-  const apiKey = config.mailGun.apiKey;
-  const domain = config.mailGun.domain;
-  const mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
-
+  const apiKey = config.mail.apiKey;
 
   return {
     /**
@@ -22,24 +20,27 @@ module.exports = function (config) {
      */
     send: (mail) => {
       return new Promise((resolve, reject) => {
+
         const defaultHtml = [
           '<div style="white-space: pre;">',
             mail.text || '',
           '</div>'
         ].join('');
 
-        const data = {
-          from: mail.from || config.mail.defaultFrom,
-          to: mail.to,
-          subject: mail.subject || config.mail.defaultSubject,
-          text: mail.text || '',
-          html: mail.html || defaultHtml
-        };
-
         if (!config.debugMode) {
-          mailgun.messages().send(data, function (error, body) {
-            error ? reject(error) : resolve(body);
-          });
+          const sparky = new SparkPost(apiKey);
+
+          sparky.transmissions.send({
+            content: {
+              from: mail.from || config.mail.defaultFrom,
+              subject: mail.subject || config.mail.defaultSubject,
+              html: mail.html || defaultHtml
+            },
+            recipients: [
+              { address: mail.to }
+            ]
+          })
+          .then(resolve, reject);
         } else {
           logger.print('========== Mailer stub ==========');
           logger.print(`New message for ${mail.to}`);
@@ -50,5 +51,4 @@ module.exports = function (config) {
       });
     }
   };
-
 };

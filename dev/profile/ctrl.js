@@ -15,8 +15,12 @@
     profileService
   ) {
     var vm = this;
+
+    vm.showFeedbackPopup = false;
     vm.photoError = '';
     vm.logoError = '';
+    vm.user = null;
+    vm.company = null;
 
     getProfile();
 
@@ -47,6 +51,14 @@
             .hideDelay(3000)
         );
       });
+    };
+
+    vm.showFeedback = function () {
+      vm.showFeedbackPopup = true;
+    };
+
+    vm.closeFeedback = function () {
+      vm.showFeedbackPopup = false;
     };
 
     $scope.convertToBase64Photo = function() {
@@ -96,6 +108,9 @@
       }).then(function(res) {
         vm.company = res.data;
         vm.company.name = vm.company.name || '';
+      }).catch(function () {
+        vm.user = null;
+        vm.company = null;
       });
     };
   }

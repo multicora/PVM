@@ -4,7 +4,9 @@
     templateUrl: 'components/feedback/tpl.html',
     controller: ctrl,
     controllerAs: 'vm',
-    bindings: {}
+    bindings: {
+      closeFeedback: '&'
+    }
   });
 
   ctrl.$inject = [
@@ -16,20 +18,12 @@
     $mdToast
   ) {
     var vm = this;
-    vm.showFeedbackPopup = false;
-
-    vm.show = function() {
-      vm.showFeedbackPopup = true;
-    };
-
-    vm.close = function() {
-      vm.showFeedbackPopup = false;
-    };
 
     vm.sendClickHandler = function() {
       feedbacksService.send(vm.feedback).then( function() {
         vm.showFeedbackPopup = false;
         vm.feedback = {};
+        vm.closeFeedback();
         $mdToast.show(
           $mdToast.simple()
             .textContent('Sent successfully!')

@@ -6,10 +6,12 @@
 
   service.$inject = [
     '$q',
+    '$mdToast',
     'libraryService'
   ];
   function service(
     $q,
+    $mdToast,
     libraryService
   ) {
     var vm = this;
@@ -41,6 +43,13 @@
           });
 
           resolve(res.data);
+        }).catch(function (err) {
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent(err.data.error)
+              .position('bottom center')
+              .hideDelay(5000)
+          );
         });
       });
 

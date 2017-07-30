@@ -158,13 +158,15 @@ const usersController = require('../controllers/users.js')(DAL);
 
         usersController.resetPassword(
           request.payload.email,
-          serverUrl,
-          Boom.badData('Invalid email'),
-          Boom.badImplementation('Server error')
+          serverUrl
         ).then(() => {
           reply();
         }).catch((err) => {
-          reply(Boom.badImplementation('Error while resetting password', err));
+          if (err.type === 404) {
+            reply(Boom.badRequest('Invalid email'));
+          } else {
+            reply(Boom.badImplementation('Error while resetting password', err));
+          }
         });
       }
     }
@@ -191,40 +193,41 @@ const usersController = require('../controllers/users.js')(DAL);
    *       "status": "success"
    *     }
    */
-  server.route({
-    method: 'POST',
-    path: '/api/register',
-    config: {
-      handler: function (request, reply) {
-        usersController.isUserExist(request.payload.email).then(res => {
-          let confirmToken = utils.newToken();
-          let result = null;
-          let serverUrl = utils.getServerUrl(request) + '/login/' + confirmToken;
-          if (res) {
-            result = Promise.reject({
-              'statusCode': 400,
-              'message': 'This email already in use!'
-            });
-          } else {
-            result = usersController.register(request.payload.email,
-              request.payload.password,
-              request.payload.confirmPassword,
-              confirmToken,
-              serverUrl);
-          }
-          return result;
-        }).then(() => {
-          reply({'status': 'success'});
-        }, err => {
-          if (err.statusCode === 400){
-            reply(Boom.badRequest(err.message, err));
-          } else {
-            reply(Boom.badImplementation(err.message, err));
-          }
-        });
-      }
-    }
-  });
+  // Temporary hidden
+  // server.route({
+  //   method: 'POST',
+  //   path: '/api/register',
+  //   config: {
+  //     handler: function (request, reply) {
+  //       usersController.isUserExist(request.payload.email).then(res => {
+  //         let confirmToken = utils.newToken();
+  //         let result = null;
+  //         let serverUrl = utils.getServerUrl(request) + '/login/' + confirmToken;
+  //         if (res) {
+  //           result = Promise.reject({
+  //             'statusCode': 400,
+  //             'message': 'This email already in use!'
+  //           });
+  //         } else {
+  //           result = usersController.register(request.payload.email,
+  //             request.payload.password,
+  //             request.payload.confirmPassword,
+  //             confirmToken,
+  //             serverUrl);
+  //         }
+  //         return result;
+  //       }).then(() => {
+  //         reply({'status': 'success'});
+  //       }, err => {
+  //         if (err.statusCode === 400){
+  //           reply(Boom.badRequest(err.message, err));
+  //         } else {
+  //           reply(Boom.badImplementation(err.message, err));
+  //         }
+  //       });
+  //     }
+  //   }
+  // });
 
   server.route({
     method: 'POST',
@@ -237,7 +240,8 @@ const usersController = require('../controllers/users.js')(DAL);
         }
       },
       handler: function (request, reply) {
-        usersController.inviteUser(request.payload.email).then(
+        let serverUrl = utils.getServerUrl(request);
+        usersController.inviteUser(request.payload, serverUrl).then(
           (res) => {
             reply(res);
           },

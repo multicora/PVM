@@ -1,6 +1,9 @@
 'use strict';
 
-var merge = require('merge');
+const merge = require('merge');
+const isCI = require('is-ci');
+
+const logger = require('./services/logger.js');
 
 var userConfig;
 
@@ -17,7 +20,7 @@ const DB = {
   }
 };
 
-var config = {
+let config = {
   debugMode: false,
   db: {
     type: DB.TYPES.MySQL,
@@ -41,16 +44,9 @@ var config = {
     APIkey: ''
   },
   mail: {
-    host: 'smtp.gmail.com',
-    port: 465,
-    user: '',
-    pass: '',
-    defaultSubject: 'BizKonect',
-    defaultFrom: 'No reply <No-reply@bizkonect.com>'
-  },
-  mailGun: {
-    apiKey: '',
-    domain: ''
+    defaultSubject: 'Bizkonect',
+    defaultFrom: 'Bizkonect <No-reply@bizkonect.com>',
+    apiKey: ''
   },
   notification: {
     time: 5 // Should be in minutes
@@ -63,7 +59,35 @@ var config = {
   },
   suport: {
     email: ''
+  },
+  logging: {
+    key: ''
   }
 };
 
-module.exports = merge.recursive(config, userConfig);
+const fullConfig = merge.recursive(config, userConfig);
+
+if (!isCI) {
+  validate(fullConfig);
+} else {
+  logger.print('The code is running on a CI server. Skip config valiation');
+}
+
+function validate(conf) {
+  if (!conf.debugMode) {
+    validateProperty(conf.mail.apiKey, '"config.mail.apiKey" key should be exist and not empty');
+  }
+  validateProperty(conf.mail.defaultFrom, '"config.mail.defaultFrom" key should be exist and not empty');
+}
+
+function showError(msg) {
+  throw new Error(msg);
+}
+
+function validateProperty(property, message) {
+  if (!property) {
+    showError(message);
+  }
+}
+
+module.exports = fullConfig;

@@ -1,10 +1,10 @@
 .library-wrapper()
-  //- md-swipe-left="vm.changeTab(1)"
-  //- md-swipe-right="vm.changeTab(-1)"
-  //- md-swipe-down=""
-  //- md-swipe-up="")
-  app-header
-  app-menu(class-name="desktop-menu")
+  app-header(
+    show-feedback="vm.showFeedback()"
+    close-feedback="vm.closeFeedback()")
+  app-menu(
+    class-name="desktop-menu"
+    show-feedback="vm.showFeedback()")
   md-content.library-content
     md-tabs(
       md-dynamic-height=""
@@ -72,5 +72,6 @@
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.close(ng-click="vm.closePreviewPopup()") close
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.send(ng-click="vm.sendClickHandler(vm.previewVideo)") send
 
-  //- Feedback form
-  feedback
+  feedback(
+    ng-if="vm.showFeedbackPopup"
+    close-feedback="vm.closeFeedback()")

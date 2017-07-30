@@ -9,6 +9,7 @@
     ng-class="{active: vm.url === '/conversations'}")
     i.material-icons message
     span Conversations
+    .unreaded-message {{ vm.unreadedMessage }}
   .menu-button(
     ng-click="vm.redirect('/library')"
     ng-class="{active: vm.url === '/library'}")
@@ -29,3 +30,6 @@
   a.app-version(
     href="{{vm.href}}"
     target="_blank") v.0.0.1
+  md-button.md-icon-button.feedback-buton(
+    ng-click="vm.showFeedback()")
+    md-icon.material-icons feedback

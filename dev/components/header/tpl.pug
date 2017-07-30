@@ -6,8 +6,6 @@ header.main-header
       i.material-icons.menu-icon menu
     img.logo.pointer(src='/files/images/logo_bizkonect.svg')
     .notification-container
-      //- .material-icons.email-notification(
-        ng-click="vm.redirect('/dashboard')") email
       md-menu(
         md-position-mode="target-right target"
         ng-if="vm.notifications.length")
@@ -46,4 +44,6 @@ header.main-header
               span.first-name(ng-if="vm.user.firstName") {{vm.user.firstName}}
               span(ng-if="vm.user.secondName") {{vm.user.secondName}}
             p {{vm.user.email}}
-      app-menu(class-name="mobile-menu")
+      app-menu(
+        class-name="mobile-menu"
+        show-feedback="vm.showFeedback()")

@@ -43,29 +43,25 @@ function startServer(tls) {
   });
   connectDB().then(
     _.bind(registerDAL, null)
-  ).then(
-    function(DAL) {
-      migrationsStart(DAL).then(
-      _.bind(registerACL, null, server)
-      ).then(
-        _.bind(registerStaticFilesServer, null, server)
-      ).then(
-        _.bind(registerAuth, null, server, DAL)
-      ).then(
-        _.bind(registerRouting, null, server, DAL)
-      ).then(
-        _.bind(run, null, server)
-      ).then(
-        _.bind(showSuccessMessage, null, server),
-        function(err) {
-          logError(err);
-        }
-      );
-    },
-    function (err) {
-      logError(err);
-    }
-  );
+  ).then(function(DAL) {
+    return migrationsStart(DAL).then(
+    _.bind(registerACL, null, server)
+    ).then(
+      _.bind(registerStaticFilesServer, null, server)
+    ).then(
+      _.bind(registerAuth, null, server, DAL)
+    ).then(
+      _.bind(registerRouting, null, server, DAL)
+    ).then(
+      _.bind(registerExternalLogging, null, server, config)
+    ).then(
+      _.bind(run, null, server)
+    ).then(
+      _.bind(showSuccessMessage, null, server)
+    );
+  }).catch(function (err) {
+    logError(err);
+  });
 }
 
 function getTls() {
@@ -185,4 +181,24 @@ function registerAuth(server, DAL) {
       }
     });
   });
+}
+
+function registerExternalLogging(server, config) {
+  var Rollbar = require('rollbar');
+  var rollbar = new Rollbar(config.logging.key);
+
+  server.on('request-error', function(request, error) {
+    // Note: before Hapi v8.0.0, this should be 'internalError' instead of 'request-error'
+    if (error instanceof Error) {
+      rollbar.error(error, request, cb);
+    } else {
+      rollbar.error('Error: ' + error, request, cb);
+    }
+  });
+
+  function cb(rollbarErr) {
+    if (rollbarErr) {
+      console.error('Error reporting to rollbar, ignoring: ' + rollbarErr);
+    }
+  };
 }
