@@ -41,7 +41,6 @@
     .message {
       display: flex;
       flex-direction: row;
-      font-family: 'Roboto Bold';
       color: rgba(0, 0, 0, 0.87);
       font-size: 14px;
 
@@ -78,6 +77,10 @@
           max-width: 250px;
         }
       }
+    }
+
+    .bold {
+      font-family: 'Roboto Bold';      
     }
 
     .progress-bar {
