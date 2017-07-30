@@ -58,14 +58,6 @@
           });
         });
 
-        var promisses = [];
-
-        conversationsToId.forEach(function(id) {
-          promisses.push(conversationsService.getChat(id));
-        });
-
-        return Promise.all(promisses);
-      }).then(function () {
         return libraryService.getConversationsToUser();
       }).then(function (res) {
         vm.conversationsToUserList = res.data;

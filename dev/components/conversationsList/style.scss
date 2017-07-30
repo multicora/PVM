@@ -155,7 +155,8 @@
       }
 
       .done {
-        border-bottom: 1px solid #4CAF50;
+        // border-bottom: 1px solid #4CAF50;  will be implemented after all logicall wiil be done
+        color: #4CAF50;
       }
 
       @media(max-width: 440px) {

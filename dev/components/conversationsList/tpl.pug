@@ -3,30 +3,6 @@
     .conversation(
       ng-repeat="item in vm.list | orderBy:'-updated'"
       ng-click="vm.onViewClick({$data: item.id})")
-      //- .indicators(
-      //-   ng-if="vm.showIndicators"
-      //-   ng-click="vm.onIndicatorClick({$event: $event})")
-      //-   .mail(ng-if="!item.CONVERSATION_IS_VIEWED")
-      //-     md-tooltip(md-direction="right") Conversation hasn't been opened yet
-      //-     i.material-icons email
-      //-   .mail-opend(ng-if="item.CONVERSATION_IS_VIEWED")
-      //-     md-tooltip(md-direction="right") Conversation has been opened
-      //-     i.material-icons drafts
-      //-   .is-watching(ng-if="item.viwatching")
-      //-     md-tooltip(md-direction="right") Video is watching now
-      //-     i.material-icons remove_red_eye
-      //-   .not-viewed(ng-if="!item.VIDEO_IS_WATCHED")
-      //-     md-tooltip(md-direction="right") Video hasn't been watched
-      //-     i.material-icons remove_red_eye
-      //-   .viewed(ng-if="item.VIDEO_IS_WATCHED")
-      //-     md-tooltip(md-direction="right") Video has been watched
-      //-     i.material-icons remove_red_eye
-      //-   .files(ng-if="!item.FILE_IS_DOWNLOADED")
-      //-     md-tooltip(md-direction="right") Files haven't been downloaded yet
-      //-     i.material-icons insert_drive_file
-      //-   .files-downloaded(ng-if="item.FILE_IS_DOWNLOADED")
-      //-     md-tooltip(md-direction="right") Files have been downloaded
-      //-     i.material-icons insert_drive_file
       .content
         .message-info.ellipsis
           span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
@@ -43,30 +19,33 @@
             i.material-icons send
 
           //- conversation opend
-          .icon.blue.in-progress(ng-if="!item.CONVERSATION_IS_VIEWED")
+          .icon.blue(ng-if="!item.CONVERSATION_IS_VIEWED")
             i.material-icons drafts
-            .bubble-green
           .icon.blue.done(ng-if="item.CONVERSATION_IS_VIEWED")
             i.material-icons drafts
 
           //-
-          .icon.blue
-            i.fa.fa-hand-pointer-o(aria-hidden="true")
+          //- .icon.blue
+          //-   i.fa.fa-hand-pointer-o(aria-hidden="true")
           
           //- conversation video vatched
-          .icon.blue
+          //- .icon.blue
             i.material-icons remove_red_eye
 
           //- 
-          .icon.blue
-            i.material-icons pause_circle_outline
+          //- .icon.blue
+            //- i.material-icons pause_circle_outline
 
           //- conversation file was downloaded
-          .icon.blue
+          .icon.blue(ng-if="!item.FILE_IS_DOWNLOADED")
+            i.material-icons attachment
+          .icon.blue.done(ng-if="item.FILE_IS_DOWNLOADED")
             i.material-icons attachment
 
           //- have chat in conversation
-          .icon.blue
+          .icon.blue(ng-if="!item.NEW_MESSAGE")
+            i.material-icons chat
+          .icon.blue.done(ng-if="item.NEW_MESSAGE")
             i.material-icons chat
 
           //- all previous points done
@@ -74,7 +53,5 @@
             i.material-icons done
             span.success Contact!
       .btn-container
-        md-button.view
+        md-button.view(ng-click="vm.onViewClick({$data: item.id})")
           | view
-        //- button.btn.mdl-button.mdl-js-button.view(ng-click="vm.onViewClick({$data: item.id})") 
-        //-   | view
