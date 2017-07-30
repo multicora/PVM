@@ -20,6 +20,24 @@
     i {
       vertical-align: middle;
     }
+
+    .unreaded-message {
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      text-align: center;
+      vertical-align: middle;
+      border: 2px solid transparent;
+      margin-left: 10px;
+      border-radius: 50%;
+    }
+
+    .unreaded-message {
+      border-color: #757575;
+      color: #757575;
+      transition: .3s;
+    }
   }
 
   .menu-button {
@@ -33,12 +51,23 @@
     background-color: rgba(93, 144, 226, .54);
     color: #fff;
     transition: .3s;
+
+    .unreaded-message {
+      border-color: #fff;
+      color: #fff;
+      transition: .3s;
+    }
   }
 
   .active {
     box-shadow: 4px 4px 10px 0 rgba(112, 157, 228, .5);
     background-color: rgba(93, 144, 226, 1);
     color: #fff;
+
+    .unreaded-message {
+      border-color: #fff;
+      color: #fff;
+    }
   }
 }
 

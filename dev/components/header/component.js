@@ -30,6 +30,7 @@
     var tokenName = 'x-biz-token';
 
     vm.user = null;
+    vm.unreadedMessage = null;
 
     getNotifications();
 
