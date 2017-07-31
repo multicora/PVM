@@ -31,8 +31,10 @@
           //- .icon.blue
           //-   i.fa.fa-hand-pointer-o(aria-hidden="true")
           
-          //- conversation video vatched
-          //- .icon.blue
+          //- conversation video watched
+          .icon.blue(ng-if="!item.VIDEO_IS_WATCHED")
+            i.material-icons remove_red_eye
+          .icon.blue.done(ng-if="item.VIDEO_IS_WATCHED")
             i.material-icons remove_red_eye
 
           //- 
