@@ -11,14 +11,13 @@
         .message
           .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
 
-          .subject.ellipsis(ng-if="vm.toUser && item.CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}
-          .subject.ellipsis(ng-if="!vm.toUser") {{item.title || 'Untitled'}}
+          .subject.ellipsis(ng-if="(vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser") {{item.title || 'Untitled'}}
           .subject.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}
 
-          .person.ellipsis(ng-if="item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
+          .person.ellipsis(ng-if="(vm.toUser || !vm.toUser) && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
           .person.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
 
-          .last-message.ellipsis(ng-if="item.lastMessage || item.message") {{item.lastMessage || item.message}}
+          .last-message.ellipsis(ng-if="((vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser) && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
           .last-message.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
         .progress-bar(ng-if="!vm.toUser")
           //- conversation send
