@@ -20,7 +20,6 @@ module.exports = function (config) {
      */
     send: (mail) => {
       return new Promise((resolve, reject) => {
-        const sparky = new SparkPost(apiKey);
 
         const defaultHtml = [
           '<div style="white-space: pre;">',
@@ -29,6 +28,8 @@ module.exports = function (config) {
         ].join('');
 
         if (!config.debugMode) {
+          const sparky = new SparkPost(apiKey);
+
           sparky.transmissions.send({
             content: {
               from: mail.from || config.mail.defaultFrom,

@@ -1,18 +1,21 @@
 'use strict';
+
 const connectDB = require('../../dataConnection.js');
 
 module.exports = function() {
   return {
     version: 63,
-    message: 'Add `thumbnail` to video table',
+    message: 'Add "read" to "chat_status" table',
     script: function (next) {
-      connectDB().then(function (connection) {
-        let request = [
-          'ALTER TABLE `videos` ',
-          'ADD `thumbnail` MEDIUMBLOB;'
-        ].join('');
+      const request = [
+        'ALTER TABLE `chat_status` ',
+        'ADD `read` BOOLEAN DEFAULT FALSE;'
+      ].join('');
 
-        connection.query(request, next);
+      connectDB().then( connection => {
+        connection.query(request, err => {
+          next(err);
+        });
       });
     }
   };

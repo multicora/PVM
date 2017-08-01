@@ -5,22 +5,30 @@
     controller: ctrl,
     controllerAs: 'vm',
     bindings: {
-      className: '@'
+      className: '@',
+      showFeedback: '&'
     }
   });
 
   ctrl.$inject = [
     '$location',
-    'storage'
+    'storage',
+    'notificationsService'
   ];
   function ctrl(
     $location,
-    storage
+    storage,
+    notificationsService
   ) {
     var vm = this;
     var tokenName = 'x-biz-token';
 
+    vm.unreadedMessage = null;
     vm.url = $location.url();
+
+    notificationsService.getUnreadedMessage().then(function(res) {
+      vm.unreadedMessage = res.data.length;
+    });
 
     vm.redirect = function(url, urlParam) {
       if (urlParam) {

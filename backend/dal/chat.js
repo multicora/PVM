@@ -72,6 +72,19 @@ module.exports = (connection) => {
       });
     },
 
+    getStatusByUser: function (userId) {
+      return new Promise(function (resolve, reject) {
+        const request = sqlBuilder.select()
+          .from('chat_status')
+          .where('userId = ' + userId)
+          .toString();
+
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     addStatus: (conversationId, userId) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
@@ -92,6 +105,22 @@ module.exports = (connection) => {
         const request = sqlBuilder.update()
           .table('chat_status')
           .set('notified', true)
+          .set('read', false)
+          .where('conversationId = ' + conversationId)
+          .where('userId = ' + userId)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    markAsRead: (conversationId, userId) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('chat_status')
+          .set('`read`', true)
           .where('conversationId = ' + conversationId)
           .where('userId = ' + userId)
           .toString();

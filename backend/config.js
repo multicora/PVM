@@ -44,8 +44,8 @@ let config = {
     APIkey: ''
   },
   mail: {
-    defaultSubject: 'BizKonect',
-    defaultFrom: 'No reply <No-reply@bizkonect.com>',
+    defaultSubject: 'Bizkonect',
+    defaultFrom: 'Bizkonect <No-reply@bizkonect.com>',
     apiKey: ''
   },
   notification: {
@@ -59,6 +59,9 @@ let config = {
   },
   suport: {
     email: ''
+  },
+  logging: {
+    key: ''
   }
 };
 

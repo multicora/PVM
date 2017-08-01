@@ -26,9 +26,8 @@
       return $http.post('/api/update-user', user);
     };
 
-    this.inviteUser = function (email) {
-      console.log(email);
-      return $http.post('/api/invite-user', {'email': email});
+    this.inviteUser = function (data) {
+      return $http.post('/api/invite-user', data);
     };
   }
 })(angular);

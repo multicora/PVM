@@ -69,13 +69,11 @@ module.exports = () => {
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
 
-        authorName = authorName ? authorName + ',' : '';
+        authorName = authorName ? authorName + ', ' : '';
         let props = {
-          text: authorName + userName + 'just viewed your conversation',
+          text: authorName + userName + ' just viewed your conversation',
           link: link
         };
-
-        console.log(props.text);
 
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);
@@ -143,6 +141,24 @@ module.exports = () => {
         let letter = new EmailTemplate(templateDir);
         let props = {
           link: link
+        };
+        letter.render(props, function (err, result) {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    },
+
+    invite: (link, user) => {
+      user = user || 'friend';
+
+      return new Promise( (resolve, reject) => {
+        const path = require('path');
+        let inviteTemplateDir = '/invite';
+        let templateDir = path.join(__dirname, templatesDir, inviteTemplateDir);
+        let letter = new EmailTemplate(templateDir);
+        let props = {
+          link: link,
+          user: user
         };
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);

@@ -31,23 +31,13 @@
     vm.showSendButton = true;
     vm.showPreviewPopup = false;
     vm.toUser = true;
+    vm.showFeedbackPopup = false;
 
-    vm.getVideos = function () {
-      libraryService.getVideos().then(function (res) {
-        vm.videosList = res.data;
-        return libraryService.getThumbnails();
-      }).then(function (res) {
-        // for (var i = 0; i < res.data.length; i++) {
-        //   vm.videosList[i].attributes.thumbnail = res.data[i].attributes;
-        // }
-      }, function () {
-        // TODO: implement it
-      });
-    };
-
-    vm.getVideos();
+    getVideos();
     getFiles();
     getTemplates();
+
+    vm.getVideos = getVideos;
 
     // Delete video
     vm.deleteVideo = function (id) {
@@ -68,18 +58,36 @@
       $event.stopPropagation();
     };
 
+    vm.showFeedback = function () {
+      vm.showFeedbackPopup = true;
+    };
+
+    vm.closeFeedback = function () {
+      vm.showFeedbackPopup = false;
+    };
+
     //Preview popup
     vm.showPreview = function (video) {
+      var ext = video.attributes.external_file_name.split('.').pop();
+
       vm.previewVideo = video;
+      vm.showPreviewPopup = true;
       conversationsService.getVideo(video.id).then(function (res) {
         vm.previewVideoUrl = {
           sources: [{
             src: res.data.attributes.url,
-            type: 'video/mp4'
+            type: 'video/' + (ext || 'mp4')
+            // type: 'video/mp4'
           }]
         };
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.message)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
       });
-      vm.showPreviewPopup = true;
     };
 
     vm.closePreviewPopup = function () {
@@ -106,14 +114,21 @@
     // Confirm popup for delete template
     function showConfirmDeleteTemplate(id) {
       $mdDialog.show( confirmDeletePopup ).then(function() {
-        libraryService.deleteTemplate(id).then(function() {
-          getTemplates();
+        return libraryService.deleteTemplate(id).then(function() {
           $mdToast.show(
             $mdToast.simple()
               .textContent('Template deleted!')
               .position('bottom center')
           );
+          return getTemplates();
         });
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.message)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
       });
     };
 
@@ -163,15 +178,41 @@
     };
 
     function getTemplates () {
-      // TODO: add .catch() part
-      libraryService.getTemplates().then(function (res) {
+      return libraryService.getTemplates().then(function (res) {
         vm.templatesList = res.data;
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
       });
     }
 
     function getFiles () {
       filesService.getFiles().then(function(res) {
         vm.filesList = res;
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
+      });
+    }
+
+    function getVideos () {
+      return libraryService.getVideos().then(function (res) {
+        vm.videosList = res.data;
+      }).catch(function (err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.message)
+            .position('bottom center')
+            .hideDelay(5000)
+        );
       });
     }
 

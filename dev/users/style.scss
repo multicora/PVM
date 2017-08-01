@@ -26,6 +26,9 @@
 
     .user {
       margin-top: 10px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      border-radius: 2px;
     }
   }
 
@@ -73,14 +76,15 @@
       text-align: center;
     }
 
+    md-input-container {
+      width: 80%;
+      margin: 0;
+      text-align: left;
+    }
+
     .add-form {
       text-align: center;
       width: 100%;
-
-      input {
-        display: inline-block;
-        width: 80%;
-      }
     }
 
     .button-container {
@@ -91,6 +95,7 @@
 
       button:last-child {
         margin-right: 15px;
+        margin-left: 10px;
       }
     }
   }
