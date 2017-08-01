@@ -47,8 +47,8 @@ module.exports = function (server, DAL) {
           }
 
           storageCtrl.addVideo(request.payload.file._data, name,
-              user.id, user.firstName + user.secondName).then( () => {
-            reply({'status': 'success'});
+              user.id, user.firstName + user.secondName).then( (fileInfo) => {
+            reply(fileInfo);
           }).catch( err => {
             console.error(err);
             reply(err);
@@ -144,13 +144,37 @@ module.exports = function (server, DAL) {
     }
   });
 
+    /**
+   * @api {post} /api/thumbnail Request for add thumbnail to video
+   *
+   * @apiParam {object}   data               data
+   * @apiParam {string}   data.video            Video id.
+   * @apiParam {string}   data.thumbnail     Thumbnail.
+   *
+   * @apiName addThumbnail
+   * @apiGroup Videos
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
   server.route({
-    method: 'GET',
-    path: '/api/thumbnails',
+    method: 'POST',
+    path: '/api/thumbnail',
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        reply([]);
+        DAL.videos.addThumbnail(request.payload).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
       }
     }
   });

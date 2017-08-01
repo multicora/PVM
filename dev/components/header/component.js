@@ -70,6 +70,7 @@
     function getNotifications () {
       notificationsService.getNotifications().then( function(res) {
         vm.notifications = res.data;
+        console.log(res.data);
 
         vm.notifications.map( function (notification) {
           notification = notificationsService.messageGenerator(notification);
