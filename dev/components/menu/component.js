@@ -42,7 +42,5 @@
       storage.clear(tokenName);
       $location.path('/login');
     };
-
-    vm.href = $location.$$protocol + '://' + $location.$$host + ':' + $location.$$port + '/' + 'release-notes';
   }
 })(angular);
