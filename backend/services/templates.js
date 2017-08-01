@@ -52,7 +52,7 @@ module.exports = () => {
 
         authorName = authorName ? authorName + ',' : '';
         let props = {
-          text: authorName + userName + 'just downloaded your conversation files',
+          text: authorName + userName + 'just downloaded your conversation file',
           link: link
         };
 
@@ -71,9 +71,11 @@ module.exports = () => {
 
         authorName = authorName ? authorName + ',' : '';
         let props = {
-          text: authorName + userName + 'just opened your conversation',
+          text: authorName + userName + 'just viewed your conversation',
           link: link
         };
+
+        console.log(props.text);
 
         letter.render(props, function (err, result) {
           err ? reject(err) : resolve(result);
