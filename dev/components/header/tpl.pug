@@ -7,8 +7,9 @@ header.main-header
     img.logo.pointer(src='/files/images/logo_bizkonect.svg')
     .notification-container
       md-menu(
-        md-position-mode="target-right target"
-        ng-if="vm.notifications.length")
+        md-position-mode="target-right target")
+        //- ng-if="vm.notifications.length"
+        
         i.fa.fa-bell-o.notifications.mdl-badge.mdl-badge--overlap(
           aria-hidden="true"
           ng-click="$mdMenu.open()"
