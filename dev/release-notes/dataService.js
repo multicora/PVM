@@ -44,7 +44,7 @@
             version: '0.0.1',
             notes: [
               'Initial countable release',
-              'Video uploadin/recording, sending, tracking',
+              'Video uploading/recording, sending, tracking',
               'Landing page templates',
               'Two way conversations',
               'User in-app notifications',
