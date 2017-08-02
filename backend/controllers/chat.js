@@ -21,6 +21,7 @@ module.exports = function (DAL) {
 
     DAL.chat.getStatus(data.conversationId, data.userId).then(res => {
       let result = null;
+
       if (!res.length) {
         result = DAL.chat.addStatus(data.conversationId, data.userId);
       } else if (!res.notified) {
@@ -50,6 +51,8 @@ module.exports = function (DAL) {
           'secondName': author.secondName
         }
       );
+    }).then( () => {
+      return DAL.events.add(DAL.events.types.NEW_MESSAGE, user.id, data.conversationId, {});
     }).then( () => {
       return templates.newMessage(data.url, user.firstName, author.firstName + ' ' + author.secondName);
     }).then( template => {

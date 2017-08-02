@@ -1,0 +1,8 @@
+.release-notes-page
+  .mdl-grid
+    h4 Release notes
+    .mdl-grid
+      .container(ng-repeat="release in vm.releases")
+        h6 {{release.date}} &nbsp Version {{release.version}}
+        ul
+          li(ng-repeat="note in release.notes") {{note}}

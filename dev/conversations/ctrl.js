@@ -13,7 +13,8 @@
     libraryService
   ) {
     var vm = this;
-    var conversationsId = [];
+    var conversationsToId = [];
+    var conversationsFromId = [];
     vm.showFeedbackPopup = false;
 
     vm.showConversationIndicators = true;
@@ -42,10 +43,10 @@
         vm.conversationsList = res.data;
 
         vm.conversationsList.forEach(function(conversation) {
-          conversationsId.push(conversation.id);
+          conversationsToId.push(conversation.id);
         });
 
-        return libraryService.getEvents(conversationsId);
+        return libraryService.getEvents(conversationsToId);
       }).then(function (res) {
         vm.conversationsList.forEach(function(conversation) {
           res.data.forEach(function(event) {
@@ -58,6 +59,20 @@
         return libraryService.getConversationsToUser();
       }).then(function (res) {
         vm.conversationsToUserList = res.data;
+
+        vm.conversationsToUserList.forEach(function(conversation) {
+          conversationsFromId.push(conversation.id);
+        });
+
+        return libraryService.getEvents(conversationsFromId);
+      }).then(function (res) {
+        vm.conversationsToUserList.forEach(function(conversation) {
+          res.data.forEach(function(event) {
+            if (conversation.id === event.conversationId) {
+              conversation[event.type] = event.type;
+            }
+          });
+        });
       });
     };
   }
