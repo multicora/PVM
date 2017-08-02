@@ -8,8 +8,6 @@ header.main-header
     .notification-container
       md-menu(
         md-position-mode="target-right target")
-        //- ng-if="vm.notifications.length"
-        
         i.fa.fa-bell-o.notifications.mdl-badge.mdl-badge--overlap(
           aria-hidden="true"
           ng-click="$mdMenu.open()"
@@ -48,4 +46,3 @@ header.main-header
       app-menu(
         class-name="mobile-menu"
         show-feedback="vm.showFeedback()")
-        
