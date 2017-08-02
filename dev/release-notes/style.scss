@@ -1,6 +1,8 @@
 .release-notes-page {
   width: 100%;
   min-height: 100%;
+  height: 100%;
+  background-color: #fff;
 
   .title {
     text-align: center;
@@ -17,7 +19,9 @@
     padding-bottom: 16px;
     border-bottom: 1px dotted rgba(0,0,0,.2);
   }
-
+  .wrapper {
+    align-items: flex-start;
+  }
   .container {
     max-width: 1024px;
   }
