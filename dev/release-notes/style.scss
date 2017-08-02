@@ -1,6 +1,8 @@
 .release-notes-page {
   width: 100%;
   min-height: 100%;
+  height: 100%;
+  background-color: #fff;
 
   .title {
     text-align: center;
@@ -13,11 +15,22 @@
     align-items: center;
   }
   
-  li:last-child {
-    padding-bottom: 16px;
-    border-bottom: 1px dotted rgba(0,0,0,.2);
+  .rn-heading {
+    display: flex;
+    color: #1E88E5;
+    i {
+      line-height: inherit;
+      font-size: inherit;
+    }
   }
 
+  li:last-child {
+    padding-bottom: 16px;
+    border-bottom: 1px dotted #1E88E5;
+  }
+  .wrapper {
+    align-items: flex-start;
+  }
   .container {
     max-width: 1024px;
   }
