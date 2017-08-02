@@ -16,12 +16,11 @@
   }
   
   h4, h6 {
-    color: #1E88E5;
-  }
-  h6 {
     display: flex;
+    color: #1E88E5;
     i {
       line-height: inherit;
+      font-size: inherit;
     }
   }
 

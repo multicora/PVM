@@ -6,7 +6,7 @@
     .mdl-grid.wrapper
       .container(ng-repeat="release in vm.releases")
         h6
-          i.material-icons update &nbsp
+          i.material-icons build &nbsp
           | {{release.date}} &nbsp Bizkonect App Version {{release.version}}
         ul
           li(ng-repeat="note in release.notes") {{note}}
