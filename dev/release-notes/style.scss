@@ -15,9 +15,19 @@
     align-items: center;
   }
   
+  h4, h6 {
+    color: #1E88E5;
+  }
+  h6 {
+    display: flex;
+    i {
+      line-height: inherit;
+    }
+  }
+
   li:last-child {
     padding-bottom: 16px;
-    border-bottom: 1px dotted rgba(0,0,0,.2);
+    border-bottom: 1px dotted #1E88E5;
   }
   .wrapper {
     align-items: flex-start;
