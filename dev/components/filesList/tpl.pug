@@ -11,12 +11,12 @@
       .button-container
         .upload-icon
         p.text Select files to upload, or drag and drop files
-  .files-container
+  .files-container(ng-if="vm.list.length")
     .file-container
       .file.default
-        p.name file name
-        p.size file size
-        p.date file date
+        p.name File name
+        p.size File size
+        p.date File date
     .file-container(ng-repeat="item in vm.list")
       .file.with-hover(ng-click="vm.onUseClick({$data: item.id})")
         p.name
