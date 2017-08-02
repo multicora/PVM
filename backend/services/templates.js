@@ -52,7 +52,7 @@ module.exports = () => {
 
         authorName = authorName ? authorName + ',' : '';
         let props = {
-          text: authorName + userName + 'just downloaded your conversation files',
+          text: authorName + userName + 'just downloaded your conversation file',
           link: link
         };
 
@@ -69,9 +69,9 @@ module.exports = () => {
         let templateDir = path.join(__dirname, templatesDir, conversationOpendTemplateDir);
         let letter = new EmailTemplate(templateDir);
 
-        authorName = authorName ? authorName + ',' : '';
+        authorName = authorName ? authorName + ', ' : '';
         let props = {
-          text: authorName + userName + 'just opened your conversation',
+          text: authorName + userName + ' just viewed your conversation',
           link: link
         };
 
