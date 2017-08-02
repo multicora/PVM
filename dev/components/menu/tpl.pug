@@ -27,8 +27,9 @@
     i.material-icons exit_to_app
     span Log out
 
-  .app-version v.0.0.1
-  //- Feedback form
+  a.app-version(
+    href="/release-notes"
+    target="_blank") v.0.0.1
   md-button.md-icon-button.feedback-buton(
     ng-click="vm.showFeedback()")
     md-icon.material-icons feedback
