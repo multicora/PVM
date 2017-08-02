@@ -38,6 +38,22 @@
               'Improved app navigation',
               'Bug fixes'
             ]
+          },
+          {
+            date: '03/06/2017',
+            version: '0.0.1',
+            notes: [
+              'Initial countable release',
+              'Video uploadin/recording, sending, tracking',
+              'Landing page templates',
+              'Two way conversations',
+              'User in-app notifications',
+              'Email notifications',
+              'File attachments',
+              'Dashboard',
+              'User profile page',
+              'Mobile friendly web application'
+            ]
           }
         ];
 
