@@ -688,6 +688,8 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         DAL.conversations.getByAuthor(request.auth.credentials.id).then(res => {
+          return conversationCtrl.getConversations(res);
+        }).then( res => {
           reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));
@@ -744,7 +746,9 @@ module.exports = function (server, DAL) {
             conversations[i].author = res[i].email;
           }
 
-          reply(conversations);
+          return conversationCtrl.getConversations(conversations);
+        }).then( res => {
+          reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));
         });

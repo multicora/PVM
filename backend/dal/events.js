@@ -8,7 +8,8 @@ module.exports = function(connection) {
       'CONVERSATION_IS_VIEWED': 'CONVERSATION_IS_VIEWED',
       'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
       'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
-      'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED'
+      'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED',
+      'NEW_MESSAGE': 'NEW_MESSAGE'
     },
 
     get: (type, userId, conversationId) => {
