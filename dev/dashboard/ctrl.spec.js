@@ -20,57 +20,57 @@ describe('dashboardCtrl', function() {
     $q = _$q_;
   }));
 
-  // describe('initial phase', function() {
-  //   it('should get the messages', function() {
-  //     var scope = $rootScope.$new();
+  describe('initial phase', function() {
+    it('should get the messages', function() {
+      var scope = $rootScope.$new();
 
-  //     conversationsService.getByAuthor.and.callFake(function () {
-  //       return $q.resolve({
-  //         data: [
-  //           {id: 1},
-  //           {id: 2}
-  //         ]
-  //       });
-  //     });
+      conversationsService.getByAuthor.and.callFake(function () {
+        return $q.resolve({
+          data: [
+            {id: 1},
+            {id: 2}
+          ]
+        });
+      });
 
-  //     libraryService.getEvents.and.callFake(function () {
-  //       return $q.resolve({
-  //         data: [
-  //           {
-  //             type: CONVERSATION_IS_VIEWED 
-  //           },
-  //           {
-  //             type: VIDEO_IS_WATCHED 
-  //           },
-  //           {
-  //             type: FILE_IS_DOWNLOADED 
-  //           }
-  //         ]
-  //       });
-  //     })
-      
-  //     conversationsService.getChatForDashboard.and.callFake(function () {
-  //       return $q.resolve({
-  //         data: [{
-  //           date: 1
-  //         }, {
-  //           date: 3
-  //         }, {
-  //           date: 2
-  //         }]
-  //       });
-  //     });
+      libraryService.getEvents.and.callFake(function () {
+        return $q.resolve({
+          data: [
+            {
+              type: 'CONVERSATION_IS_VIEWED'
+            },
+            {
+              type: 'VIDEO_IS_WATCHED'
+            },
+            {
+              type: 'FILE_IS_DOWNLOADED'
+            }
+          ]
+        });
+      });
 
-  //     var ctrl = $controller('dashboardCtrl', {
-  //       $scope: scope,
-  //       conversationsService: conversationsService,
-  //       libraryService: libraryService
-  //     });
+      conversationsService.getChatForDashboard.and.callFake(function () {
+        return $q.resolve({
+          data: [{
+            date: 1
+          }, {
+            date: 3
+          }, {
+            date: 2
+          }]
+        });
+      });
 
-  //     scope.$apply();
-  //     expect(ctrl.messages).toBeTruthy();
-  //   });
-  // });
+      var ctrl = $controller('dashboardCtrl', {
+        $scope: scope,
+        conversationsService: conversationsService,
+        libraryService: libraryService
+      });
+
+      scope.$apply();
+      expect(ctrl.messages).toBeTruthy();
+    });
+  });
 
   // TODO: test message sorting
 });
