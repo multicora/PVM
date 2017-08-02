@@ -15,12 +15,13 @@ module.exports = function (DAL) {
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        res = res || {};
         return DAL.notifications.add(
           notificationsMessageGenerator.conversationIsOpened(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
-            'firstName': res.firstName,
-            'secondName': res.secondName
+            'firstName': res.firstName || null,
+            'secondName': res.secondName || null
           }
         );
       }).then(() => {
@@ -48,12 +49,13 @@ module.exports = function (DAL) {
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        res = res || {};
         return DAL.notifications.add(
           notificationsMessageGenerator.videoIsWatched(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
-            'firstName': res.firstName,
-            'secondName': res.secondName
+            'firstName': res.firstName || null,
+            'secondName': res.secondName || null
           }
         );
       }).then(() => {
@@ -80,12 +82,13 @@ module.exports = function (DAL) {
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        res = res || {};
         return DAL.notifications.add(
           notificationsMessageGenerator.videoIsWatching(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
-            'firstName': res.firstName,
-            'secondName': res.secondName
+            'firstName': res.firstName || null,
+            'secondName': res.secondName || null
           }
         );
       }).then(() => {
@@ -112,12 +115,13 @@ module.exports = function (DAL) {
 
         return DAL.users.getUserByEmail(conversation.email);
       }).then(res => {
+        res = res || null;
         return DAL.notifications.add(
           notificationsMessageGenerator.fileIsDownloaded(), conversation.author, conversation.id, {
             'email': conversation.email,
             // 'photo': res.photo,
-            'firstName': res.firstName,
-            'secondName': res.secondName
+            'firstName': res.firstName || null,
+            'secondName': res.secondName || null
           }
         );
       }).then(() => {
