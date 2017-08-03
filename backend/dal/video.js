@@ -12,8 +12,8 @@ module.exports = function(connection) {
             'VALUES (NULL, "' + name + '", NULL, "' + externalName + '", "' + id + '", "' + userId + '");'
         ].join('');
 
-        connection.query(request, function (err) {
-          err ? reject(err) : resolve();
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
         });
       });
     },

@@ -10,11 +10,13 @@
   });
 
   ctrl.$inject = [
+    '$location',
     'uploadService',
     'uploadRecordPopupService',
     'tools'
   ];
   function ctrl(
+    $location,
     uploadService,
     uploadRecordPopupService,
     tools
@@ -32,7 +34,7 @@
       vm.videoFile = file;
     };
 
-    vm.sendRecordClick = function (name) {
+    vm.saveRecordClick = function (name) {
       name = name || 'no name';
       uploadService.sendFile(
         '/api/video',
@@ -42,6 +44,18 @@
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
+      });
+    };
+
+
+    vm.sendRecordClick = function (name) {
+      name = name || 'no name';
+      uploadService.sendFile(
+        '/api/video',
+        vm.recordedData.video,
+        name + '.wmv'
+      ).then(function (res) {
+        $location.url('template/?video=' + res.data.id);
       });
     };
   }

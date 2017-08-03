@@ -10,11 +10,13 @@
   });
 
   ctrl.$inject = [
+    '$location',
     '$mdToast',
     'uploadService',
     'uploadRecordPopupService'
   ];
   function ctrl(
+    $location,
     $mdToast,
     uploadService,
     uploadRecordPopupService
@@ -29,7 +31,7 @@
       vm.recordedData = data;
     };
 
-    vm.sendRecordClick = function (name) {
+    vm.saveRecordClick = function (name) {
       name = name || 'no name';
       uploadService.sendFile(
         '/api/video',
@@ -53,6 +55,17 @@
             .position('bottom center')
             .hideDelay(3000)
         );
+      });
+    };
+
+    vm.sendRecordClick = function (name) {
+      name = name || 'no name';
+      uploadService.sendFile(
+        '/api/video',
+        vm.recordedData.video,
+        name + '.wmv'
+      ).then(function (res) {
+        $location.url('template/?video=' + res.data.id);
       });
     };
   }
