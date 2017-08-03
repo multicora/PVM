@@ -16,7 +16,7 @@ describe('appMenu component', function() {
       url: jasmine.createSpy('url')
     });
   }));
-  beforeEach(inject(function($componentController, $location,  $rootScope, $q) {
+  beforeEach(inject(function($componentController, $location, $rootScope, $q) {
     componentController = $componentController;
     location = $location;
     rootScope = $rootScope;
@@ -28,7 +28,7 @@ describe('appMenu component', function() {
     };
     notificationsService = {
       getUnreadedMessage: jasmine.createSpy('getUnreadedMessage')
-    }
+    };
   }));
 
   describe('initial phase', function() {

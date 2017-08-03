@@ -4,8 +4,6 @@ describe('libraryCtrl', function() {
   var $controller;
   var $q;
   var $rootScope;
-  var conversationsService = {
-  };
   var libraryService = {
     getVideos: jasmine.createSpy('getVideos'),
     getTemplates: jasmine.createSpy('getTemplates'),
