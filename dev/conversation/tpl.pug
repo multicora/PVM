@@ -34,7 +34,6 @@
     .title-container
       p.title
         span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
-
     .video
       .videoHeader.showHeader(ng-class="vm.headerClass")
         .photo(
@@ -53,6 +52,8 @@
           controls
           preload="auto"
           vjs-media="vm.media")
+      audio#notification-audio
+        source(src="/files/audio/filling-your-inbox.mp3" type="audio/mpeg")
       .videoFooter
         .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")
@@ -69,7 +70,6 @@
                   p.file-name.ellipsis {{item.name}}
 
         chat-list(list="vm.chatList")
-
       chat-reply-box(
         message="vm.savedMessage"
         send-message="vm.sendMessage($data)")

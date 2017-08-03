@@ -32,7 +32,8 @@
     var sendObj;
     var usersPhotos = {};
     var chatInstance;
-
+    var audio = new Audio('/files/audio/filling-your-inbox.mp3');
+    // audio.play();
     vm.sendMessage = null;
     vm.conversation = null;
     vm.media = null;
@@ -49,6 +50,7 @@
       data.className = 'income';
       data.photo = usersPhotos[data.authorId];
       vm.chatList.push(data);
+      audio.play();
       reloadTemplate();
       scrollBottom();
     });

@@ -104,8 +104,8 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.update()
           .table('chat_status')
-          .set('notified', true)
-          .set('read', false)
+          .set('`notified`', true)
+          .set('`read`', false)
           .where('conversationId = ' + conversationId)
           .where('userId = ' + userId)
           .toString();
@@ -155,7 +155,6 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          console.log(response, err);
           err ? reject(err) : resolve(response[0]);
         });
       });
@@ -170,7 +169,6 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          console.log(response, err);
           err ? reject(err) : resolve(response[0]);
         });
       });
