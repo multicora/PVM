@@ -65,7 +65,7 @@
         vm.recordedData.video,
         name + '.wmv'
       ).then(function (res) {
-        $location.url('template/?video=' + res.data.id);
+        $location.path('template/?video=' + res.data.id);
       });
     };
   }
