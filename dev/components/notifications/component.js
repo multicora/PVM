@@ -29,7 +29,7 @@
       $location.path('conversation/' + conversationId);
     };
 
-    vm.onClose = function(id, event) {
+    vm.onClose = function(id) {
       event.stopPropagation();
       markAsRead(id);
     };
