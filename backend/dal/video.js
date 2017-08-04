@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
@@ -41,6 +42,21 @@ module.exports = function(connection) {
         });
       });
     },
+
+    markAsDeleted: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('videos')
+          .set('deleted', true)
+          .where('v_id = "' + id + '"')
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getByAuthor: function (author) {
       return new Promise(function (resolve, reject) {
         let request = 'SELECT * FROM `videos` WHERE author = ' + author + ';';
