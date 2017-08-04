@@ -25,7 +25,7 @@ header.main-header
                 aria-label="close"
                 ng-click="vm.onClose(item.id, event)")
                 md-icon.material-icons close
-              .date {{item.date}}
+              .date {{item.localTime}} {{item.localDate}}
   md-sidenav.md-sidenav-left.header-menu(
     md-component-id="left"
     md-whiteframe="4"
