@@ -85,9 +85,9 @@
 
     .progress-bar {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: flex-start;
-      margin: 0 0 0 8px;
+      margin: 8px 0 0 8px;
 
       i {
         padding: 4px 4px 0 4px;
@@ -100,19 +100,30 @@
 
       .icon {
         padding: 0 4px;
-
+        position: relative;
         .bubble-green {
           display: none;
         }
       }
 
       .blue {
-        color: rgba(0,0,0,.54);
+        
+        display: flex;
+        align-content: center;
+        color: rgba(0,0,0,.24);
+        span {
+          font-size: 10px;
+          line-height: 24px;
+          margin-left: 8px;
+        }
+
+
       }
 
       .fa {
-        padding: 5px 5px 0px 8px;
-        font-size: 18px;
+        padding: 4px 4px 0px 4px;
+        font-size: 16px;
+        margin-right: 4px;
       }
 
       .done-all {
@@ -159,18 +170,18 @@
 
       .done {
         // border-bottom: 1px solid #4CAF50;  will be implemented after all logicall wiil be done
-        color: #4CAF50;
+        color: rgba(0,0,0,.54);
       }
 
       @media(max-width: 440px) {
         margin-left: 0px;
 
         i {
-          font-size: 16px;
+          font-size: 20px;
         }
 
         .fa {
-          font-size: 16px;
+          font-size: 18px;
         }
 
         .done-all {
@@ -216,4 +227,39 @@
     transition: .3s;
     z-index: 2;
   }
+}
+.delivered {
+  border: 1px solid green;
+  background: green;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 2px;
+  left: 12px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 0;
+  text-align: center;
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+  .small-icon, .times {
+    margin: 0 0 4px 5px;
+    font-size: 10px;
+    font-weight: 900;
+    color: #fff;
+    }
+  .times {
+    z-index: 5;
+    color: #000;
+    font-size: 50px;
+    font-weight: 300;
+  }
+}
+
+#expand {
+  align-self: center;
 }

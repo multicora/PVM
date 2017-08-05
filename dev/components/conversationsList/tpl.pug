@@ -23,43 +23,74 @@
           //- conversation send
           .icon.blue.done
             i.material-icons send
+              .delivered
+                i.material-icons
+                  .small-icon done
+            span Aug 2, 5:35pm: Email delivered
 
           //- conversation opend
           .icon.blue(ng-if="!item.CONVERSATION_IS_VIEWED")
             i.material-icons drafts
+            span Roman didn't open your email/message
           .icon.blue.done(ng-if="item.CONVERSATION_IS_VIEWED")
             i.material-icons drafts
+              .delivered
+                i.material-icons
+                  .small-icon done
+            span Aug 2, 5:36pm: Roman opened your email/message
 
           //-
-          //- .icon.blue
-          //-   i.fa.fa-hand-pointer-o(aria-hidden="true")
+          .icon.blue.done
+            i.fa.fa-hand-pointer-o(aria-hidden="true")
+              .delivered
+                i.material-icons
+                  .small-icon done
+            span Aug 2, 5:36 pm: Roman clicked the link to conversation
           
           //- conversation video watched
           .icon.blue(ng-if="!item.VIDEO_IS_WATCHED")
             i.material-icons remove_red_eye
+            span Roman didn't watch the video yet
           .icon.blue.done(ng-if="item.VIDEO_IS_WATCHED")
             i.material-icons remove_red_eye
-
+              .delivered
+                i.material-icons
+                  .small-icon done
+            span Aug 2, 3:37pm: Roman watched your video
           //- 
-          //- .icon.blue
-            //- i.material-icons pause_circle_outline
+          .icon.blue.done
+            i.material-icons pause_circle_outline
+              .delivered
+                i.material-icons
+                  .small-icon done
+            span Aug 2, 3:37pm: Roman looked through your video
 
           //- conversation file was downloaded
           .icon.blue(ng-if="!item.FILE_IS_DOWNLOADED")
             i.material-icons attachment
+            span Roman didn't download your files
           .icon.blue.done(ng-if="item.FILE_IS_DOWNLOADED")
             i.material-icons attachment
-
+              .delivered
+                i.material-icons
+                  .small-icon done
+            span Aug 2, 3:37pm: Roman downloaded your attachment
           //- have chat in conversation
           .icon.blue(ng-if="!item.NEW_MESSAGE")
             i.material-icons chat
+            span Roman didn't answer yet
           .icon.blue.done(ng-if="item.NEW_MESSAGE")
             i.material-icons chat
-
+              .delivered
+                i.material-icons
+                  .small-icon done
+            span Aug 2, 3:37pm: Congrats, it worked! You received the respones from Roman 
           //- all previous points done
           .done-all(ng-if="item.doneAll")
             i.material-icons done
             span.success Contact!
+          //- md-button#expand Expand
+      
       .btn-container
         md-button.view(ng-click="vm.onViewClick({$data: item.id})")
-          | view
+          | open
