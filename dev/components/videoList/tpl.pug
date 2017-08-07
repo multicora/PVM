@@ -20,7 +20,6 @@
         p.text New video
     .video-container(ng-repeat="item in vm.list | orderBy:'-attributes.uploadDate'")
       video-tile(
-        ng-if="!item.attributes.deleted"
         video="item"
         show-send-button="vm.showSendButton"
         on-send-click="vm.onSendClick({$data: item})"
