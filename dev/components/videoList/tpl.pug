@@ -18,7 +18,7 @@
             .fa.fa-video-camera(aria-hidden="true")
             p Record
         p.text New video
-    .video-container(ng-repeat="item in vm.list")
+    .video-container(ng-repeat="item in vm.list | orderBy:'-attributes.uploadDate'")
       video-tile(
         video="item"
         show-send-button="vm.showSendButton"
