@@ -18,17 +18,20 @@ module.exports = function(connection) {
         });
       });
     },
-    get: function (id) {
-      return new Promise(function (resolve, reject) {
-        let request = [
-          'SELECT * FROM `videos` WHERE v_id = ' + id
-        ].join('');
 
-        connection.query(request, function (err, response) {
+    get: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.select()
+          .from('videos')
+          .where(`v_id = "${id}"`)
+          .toString();
+
+        connection.query(request, (err, response) => {
           (err || !response.length) ? reject(err) : resolve(response[0]);
         });
       });
     },
+
     delete: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
