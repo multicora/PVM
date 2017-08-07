@@ -35,12 +35,7 @@
     };
 
     vm.saveRecordClick = function (name) {
-      name = name || 'no name';
-      uploadService.sendFile(
-        '/api/video',
-        vm.videoFile,
-        name + '.' + tools.getExtension(vm.videoFile.name)
-      ).then(function () {
+      save(name).then(function () {
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
@@ -49,14 +44,17 @@
 
 
     vm.sendRecordClick = function (name) {
-      name = name || 'no name';
-      uploadService.sendFile(
-        '/api/video',
-        vm.recordedData.video,
-        name + '.wmv'
-      ).then(function (res) {
+      save(name).then(function (res) {
         $location.url('template/?video=' + res.data.id);
       });
     };
+
+    function save(name) {
+      name = name || 'no name';
+      return uploadService.sendFile(
+        '/api/video',
+        vm.videoFile,
+        name + '.' + tools.getExtension(vm.videoFile.name));
+    }
   }
 })(angular);
