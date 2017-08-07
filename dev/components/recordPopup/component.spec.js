@@ -64,7 +64,7 @@ describe('recordPopup component', function() {
 
       ctrl.sendRecordClick(name);
       scope.$apply();
-      expect(location.path).toHaveBeenCalledWith('template/?video=id');
+      expect(location.url).toHaveBeenCalledWith('template/?video=id');
     });
   });
 

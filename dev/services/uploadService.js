@@ -23,7 +23,7 @@
             'Keep-Alive': 'timeout=2000, max=10000'
           },
           transformRequest: angular.identity,
-          responseType: 'JSON'
+          responseType: 'json'
         }
       );
     };

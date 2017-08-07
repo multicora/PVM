@@ -55,7 +55,14 @@
 
     vm.sendRecordClick = function (name) {
       save(name).then(function (res) {
-        $location.path('template/?video=' + res.data.id);
+        $location.url('template/?video=' + res.data.id);
+      }, function(err) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(err.data.error)
+            .position('bottom center')
+            .hideDelay(3000)
+        );
       });
     };
 
