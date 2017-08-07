@@ -89,9 +89,9 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.insert()
           .into('chat_status')
-          .set('conversationId', conversationId)
-          .set('userId', userId)
-          .set('notified', true)
+          .set('`conversationId`', conversationId)
+          .set('`userId`', userId)
+          .set('`notified`', true)
           .toString();
 
         connection.query(request, (err, response) => {
@@ -135,7 +135,7 @@ module.exports = (connection) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.update()
           .table('chat_status')
-          .set('notified', false)
+          .set('`notified`', false)
           .where('conversationId = ' + conversationId)
           .where('userId = ' + userId)
           .toString();
