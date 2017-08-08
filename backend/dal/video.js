@@ -62,7 +62,11 @@ module.exports = function(connection) {
 
     getByAuthor: function (author) {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT * FROM `videos` WHERE author = ' + author + ';';
+        const request = sqlBuilder.select()
+          .from('videos')
+          .where(`author = ${ author }`)
+          .where('deleted = false')
+          .toString();
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);

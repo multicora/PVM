@@ -118,10 +118,6 @@ module.exports = function (server, DAL) {
         DAL.videos.getByAuthor(request.auth.credentials.id).then(function(res) {
           let promises = [];
 
-          res = res.filter( video => {
-            return !video.deleted;
-          });
-
           res.forEach( video => {
             video.name = video.name.replace(/\.([0-9a-z]+)(?:[\?#]|$)/, '');
 
