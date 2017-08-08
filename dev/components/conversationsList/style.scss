@@ -7,18 +7,26 @@
   }
 
   .conversation {
-    padding: 16px;
+    padding: 16px 16px 0 16px;
     position: relative;
     outline: none;
     cursor: pointer;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     margin: 3px 0;
     border-radius: 4px;
     background-color: #fff;
-
+  .main-content {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
     .content {
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
     }
@@ -84,8 +92,11 @@
     }
 
     .progress-bar {
+      .timeline-title {
+        display: none;
+      }
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: flex-start;
       margin: 12px 0 0 -2px;
 
@@ -111,8 +122,8 @@
         display: flex;
         align-content: center;
         color: rgba(0,0,0,.24);
-        span {
-          // display: none;
+        .explain {
+          display: none;
           font-size: 12px;
           line-height: 24px;
           margin-left: 8px;
@@ -199,16 +210,17 @@
       }
     }
 
-    .btn-container {
+    .open-btn-container {
       display: flex;
       align-items: center;
       justify-content: center;
       
       font-family: 'Roboto Bold';
-
-      @media(max-width: 910px) {
-        display: none;
-      }
+      margin: 0;
+      padding: 0;
+      // @media(max-width: 910px) {
+      //   display: none;
+      // }
 
       .view {
         height: 36px;
@@ -266,7 +278,8 @@
   }
 }
 
-#expand {
+#full-log {
+  display: none;
   align-self: flex-start;
   margin: 0 0 0 28px;
   font-weight: 600;
@@ -274,4 +287,30 @@
 }
 .timeline-title {
   margin: 0;
+}
+
+.pr-bar-container.expanded {
+  .timeline-title {
+    display: block;
+  }
+  .progress-bar {
+    flex-direction: column;
+    .green {
+      .explain {
+      display: block;
+      }
+    }
+  }
+  
+  #full-log {
+  display: block;
+  }
+}
+.expand-btn-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  #expand {
+  }
 }
