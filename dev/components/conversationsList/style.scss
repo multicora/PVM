@@ -290,11 +290,11 @@
 }
 
 .pr-bar-container.expanded {
-  .timeline-title {
-    display: block;
-  }
   .progress-bar {
     flex-direction: column;
+    .timeline-title {
+      display: block;
+    }
     .green {
       .explain {
       display: block;
@@ -315,8 +315,12 @@
   justify-content: center;
   align-content: center;
   align-items: center;
-  #expand {
+
+  .expand {
     box-sizing: border-box;
     border: 1px solid #eee;
+  }
+  .collapse {
+    transform: rotate(180deg);
   }
 }

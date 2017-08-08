@@ -20,9 +20,9 @@
 
             .last-message.ellipsis(ng-if="((vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser) && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
             .last-message.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
-          .pr-bar-container
+          .pr-bar-container(ng-class="item.expandClass")
             .progress-bar(ng-if="!vm.toUser")
-              
+
               //- conversation sent
               p.timeline-title Events timeline:
               .icon.green.done
@@ -45,7 +45,8 @@
                     .times 9
                     //- i.material-icons // Wi'll not display this element when event happened more than once
                       //- .small-icon done
-                span.explain Aug 2, 5:36pm: Roman opened your email/message
+                //- span.explain Aug 2, 5:36pm: Roman opened your email/message
+                span.explain {{ item.CONVERSATION_IS_VIEWED.localDate }}, {{ item.CONVERSATION_IS_VIEWED.localTime }}: Roman opened your email/message
 
               //-
               .icon.green.done
@@ -112,8 +113,11 @@
           md-button.view(ng-click="vm.onViewClick({$data: item.id})")
             | open
       .expand-btn-container
-        md-button.md-icon-button#expand(onclick="event.stopPropagation();")
+        md-button.md-icon-button.expand(
+          ng-if="!item.expandClass"
+          ng-click="vm.expand($event, item)")
           i.material-icons keyboard_arrow_down
-
-
-
+        md-button.md-icon-button.expand.collapse(
+          ng-if="item.expandClass"
+          ng-click="vm.collapse($event, item)")
+          i.material-icons keyboard_arrow_down

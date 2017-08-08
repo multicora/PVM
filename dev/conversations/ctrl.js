@@ -51,7 +51,9 @@
         vm.conversationsList.forEach(function(conversation) {
           res.data.forEach(function(event) {
             if (conversation.id === event.conversationId) {
-              conversation[event.type] = event.type;
+              conversation[event.type] = event;
+              conversation[event.type].localDate = new Date(conversation[event.type].date).toLocaleDateString();
+              conversation[event.type].localTime = new Date(conversation[event.type].date).toLocaleTimeString();
             }
           });
         });
@@ -69,10 +71,12 @@
         vm.conversationsToUserList.forEach(function(conversation) {
           res.data.forEach(function(event) {
             if (conversation.id === event.conversationId) {
-              conversation[event.type] = event.type;
+              conversation[event.type] = event;
             }
           });
         });
+
+        console.log(vm.conversationsList);
       });
     };
   }
