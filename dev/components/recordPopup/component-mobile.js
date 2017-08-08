@@ -12,14 +12,12 @@
   ctrl.$inject = [
     '$location',
     'uploadService',
-    'uploadRecordPopupService',
-    'tools'
+    'uploadRecordPopupService'
   ];
   function ctrl(
     $location,
     uploadService,
-    uploadRecordPopupService,
-    tools
+    uploadRecordPopupService
   ) {
     var vm = this;
 
@@ -35,7 +33,11 @@
     };
 
     vm.saveRecordClick = function (name) {
-      save(name).then(function () {
+      uploadService.sendVideo(
+        name,
+        '/api/video',
+        vm.videoFile)
+      .then(function () {
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
@@ -44,17 +46,13 @@
 
 
     vm.sendRecordClick = function (name) {
-      save(name).then(function (res) {
+      uploadService.sendVideo(
+        name,
+        '/api/video',
+        vm.videoFile)
+      .then(function (res) {
         $location.url('template/?video=' + res.data.id);
       });
     };
-
-    function save(name) {
-      name = name || 'no name';
-      return uploadService.sendFile(
-        '/api/video',
-        vm.videoFile,
-        name + '.' + tools.getExtension(vm.videoFile.name));
-    }
   }
 })(angular);

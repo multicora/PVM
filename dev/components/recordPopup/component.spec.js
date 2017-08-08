@@ -23,7 +23,7 @@ describe('recordPopup component', function() {
     q = $q;
     bindings = {};
     uploadService = {
-      sendFile: jasmine.createSpy('sendFile').and.returnValue(q.resolve({data: {id: 'id'}}))
+      sendVideo: jasmine.createSpy('sendVideo').and.returnValue(q.resolve({data: {id: 'id'}}))
     };
     uploadRecordPopupService = {
       hideRecordPopup: jasmine.createSpy('hideRecordPopup')

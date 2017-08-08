@@ -4,13 +4,29 @@
 
   app.service('uploadService', service);
 
-  service.$inject = ['$http'];
-  function service($http) {
+  service.$inject = [
+    '$http',
+    'tools'
+  ];
+  function service(
+    $http,
+    tools
+  ) {
+    this.sendVideo = function(name, url, file) {
+      name = name || 'no name';
+      var data = name + '.' + tools.getExtension(file.name);
+
+      return send(url, file, data);
+    };
+
     this.sendFile = function(url, file, data) {
+      return send(url, file, data);
+    };
+
+    function send(url, file, data) {
       var formData = new FormData();
       formData.append('file', file);
       formData.append('data', data);
-
 
       return $http.post(
         url,
@@ -26,6 +42,6 @@
           responseType: 'json'
         }
       );
-    };
+    }
   }
 })(angular);
