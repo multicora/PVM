@@ -20,11 +20,11 @@
     vm.expand = function(event, item) {
       event.stopPropagation();
       item.expandClass = 'expanded';
-    }
+    };
 
     vm.collapse = function(event, item) {
       event.stopPropagation();
       item.expandClass = '';
-    }
+    };
   }
 })(angular);
