@@ -73,6 +73,7 @@ module.exports = function(connection) {
         });
       });
     },
+
     getAll: function () {
       return new Promise(function (resolve, reject) {
         let request = 'SELECT * FROM `videos`;';
