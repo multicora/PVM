@@ -87,7 +87,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      margin: 8px 0 0 8px;
+      margin: 12px 0 0 -2px;
 
       i {
         padding: 4px 4px 0 4px;
@@ -106,13 +106,14 @@
         }
       }
 
-      .blue {
+      .green {
         
         display: flex;
         align-content: center;
         color: rgba(0,0,0,.24);
         span {
-          font-size: 10px;
+          // display: none;
+          font-size: 12px;
           line-height: 24px;
           margin-left: 8px;
         }
@@ -121,9 +122,9 @@
       }
 
       .fa {
-        padding: 4px 4px 0px 4px;
+        padding: 4px 4px 5px 4px;
         font-size: 16px;
-        margin-right: 4px;
+        margin-right: 2px;
       }
 
       .done-all {
@@ -202,7 +203,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #709de4;
+      
       font-family: 'Roboto Bold';
 
       @media(max-width: 910px) {
@@ -212,6 +213,7 @@
       .view {
         height: 36px;
         min-width: 65px;
+        color: #709de4;
       }
     }
   }
@@ -228,11 +230,11 @@
     z-index: 2;
   }
 }
-.delivered {
+.result {
   border: 1px solid green;
   background: green;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   position: absolute;
   top: 2px;
   left: 12px;
@@ -244,22 +246,32 @@
   line-height: 0;
   text-align: center;
   align-content: center;
-  text-align: center;
-  vertical-align: center;
-  .small-icon, .times {
-    margin: 0 0 4px 5px;
+  .small-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 10px;
     font-size: 10px;
     font-weight: 900;
     color: #fff;
     }
   .times {
-    z-index: 5;
-    color: #000;
-    font-size: 50px;
-    font-weight: 300;
+
+    // margin: 0 0 6px 8px;
+    font-size: 10px;
+    font-weight: 900;
+    color: #fff;
   }
 }
 
 #expand {
-  align-self: center;
+  align-self: flex-start;
+  margin: 0 0 0 28px;
+  font-weight: 600;
+  color: #709de4;
+}
+.timeline-title {
+  margin: 0;
 }

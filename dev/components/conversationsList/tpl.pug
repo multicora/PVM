@@ -19,69 +19,84 @@
 
           .last-message.ellipsis(ng-if="((vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser) && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
           .last-message.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
+
         .progress-bar(ng-if="!vm.toUser")
-          //- conversation send
-          .icon.blue.done
-            i.material-icons send
-              .delivered
+          
+          //- conversation sent
+          p.timeline-title Events timeline:
+          .icon.green.done
+            .icon-container
+              i.material-icons send
+              .result
                 i.material-icons
                   .small-icon done
             span Aug 2, 5:35pm: Email delivered
 
-          //- conversation opend
-          .icon.blue(ng-if="!item.CONVERSATION_IS_VIEWED")
-            i.material-icons drafts
+          //- conversation was opened
+          .icon.green(ng-if="!item.CONVERSATION_IS_VIEWED")
+            .icon-container
+              i.material-icons drafts
             span Roman didn't open your email/message
-          .icon.blue.done(ng-if="item.CONVERSATION_IS_VIEWED")
-            i.material-icons drafts
-              .delivered
-                i.material-icons
-                  .small-icon done
+          .icon.green.done(ng-if="item.CONVERSATION_IS_VIEWED")
+            .icon-container
+              i.material-icons drafts
+              .result
+                .times 9
+                //- i.material-icons // Wi'll not display this element when event happened more than once
+                  //- .small-icon done
             span Aug 2, 5:36pm: Roman opened your email/message
 
           //-
-          .icon.blue.done
-            i.fa.fa-hand-pointer-o(aria-hidden="true")
-              .delivered
+          .icon.green.done
+            .icon-container
+              i.fa.fa-hand-pointer-o(aria-hidden="true")
+              .result
                 i.material-icons
                   .small-icon done
-            span Aug 2, 5:36 pm: Roman clicked the link to conversation
+            span Aug 2, 5:36 pm: Roman clicked the link
           
           //- conversation video watched
-          .icon.blue(ng-if="!item.VIDEO_IS_WATCHED")
-            i.material-icons remove_red_eye
+          .icon.green(ng-if="!item.VIDEO_IS_WATCHED")
+            .icon-container
+              i.material-icons remove_red_eye
             span Roman didn't watch the video yet
-          .icon.blue.done(ng-if="item.VIDEO_IS_WATCHED")
-            i.material-icons remove_red_eye
-              .delivered
+          .icon.green.done(ng-if="item.VIDEO_IS_WATCHED")
+            .icon-container  
+              i.material-icons remove_red_eye
+              .result
                 i.material-icons
                   .small-icon done
             span Aug 2, 3:37pm: Roman watched your video
           //- 
-          .icon.blue.done
-            i.material-icons pause_circle_outline
-              .delivered
+          .icon.green.done
+            .icon-container
+              i.material-icons pause_circle_outline
+              .result
                 i.material-icons
                   .small-icon done
             span Aug 2, 3:37pm: Roman looked through your video
 
           //- conversation file was downloaded
-          .icon.blue(ng-if="!item.FILE_IS_DOWNLOADED")
-            i.material-icons attachment
+          .icon.green(ng-if="!item.FILE_IS_DOWNLOADED")
+            .icon-container
+              i.material-icons attachment
             span Roman didn't download your files
-          .icon.blue.done(ng-if="item.FILE_IS_DOWNLOADED")
-            i.material-icons attachment
-              .delivered
+          .icon.green.done(ng-if="item.FILE_IS_DOWNLOADED")
+            .icon-container
+              i.material-icons attachment
+              .result
                 i.material-icons
                   .small-icon done
             span Aug 2, 3:37pm: Roman downloaded your attachment
           //- have chat in conversation
-          .icon.blue(ng-if="!item.NEW_MESSAGE")
-            i.material-icons chat
+          .icon.green(ng-if="!item.NEW_MESSAGE")
+            .icon-container
+              i.material-icons chat
             span Roman didn't answer yet
-          .icon.blue.done(ng-if="item.NEW_MESSAGE")
-            i.material-icons chat
-              .delivered
+          .icon.green.done(ng-if="item.NEW_MESSAGE")
+            .icon-container
+              i.material-icons chat
+              .result
                 i.material-icons
                   .small-icon done
             span Aug 2, 3:37pm: Congrats, it worked! You received the respones from Roman 
@@ -89,7 +104,7 @@
           .done-all(ng-if="item.doneAll")
             i.material-icons done
             span.success Contact!
-          //- md-button#expand Expand
+          md-button#expand( onclick="event.stopPropagation();") See Full log
       
       .btn-container
         md-button.view(ng-click="vm.onViewClick({$data: item.id})")
