@@ -9,6 +9,7 @@ describe('conversationCtrl', function() {
   var chat;
   var profileService;
   var event;
+  var utils;
 
   beforeEach(module('app'));
   beforeEach(inject(function(_$controller_, _$rootScope_, _$q_, _$location_){
@@ -47,10 +48,13 @@ describe('conversationCtrl', function() {
     event = {
       stopPropagation: jasmine.createSpy('stopPropagation')
     };
+    utils = {
+      createAudio: jasmine.createSpy('createAudio').and.returnValue(function(){})
+    };
     chat = {
       connect: jasmine.createSpy('getProfile').and.callFake(function () {
         return $q.resolve();
-      }),
+      })
     };
   }));
 
@@ -60,6 +64,7 @@ describe('conversationCtrl', function() {
     var ctrl = $controller('conversationCtrl', {
       $scope: scope,
       chat: chat,
+      utils: utils,
       conversationsService: conversationsService,
       profileService: profileService,
     });
@@ -75,6 +80,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
@@ -91,6 +97,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
@@ -107,6 +114,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
@@ -123,6 +131,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
