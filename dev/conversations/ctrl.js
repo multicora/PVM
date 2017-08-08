@@ -49,11 +49,15 @@
         return libraryService.getEvents(conversationsToId);
       }).then(function (res) {
         vm.conversationsList.forEach(function(conversation) {
+
           res.data.forEach(function(event) {
-            if (conversation.id === event.conversationId) {
+            event.date = convertDate(event.date);
+
+            if (conversation[event.type]) {
+              conversation[event.type].counter++;
+            } else if (conversation.id === event.conversationId) {
               conversation[event.type] = event;
-              conversation[event.type].localDate = new Date(conversation[event.type].date).toLocaleDateString();
-              conversation[event.type].localTime = new Date(conversation[event.type].date).toLocaleTimeString();
+              conversation[event.type].counter = 0;
             }
           });
         });
@@ -75,9 +79,18 @@
             }
           });
         });
-
-        console.log(vm.conversationsList);
       });
     };
+
+    function convertDate(date) {
+      var options = {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+
+      return new Date(date).toLocaleString('en-Us', options);
+    }
   }
 })(angular);

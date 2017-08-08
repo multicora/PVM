@@ -37,71 +37,74 @@
               .icon.green(ng-if="!item.CONVERSATION_IS_VIEWED")
                 .icon-container
                   i.material-icons drafts
-                span.explain Roman didn't open your email/message
+                span.explain User didn't open your email/message
               .icon.green.done(ng-if="item.CONVERSATION_IS_VIEWED")
                 .icon-container
                   i.material-icons drafts
                   .result
-                    .times 9
-                    //- i.material-icons // Wi'll not display this element when event happened more than once
-                      //- .small-icon done
-                //- span.explain Aug 2, 5:36pm: Roman opened your email/message
-                span.explain {{ item.CONVERSATION_IS_VIEWED.localDate }}, {{ item.CONVERSATION_IS_VIEWED.localTime }}: Roman opened your email/message
-
-              //-
-              .icon.green.done
-                .icon-container
-                  i.fa.fa-hand-pointer-o(aria-hidden="true")
-                  .result
-                    i.material-icons
+                    .times(ng-if="item.CONVERSATION_IS_VIEWED.counter > 1 && item.CONVERSATION_IS_VIEWED.counter < 9") {{ item.CONVERSATION_IS_VIEWED.counter }}
+                    .times(ng-if="item.CONVERSATION_IS_VIEWED.counter > 9") 9+
+                    i.material-icons(ng-if="item.CONVERSATION_IS_VIEWED.counter === 1")
                       .small-icon done
-                span.explain Aug 2, 5:36 pm: Roman clicked the link
-              
+                span.explain {{ item.CONVERSATION_IS_VIEWED.date }}: User opened your email/message
+
+              //- //-
+              //- .icon.green.done
+              //-   .icon-container
+              //-     i.fa.fa-hand-pointer-o(aria-hidden="true")
+              //-     .result
+              //-       i.material-icons
+              //-         .small-icon done
+              //-   span.explain {{ item.CONVERSATION_IS_VIEWED.date }}: Roman clicked the link
+
               //- conversation video watched
               .icon.green(ng-if="!item.VIDEO_IS_WATCHED")
                 .icon-container
                   i.material-icons remove_red_eye
-                span.explain Roman didn't watch the video yet
+                span.explain User didn't watch the video yet
               .icon.green.done(ng-if="item.VIDEO_IS_WATCHED")
                 .icon-container  
                   i.material-icons remove_red_eye
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain Aug 2, 3:37pm: Roman watched your video
-              //- 
-              .icon.green.done
-                .icon-container
-                  i.material-icons pause_circle_outline
-                  .result
-                    i.material-icons
-                      .small-icon done
-                span.explain Aug 2, 3:37pm: Roman looked through your video
+                span.explain {{ item.VIDEO_IS_WATCHED.date }}: User watched your video
+
+              //- //- 
+              //- .icon.green.done
+              //-   .icon-container
+              //-     i.material-icons pause_circle_outline
+              //-     .result
+              //-       i.material-icons
+              //-         .small-icon done
+              //-   span.explain Aug 2, 3:37pm: Roman looked through your video
 
               //- conversation file was downloaded
               .icon.green(ng-if="!item.FILE_IS_DOWNLOADED")
                 .icon-container
                   i.material-icons attachment
-                span.explain Roman didn't download your files
+                span.explain User didn't download your files
               .icon.green.done(ng-if="item.FILE_IS_DOWNLOADED")
                 .icon-container
                   i.material-icons attachment
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain Aug 2, 3:37pm: Roman downloaded your attachment
+                span.explain {{ item.FILE_IS_DOWNLOADED.date }}: User downloaded your attachment
+
               //- have chat in conversation
               .icon.green(ng-if="!item.NEW_MESSAGE")
                 .icon-container
                   i.material-icons chat
-                span.explain Roman didn't answer yet
+                span.explain User didn't answer yet
               .icon.green.done(ng-if="item.NEW_MESSAGE")
                 .icon-container
                   i.material-icons chat
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain Aug 2, 3:37pm: Congrats, it worked! You received the respones from Roman 
+                span.explain {{ item.NEW_MESSAGE.date }}: Congrats, it worked! You received the respones
+
               //- all previous points done
               .done-all(ng-if="item.doneAll")
                 i.material-icons done
@@ -112,7 +115,7 @@
         .open-btn-container
           md-button.view(ng-click="vm.onViewClick({$data: item.id})")
             | open
-      .expand-btn-container
+      .expand-btn-container(ng-if="!vm.toUser")
         md-button.md-icon-button.expand(
           ng-if="!item.expandClass"
           ng-click="vm.expand($event, item)")
