@@ -14,7 +14,8 @@
     'profileService',
     'chat',
     'pubSub',
-    'storage'
+    'storage',
+    'utils'
   ];
   function ctrl(
     $routeParams,
@@ -26,13 +27,14 @@
     profileService,
     chat,
     pubSub,
-    storage
+    storage,
+    utils
   ) {
     var vm = this;
     var sendObj;
     var usersPhotos = {};
     var chatInstance;
-
+    var audio = utils.createAudio('/files/audio/filling-your-inbox.mp3');
     vm.sendMessage = null;
     vm.conversation = null;
     vm.media = null;
@@ -49,6 +51,7 @@
       data.className = 'income';
       data.photo = usersPhotos[data.authorId];
       vm.chatList.push(data);
+      audio.play();
       reloadTemplate();
       scrollBottom();
     });

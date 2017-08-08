@@ -34,7 +34,6 @@
     .title-container
       p.title
         span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
-
     .video
       .videoHeader.showHeader(ng-class="vm.headerClass")
         .photo(
@@ -69,7 +68,6 @@
                   p.file-name.ellipsis {{item.name}}
 
         chat-list(list="vm.chatList")
-
       chat-reply-box(
         message="vm.savedMessage"
         send-message="vm.sendMessage($data)")
