@@ -24,7 +24,8 @@
             list="vm.conversationsList"
             on-indicator-click="vm.stopPropagation($event)"
             on-view-click="vm.viewConversation($data)"
-            show-indicators="vm.showConversationIndicators")
+            show-indicators="vm.showConversationIndicators"
+            on-full-log-click="vm.showFullLog($event, $data)")
           conversation-list(
             list="vm.conversationsToUserList"
             on-indicator-click="vm.stopPropagation($event)"
@@ -34,3 +35,20 @@
   feedback(
     ng-if="vm.showFeedbackPopup"
     close-feedback="vm.closeFeedback()")
+
+  //- Full log popup
+  popup.full-log-popup(
+      ng-if="vm.showFullLogPopup"
+      close-popup="vm.closeFullLogPopup()")
+      
+    .log(ng-repeat="item in vm.fullLogs")
+      .icon
+        i.material-icons(ng-if="item.type === 'NEW_MESSAGE'") chat
+        i.material-icons(ng-if="item.type === 'FILE_IS_DOWNLOADED'") attachment
+        i.material-icons(ng-if="item.type === 'VIDEO_IS_WATCHED'") remove_red_eye
+        i.material-icons(ng-if="item.type === 'VIDEO_IS_WATCHING'") pause_circle_outline
+        i.material-icons(ng-if="item.type === 'CONVERSATION_IS_VIEWED'") drafts
+      .date {{ item.date }}
+      .mesage {{ item.message }}
+    .button-container
+      md-button(ng-click="vm.closeFullLogPopup()") Back

@@ -7,6 +7,7 @@
     bindings: {
       onViewClick: '&',
       onIndicatorClick: '&',
+      onFullLogClick: '&',
       showIndicators: '<',
       list: '<',
       toUser: '<'

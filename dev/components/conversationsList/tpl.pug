@@ -109,9 +109,8 @@
               .done-all(ng-if="item.doneAll")
                 i.material-icons done
                 span.success Contact!
-              md-button#full-log(onclick="event.stopPropagation();") See Full log
+              md-button#full-log(ng-click="vm.onFullLogClick({$data: item.history, $event: $event})") See Full log
 
-        
         .open-btn-container
           md-button.view(ng-click="vm.onViewClick({$data: item.id})")
             | open

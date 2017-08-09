@@ -1,0 +1,29 @@
+.full-log-popup {
+  .popup {
+    background-color:  #f8f8f8;
+    border-radius: 2px;
+    max-width: 600px;
+    width: 100%;
+    padding: 16px 16px 24px 16px;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .log {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .date {
+      margin-right: 10px;
+      font-size: 12px;
+    }
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

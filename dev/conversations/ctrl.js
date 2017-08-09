@@ -6,21 +6,35 @@
 
   ctrl.$inject = [
     '$location',
-    'libraryService'
+    'libraryService',
+    'translations'
   ];
   function ctrl(
     $location,
-    libraryService
+    libraryService,
+    translations
   ) {
     var vm = this;
     var conversationsToId = [];
     var conversationsFromId = [];
     vm.showFeedbackPopup = false;
-
     vm.showConversationIndicators = true;
     vm.toUser = true;
+    vm.showFullLogPopup = false;
+    vm.fullLogs = null;
 
     getConversations();
+
+    vm.showFullLog = function($event, data) {
+      $event.stopPropagation();
+      vm.showFullLogPopup = true;
+      vm.fullLogs = data;
+    };
+
+    vm.closeFullLogPopup = function() {
+      vm.showFullLogPopup = false;
+      vm.fullLogs = null;
+    };
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
@@ -62,14 +76,13 @@
             }
 
             if (conversation.id === event.conversationId) {
+              event.message = translations.txt(event.type);
               conversation.history.push(event);
             }
           });
 
           conversation.doneAll = (conversation.CONVERSATION_IS_VIEWED && conversation.NEW_MESSAGE &&
             conversation.VIDEO_IS_WATCHED && conversation.FILE_IS_DOWNLOADED) ? true : false;
-
-          console.log(conversation);
         });
 
         return libraryService.getConversationsToUser();
