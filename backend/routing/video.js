@@ -179,7 +179,7 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.videos.delete(request.payload).then(() => {
+        DAL.videos.markAsDeleted(request.payload).then(() => {
           reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(err, err));
