@@ -49,6 +49,7 @@
         return libraryService.getEvents(conversationsToId);
       }).then(function (res) {
         vm.conversationsList.forEach(function(conversation) {
+          conversation.history = [];
 
           res.data.forEach(function(event) {
             event.date = convertDate(event.date);
@@ -59,10 +60,16 @@
               conversation[event.type] = event;
               conversation[event.type].counter = 1;
             }
+
+            if (conversation.id === event.conversationId) {
+              conversation.history.push(event);
+            }
           });
 
           conversation.doneAll = (conversation.CONVERSATION_IS_VIEWED && conversation.NEW_MESSAGE &&
             conversation.VIDEO_IS_WATCHED && conversation.FILE_IS_DOWNLOADED) ? true : false;
+
+          console.log(conversation);
         });
 
         return libraryService.getConversationsToUser();
