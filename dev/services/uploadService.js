@@ -12,11 +12,11 @@
     $http,
     tools
   ) {
-    this.sendVideo = function(name, url, file) {
+    this.sendVideo = function(name, file) {
       name = name || 'no name';
       var data = name + '.' + tools.getExtension(file.name);
 
-      return send(url, file, data);
+      return send('/api/video', file, data);
     };
 
     this.sendFile = function(url, file, data) {

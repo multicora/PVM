@@ -34,7 +34,6 @@
     vm.saveRecordClick = function (name) {
       uploadService.sendVideo(
         name,
-        '/api/video',
         vm.recordedData.video)
       .then(function () {
         vm.closeRecordPopup();
@@ -60,7 +59,6 @@
     vm.sendRecordClick = function (name) {
       uploadService.sendVideo(
         name,
-        '/api/video',
         vm.recordedData.video)
       .then(function (res) {
         $location.url('template/?video=' + res.data.id);
