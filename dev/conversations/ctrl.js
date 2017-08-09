@@ -57,9 +57,12 @@
               conversation[event.type].counter++;
             } else if (conversation.id === event.conversationId) {
               conversation[event.type] = event;
-              conversation[event.type].counter = 0;
+              conversation[event.type].counter = 1;
             }
           });
+
+          conversation.doneAll = (conversation.CONVERSATION_IS_VIEWED && conversation.NEW_MESSAGE &&
+            conversation.VIDEO_IS_WATCHED && conversation.FILE_IS_DOWNLOADED) ? true : false;
         });
 
         return libraryService.getConversationsToUser();

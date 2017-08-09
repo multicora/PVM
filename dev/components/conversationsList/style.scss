@@ -88,7 +88,7 @@
     }
 
     .bold {
-      font-family: 'Roboto Bold';      
+      font-family: 'Roboto Bold';
     }
 
     .progress-bar {
@@ -299,6 +299,9 @@
       .explain {
       display: block;
       }
+    }
+    .done-all {
+      display: none;
     }
   }
   
