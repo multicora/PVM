@@ -45,15 +45,35 @@ module.exports = function(connection) {
         });
       });
     },
+
+    markAsDeleted: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('videos')
+          .set('deleted', true)
+          .where('v_id = "' + id + '"')
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getByAuthor: function (author) {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT * FROM `videos` WHERE author = ' + author + ';';
+        const request = sqlBuilder.select()
+          .from('videos')
+          .where(`author = ${ author }`)
+          .where('deleted = false')
+          .toString();
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
         });
       });
     },
+
     getAll: function () {
       return new Promise(function (resolve, reject) {
         let request = 'SELECT * FROM `videos`;';
