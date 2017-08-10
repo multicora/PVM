@@ -67,6 +67,10 @@
 
           res.data.forEach(function(event) {
             event.date = convertDate(event.date);
+            // Commented this to make AngularJS filters work in templates
+            // Added filter to the templates in folders:
+            // 1. dev/components/conversationsList/tpl.pug
+            // 2. dev/conversations/tpl.pug
 
             if (conversation[event.type]) {
               conversation[event.type].counter++;

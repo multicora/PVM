@@ -46,7 +46,7 @@
                     .times(ng-if="item.CONVERSATION_IS_VIEWED.counter > 9") 9+
                     i.material-icons(ng-if="item.CONVERSATION_IS_VIEWED.counter === 1")
                       .small-icon done
-                span.explain {{ item.CONVERSATION_IS_VIEWED.date }}: User opened your email/message
+                span.explain {{ item.CONVERSATION_IS_VIEWED.date | date:'h:mm a' }}: User opened your email/message
 
               //- //-
               //- .icon.green.done
