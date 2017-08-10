@@ -27,8 +27,8 @@
 
     vm.showFullLog = function($event, data) {
       $event.stopPropagation();
-      vm.showFullLogPopup = true;
       vm.fullLogs = data;
+      vm.showFullLogPopup = true;
     };
 
     vm.closeFullLogPopup = function() {
@@ -52,6 +52,15 @@
       vm.showFeedbackPopup = false;
     };
 
+    vm.getObjectKeyName = function (numb, object) {
+      return Object.keys(object)[numb];
+    };
+
+    function dateGenerator(date) {
+      date = new Date(date);
+      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    }
+
     function getConversations () {
       libraryService.getConversations().then(function (res) {
         vm.conversationsList = res.data;
@@ -63,15 +72,9 @@
         return libraryService.getEvents(conversationsToId);
       }).then(function (res) {
         vm.conversationsList.forEach(function(conversation) {
-          conversation.history = [];
+          var history = [];
 
           res.data.forEach(function(event) {
-            event.date = convertDate(event.date);
-            // Commented this to make AngularJS filters work in templates
-            // Added filter to the templates in folders:
-            // 1. dev/components/conversationsList/tpl.pug
-            // 2. dev/conversations/tpl.pug
-
             if (conversation[event.type]) {
               conversation[event.type].counter++;
             } else if (conversation.id === event.conversationId) {
@@ -81,7 +84,16 @@
 
             if (conversation.id === event.conversationId) {
               event.message = translations.txt(event.type);
-              conversation.history.push(event);
+              history.push(event);
+            }
+          });
+          conversation.sortedHistory = {};
+
+          history.forEach(function(event) {
+            if (!conversation.sortedHistory[dateGenerator(event.date)]) {
+              conversation.sortedHistory[dateGenerator(event.date)] = new Array(event);
+            } else {
+              conversation.sortedHistory[dateGenerator(event.date)].push(event);
             }
           });
 
@@ -108,16 +120,5 @@
         });
       });
     };
-
-    function convertDate(date) {
-      var options = {
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric'
-      };
-
-      return new Date(date).toLocaleString('en-Us', options);
-    }
   }
 })(angular);

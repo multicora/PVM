@@ -41,25 +41,19 @@
       ng-if="vm.showFullLogPopup"
       close-popup="vm.closeFullLogPopup()")
     h5.title Conversation history
-    .day
-      i.material-icons event
-      //- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-      //-                                                                |
-      //- Following span section is hardcoded and needs proper logic:    |
-      //- It should divide rows with .log events that belong to the same |
-      //- day. Also each event should display only time and no date      |
-      //-                                                                |
-      //- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-      span 2 Aug:
+    .date-container(ng-repeat="item in vm.fullLogs track by $index")
+      .day
+        i.material-icons event
+        span(ng-bind="vm.getObjectKeyName($index, vm.fullLogs)")
 
-    .log(ng-repeat="item in vm.fullLogs")
-      .icon
-        i.material-icons(ng-if="item.type === 'NEW_MESSAGE'") chat
-        i.material-icons(ng-if="item.type === 'FILE_IS_DOWNLOADED'") attachment
-        i.material-icons(ng-if="item.type === 'VIDEO_IS_WATCHED'") remove_red_eye
-        i.material-icons(ng-if="item.type === 'VIDEO_IS_WATCHING'") pause_circle_outline
-        i.material-icons(ng-if="item.type === 'CONVERSATION_IS_VIEWED'") drafts
-      .date {{ item.date | date:'d MMM, h:mm:ss a:'}}
-      .message {{ item.message }}
+      .log(ng-repeat="event in item")
+        .icon
+          i.material-icons(ng-if="event.type === 'NEW_MESSAGE'") chat
+          i.material-icons(ng-if="event.type === 'FILE_IS_DOWNLOADED'") attachment
+          i.material-icons(ng-if="event.type === 'VIDEO_IS_WATCHED'") remove_red_eye
+          i.material-icons(ng-if="event.type === 'VIDEO_IS_WATCHING'") pause_circle_outline
+          i.material-icons(ng-if="event.type === 'CONVERSATION_IS_VIEWED'") drafts
+        .date {{ event.date | date:'d MMM, h:mm:ss a:'}}
+        .message {{ event.message }}
     .button-container
       md-button.md-button(ng-click="vm.closeFullLogPopup()") Close

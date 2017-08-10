@@ -31,7 +31,7 @@
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain Aug 2, 5:35pm: Email delivered
+                span.explain Email delivered
 
               //- conversation was opened
               .icon.green(ng-if="!item.CONVERSATION_IS_VIEWED")
@@ -68,7 +68,7 @@
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain {{ item.VIDEO_IS_WATCHED.date }}: User watched your video
+                span.explain {{ item.VIDEO_IS_WATCHED.date | date:'h:mm a' }}: User watched your video
 
               //- //- 
               //- .icon.green.done
@@ -90,7 +90,7 @@
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain {{ item.FILE_IS_DOWNLOADED.date }}: User downloaded your attachment
+                span.explain {{ item.FILE_IS_DOWNLOADED.date | date:'h:mm a' }}: User downloaded your attachment
 
               //- have chat in conversation
               .icon.green(ng-if="!item.NEW_MESSAGE")
@@ -103,13 +103,13 @@
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain {{ item.NEW_MESSAGE.date }}: Congrats, it worked! You received the respones
+                span.explain {{ item.NEW_MESSAGE.date | date:'h:mm a' }}: Congrats, it worked! You received the respones
 
               //- all previous points done
               .done-all(ng-if="item.doneAll")
                 i.material-icons done
                 span.success Contact!
-              md-button#full-log(ng-click="vm.onFullLogClick({$data: item.history, $event: $event})") See Full log
+              md-button#full-log(ng-click="vm.onFullLogClick({$data: item.sortedHistory, $event: $event})") See Full log
 
         .open-btn-container
           md-button.view(ng-click="vm.onViewClick({$data: item.id})")
