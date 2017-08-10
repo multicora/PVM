@@ -40,8 +40,7 @@
 
         vm.notifications.map( function (notification) {
           notification = notificationsService.messageGenerator(notification);
-          notification.localDate = new Date(notification.date).toLocaleDateString();
-          notification.localTime = new Date(notification.date).toLocaleTimeString();
+
           return notification;
         });
 
