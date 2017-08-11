@@ -71,7 +71,7 @@
                 span.explain {{ item.VIDEO_IS_WATCHED.date | date:'h:mm a' }}: User watched your video
 
               //- conversation video paused
-              .icon.green(ng-if="!item.VIDEO_PAUSED")
+              .icon.green(ng-if="!item.VIDEO_PAUSED && !item.VIDEO_IS_WATCHED")
                 .icon-container
                   i.material-icons pause_circle_outline
               .icon.green.done(ng-if="item.VIDEO_PAUSED && !item.VIDEO_IS_WATCHED")
