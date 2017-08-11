@@ -42,6 +42,10 @@
       return $http.post('/api/file-downloaded', data);
     };
 
+    this.videoPaused = function (data) {
+      return $http.post('/api/video-paused', data);
+    };
+
     this.getChatForDashboard = function () {
       return $http.get('/api/chat-for-dashboard');
     };
