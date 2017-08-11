@@ -27,6 +27,20 @@ module.exports = function(connection) {
       });
     },
 
+    update: (type, userId, conversationId, metadata) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('events')
+          .set('metadata', JSON.stringify(metadata))
+          .where(`type = "${type}" AND userId = ${userId} AND conversationId = ${conversationId}`)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getByConversationId: (conversationId) => {
       return new Promise((resolve, reject) => {
         const request = sqlBuilder.select()

@@ -28,7 +28,8 @@
     VIDEO_IS_WATCHED: 'Watched the video',
     VIDEO_IS_WATCHING: 'Is watching your video',
     CONVERSATION_IS_VIEWED: 'Followed your email link',
-    NEW_MESSAGE: 'Message Sent!'
+    NEW_MESSAGE: 'Message Sent!',
+    VIDEO_PAUSED: 'Video paused'
   };
 
   vocabulary = {

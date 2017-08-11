@@ -70,14 +70,17 @@
                       .small-icon done
                 span.explain {{ item.VIDEO_IS_WATCHED.date | date:'h:mm a' }}: User watched your video
 
-              //- //- 
-              //- .icon.green.done
-              //-   .icon-container
-              //-     i.material-icons pause_circle_outline
-              //-     .result
-              //-       i.material-icons
-              //-         .small-icon done
-              //-   span.explain Aug 2, 3:37pm: Roman looked through your video
+              //- conversation video paused
+              .icon.green(ng-if="!item.VIDEO_PAUSED")
+                .icon-container
+                  i.material-icons pause_circle_outline
+              .icon.green.done(ng-if="item.VIDEO_PAUSED && !item.VIDEO_IS_WATCHED")
+                .icon-container
+                  i.material-icons pause_circle_outline
+                  .result
+                    i.material-icons
+                      .small-icon done
+                span.explain {{ item.VIDEO_PAUSED.date | date:'h:mm a' }}: User stoped your video at {{item.VIDEO_PAUSED.metadata.time | number:1 }} second
 
               //- conversation file was downloaded
               .icon.green(ng-if="!item.FILE_IS_DOWNLOADED")
