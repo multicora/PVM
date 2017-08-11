@@ -9,7 +9,8 @@ module.exports = function(connection) {
       'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
       'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
       'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED',
-      'NEW_MESSAGE': 'NEW_MESSAGE'
+      'NEW_MESSAGE': 'NEW_MESSAGE',
+      'VIDEO_PAUSED': 'VIDEO_PAUSED'
     },
 
     get: (type, userId, conversationId) => {
