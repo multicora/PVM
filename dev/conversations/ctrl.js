@@ -52,10 +52,6 @@
       vm.showFeedbackPopup = false;
     };
 
-    vm.getObjectKeyName = function (numb, object) {
-      return Object.keys(object)[numb];
-    };
-
     function dateGenerator(date) {
       date = new Date(date);
       return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
