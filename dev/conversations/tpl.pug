@@ -41,10 +41,10 @@
       ng-if="vm.showFullLogPopup"
       close-popup="vm.closeFullLogPopup()")
     h5.title Conversation history
-    .date-container(ng-repeat="item in vm.fullLogs track by $index")
+    .date-container(ng-repeat="(key, item) in vm.fullLogs")
       .day
         i.material-icons event
-        span(ng-bind="vm.getObjectKeyName($index, vm.fullLogs)")
+        span {{ key }}
 
       .log(ng-repeat="event in item")
         .icon

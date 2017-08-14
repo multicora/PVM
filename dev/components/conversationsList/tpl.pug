@@ -6,20 +6,20 @@
       .main-content
         .content
           .message-info.ellipsis
-            span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
-            span(ng-if="!vm.toUser && !item.email || item.email === 'null' || item.email === 'undefined'") Public
+            span(ng-if="!vm.toUser && item.email && item.email != null && item.email != undefined") to: {{item.email}}
+            span(ng-if="!vm.toUser && !item.email || item.email === null || item.email === undefined") Public
             span(ng-if="vm.toUser") from: {{item.author}}
           .message
             .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
 
             .subject.ellipsis(ng-if="(vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser") {{item.title || 'Untitled'}}
-            .subject.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}
+            .subject.ellipsis-font(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}
 
             .person.ellipsis(ng-if="(vm.toUser || !vm.toUser) && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
-            .person.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
+            .person.ellipsis.bold-font(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
 
             .last-message.ellipsis(ng-if="((vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser) && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
-            .last-message.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
+            .last-message.ellipsis.bold-font(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
           .pr-bar-container(ng-class="item.expandClass")
             .progress-bar(ng-if="!vm.toUser")
 
@@ -109,7 +109,7 @@
               .done-all(ng-if="item.doneAll")
                 i.material-icons done
                 span.success Contact!
-              md-button#full-log(ng-click="vm.onFullLogClick({$data: item.sortedHistory, $event: $event})") See Full log
+              md-button.full-log(ng-click="vm.onFullLogClick({$data: item.sortedHistory, $event: $event})") See Full log
 
         .open-btn-container
           md-button.view(ng-click="vm.onViewClick({$data: item.id})")
