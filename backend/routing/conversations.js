@@ -447,13 +447,15 @@ module.exports = function (server, DAL) {
 
           if (res.result) {
             return DAL.events.get(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id).then(res => {
-              let result = DAL.events.add(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id, {
-                'videoId': videoId,
-                'time': time
-              });
+              let result = null;
 
               if (res.length) {
                 result = DAL.events.update(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id, {
+                  'videoId': videoId,
+                  'time': time
+                });
+              } else {
+                result = DAL.events.add(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id, {
                   'videoId': videoId,
                   'time': time
                 });

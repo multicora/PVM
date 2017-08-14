@@ -76,7 +76,7 @@
           videoId: vm.conversation.videoId
         });
       });
-      if (!vm.videoWatched) {
+      if (vm.videoWatched) {
         data.player.on('pause', function() {
           conversationsService.videoPaused({
             conversationId: vm.conversation.id,
