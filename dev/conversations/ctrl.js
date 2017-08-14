@@ -70,10 +70,9 @@
         return libraryService.getEvents(conversationsToId);
       }).then(function (res) {
         res.data.forEach(function(event) {
-          if(!vm.eventsList[event.conversationId]) {
-            vm.eventsList[event.conversationId] = {
-              [event.type]: [event]
-            };
+          if (!vm.eventsList[event.conversationId]) {
+            vm.eventsList[event.conversationId] = {};
+            vm.eventsList[event.conversationId][event.type] = [event];
           } else {
             if (!vm.eventsList[event.conversationId][event.type]) {
               vm.eventsList[event.conversationId][event.type] = [event];
@@ -83,9 +82,11 @@
           }
         });
 
-        for(var key in vm.eventsList) {
-          vm.eventsList[key].doneAll = (vm.eventsList[key].CONVERSATION_IS_VIEWED && vm.eventsList[key].NEW_MESSAGE &&
-            vm.eventsList[key].VIDEO_IS_WATCHED && vm.eventsList[key].FILE_IS_DOWNLOADED) ? true : false;
+        for (var key in vm.eventsList) {
+          if (vm.eventsList.hasOwnProperty(key)) {
+            vm.eventsList[key].doneAll = (vm.eventsList[key].CONVERSATION_IS_VIEWED && vm.eventsList[key].NEW_MESSAGE &&
+              vm.eventsList[key].VIDEO_IS_WATCHED && vm.eventsList[key].FILE_IS_DOWNLOADED) ? true : false;
+          }
         }
 
         vm.conversationsList.forEach(function(conversation) {
