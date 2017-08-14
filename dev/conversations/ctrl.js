@@ -17,6 +17,8 @@
     var vm = this;
     var conversationsToId = [];
     var conversationsFromId = [];
+    var history = [];
+    vm.eventsList = {};
     vm.showFeedbackPopup = false;
     vm.showConversationIndicators = true;
     vm.toUser = true;
@@ -67,22 +69,33 @@
 
         return libraryService.getEvents(conversationsToId);
       }).then(function (res) {
-        vm.conversationsList.forEach(function(conversation) {
-          var history = [];
-
-          res.data.forEach(function(event) {
-            if (conversation[event.type]) {
-              conversation[event.type].counter++;
-            } else if (conversation.id === event.conversationId) {
-              conversation[event.type] = event;
-              conversation[event.type].counter = 1;
+        res.data.forEach(function(event) {
+          if(!vm.eventsList[event.conversationId]) {
+            vm.eventsList[event.conversationId] = {
+              [event.type]: [event]
+            };
+          } else {
+            if (!vm.eventsList[event.conversationId][event.type]) {
+              vm.eventsList[event.conversationId][event.type] = [event];
+            } else {
+              vm.eventsList[event.conversationId][event.type].push(event);
             }
+          }
+        });
 
+        for(var key in vm.eventsList) {
+          vm.eventsList[key].doneAll = (vm.eventsList[key].CONVERSATION_IS_VIEWED && vm.eventsList[key].NEW_MESSAGE &&
+            vm.eventsList[key].VIDEO_IS_WATCHED && vm.eventsList[key].FILE_IS_DOWNLOADED) ? true : false;
+        }
+
+        vm.conversationsList.forEach(function(conversation) {
+          res.data.forEach(function(event) {
             if (conversation.id === event.conversationId) {
               event.message = translations.txt(event.type);
               history.push(event);
             }
           });
+
           conversation.sortedHistory = {};
 
           history.forEach(function(event) {
@@ -92,9 +105,6 @@
               conversation.sortedHistory[dateGenerator(event.date)].push(event);
             }
           });
-
-          conversation.doneAll = (conversation.CONVERSATION_IS_VIEWED && conversation.NEW_MESSAGE &&
-            conversation.VIDEO_IS_WATCHED && conversation.FILE_IS_DOWNLOADED) ? true : false;
         });
 
         return libraryService.getConversationsToUser();

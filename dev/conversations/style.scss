@@ -18,6 +18,15 @@
         padding-left: 16px;
       }
     }
+
+    .content {
+      max-height: 500px;
+      overflow-y: scroll;
+
+      @media (max-width: 767px) {
+        max-height: 320px;
+      }
+    }
   }
 
   .day {

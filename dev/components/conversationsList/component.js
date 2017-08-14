@@ -10,6 +10,7 @@
       onFullLogClick: '&',
       showIndicators: '<',
       list: '<',
+      events: '<',
       toUser: '<'
     }
   });
@@ -20,6 +21,9 @@
 
     vm.expand = function(event, item) {
       event.stopPropagation();
+      vm.list.forEach(function(conversation) {
+        conversation.expandClass = '';
+      });
       item.expandClass = 'expanded';
     };
 
