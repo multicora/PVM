@@ -27,23 +27,6 @@ var beConfig = require('./backend/config.js');
 
 var config = require('./gulp/config.js')();
 var path = config.path;
-// var config = {
-//   autoprefixer: {
-//     browsers: ['last 2 versions'],
-//     cascade: false
-//   },
-//   scssOrder: ['**/app.scss'],
-//   jsOrder: ['**/app.js', '**/appConfig.js']
-// };
-
-// var path = {};
-// path.dev = 'dev';
-// path.be = 'backend';
-// path.dest = 'backend/public';
-// path.pug = path.dev + '/**/*.pug';
-// path.css = path.dev + '/**/*.scss';
-// path.js = path.dev + '/**/!(*spec).js';
-// path.assets = path.dev + '/files/**/*';
 
 require('./gulp/tests.js')();
 require('./gulp/jslint.js')();

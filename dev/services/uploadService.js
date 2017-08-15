@@ -11,7 +11,6 @@
       formData.append('file', file);
       formData.append('data', data);
 
-
       return $http.post(
         url,
         formData,
