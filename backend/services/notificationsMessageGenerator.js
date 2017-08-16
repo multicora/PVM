@@ -13,7 +13,7 @@ module.exports = () => {
       return 'VIDEO_IS_WATCHING';
     },
     conversationIsOpened: function () {
-      return 'CONVERSATION_IS_OPENED';
+      return 'CONVERSATION_IS_VIEWED';
     },
     newMessage: function () {
       return 'NEW_MESSAGE';

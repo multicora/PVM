@@ -6,21 +6,37 @@
 
   ctrl.$inject = [
     '$location',
-    'libraryService'
+    'libraryService',
+    'translations'
   ];
   function ctrl(
     $location,
-    libraryService
+    libraryService,
+    translations
   ) {
     var vm = this;
     var conversationsToId = [];
     var conversationsFromId = [];
+    var history = [];
+    vm.eventsList = {};
     vm.showFeedbackPopup = false;
-
     vm.showConversationIndicators = true;
     vm.toUser = true;
+    vm.showFullLogPopup = false;
+    vm.fullLogs = null;
 
     getConversations();
+
+    vm.showFullLog = function($event, data) {
+      $event.stopPropagation();
+      vm.fullLogs = data;
+      vm.showFullLogPopup = true;
+    };
+
+    vm.closeFullLogPopup = function() {
+      vm.showFullLogPopup = false;
+      vm.fullLogs = null;
+    };
 
     vm.stopPropagation = function($event) {
       $event.stopPropagation();
@@ -38,6 +54,11 @@
       vm.showFeedbackPopup = false;
     };
 
+    function dateGenerator(date) {
+      date = new Date(date);
+      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    }
+
     function getConversations () {
       libraryService.getConversations().then(function (res) {
         vm.conversationsList = res.data;
@@ -48,10 +69,41 @@
 
         return libraryService.getEvents(conversationsToId);
       }).then(function (res) {
+        res.data.forEach(function(event) {
+          if (!vm.eventsList[event.conversationId]) {
+            vm.eventsList[event.conversationId] = {};
+            vm.eventsList[event.conversationId][event.type] = [event];
+          } else {
+            if (!vm.eventsList[event.conversationId][event.type]) {
+              vm.eventsList[event.conversationId][event.type] = [event];
+            } else {
+              vm.eventsList[event.conversationId][event.type].push(event);
+            }
+          }
+        });
+
+        for (var key in vm.eventsList) {
+          if (vm.eventsList.hasOwnProperty(key)) {
+            vm.eventsList[key].doneAll = (vm.eventsList[key].CONVERSATION_IS_VIEWED && vm.eventsList[key].NEW_MESSAGE &&
+              vm.eventsList[key].VIDEO_IS_WATCHED && vm.eventsList[key].FILE_IS_DOWNLOADED) ? true : false;
+          }
+        }
+
         vm.conversationsList.forEach(function(conversation) {
           res.data.forEach(function(event) {
             if (conversation.id === event.conversationId) {
-              conversation[event.type] = event.type;
+              event.message = translations.txt(event.type);
+              history.push(event);
+            }
+          });
+
+          conversation.sortedHistory = {};
+
+          history.forEach(function(event) {
+            if (!conversation.sortedHistory[dateGenerator(event.date)]) {
+              conversation.sortedHistory[dateGenerator(event.date)] = new Array(event);
+            } else {
+              conversation.sortedHistory[dateGenerator(event.date)].push(event);
             }
           });
         });
@@ -69,7 +121,7 @@
         vm.conversationsToUserList.forEach(function(conversation) {
           res.data.forEach(function(event) {
             if (conversation.id === event.conversationId) {
-              conversation[event.type] = event.type;
+              conversation[event.type] = event;
             }
           });
         });
