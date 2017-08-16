@@ -23,13 +23,22 @@
       event.stopPropagation();
       vm.list.forEach(function(conversation) {
         conversation.expandClass = '';
+        conversation.fullLogShow = false;
+        conversation.timelineShow = false;
+        conversation.explainShow = false;
       });
       item.expandClass = 'expanded';
+      item.fullLogShow = true;
+      item.timelineShow = true;
+      item.explainShow = true;
     };
 
     vm.collapse = function(event, item) {
       event.stopPropagation();
       item.expandClass = '';
+      item.fullLogShow = false;
+      item.timelineShow = false;
+      item.explainShow = false;
     };
   }
 })(angular);
