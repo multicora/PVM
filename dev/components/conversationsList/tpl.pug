@@ -114,7 +114,7 @@
                 ng-if="item.fullLogShow"
                 ng-click="vm.onFullLogClick({$data: item.sortedHistory, $event: $event})") See Full log
 
-        .open-btn-container
+        .open-btn-container.bold-font
           md-button.view(ng-click="vm.onViewClick({$data: item.id})")
             | open
       .expand-btn-container(ng-if="!vm.toUser")
