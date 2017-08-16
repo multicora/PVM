@@ -7,7 +7,7 @@
         .content
           .message-info.ellipsis
             span(ng-if="!vm.toUser && item.email && item.email != null && item.email != undefined") to: {{item.email}}
-            span(ng-if="!vm.toUser && !item.email || item.email === null || item.email === undefined") Public
+            span(ng-if="!vm.toUser && (!item.email || item.email === null || item.email === undefined)") Public
             span(ng-if="vm.toUser") from: {{item.author}}
           .message
             .bubble(ng-if="vm.toUser && !vm.events[item.id].CONVERSATION_IS_VIEWED")
