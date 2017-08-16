@@ -53,9 +53,11 @@
             i.material-icons(ng-if="event.type === 'NEW_MESSAGE'") chat
             i.material-icons(ng-if="event.type === 'FILE_IS_DOWNLOADED'") attachment
             i.material-icons(ng-if="event.type === 'VIDEO_IS_WATCHED'") remove_red_eye
-            i.material-icons(ng-if="event.type === 'VIDEO_IS_WATCHING'") pause_circle_outline
+            i.material-icons.green(ng-if="event.type === 'VIDEO_IS_WATCHING'") remove_red_eye
+            i.material-icons(ng-if="event.type === 'VIDEO_PAUSED'") pause_circle_outline
             i.material-icons(ng-if="event.type === 'CONVERSATION_IS_VIEWED'") drafts
           .date {{ event.date | date:'d MMM, h:mm:ss a:'}}
-          .message {{ event.message }}
+          .message(ng-if="event.type !== 'VIDEO_PAUSED'") {{ event.message }}
+          .message(ng-if="event.type === 'VIDEO_PAUSED'") {{ event.message }} at {{ event.metadata.time }}
     .button-container
       md-button.md-button(ng-click="vm.closeFullLogPopup()") Close
