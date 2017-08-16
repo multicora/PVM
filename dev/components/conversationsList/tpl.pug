@@ -6,47 +6,48 @@
       .main-content
         .content
           .message-info.ellipsis
-            span(ng-if="!vm.toUser && item.email && item.email != 'null' && item.email != 'undefined'") to: {{item.email}}
-            span(ng-if="!vm.toUser && !item.email || item.email === 'null' || item.email === 'undefined'") Public
+            span(ng-if="!vm.toUser && item.email && item.email != null && item.email != undefined") to: {{item.email}}
+            span(ng-if="!vm.toUser && (!item.email || item.email === null || item.email === undefined)") Public
             span(ng-if="vm.toUser") from: {{item.author}}
           .message
-            .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
+            .bubble(ng-if="vm.toUser && !vm.events[item.id].CONVERSATION_IS_VIEWED")
 
-            .subject.ellipsis(ng-if="(vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser") {{item.title || 'Untitled'}}
-            .subject.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}
+            .subject.ellipsis(ng-if="(vm.toUser && vm.events[item.id].CONVERSATION_IS_VIEWED) || !vm.toUser") {{item.title || 'Untitled'}}
+            .subject.ellipsis-font(ng-if="vm.toUser && !vm.events[item.id].CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}
 
             .person.ellipsis(ng-if="(vm.toUser || !vm.toUser) && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
-            .person.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
+            .person.ellipsis.bold-font(ng-if="vm.toUser && !vm.events[item.id].CONVERSATION_IS_VIEWED && item.lastMessage") - {{item.lastMessageAuthor || 'User'}}:
 
-            .last-message.ellipsis(ng-if="((vm.toUser && item.CONVERSATION_IS_VIEWED) || !vm.toUser) && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
-            .last-message.ellipsis.bold(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
+            .last-message.ellipsis(ng-if="((vm.toUser && vm.events[item.id].CONVERSATION_IS_VIEWED) || !vm.toUser) && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
+            .last-message.ellipsis.bold-font(ng-if="vm.toUser && !vm.events[item.id].CONVERSATION_IS_VIEWED && (item.lastMessage || item.message)") {{item.lastMessage || item.message}}
           .pr-bar-container(ng-class="item.expandClass")
             .progress-bar(ng-if="!vm.toUser")
 
               //- conversation sent
-              p.timeline-title Events timeline:
+              p.timeline-title(ng-if="item.timelineShow") Events timeline:
               .icon.green.done
                 .icon-container
                   i.material-icons send
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain Email delivered
+                span.explain(ng-if="item.explainShow") Email delivered
 
               //- conversation was opened
-              .icon.green(ng-if="!item.CONVERSATION_IS_VIEWED")
+              .icon.green(ng-if="!vm.events[item.id].CONVERSATION_IS_VIEWED")
                 .icon-container
                   i.material-icons drafts
-                span.explain User didn't open your email/message
-              .icon.green.done(ng-if="item.CONVERSATION_IS_VIEWED")
+                span.explain(ng-if="item.explainShow") User didn't open your email/message
+              .icon.green.done(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED")
                 .icon-container
                   i.material-icons drafts
                   .result
-                    .times(ng-if="item.CONVERSATION_IS_VIEWED.counter > 1 && item.CONVERSATION_IS_VIEWED.counter < 9") {{ item.CONVERSATION_IS_VIEWED.counter }}
-                    .times(ng-if="item.CONVERSATION_IS_VIEWED.counter > 9") 9+
-                    i.material-icons(ng-if="item.CONVERSATION_IS_VIEWED.counter === 1")
+                    .times(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED.length > 1 && vm.events[item.id].CONVERSATION_IS_VIEWED.length < 9" 
+                      ng-bind="vm.events[item.id].CONVERSATION_IS_VIEWED.length")
+                    .times(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED.length > 9") 9+
+                    i.material-icons(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED.length === 1")
                       .small-icon done
-                span.explain {{ item.CONVERSATION_IS_VIEWED.date | date:'h:mm a' }}: User opened your email/message
+                span.explain(ng-if="item.explainShow") {{ vm.events[item.id].CONVERSATION_IS_VIEWED[0].date | date:'h:mm a' }}: User opened your email/message
 
               //- //-
               //- .icon.green.done
@@ -55,20 +56,20 @@
               //-     .result
               //-       i.material-icons
               //-         .small-icon done
-              //-   span.explain {{ item.CONVERSATION_IS_VIEWED.date }}: Roman clicked the link
+              //-   span.explain(ng-if="item.explainShow") {{ item.CONVERSATION_IS_VIEWED.date }}: Roman clicked the link
 
               //- conversation video watched
-              .icon.green(ng-if="!item.VIDEO_IS_WATCHED")
+              .icon.green(ng-if="!vm.events[item.id].VIDEO_IS_WATCHED")
                 .icon-container
                   i.material-icons remove_red_eye
-                span.explain User didn't watch the video yet
-              .icon.green.done(ng-if="item.VIDEO_IS_WATCHED")
+                span.explain(ng-if="item.explainShow") User didn't watch the video yet
+              .icon.green.done(ng-if="vm.events[item.id].VIDEO_IS_WATCHED")
                 .icon-container  
                   i.material-icons remove_red_eye
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain {{ item.VIDEO_IS_WATCHED.date | date:'h:mm a' }}: User watched your video
+                span.explain(ng-if="item.explainShow") {{ vm.events[item.id].VIDEO_IS_WATCHED[0].date | date:'h:mm a' }}: User watched your video
 
               //- conversation video paused
               .icon.green(ng-if="!item.VIDEO_PAUSED && !item.VIDEO_IS_WATCHED")
@@ -83,38 +84,40 @@
                 span.explain {{ item.VIDEO_PAUSED.date | date:'h:mm a' }}: User stoped your video at {{item.VIDEO_PAUSED.metadata.time | number:1 }} second
 
               //- conversation file was downloaded
-              .icon.green(ng-if="!item.FILE_IS_DOWNLOADED")
+              .icon.green(ng-if="!vm.events[item.id].FILE_IS_DOWNLOADED")
                 .icon-container
                   i.material-icons attachment
-                span.explain User didn't download your files
-              .icon.green.done(ng-if="item.FILE_IS_DOWNLOADED")
+                span.explain(ng-if="item.explainShow") User didn't download your files
+              .icon.green.done(ng-if="vm.events[item.id].FILE_IS_DOWNLOADED")
                 .icon-container
                   i.material-icons attachment
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain {{ item.FILE_IS_DOWNLOADED.date | date:'h:mm a' }}: User downloaded your attachment
+                span.explain(ng-if="item.explainShow") {{ vm.events[item.id].FILE_IS_DOWNLOADED[0].date | date:'h:mm a' }}: User downloaded your attachment
 
               //- have chat in conversation
-              .icon.green(ng-if="!item.NEW_MESSAGE")
+              .icon.green(ng-if="!vm.events[item.id].NEW_MESSAGE")
                 .icon-container
                   i.material-icons chat
-                span.explain User didn't answer yet
-              .icon.green.done(ng-if="item.NEW_MESSAGE")
+                span.explain(ng-if="item.explainShow") User didn't answer yet
+              .icon.green.done(ng-if="vm.events[item.id].NEW_MESSAGE")
                 .icon-container
                   i.material-icons chat
                   .result
                     i.material-icons
                       .small-icon done
-                span.explain {{ item.NEW_MESSAGE.date | date:'h:mm a' }}: Congrats, it worked! You received the respones
+                span.explain(ng-if="item.explainShow") {{ vm.events[item.id].NEW_MESSAGE[0].date | date:'h:mm a' }}: Congrats, it worked! You received the respones
 
               //- all previous points done
-              .done-all(ng-if="item.doneAll")
+              .done-all(ng-if="vm.events[item.id].doneAll && !item.expandClass")
                 i.material-icons done
                 span.success Contact!
-              md-button#full-log(ng-click="vm.onFullLogClick({$data: item.sortedHistory, $event: $event})") See Full log
+              md-button.full-log(
+                ng-if="item.fullLogShow"
+                ng-click="vm.onFullLogClick({$data: item.sortedHistory, $event: $event})") See Full log
 
-        .open-btn-container
+        .open-btn-container.bold-font
           md-button.view(ng-click="vm.onViewClick({$data: item.id})")
             | open
       .expand-btn-container(ng-if="!vm.toUser")

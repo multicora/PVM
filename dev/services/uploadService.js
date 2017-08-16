@@ -4,9 +4,26 @@
 
   app.service('uploadService', service);
 
-  service.$inject = ['$http'];
-  function service($http) {
+  service.$inject = [
+    '$http',
+    'tools'
+  ];
+  function service(
+    $http,
+    tools
+  ) {
+    this.sendVideo = function(name, file) {
+      name = name || 'no name';
+      var data = name + '.' + tools.getExtension(file.name);
+
+      return send('/api/video', file, data);
+    };
+
     this.sendFile = function(url, file, data) {
+      return send(url, file, data);
+    };
+
+    function send(url, file, data) {
       var formData = new FormData();
       formData.append('file', file);
       formData.append('data', data);
@@ -22,9 +39,9 @@
             'Keep-Alive': 'timeout=2000, max=10000'
           },
           transformRequest: angular.identity,
-          responseType: 'arraybuffer'
+          responseType: 'json'
         }
       );
-    };
+    }
   }
 })(angular);

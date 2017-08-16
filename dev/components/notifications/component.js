@@ -39,9 +39,7 @@
         vm.notifications = res.data;
 
         vm.notifications.map( function (notification) {
-          notification = notificationsService.messageGenerator(notification);
-
-          return notification;
+          return notificationsService.messageGenerator(notification);
         });
 
         vm.notifications.sort( function(a, b) {
