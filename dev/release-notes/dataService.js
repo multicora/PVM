@@ -9,7 +9,21 @@
     this.get = function () {
       var data = [
           {
-            date: '31/06/2017',
+            date: '14/08/2017',
+            version: '0.0.4',
+            notes: [
+              'Sound alerts when new message arrives',
+              'Conversation history log',
+              'New conversations list design',
+              'User can send the message right from the video recording screen',
+              'Newly recorded videos now appear on the top of the video library',
+              'iPhone 6 Plus app view issue',
+              'Unread messages now have blue bubble and much more bold fonts',
+              'Bug fixes'
+            ]
+          },
+          {
+            date: '1/08/2017',
             version: '0.0.3',
             notes: [
               'Implemented beta-users invitaion system',
@@ -23,7 +37,7 @@
             ]
           },
           {
-            date: '17/06/2017',
+            date: '18/07/2017',
             version: '0.0.2',
             notes: [
               'Redesigned Dashboard interface',
@@ -40,7 +54,7 @@
             ]
           },
           {
-            date: '03/06/2017',
+            date: '14/07/2017',
             version: '0.0.1',
             notes: [
               'Initial countable release',
