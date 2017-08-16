@@ -23,6 +23,9 @@
       event.stopPropagation();
       vm.list.forEach(function(conversation) {
         conversation.expandClass = '';
+        conversation.fullLogShow = false;
+        conversation.timelineShow = false;
+        conversation.explainShow = false;
       });
       item.expandClass = 'expanded';
       item.fullLogShow = true;
