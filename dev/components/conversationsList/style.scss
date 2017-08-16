@@ -94,10 +94,6 @@
     }
 
     .progress-bar {
-      .timeline-title {
-        display: none;
-      }
-
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -115,18 +111,14 @@
       .icon {
         padding: 0 4px;
         position: relative;
-        .bubble-green {
-          display: none;
-        }
       }
 
       .green {
-        
         display: flex;
         align-content: center;
         color: rgba(0,0,0,.24);
+
         .explain {
-          display: none;
           font-size: 12px;
           line-height: 24px;
           margin-left: 8px;
@@ -179,7 +171,6 @@
           height: 4px;
           margin: 0 0 2px 8px;
           border-radius: 50%;
-          display: block;
         }
       }
 
@@ -279,7 +270,6 @@
   }
 
   .full-log {
-    display: none;
     align-self: flex-start;
     margin: 0 0 0 28px;
     font-weight: 600;
@@ -293,24 +283,6 @@
   .pr-bar-container.expanded {
     .progress-bar {
       flex-direction: column;
-
-      .timeline-title {
-        display: block;
-      }
-
-      .green {
-        .explain {
-        display: block;
-        }
-      }
-
-      .done-all {
-        display: none;
-      }
-    }
-    
-    .full-log {
-      display: block;
     }
   }
 
