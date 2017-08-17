@@ -25,6 +25,8 @@
       .default-logo,
       .logo-user {
         display: inline-block;
+        outline: none;
+        cursor: pointer;
       }
 
       .default-logo {

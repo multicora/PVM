@@ -3,7 +3,9 @@
     .logoContainer
       .logo
         //- DEFAULT LOGO
-        .default-logo(ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === 'undefined'")
+        .default-logo(
+          ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === 'undefined'"
+          ng-click="redirect('')")
           span.logoText Powered by
           img(src='/files/images/logo_bizkonect.svg'
             alt='logo')
