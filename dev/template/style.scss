@@ -252,3 +252,35 @@
     max-width: 920px;
   }
 }
+
+i.fa {
+  font-size: 20px;
+}
+
+.twitter {
+  color: #0084b4;
+  border: 1px solid #0084b4;
+}
+.facebook {
+  color: #3b5998;
+  border: 1px solid #3b5998;
+}
+.linkedin {
+  color: #0077B5;
+  border: 1px solid #0077B5;
+}
+.copy-link {
+  color: #666;
+  border: 1px solid #666;
+}
+
+.popupTitle {}
+.popupSubTitle {
+  margin: 24px 0 16px 0;
+}
+
+.email-container {
+  margin: -24px 0 0 0;
+  padding: 0;
+
+}
