@@ -27,7 +27,7 @@
     FILE_IS_DOWNLOADED: 'Downloaded your attachment',
     VIDEO_IS_WATCHED: 'Watched the video',
     VIDEO_IS_WATCHING: 'Is watching your video',
-    CONVERSATION_IS_OPENED: 'Followed your email link',
+    CONVERSATION_IS_VIEWED: 'Followed your email link',
     NEW_MESSAGE: 'Message Sent!'
   };
 

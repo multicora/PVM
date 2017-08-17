@@ -18,4 +18,4 @@
             aria-label="close"
             ng-click="vm.onClose(item.id, $event)")
             md-icon.material-icons close
-          .date {{item.localTime}} {{item.localDate}}
+          .date {{item.date | date:'d MMM'}} {{item.date | date:'h:mm:a'}}

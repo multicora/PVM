@@ -7,18 +7,28 @@
   }
 
   .conversation {
-    padding: 16px;
+    padding: 16px 16px 16px 16px;
     position: relative;
     outline: none;
     cursor: pointer;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     margin: 3px 0;
     border-radius: 4px;
     background-color: #fff;
 
+    .main-content {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
     .content {
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
     }
@@ -79,15 +89,11 @@
       }
     }
 
-    .bold {
-      font-family: 'Roboto Bold';      
-    }
-
     .progress-bar {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      margin: 0 0 0 8px;
+      margin: 12px 0 0 -2px;
 
       i {
         padding: 4px 4px 0 4px;
@@ -100,19 +106,27 @@
 
       .icon {
         padding: 0 4px;
-
-        .bubble-green {
-          display: none;
-        }
+        position: relative;
       }
 
-      .blue {
-        color: rgba(0,0,0,.54);
+      .green {
+        display: flex;
+        align-content: center;
+        color: rgba(0,0,0,.24);
+
+        .explain {
+          font-size: 12px;
+          line-height: 24px;
+          margin-left: 8px;
+        }
+
+
       }
 
       .fa {
-        padding: 5px 5px 0px 8px;
-        font-size: 18px;
+        padding: 4px 4px 5px 4px;
+        font-size: 16px;
+        margin-right: 2px;
       }
 
       .done-all {
@@ -153,24 +167,23 @@
           height: 4px;
           margin: 0 0 2px 8px;
           border-radius: 50%;
-          display: block;
         }
       }
 
       .done {
         // border-bottom: 1px solid #4CAF50;  will be implemented after all logicall wiil be done
-        color: #4CAF50;
+        color: rgba(0,0,0,.54);
       }
 
       @media(max-width: 440px) {
         margin-left: 0px;
 
         i {
-          font-size: 16px;
+          font-size: 20px;
         }
 
         .fa {
-          font-size: 16px;
+          font-size: 18px;
         }
 
         .done-all {
@@ -187,33 +200,103 @@
       }
     }
 
-    .btn-container {
+    .open-btn-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #709de4;
-      font-family: 'Roboto Bold';
-
-      @media(max-width: 910px) {
-        display: none;
-      }
+      margin: 0;
+      padding: 0;
 
       .view {
         height: 36px;
         min-width: 65px;
+        color: #709de4;
       }
     }
   }
 
   .conversation {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    transition: all 0.2s cubic-bezier(.25,.8,.25,1);
     z-index: 1;
   }
 
   .conversation:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    transition: .3s;
+    transition: .2s;
     z-index: 2;
+  }
+
+  .result {
+    border: 1px solid green;
+    background: green;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 2px;
+    left: 12px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+    text-align: center;
+    align-content: center;
+
+    .small-icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 10px;
+      font-size: 10px;
+      font-weight: 900;
+      color: #fff;
+      }
+
+      .times {
+      font-size: 10px;
+      font-weight: 900;
+      color: #fff;
+    }
+  }
+
+  .full-log {
+    align-self: flex-start;
+    margin: 0 0 0 28px;
+    font-weight: 600;
+    color: #709de4;
+  }
+
+  .timeline-title {
+    margin: 0;
+  }
+
+  .pr-bar-container.expanded {
+    .progress-bar {
+      flex-direction: column;
+    }
+  }
+
+  .expand-btn-container {
+    margin: 0 0 -8px 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    @media(min-width: 500px) {
+      margin-top: -32px;
+    }
+
+    .expand {
+      box-sizing: border-box;
+      border: 1px solid #eee;
+    }
+
+    .collapse {
+      transform: rotate(180deg);
+    }
   }
 }
