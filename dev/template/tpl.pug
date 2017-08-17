@@ -193,20 +193,24 @@
     close-popup="vm.closeSendPopup()")
     form.send-form({{action='', on='submit', }}='')
       p.popupTitle Send your message
-      p.popupSubtitle via social media
-      md-button.md-icon-button(
+      p.popupSubTitle via social media
+      .facebook.md-button.md-icon-button(
         aria-label="facebook"
         ng-click="vm.shareFacebook()")
         i.fa.fa-facebook
-      md-button.md-icon-button(
+      .linkedin.md-button.md-icon-button(
         aria-label="linkedin"
         ng-click="vm.shareLinkedin()")
         i.fa.fa-linkedin
-      md-button.md-icon-button(
+      .twitter.md-button.md-icon-button(
         aria-label="twitter"
         ng-click="vm.shareTwitter()")
         i.fa.fa-twitter
-      p.popupSubtitle via email
+      .copy-link.md-button.md-icon-button(
+        aria-label="copy-link"
+        ng-click="")
+        i.fa.fa-link
+      p.popupSubTitle or enter email
       md-input-container.email-container(md-no-float="true")
         input(
           type="email"
