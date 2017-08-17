@@ -22,7 +22,8 @@
     "angular-charts": "^0.2.7",
     "angular-mocks": "^1.6.4",
     "ng-rollbar": "^1.9.2",
-    "ngstorage": "^0.3.11"
+    "ngstorage": "^0.3.11",
+    "ngclipboard": "^1.1.1"
   },
   "overrides": {
     "components-font-awesome": {
