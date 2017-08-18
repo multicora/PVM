@@ -7,7 +7,9 @@
   "scripts": {
     "bower": "bower i --allow-root",
     "precommit": "gulp belint && gulp felint && gulp testOnce",
-    "start": "gulp dev"
+    "start": "gulp dev",
+    "test": "gulp testOnce",
+    "server": "gulp backend"
   },
   "repository": {
     "type": "git",
