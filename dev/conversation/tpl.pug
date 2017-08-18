@@ -24,17 +24,16 @@
             img(src='/files/images/email.png', alt='email')
             span.ellipsis {{vm.conversation.authorEmail}}
   header.default-header(ng-if="!vm.showUserHeader")
-    button.btn.mdl-button.mdl-js-button.mdl-button--raised.back(ng-click="vm.back($event)")
-      |Back
+    md-button.md-primary.md-icon-button.md-ink-ripple.back(ng-click="vm.back($event)")
+      i.material-icons arrow_back
     p.title(ng-if="!vm.conversation.email || vm.conversation.email === 'null' || vm.conversation.email === 'undefined'") Public conversation
-    p.title(ng-if="vm.conversation.email && vm.conversation.email != 'null' && vm.conversation.email != 'undefined'") Conversation with 
+    p.title(ng-if="vm.conversation.email && vm.conversation.email != 'null' && vm.conversation.email != 'undefined'") to:&nbsp
       span.email {{vm.conversation.email}}
   .content
     //- TITLE
     .title-container
       p.title
         span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
-
     .video
       .videoHeader.showHeader(ng-class="vm.headerClass")
         .photo(
@@ -69,7 +68,6 @@
                   p.file-name.ellipsis {{item.name}}
 
         chat-list(list="vm.chatList")
-
       chat-reply-box(
         message="vm.savedMessage"
         send-message="vm.sendMessage($data)")

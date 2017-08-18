@@ -15,16 +15,14 @@
     '$mdSidenav',
     '$mdToast',
     'storage',
-    'profileService',
-    'notificationsService'
+    'profileService'
   ];
   function ctrl(
     $location,
     $mdSidenav,
     $mdToast,
     storage,
-    profileService,
-    notificationsService
+    profileService
   ) {
     var vm = this;
     var tokenName = 'x-biz-token';
@@ -32,7 +30,6 @@
     vm.user = null;
     vm.unreadedMessage = null;
 
-    getNotifications();
 
     vm.isAuthenticated = !!storage.get(tokenName);
     getProfile();
@@ -49,16 +46,6 @@
       $mdSidenav('left').toggle();
     };
 
-    vm.openConversation = function(conversationId, notificationId) {
-      markAsRead(notificationId);
-      $location.path('conversation/' + conversationId);
-    };
-
-    vm.onClose = function(id) {
-      event.stopPropagation();
-      markAsRead(id);
-    };
-
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
@@ -66,34 +53,5 @@
         vm.user = null;
       });
     };
-
-    function getNotifications () {
-      notificationsService.getNotifications().then( function(res) {
-        vm.notifications = res.data;
-
-        vm.notifications.map( function (notification) {
-          notification = notificationsService.messageGenerator(notification);
-          notification.date = new Date(notification.date).toLocaleTimeString();
-          return notification;
-        });
-
-        vm.notifications.sort( function(a, b) {
-          return a.date < b.date ? 1 : -1;
-        });
-      }).catch(function (err) {
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(err.data.error)
-            .position('bottom center')
-            .hideDelay(5000)
-        );
-      });
-    }
-
-    function markAsRead (id) {
-      notificationsService.markAsRead(id).then( function () {
-        getNotifications();
-      });
-    }
   }
 })(angular);

@@ -22,9 +22,11 @@
           md-selected="vm.selectedIndex")
           conversation-list(
             list="vm.conversationsList"
+            events="vm.eventsList"
             on-indicator-click="vm.stopPropagation($event)"
             on-view-click="vm.viewConversation($data)"
-            show-indicators="vm.showConversationIndicators")
+            show-indicators="vm.showConversationIndicators"
+            on-full-log-click="vm.showFullLog($event, $data)")
           conversation-list(
             list="vm.conversationsToUserList"
             on-indicator-click="vm.stopPropagation($event)"
@@ -34,3 +36,26 @@
   feedback(
     ng-if="vm.showFeedbackPopup"
     close-feedback="vm.closeFeedback()")
+
+  //- Full log popup
+  popup.full-log-popup(
+      ng-if="vm.showFullLogPopup"
+      close-popup="vm.closeFullLogPopup()")
+    h5.title Conversation history
+    .content
+      .date-container(ng-repeat="(key, item) in vm.fullLogs")
+        .day
+          i.material-icons event
+          span {{ key }}
+
+        .log(ng-repeat="event in item")
+          .icon
+            i.material-icons(ng-if="event.type === 'NEW_MESSAGE'") chat
+            i.material-icons(ng-if="event.type === 'FILE_IS_DOWNLOADED'") attachment
+            i.material-icons(ng-if="event.type === 'VIDEO_IS_WATCHED'") remove_red_eye
+            i.material-icons(ng-if="event.type === 'VIDEO_IS_WATCHING'") pause_circle_outline
+            i.material-icons(ng-if="event.type === 'CONVERSATION_IS_VIEWED'") drafts
+          .date {{ event.date | date:'d MMM, h:mm:ss a:'}}
+          .message {{ event.message }}
+    .button-container
+      md-button.md-button(ng-click="vm.closeFullLogPopup()") Close

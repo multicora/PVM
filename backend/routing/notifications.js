@@ -32,7 +32,6 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         DAL.notifications.getByUser(request.auth.credentials.id).then(res => {
-
           reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));

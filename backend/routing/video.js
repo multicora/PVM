@@ -13,13 +13,13 @@ module.exports = function (server, DAL) {
    * @apiGroup Videos
    *
    *
-   * @apiSuccess {Object}   status           Status.
-   * @apiSuccess {String}   status.status    Status.
+   * @apiSuccess {Object}   data       video data.
+   * @apiSuccess {String}   data.id    Insert id.
    *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
    *     {
-   *       "status": "success"
+   *       id: 1
    *     }
    */
   server.route({
@@ -47,8 +47,8 @@ module.exports = function (server, DAL) {
           }
 
           storageCtrl.addVideo(request.payload.file._data, name,
-              user.id, user.firstName + user.secondName).then( () => {
-            reply({'status': 'success'});
+              user.id, user.firstName + user.secondName).then( res => {
+            reply({id: res.insertId});
           }).catch( err => {
             console.error(err);
             reply(err);
@@ -179,7 +179,7 @@ module.exports = function (server, DAL) {
     config: {
       auth: 'simple',
       handler: function (request, reply) {
-        DAL.videos.delete(request.payload).then(() => {
+        DAL.videos.markAsDeleted(request.payload).then(() => {
           reply({'status': 'success'});
         }, err => {
           reply(Boom.badImplementation(err, err));

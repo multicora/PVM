@@ -31,11 +31,15 @@
       border: 2px solid transparent;
       margin-left: 10px;
       border-radius: 50%;
+      font-size: 14px;
+      font-weight: 600;
     }
 
     .unreaded-message {
-      border-color: #757575;
-      color: #757575;
+      background: #ff4081;
+      // border-color: #ff4081;
+      // commented Roman's original CSS
+      color: #fff;
       transition: .3s;
     }
   }
@@ -53,7 +57,8 @@
     transition: .3s;
 
     .unreaded-message {
-      border-color: #fff;
+      // border-color: #fff;
+      // commented Roman's original CSS
       color: #fff;
       transition: .3s;
     }
@@ -65,7 +70,8 @@
     color: #fff;
 
     .unreaded-message {
-      border-color: #fff;
+      // border-color: #fff;
+      // commented Roman's original CSS
       color: #fff;
     }
   }
@@ -88,6 +94,7 @@
   bottom: 30px;
   left: 20px;
   font-family: 'Roboto Bold';
+  text-decoration: none;
 
   @media (max-width: 910px) {
     bottom: 10px;

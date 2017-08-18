@@ -1,0 +1,73 @@
+.full-log-popup {
+  .popup {
+    background-color:  #fff;
+    border-radius: 2px;
+    max-width: 600px;
+    width: 100%;
+    padding: 16px 16px 24px 16px;
+    outline: none;
+    box-sizing: border-box;
+    color: rgba(0,0,0,.87);
+
+    .title {
+      color: #709de4;
+    }
+
+    @media (min-width: 330px) {
+      .log {
+        padding-left: 16px;
+      }
+    }
+
+    .content {
+      max-height: 500px;
+      overflow-y: scroll;
+
+      @media (max-width: 767px) {
+        max-height: 320px;
+      }
+    }
+  }
+
+  .day {
+    margin: 0 0 16px 0;
+    display: flex;
+    justify-content: flex-start;
+    color: #709de4;
+    align-items: center;
+    background: #fafaff;
+    border-radius: 4px;
+
+    i {
+      margin: 0 4px 0 0;
+    }
+  }
+
+  .log {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .icon {
+      color: rgba(0,0,0,.54);
+    }
+
+    .date {
+      margin: 0 4px 0 4px;
+      font-size: 10px;
+      color: rgba(0,0,0,.54);
+    }
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    color: #709de4;
+
+    button {
+      font-weight: 600;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('promise');
+const sqlBuilder = require('../services/sqlBuilder.js');
 
 module.exports = function(connection) {
   return {
@@ -12,22 +13,25 @@ module.exports = function(connection) {
             'VALUES (NULL, "' + name + '", NULL, "' + externalName + '", "' + id + '", "' + userId + '");'
         ].join('');
 
-        connection.query(request, function (err) {
-          err ? reject(err) : resolve();
+        connection.query(request, function (err, response) {
+          err ? reject(err) : resolve(response);
         });
       });
     },
-    get: function (id) {
-      return new Promise(function (resolve, reject) {
-        let request = [
-          'SELECT * FROM `videos` WHERE v_id = ' + id
-        ].join('');
 
-        connection.query(request, function (err, response) {
+    get: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.select()
+          .from('videos')
+          .where(`v_id = "${id}"`)
+          .toString();
+
+        connection.query(request, (err, response) => {
           (err || !response.length) ? reject(err) : resolve(response[0]);
         });
       });
     },
+
     delete: (id) => {
       return new Promise((resolve, reject) => {
         let request = [
@@ -41,15 +45,35 @@ module.exports = function(connection) {
         });
       });
     },
+
+    markAsDeleted: (id) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('videos')
+          .set('deleted', true)
+          .where('v_id = "' + id + '"')
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
     getByAuthor: function (author) {
       return new Promise(function (resolve, reject) {
-        let request = 'SELECT * FROM `videos` WHERE author = ' + author + ';';
+        const request = sqlBuilder.select()
+          .from('videos')
+          .where(`author = ${ author }`)
+          .where('deleted = false')
+          .toString();
 
         connection.query(request, function (err, response) {
           err ? reject(err) : resolve(response);
         });
       });
     },
+
     getAll: function () {
       return new Promise(function (resolve, reject) {
         let request = 'SELECT * FROM `videos`;';
