@@ -38,4 +38,5 @@ module.exports.init = function (server, DAL) {
   require('./routing/files.js')(server, DAL);
   require('./routing/notifications.js')(server, DAL);
   require('./routing/events.js')(server, DAL);
+  require('./routing/settings.js')(server, DAL);
 };

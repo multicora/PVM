@@ -1,6 +1,17 @@
 'use strict';
 
+const tableName = 'dbinfo';
+const sqlBuilder = require('../services/sqlBuilder.js');
+
 module.exports = function(connection) {
+  function query(request) {
+    return new Promise((resolve, reject) => {
+      connection.query(request, (err, response) => {
+        err ? reject(err) : resolve(response);
+      });
+    });
+  }
+
   const settings = {
     create: (cb) => {
       let request1 = [
@@ -40,6 +51,16 @@ module.exports = function(connection) {
         ' value = "' + setting.value + '"' +
         ' WHERE name = "' + setting.name + '"';
       return connection.query(request, cb);
+    },
+    getUiSettings() {
+      const request = sqlBuilder.select()
+      .from(tableName)
+      .field('name')
+      .field('value')
+      .where('name IN ("timeToBeOnline")')
+      .toString();
+
+      return query(request);
     }
   };
 

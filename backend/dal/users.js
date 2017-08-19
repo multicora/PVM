@@ -384,6 +384,16 @@ module.exports = (connection) => {
       });
     },
 
+    updateLastActivity(id) {
+      const request = sqlBuilder.update()
+        .table('users')
+        .set('lastActivity', sqlBuilder.str('NOW()'))
+        .where(`id = "${id}"`)
+        .toString();
+
+      return query(request);
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [
@@ -494,16 +504,6 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    },
-
-    updateLastActivity(id) {
-      const request = sqlBuilder.update()
-        .table('users')
-        .set('lastActivity', sqlBuilder.str('NOW()'))
-        .where(`id = "${id}"`)
-        .toString();
-
-      return query(request);
     },
   };
 };
