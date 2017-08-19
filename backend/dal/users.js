@@ -14,7 +14,6 @@ function parse(data) {
   return data;
 }
 
-
 module.exports = (connection) => {
   function query(request) {
     return new Promise((resolve, reject) => {
@@ -392,6 +391,17 @@ module.exports = (connection) => {
         .toString();
 
       return query(request);
+    },
+
+    getOnline(timeToBeOnline) {
+      const request = sqlBuilder.select()
+        .from('users')
+        .where(`lastActivity > (NOW() - (${timeToBeOnline} * 60))`)
+        .toString();
+
+      return query(request).then(
+        (res) => res.map(parse)
+      );
     },
 
     // For migrations

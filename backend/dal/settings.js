@@ -42,7 +42,11 @@ module.exports = function(connection) {
         'WHERE name = '
       ].join('') + '"' + searchName + '"';
 
-      return connection.query(request, cb);
+      if (!cb) {
+        return query(request);
+      } else {
+        return connection.query(request, cb);
+      }
     },
     update: (setting, cb) => {
       let request =
