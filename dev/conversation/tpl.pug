@@ -4,7 +4,7 @@
       .logo
         //- DEFAULT LOGO
         .default-logo(
-          ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === 'undefined'"
+          ng-if="!vm.conversation.logo || vm.conversation.logo === null || vm.conversation.logo === undefined"
           ng-click="redirect('')")
           span.logoText Powered by
           img(src='/files/images/logo_bizkonect.svg'
@@ -12,7 +12,7 @@
 
         //- USER LOGO
         .logo-user(
-          ng-if="vm.conversation.logo && vm.conversation.logo != null && vm.conversation.logo != 'undefined'"
+          ng-if="vm.conversation.logo && vm.conversation.logo != null && vm.conversation.logo != undefined"
           ng-style="{backgroundImage: 'url('+ vm.conversation.logo + ')' }")
 
     .socialContainer
@@ -28,14 +28,14 @@
   header.default-header(ng-if="!vm.showUserHeader")
     md-button.md-primary.md-icon-button.md-ink-ripple.back(ng-click="vm.back($event)")
       i.material-icons arrow_back
-    p.title(ng-if="!vm.conversation.email || vm.conversation.email === 'null' || vm.conversation.email === 'undefined'") Public conversation
-    p.title(ng-if="vm.conversation.email && vm.conversation.email != 'null' && vm.conversation.email != 'undefined'") to:&nbsp
+    p.title(ng-if="!vm.conversation.email || vm.conversation.email === null || vm.conversation.email === undefined") Public conversation
+    p.title(ng-if="vm.conversation.email && vm.conversation.email != null && vm.conversation.email != undefined") to:&nbsp
       span.email {{vm.conversation.email}}
   .content
     //- TITLE
     .title-container
       p.title
-        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != 'undefined'") {{vm.conversation.title}}
+        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != undefined") {{vm.conversation.title}}
     .video
       .videoHeader.showHeader(ng-class="vm.headerClass")
         .photo(
