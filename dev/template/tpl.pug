@@ -208,8 +208,13 @@
         i.fa.fa-twitter
       .copy-link.md-button.md-icon-button(
         aria-label="copy-link"
-        ng-click="")
+        ng-click="vm.onCopyLinkClick()")
         i.fa.fa-link
+      p.link(
+        ng-bind="vm.copyLink"
+        ngclipboard
+        ngclipboard-success="vm.onSuccessCopyLink()"
+        data-clipboard-text="vm.copyLink")
       p.popupSubTitle or enter email
       md-input-container.email-container(md-no-float="true")
         input(
