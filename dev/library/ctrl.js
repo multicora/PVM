@@ -69,6 +69,7 @@
     //Preview popup
     vm.showPreview = function (video) {
       var ext = video.attributes.external_file_name.split('.').pop();
+      ext = (ext === 'wmv') ? 'webm' : ext;
 
       vm.previewVideo = video;
       vm.showPreviewPopup = true;
