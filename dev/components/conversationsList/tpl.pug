@@ -23,8 +23,9 @@
           .pr-bar-container(ng-class="item.expandClass")
             .progress-bar(ng-if="!vm.toUser")
 
-              //- conversation sent
               p.timeline-title(ng-if="item.timelineShow") Events timeline:
+
+              //- conversation sent
               .icon.green.done
                 .icon-container
                   i.material-icons send
@@ -71,14 +72,17 @@
                       .small-icon done
                 span.explain(ng-if="item.explainShow") {{ vm.events[item.id].VIDEO_IS_WATCHED[0].date | date:'h:mm a' }}: User watched your video
 
-              //- //- 
-              //- .icon.green.done
-              //-   .icon-container
-              //-     i.material-icons pause_circle_outline
-              //-     .result
-              //-       i.material-icons
-              //-         .small-icon done
-              //-   span.explain(ng-if="item.explainShow") Aug 2, 3:37pm: Roman looked through your video
+              //- conversation video paused
+              .icon.green(ng-if="!vm.events[item.id].VIDEO_PAUSED[0] && !vm.events[item.id].VIDEO_IS_WATCHED[0]")
+                .icon-container
+                  i.material-icons pause_circle_outline
+              .icon.green.done(ng-if="vm.events[item.id].VIDEO_PAUSED[0] && !vm.events[item.id].VIDEO_IS_WATCHED[0]")
+                .icon-container
+                  i.material-icons pause_circle_outline
+                  .result
+                    i.material-icons
+                      .small-icon done
+                span.explain {{ vm.events[item.id].VIDEO_PAUSED[0].date | date:'h:mm a' }}: User stoped your video at {{item.VIDEO_PAUSED.metadata.time | number:1 }} second
 
               //- conversation file was downloaded
               .icon.green(ng-if="!vm.events[item.id].FILE_IS_DOWNLOADED")

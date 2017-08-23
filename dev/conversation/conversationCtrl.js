@@ -12,6 +12,7 @@
     '$scope',
     'conversationsService',
     'profileService',
+    'libraryService',
     'chat',
     'pubSub',
     'storage',
@@ -25,6 +26,7 @@
     $scope,
     conversationsService,
     profileService,
+    libraryService,
     chat,
     pubSub,
     storage,
@@ -43,6 +45,7 @@
     vm.showUserFooter = true;
     vm.messageClassName = 'income';
     vm.showLoginPopup = false;
+    vm.videoWatched = false;
 
     getProfile();
     getConversation();
@@ -73,6 +76,15 @@
           videoId: vm.conversation.videoId
         });
       });
+      if (!vm.videoWatched) {
+        data.player.on('pause', function() {
+          conversationsService.videoPaused({
+            conversationId: vm.conversation.id,
+            videoId: vm.conversation.videoId,
+            time: data.player.currentTime()
+          });
+        });
+      }
     });
 
     vm.back = function (event) {
@@ -122,6 +134,16 @@
         };
 
       }).then(function() {
+        return libraryService.getEvents([vm.conversation.id]);
+      }).then(function(res) {
+
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].type === 'VIDEO_IS_WATCHED') {
+            vm.videoWatched = true;
+            break;
+          }
+        }
+
         return conversationsService.getChat($routeParams.id);
       }).then(function(res) {
         vm.chatList = res.data;

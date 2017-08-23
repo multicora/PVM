@@ -6,6 +6,7 @@ describe('conversationCtrl', function() {
   var $rootScope;
   var $location;
   var conversationsService;
+  var libraryService;
   var chat;
   var profileService;
   var event;
@@ -35,6 +36,11 @@ describe('conversationCtrl', function() {
       fileDownloaded: jasmine.createSpy('createPublic').and.callFake(function () {
         return $q.resolve({});
       }),
+    };
+    libraryService = {
+      getEvents: jasmine.createSpy('getEvents').and.callFake(function () {
+        return $q.resolve({ data: [{type: 'VIDEO_IS_WATCHED'}] });
+      })
     };
     profileService = {
       getProfile: jasmine.createSpy('getProfile').and.callFake(function () {
@@ -67,6 +73,7 @@ describe('conversationCtrl', function() {
       utils: utils,
       conversationsService: conversationsService,
       profileService: profileService,
+      libraryService: libraryService
     });
 
     scope.$apply();

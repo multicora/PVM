@@ -9,7 +9,8 @@ module.exports = function(connection) {
       'VIDEO_IS_WATCHED': 'VIDEO_IS_WATCHED',
       'VIDEO_IS_WATCHING': 'VIDEO_IS_WATCHING',
       'FILE_IS_DOWNLOADED': 'FILE_IS_DOWNLOADED',
-      'NEW_MESSAGE': 'NEW_MESSAGE'
+      'NEW_MESSAGE': 'NEW_MESSAGE',
+      'VIDEO_PAUSED': 'VIDEO_PAUSED'
     },
 
     get: (type, userId, conversationId) => {
@@ -17,6 +18,20 @@ module.exports = function(connection) {
         const request = sqlBuilder.select()
           .from('events')
           .field('metadata')
+          .where(`type = "${type}" AND userId = ${userId} AND conversationId = ${conversationId}`)
+          .toString();
+
+        connection.query(request, (err, response) => {
+          err ? reject(err) : resolve(response);
+        });
+      });
+    },
+
+    update: (type, userId, conversationId, metadata) => {
+      return new Promise((resolve, reject) => {
+        const request = sqlBuilder.update()
+          .table('events')
+          .set('metadata', JSON.stringify(metadata))
           .where(`type = "${type}" AND userId = ${userId} AND conversationId = ${conversationId}`)
           .toString();
 
