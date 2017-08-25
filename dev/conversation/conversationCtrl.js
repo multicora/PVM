@@ -35,8 +35,8 @@
     var vm = this;
     var sendObj;
     var usersPhotos = {};
-    var chatInstance;
     var audio = utils.createAudio('/files/audio/filling-your-inbox.mp3');
+    var chatInstance;
     vm.sendMessage = null;
     vm.conversation = null;
     vm.media = null;
