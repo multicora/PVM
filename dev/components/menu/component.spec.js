@@ -27,15 +27,15 @@ describe('appMenu component', function() {
       get: jasmine.createSpy('get')
     };
     notificationsService = {
-      getUnreadedMessage: jasmine.createSpy('getUnreadedMessage')
+      getUnreadMessage: jasmine.createSpy('getUnreadMessage')
     };
   }));
 
   describe('initial phase', function() {
-    it('should get unreadedMessage', function() {
+    it('should get unreadMessage', function() {
       var scope = rootScope.$new();
 
-      notificationsService.getUnreadedMessage.and.callFake(function () {
+      notificationsService.getUnreadMessage.and.callFake(function () {
         return q.resolve({
           data: [{}]
         });
@@ -46,7 +46,7 @@ describe('appMenu component', function() {
       }, bindings);
 
       scope.$apply();
-      expect(ctrl.unreadedMessage).toBeTruthy();
+      expect(ctrl.unreadMessage).toBeTruthy();
     });
   });
 
