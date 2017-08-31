@@ -9,6 +9,18 @@
     this.get = function () {
       var data = [
           {
+            date: '28/08/2017',
+            version: '0.0.5',
+            notes: [
+              'User can see the exact time that prospect spent vatching the video',
+              'Details about video',
+              'New sending form design',
+              '"Share by link" feature',
+              'Improved chat experience',
+              'Bug fixes'
+            ]
+          },
+          {
             date: '14/08/2017',
             version: '0.0.4',
             notes: [
@@ -23,7 +35,7 @@
             ]
           },
           {
-            date: '1/08/2017',
+            date: '31/07/2017',
             version: '0.0.3',
             notes: [
               'Implemented beta-users invitaion system',
@@ -37,7 +49,7 @@
             ]
           },
           {
-            date: '18/07/2017',
+            date: '17/07/2017',
             version: '0.0.2',
             notes: [
               'Redesigned Dashboard interface',
@@ -54,7 +66,7 @@
             ]
           },
           {
-            date: '14/07/2017',
+            date: '3/07/2017',
             version: '0.0.1',
             notes: [
               'Initial countable release',
