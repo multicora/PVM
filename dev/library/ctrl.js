@@ -10,7 +10,8 @@
     '$mdDialog',
     'libraryService',
     'conversationsService',
-    'filesService'
+    'filesService',
+    'utils'
   ];
   function ctrl(
     $location,
@@ -18,7 +19,8 @@
     $mdDialog,
     libraryService,
     conversationsService,
-    filesService
+    filesService,
+    utils
   ) {
     var vm = this;
     var confirmDeletePopup = $mdDialog.confirm({
@@ -68,7 +70,7 @@
 
     //Preview popup
     vm.showPreview = function (video) {
-      var ext = video.attributes.external_file_name.split('.').pop();
+      var ext = utils.checkExt(video.attributes.external_file_name);
 
       vm.previewVideo = video;
       vm.showPreviewPopup = true;
@@ -76,7 +78,7 @@
         vm.previewVideoUrl = {
           sources: [{
             src: res.data.attributes.url,
-            type: 'video/' + (ext || 'mp4')
+            type: 'video/' + ext
             // type: 'video/mp4'
           }]
         };
