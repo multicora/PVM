@@ -23,11 +23,11 @@
     var vm = this;
     var tokenName = 'x-biz-token';
 
-    vm.unreadedMessage = null;
+    vm.unreadMessage = null;
     vm.url = $location.url();
 
-    notificationsService.getUnreadedMessage().then(function(res) {
-      vm.unreadedMessage = res.data.length;
+    notificationsService.getUnreadMessage().then(function(res) {
+      vm.unreadMessage = res.data.length;
     });
 
     vm.redirect = function(url, urlParam) {

@@ -9,7 +9,7 @@
     ng-class="{active: vm.url === '/conversations'}")
     i.material-icons message
     span Conversations
-    .unreaded-message(ng-if="vm.unreadMessage") {{ vm.unreadedMessage }}
+    .unread-message(ng-if="vm.unreadMessage") {{ vm.unreadMessage }}
   .menu-button(
     ng-click="vm.redirect('/library')"
     ng-class="{active: vm.url === '/library'}")
