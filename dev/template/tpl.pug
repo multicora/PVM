@@ -210,7 +210,8 @@
         aria-label="copy-link"
         ng-click="vm.onCopyLinkClick()")
         i.fa.fa-link
-      p.link(
+      .link(
+        ng-if="vm.copyLink"
         ng-bind="vm.copyLink"
         ngclipboard
         ngclipboard-success="vm.onSuccessCopyLink()"
