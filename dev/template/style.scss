@@ -209,8 +209,23 @@
       }
     }
   }
+  .link {
+    overflow-x: hidden;
+    margin: 16px auto;
+    padding: 8px 16px;
+    width: calc(100% - 32px);
+    background: #eaffec;
+    border-radius: 4px;
+    color: #33b433;
+    font-size: 12px;
+    border: 1px solid #eee;
+    .link:active {
+      background: #333;
+      color: white;
+      transition: .1s;
+    }
+  }
 }
-
 .select-video-container,
 .select-file-container {
   .popup {
@@ -273,32 +288,7 @@ i.fa {
   color: #666;
   border: 1px solid #666;
 }
-.link {
-  inner-glow: 1px;
-  overflow-x: hidden;
-  margin: 16px auto;
-  padding: 8px 16px 8px 16px;
-  width: calc(100% - 32px);
-  background: #eaffec;
-  border-radius: 4px;
-  color: #33b433;
-  font-size: 12px;
-  border: 1px solid #eee;
-  animation: height .3s;
-  @keyframes height {
-    from{
-      height: 0px;
-    }
-    to {
-      height: auto;
-    }
-  }
-}
-.link:active {
-  background: #333;
-  color: white;
-  transition: .1s;
-}
+
 .popupTitle {}
 .popupSubTitle {
   margin: 24px 0 16px 0;
