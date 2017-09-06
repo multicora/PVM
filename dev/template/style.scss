@@ -209,8 +209,23 @@
       }
     }
   }
+  .link {
+    overflow-x: hidden;
+    margin: 16px auto;
+    padding: 8px 16px;
+    width: calc(100% - 32px);
+    background: #eaffec;
+    border-radius: 4px;
+    color: #33b433;
+    font-size: 12px;
+    border: 1px solid #eee;
+    .link:active {
+      background: #333;
+      color: white;
+      transition: .1s;
+    }
+  }
 }
-
 .select-video-container,
 .select-file-container {
   .popup {
