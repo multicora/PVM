@@ -210,12 +210,12 @@
         aria-label="copy-link"
         ng-click="vm.onCopyLinkClick()")
         i.fa.fa-link
-      .link(
+      .link#link(
         ng-if="vm.copyLink"
         ng-bind="vm.copyLink"
         ngclipboard
         ngclipboard-success="vm.onSuccessCopyLink()"
-        data-clipboard-text="vm.copyLink")
+        data-clipboard-target="#link")
       p.popupSubTitle or enter email
       md-input-container.email-container(md-no-float="true")
         input(
