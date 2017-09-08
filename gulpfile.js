@@ -22,28 +22,12 @@ var sourcemaps = require('gulp-sourcemaps');
 var nodemon = require('gulp-nodemon');
 var apidoc = require('gulp-api-doc');
 var install = require('gulp-install');
+var pm2 = require('pm2');
 
 var beConfig = require('./backend/config.js');
 
 var config = require('./gulp/config.js')();
 var path = config.path;
-// var config = {
-//   autoprefixer: {
-//     browsers: ['last 2 versions'],
-//     cascade: false
-//   },
-//   scssOrder: ['**/app.scss'],
-//   jsOrder: ['**/app.js', '**/appConfig.js']
-// };
-
-// var path = {};
-// path.dev = 'dev';
-// path.be = 'backend';
-// path.dest = 'backend/public';
-// path.pug = path.dev + '/**/*.pug';
-// path.css = path.dev + '/**/*.scss';
-// path.js = path.dev + '/**/!(*spec).js';
-// path.assets = path.dev + '/files/**/*';
 
 require('./gulp/tests.js')();
 require('./gulp/jslint.js')();
@@ -197,6 +181,52 @@ gulp.task('build', function() {
 gulp.task('dev', function() {
   return sequence(['clean'], ['belint'], buildTasks, ['backend', 'server'], ['watch'], 'openUrl', function() {
     return log(' -| Runned');
+  });
+});
+
+gulp.task('start', function() {
+  return sequence(buildTasks, function() {
+    log(' -| Connecting to the PM2');
+    return pm2.connect(function(err) {
+      log(' -| Fetching the list of process');
+
+      pm2.list(function(err, process_list) {
+        log(' -| Fetching the list of process done');
+        console.dir(process_list.map(function (item) {
+          return {
+            name: item.name,
+            pid: item.pid,
+            monit: item.monit,
+          };
+        }));
+        if (process_list.length) {
+          log(' -| Restarting the process');
+          pm2.restart('all', function(err, proc) {
+            if (err) {
+              log(' -| Process restarting error');
+              log(err);
+            } else {
+              log(' -| Process restarted');
+            }
+            // Disconnect to PM2
+            pm2.disconnect(function() { process.exit(0) });
+          });
+        } else {
+          log(' -| Starting the process');
+          // Start a script on the current folder
+          pm2.start('backend/index.js', { name: 'server' }, function(err, proc) {
+            if (err) {
+              log(' -| Process starting error');
+              log(err);
+            } else {
+              log(' -| Process started');
+            }
+            // Disconnect to PM2
+            pm2.disconnect(function() { process.exit(0) });
+          });
+        }
+      });
+    })
   });
 });
 
