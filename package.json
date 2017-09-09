@@ -4,11 +4,15 @@
   "description": "Personal video message",
   "private": true,
   "main": "backend/index.js",
+  "engines": {
+    "node": ">=6.11.0"
+  },
   "scripts": {
     "bower": "bower i --allow-root",
     "precommit": "gulp belint && gulp felint && gulp testOnce",
     "dev": "gulp dev",
-    "start": "gulp start",
+    "start": "node backend/index.js",
+    "start2": "gulp start",
     "test": "gulp testOnce",
     "server": "gulp backend"
   },
