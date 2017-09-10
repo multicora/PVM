@@ -61,7 +61,6 @@
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "main-bower-files": "^2.13.1",
-    "pm2": "^2.6.1",
     "pug": "^2.0.0-beta6"
   },
   "dependencies": {
