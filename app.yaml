@@ -1,2 +1,4 @@
 env: flex
 runtime: nodejs
+beta_settings:
+  cloud_sql_instances: bktest-175420:us-central1:bkbase
