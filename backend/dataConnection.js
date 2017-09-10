@@ -2,12 +2,15 @@
 
 const mysql = require('mysql');
 const config = require('./config.js');
-const connection = mysql.createConnection({
-  host: config.db.host,
-  user: config.db.user,
-  password: config.db.password,
-  database: config.db.dbName
-});
+const constants = require('./constants');
+
+const options = Object.assign({}, config.db);
+
+if (process.env.ENVIRONMENT === constants.ENVIRONMENTS.DEVELOPMENT) {
+  delete options.socketPath;
+}
+
+const connection = mysql.createConnection(options);
 const promise = new Promise(
   function(resolve, reject) {
 

@@ -10,11 +10,12 @@
   "scripts": {
     "bower": "bower i --allow-root",
     "precommit": "gulp belint && gulp felint && gulp testOnce",
-    "dev": "gulp dev",
+    "dev": "cross-env ENVIRONMENT=DEVELOPMENT gulp dev",
     "start": "node backend/index.js",
-    "start2": "gulp start",
     "test": "gulp testOnce",
-    "server": "gulp backend"
+    "server": "cross-env ENVIRONMENT=DEVELOPMENT gulp backend",
+    "sqlProxy": "cross-env GOOGLE_APPLICATION_CREDENTIALS=./gcp_service_account.json cloud_sql_proxy.exe -instances=\"bktest-175420:us-central1:bkbase\"=tcp:3306",
+    "deploy": "gcloud app deploy"
   },
   "repository": {
     "type": "git",
@@ -66,6 +67,7 @@
   "dependencies": {
     "backblaze-b2": "^1.0.2",
     "boom": "^4.2.0",
+    "cross-env": "^5.0.5",
     "ejs": "^2.5.6",
     "email-templates": "^2.5.4",
     "hapi": "^15.2.0",
