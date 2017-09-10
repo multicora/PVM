@@ -268,7 +268,7 @@ module.exports = function (server, DAL) {
    * @apiParam {String}   videoId                      video id.
    *
    * @apiName VideoWatched
-   * @apiGroup Templates
+   * @apiGroup Conversations
    *
    *
    * @apiSuccess {Object}   status           Status.
@@ -336,7 +336,7 @@ module.exports = function (server, DAL) {
    * @apiParam {String}   fileId                       file id.
    *
    * @apiName VideoWatched
-   * @apiGroup Templates
+   * @apiGroup Conversations
    *
    *
    * @apiSuccess {Object}   status           Status.
@@ -391,6 +391,77 @@ module.exports = function (server, DAL) {
               return DAL.events.add(DAL.events.types.FILE_IS_DOWNLOADED, user.id, conversation.id, {
                 'fileId': fileId
               });
+            }).then(() => {
+              return DAL.conversations.updateTime(conversation.id);
+            });
+          } else {
+            return Promise.resolve();
+          }
+        }).then(() => {
+          reply({'status': 'success'});
+        }, err => {
+          reply(Boom.badImplementation(err, err));
+        });
+      }
+    }
+  });
+
+  /**
+   * @api {post} /api/video-paused Request for conversation video paused add event.
+   *
+   * @apiParam {String}   conversationId               conversation id.
+   * @apiParam {String}   videoId                      video id.
+   * @apiParam {String}   time                         video stoped time.
+   *
+   * @apiName VideoPaused
+   * @apiGroup Conversations
+   *
+   *
+   * @apiSuccess {Object}   status           Status.
+   * @apiSuccess {String}   status.status    Status.
+   *
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "status": "success"
+   *     }
+   */
+
+  server.route({
+    method: 'POST',
+    path: '/api/video-paused',
+    config: {
+      handler: function (request, reply) {
+        let conversationId = request.payload.conversationId;
+        let videoId = request.payload.videoId;
+        let time = request.payload.time;
+        let token = usersCtrl.parseToken(request.headers.authorization);
+        let conversation;
+        let user;
+
+        DAL.conversations.getById(conversationId).then(res => {
+          conversation = res;
+          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
+        }).then(res => {
+          user = res.user;
+
+          if (res.result) {
+            return DAL.events.get(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id).then(res => {
+              let result = null;
+
+              if (res.length) {
+                result = DAL.events.update(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id, {
+                  'videoId': videoId,
+                  'time': time
+                });
+              } else {
+                result = DAL.events.add(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id, {
+                  'videoId': videoId,
+                  'time': time
+                });
+              }
+
+              return result;
             }).then(() => {
               return DAL.conversations.updateTime(conversation.id);
             });
@@ -688,6 +759,8 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         DAL.conversations.getByAuthor(request.auth.credentials.id).then(res => {
+          return conversationCtrl.getConversations(res);
+        }).then( res => {
           reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));
@@ -744,7 +817,9 @@ module.exports = function (server, DAL) {
             conversations[i].author = res[i].email;
           }
 
-          reply(conversations);
+          return conversationCtrl.getConversations(conversations);
+        }).then( res => {
+          reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));
         });

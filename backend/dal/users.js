@@ -4,7 +4,25 @@ const Promise = require('promise');
 const passwordHash = require('password-hash');
 const sqlBuilder = require('../services/sqlBuilder.js');
 
+function parse(data) {
+  delete data.confirmToken;
+  delete data.password;
+  delete data.permanent;
+  delete data.resetToken;
+  delete data.token;
+
+  return data;
+}
+
 module.exports = (connection) => {
+  function query(request) {
+    return new Promise((resolve, reject) => {
+      connection.query(request, (err, response) => {
+        err ? reject(err) : resolve(response);
+      });
+    });
+  }
+
   return {
     register: (email, password, company) => {
       return new Promise((resolve, reject) => {
@@ -44,7 +62,7 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          (err || !response.length) ? reject(err) : resolve(response[0]);
+          err ? reject(err) : resolve(response[0]);
         });
       });
     },
@@ -120,6 +138,7 @@ module.exports = (connection) => {
           .field('companyPosition')
           .field('photo')
           .field('confirmed')
+          .field('lastActivity')
           .toString();
 
         connection.query(request, (err, response) => {
@@ -166,7 +185,7 @@ module.exports = (connection) => {
           } else if (!response.length) {
             reject('Not found');
           } else {
-            resolve(response[0]);
+            resolve(parse(response[0]));
           }
         });
       });
@@ -364,6 +383,27 @@ module.exports = (connection) => {
       });
     },
 
+    updateLastActivity(id) {
+      const request = sqlBuilder.update()
+        .table('users')
+        .set('lastActivity', sqlBuilder.str('NOW()'))
+        .where(`id = "${id}"`)
+        .toString();
+
+      return query(request);
+    },
+
+    getOnline(timeToBeOnline) {
+      const request = sqlBuilder.select()
+        .from('users')
+        .where(`lastActivity > (NOW() - (${timeToBeOnline} * 60))`)
+        .toString();
+
+      return query(request).then(
+        (res) => res.map(parse)
+      );
+    },
+
     // For migrations
     createTable: (cb) => {
       let request = [
@@ -474,7 +514,6 @@ module.exports = (connection) => {
       ].join('');
 
       return connection.query(request, cb);
-    }
-
+    },
   };
 };

@@ -21,7 +21,7 @@
       vertical-align: middle;
     }
 
-    .unreaded-message {
+    .unread-message {
       display: inline-block;
       height: 20px;
       width: 20px;
@@ -31,11 +31,15 @@
       border: 2px solid transparent;
       margin-left: 10px;
       border-radius: 50%;
+      font-size: 14px;
+      font-weight: 600;
     }
 
-    .unreaded-message {
-      border-color: #757575;
-      color: #757575;
+    .unread-message {
+      background: #ff4081;
+      // border-color: #ff4081;
+      // commented Roman's original CSS
+      color: #fff;
       transition: .3s;
     }
   }
@@ -52,8 +56,9 @@
     color: #fff;
     transition: .3s;
 
-    .unreaded-message {
-      border-color: #fff;
+    .unread-message {
+      // border-color: #fff;
+      // commented Roman's original CSS
       color: #fff;
       transition: .3s;
     }
@@ -64,8 +69,9 @@
     background-color: rgba(93, 144, 226, 1);
     color: #fff;
 
-    .unreaded-message {
-      border-color: #fff;
+    .unread-message {
+      // border-color: #fff;
+      // commented Roman's original CSS
       color: #fff;
     }
   }
@@ -88,6 +94,7 @@
   bottom: 30px;
   left: 20px;
   font-family: 'Roboto Bold';
+  text-decoration: none;
 
   @media (max-width: 910px) {
     bottom: 10px;

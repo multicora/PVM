@@ -5,29 +5,7 @@ header.main-header
       ng-click="vm.openMenu()")
       i.material-icons.menu-icon menu
     img.logo.pointer(src='/files/images/logo_bizkonect.svg')
-    .notification-container
-      md-menu(
-        md-position-mode="target-right target"
-        ng-if="vm.notifications.length")
-        i.fa.fa-bell-o.notifications.mdl-badge.mdl-badge--overlap(
-          aria-hidden="true"
-          ng-click="$mdMenu.open()"
-          data-badge="{{vm.notifications.length}}")
-        md-menu-content.notification-menu-content
-          md-menu-item.notification-item(
-            ng-repeat="item in vm.notifications"
-            ng-click="vm.openConversation(item.conversationId, item.id)")
-            .colomn
-              .name.ellipsis
-                span(ng-if="item.metadata.firstName") {{item.metadata.firstName}}
-                span.second-name(ng-if="item.metadata.secondName") {{item.metadata.secondName}}
-              .text.ellipsis {{item.message}}
-            .rigth-colomn
-              md-button.md-icon-button.md-accent.button-close(
-                aria-label="close"
-                ng-click="vm.onClose(item.id, event)")
-                md-icon.material-icons close
-              .date {{item.date}}
+    notifications
   md-sidenav.md-sidenav-left.header-menu(
     md-component-id="left"
     md-whiteframe="4"

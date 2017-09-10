@@ -8,6 +8,7 @@
     'ngMaterial',
     '720kb.socialshare',
     'angularCharts',
-    'tandibar/ng-rollbar'
+    'tandibar/ng-rollbar',
+    'ngclipboard'
   ]);
 })(angular);

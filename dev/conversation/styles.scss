@@ -25,6 +25,8 @@
       .default-logo,
       .logo-user {
         display: inline-block;
+        outline: none;
+        cursor: pointer;
       }
 
       .default-logo {
@@ -147,6 +149,7 @@
 
     .back {
       margin-left: 20px;
+      color: #709de4;
     }
 
     .title {
@@ -159,7 +162,7 @@
       }
 
       @media (max-width: 430px) {
-        font-size: 10px;
+        font-size: 14px;
       }
     }
 

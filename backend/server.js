@@ -76,7 +76,7 @@ function startServer(tls) {
       _.bind(run, null, server)
     ).then(
       _.bind(showSuccessMessage, null, server)
-    );
+    ).then(() => registerRequestsInterseptor(server, DAL));
   }).catch(function (err) {
     logError(err);
   });
@@ -219,4 +219,13 @@ function registerExternalLogging(server, config) {
       console.error('Error reporting to rollbar, ignoring: ' + rollbarErr);
     }
   };
+}
+
+function registerRequestsInterseptor(server, DAL) {
+  return server.ext('onPreResponse', function (request, reply) {
+    if (request.auth.credentials) {
+      DAL.users.updateLastActivity(request.auth.credentials.id);
+    }
+    return reply.continue();
+  });
 }

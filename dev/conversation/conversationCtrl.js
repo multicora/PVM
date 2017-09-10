@@ -12,9 +12,11 @@
     '$scope',
     'conversationsService',
     'profileService',
+    'libraryService',
     'chat',
     'pubSub',
-    'storage'
+    'storage',
+    'utils'
   ];
   function ctrl(
     $routeParams,
@@ -24,15 +26,17 @@
     $scope,
     conversationsService,
     profileService,
+    libraryService,
     chat,
     pubSub,
-    storage
+    storage,
+    utils
   ) {
     var vm = this;
     var sendObj;
     var usersPhotos = {};
+    var audio = utils.createAudio('/files/audio/filling-your-inbox.mp3');
     var chatInstance;
-
     vm.sendMessage = null;
     vm.conversation = null;
     vm.media = null;
@@ -41,6 +45,7 @@
     vm.showUserFooter = true;
     vm.messageClassName = 'income';
     vm.showLoginPopup = false;
+    vm.videoWatched = false;
 
     getProfile();
     getConversation();
@@ -49,6 +54,7 @@
       data.className = 'income';
       data.photo = usersPhotos[data.authorId];
       vm.chatList.push(data);
+      audio.play();
       reloadTemplate();
       scrollBottom();
     });
@@ -70,6 +76,15 @@
           videoId: vm.conversation.videoId
         });
       });
+      if (!vm.videoWatched) {
+        data.player.on('pause', function() {
+          conversationsService.videoPaused({
+            conversationId: vm.conversation.id,
+            videoId: vm.conversation.videoId,
+            time: data.player.currentTime()
+          });
+        });
+      }
     });
 
     vm.back = function (event) {
@@ -119,6 +134,16 @@
         };
 
       }).then(function() {
+        return libraryService.getEvents([vm.conversation.id]);
+      }).then(function(res) {
+
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].type === 'VIDEO_IS_WATCHED') {
+            vm.videoWatched = true;
+            break;
+          }
+        }
+
         return conversationsService.getChat($routeParams.id);
       }).then(function(res) {
         vm.chatList = res.data;

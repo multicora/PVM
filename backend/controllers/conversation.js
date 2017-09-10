@@ -58,6 +58,64 @@ module.exports = function(DAL) {
         return conversation;
       });
     },
+    getConversations: conversations => {
+      return new Promise((resolve, reject) => {
+        let promises = [];
+
+        conversations.forEach( conversation => {
+          promises.push(DAL.chat.getByConversationId(conversation.id));
+        });
+
+        return Promise.all(promises).then( res => {
+          let chats = [];
+
+          res.map(function(chat) {
+            var lastChat = chat[0];
+            for (var i = 0; i < chat.length; i++) {
+              if (lastChat.date < chat[i].date) {
+                lastChat = chat[i];
+              }
+            }
+
+            chats.push(lastChat);
+          });
+
+          conversations.forEach(function(conversation) {
+            conversation.lastMessage = null;
+            conversation.lastMessageAuthor = null;
+
+            chats.forEach(function(chat) {
+              if (chat && chat.conversationId === conversation.id) {
+                conversation.lastMessage = chat.message;
+                conversation.lastMessageAuthor = chat.authorId;
+              }
+            });
+          });
+
+          let promisesArr = [];
+
+          conversations.forEach( conversation => {
+            if (conversation.lastMessageAuthor) {
+              promisesArr.push(DAL.users.getUserById(conversation.lastMessageAuthor));
+            }
+          });
+
+          return Promise.all(promisesArr);
+        }).then( res => {
+          conversations.forEach(function(conversation) {
+            res.forEach(function(user) {
+              if (user.id === conversation.lastMessageAuthor) {
+                conversation.lastMessageAuthor = user.firstName || null;
+              }
+            });
+          });
+
+          resolve(conversations);
+        }, err => {
+          reject(err);
+        });
+      });
+    },
     needToMarkPromise: function(token, author, email) {
       return new Promise((resolve) => {
         usersCtrl.getUserByToken(token).then(res => {

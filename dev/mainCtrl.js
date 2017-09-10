@@ -24,6 +24,10 @@
       }
     };
 
+    document.addEventListener('gesturestart', function (e) {
+      e.preventDefault();
+    });
+
     $rootScope.$on('$routeChangeStart', function (e, next) {
       ga.send('pageview', next.originalPath);
     });

@@ -45,6 +45,7 @@
     vm.videoId = null;
     vm.files = [];
     vm.user = null;
+    vm.copyLink = null;
 
     if ($routeParams.templateId) {
       vm.templateId = $routeParams.templateId;
@@ -254,6 +255,21 @@
 
     vm.deleteFile = function(index) {
       vm.files.splice(index, 1);
+    };
+
+    vm.onSuccessCopyLink = function() {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Link has been copied to clipboard.')
+          .position('bottom center')
+          .hideDelay(3000)
+      );
+    };
+
+    vm.onCopyLinkClick = function() {
+      createPublicConversation().then(function(res) {
+        vm.copyLink = res.data.link;
+      });
     };
 
     $scope.convertToBase64LogoTemplate = function() {

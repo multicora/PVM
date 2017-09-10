@@ -8,6 +8,9 @@ describe('dashboardCtrl', function() {
     getByAuthor: jasmine.createSpy('getByAuthor'),
     getChatForDashboard: jasmine.createSpy('getChatForDashboard'),
   };
+  var libraryService = {
+    getEvents: jasmine.createSpy('getEvents')
+  };
 
   beforeEach(module('app'));
   beforeEach(inject(function(_$controller_, _$rootScope_, _$q_){
@@ -23,9 +26,29 @@ describe('dashboardCtrl', function() {
 
       conversationsService.getByAuthor.and.callFake(function () {
         return $q.resolve({
-          data: []
+          data: [
+            {id: 1},
+            {id: 2}
+          ]
         });
       });
+
+      libraryService.getEvents.and.callFake(function () {
+        return $q.resolve({
+          data: [
+            {
+              type: 'CONVERSATION_IS_VIEWED'
+            },
+            {
+              type: 'VIDEO_IS_WATCHED'
+            },
+            {
+              type: 'FILE_IS_DOWNLOADED'
+            }
+          ]
+        });
+      });
+
       conversationsService.getChatForDashboard.and.callFake(function () {
         return $q.resolve({
           data: [{
@@ -41,6 +64,7 @@ describe('dashboardCtrl', function() {
       var ctrl = $controller('dashboardCtrl', {
         $scope: scope,
         conversationsService: conversationsService,
+        libraryService: libraryService
       });
 
       scope.$apply();

@@ -32,7 +32,6 @@ module.exports = function (server, DAL) {
       auth: 'simple',
       handler: function (request, reply) {
         DAL.notifications.getByUser(request.auth.credentials.id).then(res => {
-
           reply(res);
         }, err => {
           reply(Boom.badImplementation(err, err));
@@ -73,9 +72,9 @@ module.exports = function (server, DAL) {
   });
 
   /**
-   * @api {get} /api/unreaded-message  Request for get unreaded message
+   * @api {get} /api/unread-message  Request for get unread message
    *
-   * @apiName GetUnreadedMessage
+   * @apiName GetUnreadMessage
    * @apiGroup Notifications
    *
    *
@@ -100,7 +99,7 @@ module.exports = function (server, DAL) {
    */
   server.route({
     method: 'GET',
-    path: '/api/unreaded-message',
+    path: '/api/unread-message',
     config: {
       auth: 'simple',
       handler: function (request, reply) {

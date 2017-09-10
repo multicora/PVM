@@ -73,7 +73,7 @@ describe('authCtrl', function() {
     it('should be defined "errorMessage" and "successMessage" should be "null" if response have error', function() {
       var ctrl = $controller('authCtrl', dependency);
 
-      authService.reset.and.returnValue($q.resolve({
+      authService.reset.and.returnValue($q.reject({
         data: {
           error: 'error',
           message: 'message'

@@ -5,6 +5,9 @@ describe('appMenu component', function() {
   var bindings;
   var location;
   var storage;
+  var rootScope;
+  var notificationsService;
+  var q;
 
   beforeEach(module('app'));
   beforeEach(module(function ($provide) {
@@ -13,15 +16,39 @@ describe('appMenu component', function() {
       url: jasmine.createSpy('url')
     });
   }));
-  beforeEach(inject(function($componentController, $location) {
+  beforeEach(inject(function($componentController, $location, $rootScope, $q) {
     componentController = $componentController;
     location = $location;
+    rootScope = $rootScope;
+    q = $q;
     bindings = {};
     storage = {
       clear: jasmine.createSpy('clear'),
       get: jasmine.createSpy('get')
     };
+    notificationsService = {
+      getUnreadMessage: jasmine.createSpy('getUnreadMessage')
+    };
   }));
+
+  describe('initial phase', function() {
+    it('should get unreadMessage', function() {
+      var scope = rootScope.$new();
+
+      notificationsService.getUnreadMessage.and.callFake(function () {
+        return q.resolve({
+          data: [{}]
+        });
+      });
+
+      var ctrl = componentController('appMenu', {
+        notificationsService: notificationsService
+      }, bindings);
+
+      scope.$apply();
+      expect(ctrl.unreadMessage).toBeTruthy();
+    });
+  });
 
   describe('redirect', function() {
     it('should redirect to "url/urlParam" if "urlParam" is defined', function() {

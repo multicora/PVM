@@ -1,0 +1,12 @@
+.release-notes-page
+  .mdl-grid
+    h4.rn-heading
+      i.material-icons new_releases &nbsp
+      | Release notes
+    .mdl-grid.wrapper
+      .container(ng-repeat="release in vm.releases")
+        h6.rn-heading
+          i.material-icons build &nbsp
+          | {{release.date}} &nbsp Bizkonect App Version {{release.version}}
+        ul
+          li(ng-repeat="note in release.notes") {{note}}

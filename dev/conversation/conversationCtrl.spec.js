@@ -6,9 +6,11 @@ describe('conversationCtrl', function() {
   var $rootScope;
   var $location;
   var conversationsService;
+  var libraryService;
   var chat;
   var profileService;
   var event;
+  var utils;
 
   beforeEach(module('app'));
   beforeEach(inject(function(_$controller_, _$rootScope_, _$q_, _$location_){
@@ -35,6 +37,11 @@ describe('conversationCtrl', function() {
         return $q.resolve({});
       }),
     };
+    libraryService = {
+      getEvents: jasmine.createSpy('getEvents').and.callFake(function () {
+        return $q.resolve({ data: [{type: 'VIDEO_IS_WATCHED'}] });
+      })
+    };
     profileService = {
       getProfile: jasmine.createSpy('getProfile').and.callFake(function () {
         return $q.resolve({
@@ -47,10 +54,13 @@ describe('conversationCtrl', function() {
     event = {
       stopPropagation: jasmine.createSpy('stopPropagation')
     };
+    utils = {
+      createAudio: jasmine.createSpy('createAudio').and.returnValue(function(){})
+    };
     chat = {
       connect: jasmine.createSpy('getProfile').and.callFake(function () {
         return $q.resolve();
-      }),
+      })
     };
   }));
 
@@ -60,8 +70,10 @@ describe('conversationCtrl', function() {
     var ctrl = $controller('conversationCtrl', {
       $scope: scope,
       chat: chat,
+      utils: utils,
       conversationsService: conversationsService,
       profileService: profileService,
+      libraryService: libraryService
     });
 
     scope.$apply();
@@ -75,6 +87,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
@@ -91,6 +104,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
@@ -107,6 +121,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
@@ -123,6 +138,7 @@ describe('conversationCtrl', function() {
       var ctrl = $controller('conversationCtrl', {
         $scope: scope,
         chat: chat,
+        utils: utils,
         conversationsService: conversationsService,
         profileService: profileService
       });
