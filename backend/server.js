@@ -10,6 +10,7 @@ const fs = require('fs');
 // Internal
 const config = require('./config.js');
 const migrations = require('./migrations/migrations');
+const constants = require('./constants');
 
 function logError(error) {
   console.log(' ======================= uncaughtException:');
@@ -17,7 +18,15 @@ function logError(error) {
 }
 
 module.exports = function () {
-  getTls().then(
+  let promise = null;
+
+  if (process.env.ENVIRONMENT === constants.ENVIRONMENTS.DEVELOPMENT) {
+    promise = getTls();
+  } else {
+    promise = Promise.resolve();
+  }
+
+  promise.then(
     (tls) => {
       startServer(tls);
     },
@@ -30,9 +39,12 @@ module.exports = function () {
 function startServer(tls) {
   const server = new Hapi.Server();
 
-  server.connection({
-    port: config.server.port,
-    tls: tls,
+  if (process.env.PORT) {
+    console.log('"PORT" env var detected: ' + process.env.PORT);
+  }
+
+  const serverConfig = {
+    port: process.env.PORT || config.server.port,
     routes: {
       // TODO: Need to be investigated
       cors: {
@@ -40,7 +52,13 @@ function startServer(tls) {
         credentials: true
       }
     }
-  });
+  };
+
+  if (tls) {
+    serverConfig.tls = tls;
+  }
+
+  server.connection(serverConfig);
   connectDB().then(
     _.bind(registerDAL, null)
   ).then(function(DAL) {

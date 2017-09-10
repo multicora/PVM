@@ -31,3 +31,4 @@ testem.log
 /cakey.pem
 /passphrase.txt
 /package-lock.json
+/cloud_sql_proxy.exe
