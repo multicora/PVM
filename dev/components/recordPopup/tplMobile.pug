@@ -22,7 +22,7 @@ popup.video-record(close-popup="vm.closeRecordPopup()")
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.cancel(ng-click="vm.closeRecordPopup()") cancel
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.save(
           ng-click="vm.saveRecordClick(vm.videoName)"
-          ng-disabled="!vm.recordedData") save
+          ng-disabled="!vm.videoFile") save
         button.btn.mdl-button.mdl-js-button.mdl-button--raised.save(
           ng-click="vm.sendRecordClick(vm.videoName)"
-          ng-disabled="!vm.recordedData") send
+          ng-disabled="!vm.videoFile") send

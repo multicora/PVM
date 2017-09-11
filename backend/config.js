@@ -3,12 +3,17 @@
 const merge = require('merge');
 const isCI = require('is-ci');
 
+const constants = require('./constants');
 const logger = require('./services/logger.js');
 
 var userConfig;
 
 try {
-  userConfig = require('./userConfig.js');
+  if (process.env.ENVIRONMENT === constants.ENVIRONMENTS.DEVELOPMENT) {
+    userConfig = require('./userConfig.js');
+  } else {
+    userConfig = require('./prodConfig.js');
+  }
 } catch (ex) {
   userConfig = {};
 }
@@ -24,7 +29,7 @@ let config = {
   debugMode: false,
   db: {
     type: DB.TYPES.MySQL,
-    dbName: 'pvmdb',
+    database: 'pvmdb',
     host: 'localhost',
     user: 'root',
     password: ''

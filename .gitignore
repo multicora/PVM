@@ -32,3 +32,4 @@ testem.log
 /passphrase.txt
 /package-lock.json
 /cloud_sql_proxy.exe
+/backend/prodConfig.js
