@@ -10,7 +10,7 @@
     };
 
     this.checkExt = function(name) {
-      var ext = name.split('.').pop();
+      var ext = name.split('.').pop().toLowerCase();
       ext = (ext === 'wmv') ? 'webm' : (ext === 'mov' ? 'mp4' : ext);
       return ext;
     };
