@@ -25,7 +25,7 @@ module.exports = function (DAL) {
           }
         );
       }).then(() => {
-        return templates.conversationOpened(link, user.firstName, 'Person with email: ' + conversation.email);
+        return templates.conversationOpened(link, user.firstName, ' Person with email: ' + conversation.email);
       }).then(template => {
         const message = 'Your conversation was viewed!';
 
@@ -60,7 +60,7 @@ module.exports = function (DAL) {
         );
       }).then(() => {
         return templates.videoWatched(link, user.firstName,
-          ('Person with email: ' + conversation.email) || '');
+          (' Person with email: ' + conversation.email) || '');
       }).then((res) => {
         const mail = {
           to: user.email,
@@ -93,7 +93,7 @@ module.exports = function (DAL) {
         );
       }).then(() => {
         return templates.videoIsWatching(link, user.firstName,
-          ('Person with email: ' + conversation.email) || '');
+          (' Person with email: ' + conversation.email) || '');
       }).then((res) => {
         const mail = {
           to: user.email,
@@ -126,7 +126,7 @@ module.exports = function (DAL) {
         );
       }).then(() => {
         return templates.fileDownloaded(link, user.firstName,
-          ('Person with email: ' + conversation.email) || '');
+          (' Person with email: ' + conversation.email) || '');
       }).then(res => {
         const mail = {
           to: user.email,
