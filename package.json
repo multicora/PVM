@@ -9,7 +9,7 @@
   },
   "scripts": {
     "bower": "bower i --allow-root",
-    "precommit": "gulp belint && gulp felint && gulp testOnce",
+    "precommit": "cross-env ENVIRONMENT=DEVELOPMENT gulp belint && gulp felint && gulp testOnce",
     "dev": "cross-env ENVIRONMENT=DEVELOPMENT gulp dev",
     "start": "node backend/index.js",
     "test": "gulp testOnce",
