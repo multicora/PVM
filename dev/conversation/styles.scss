@@ -255,7 +255,6 @@
     }
 
     .videoContent {
-      min-height: 400px;
       width: 100%;
       box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
       background-color: #010001;
@@ -267,9 +266,13 @@
     .vjs-video-wrap,
     .video-js {
       max-width: 100%;
-      height: 400px;
+      height: auto;
     }
 
+    .video-js .vjs-tech {
+      position: auto;
+    }
+    
     .videoFooter {
       position: relative;
       padding-bottom: 20px;
