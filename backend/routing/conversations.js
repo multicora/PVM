@@ -230,31 +230,33 @@ module.exports = function (server, DAL) {
         let serverUrl = utils.getServerUrl(request);
         let token = usersCtrl.parseToken(request.headers.authorization);
         let conversation;
-        let user;
+        let viewerId;
 
         DAL.conversations.getById(conversationId).then(res => {
           conversation = res;
-          return conversationCtrl.needToMarkPromise(token.value, conversation.author, conversation.email);
-        }).then(res => {
-          let result = null;
-          user = res.user;
 
-          if (res.result) {
-            result = notificationsCtrl.videoIsWatching(conversation, serverUrl +
-              '/conversation/' +
-              conversation.id);
+          return Promise.all([
+            DAL.users.getUserByToken(token.value),
+            DAL.users.getUserByEmail(conversation.email),
+          ]);
+        }).then((response) => {
+          const visiter = response[0];
+          const recipient = response[1];
+          viewerId = (visiter && visiter.id) || (recipient && recipient.id);
+        }).then(() => {
+          if (conversation.author !== viewerId) {
+            return Promise.all([
+              notificationsCtrl.videoIsWatching(conversation, `${serverUrl}/conversation/${conversation.id}`),
+              DAL.events.add(DAL.events.types.VIDEO_IS_WATCHING, viewerId, conversation.id, {
+                'videoId': videoId
+              }),
+              DAL.conversations.updateTime(conversation.id),
+            ]);
           }
-
-          return result;
+          return null;
         }).then(() => {
-          return DAL.events.add(DAL.events.types.VIDEO_IS_WATCHING, user.id, conversation.id, {
-            'videoId': videoId
-          });
-        }).then(() => {
-          return DAL.conversations.updateTime(conversation.id);
-        }).then(() => {
-          reply({'status': 'success'});
-        }, err => {
+          reply();
+        }).catch(err => {
           reply(Boom.badImplementation(err, err));
         });
       }

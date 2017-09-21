@@ -202,17 +202,19 @@ function registerAuth(server, DAL) {
 }
 
 function registerExternalLogging(server, config) {
-  var Rollbar = require('rollbar');
-  var rollbar = new Rollbar(config.logging.key);
+  if (process.env.ENVIRONMENT !== constants.ENVIRONMENTS.DEVELOPMENT) {
+    var Rollbar = require('rollbar');
+    var rollbar = new Rollbar(config.logging.key);
 
-  server.on('request-error', function(request, error) {
-    // Note: before Hapi v8.0.0, this should be 'internalError' instead of 'request-error'
-    if (error instanceof Error) {
-      rollbar.error(error, request, cb);
-    } else {
-      rollbar.error('Error: ' + error, request, cb);
-    }
-  });
+    server.on('request-error', function(request, error) {
+      // Note: before Hapi v8.0.0, this should be 'internalError' instead of 'request-error'
+      if (error instanceof Error) {
+        rollbar.error(error, request, cb);
+      } else {
+        rollbar.error('Error: ' + error, request, cb);
+      }
+    });
+  }
 
   function cb(rollbarErr) {
     if (rollbarErr) {

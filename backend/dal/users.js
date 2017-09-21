@@ -183,7 +183,7 @@ module.exports = (connection) => {
           if (err) {
             reject(err);
           } else if (!response.length) {
-            reject('Not found');
+            resolve(null);
           } else {
             resolve(parse(response[0]));
           }
