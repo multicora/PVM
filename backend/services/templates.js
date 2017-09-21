@@ -34,7 +34,7 @@ module.exports = () => {
 
         authorName = authorName ? authorName + ',' : '';
         let props = {
-          text: authorName + userName + 'is watching your conversation video now',
+          text: authorName + userName + ' is watching your conversation video now',
           link: link
         };
         letter.render(props, function (err, result) {
