@@ -194,7 +194,17 @@ module.exports = function (server, DAL) {
         }).then(() => {
           reply(conversation);
         }).catch((err) => {
-          reply(Boom.badImplementation(err, err));
+          if (err instanceof Error) {
+            reply(Boom.badImplementation(err, err));
+          } else {
+            switch (err.code) {
+              case 404:
+                reply(Boom.notFound(err, err));
+                break;
+              default:
+                reply(Boom.badImplementation(err, err));
+            }
+          }
         });
       }
     }

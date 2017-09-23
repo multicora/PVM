@@ -20,8 +20,6 @@
       // },
       message: function(res) {
         var channelListeners = listeners[res.channel];
-        console.log('New Message!!', res);
-
         if (channelListeners) {
           channelListeners.forEach(function (cb) {
             cb(res.message);

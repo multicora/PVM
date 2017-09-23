@@ -8,19 +8,19 @@
     '$location',
     '$q',
     'storage',
-    'routingCheckingService'
+    'routingCheckingService',
+    'TOKEN_NAME'
     ];
   function interseptor(
     $location,
     $q,
     storage,
-    routingCheckingService
+    routingCheckingService,
+    TOKEN_NAME
   ) {
-    var tokenName = 'x-biz-token';
-
     return {
       request: function(request) {
-        request.headers.Authorization = tokenName + ' ' + storage.get(tokenName);
+        request.headers.Authorization = TOKEN_NAME + ' ' + storage.get(TOKEN_NAME);
         return request;
       },
       response: function(response) {
@@ -30,7 +30,7 @@
         if (response.status === 401) {
           var url = $location.url();
           if (!routingCheckingService.checkRouting(url)) {
-            storage.clear(tokenName);
+            storage.clear(TOKEN_NAME);
             $location.path('/login');
           }
         }

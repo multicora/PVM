@@ -12,7 +12,6 @@ const pubnub = new PubNub({
 
 module.exports = {
   pub(channel, message) {
-    console.log(channel, message);
     const publishConfig = {
       channel,
       message,
@@ -20,12 +19,9 @@ module.exports = {
 
     return new Promise((resolve, reject) => {
       return pubnub.publish(publishConfig, function(status, response) {
-        console.log(status);
         if (!status.error) {
-          console.log(response);
           resolve(response);
         } else {
-          console.log(response);
           reject(response);
         }
       });

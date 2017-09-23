@@ -1,4 +1,6 @@
 'use strict';
+
+const Promise = require('promise');
 // const uuid = require('node-uuid');
 // const separator = '_';
 
@@ -15,9 +17,15 @@ module.exports = function(DAL) {
 
       // Finding conversation
       return DAL.conversations.getById(conversationId).then((res) => {
-        conversation = parseConversation(res);
+        if (res) {
+          conversation = parseConversation(res);
 
-        return conversation;
+          return conversation;
+        }
+
+        return Promise.reject({
+          code: 404,
+        });
       }).then(() => {
         // Get author information
         return DAL.users.getUserById(conversation.author);
@@ -28,9 +36,10 @@ module.exports = function(DAL) {
 
         return conversation;
       }).then(() => {
+        // Get video information
         return storageCtrl.getVideo(conversation.videoId);
-      }).then((buffer) => {
-        conversation.url = buffer;
+      }).then((url) => {
+        conversation.url = url;
 
         return DAL.files.getFilesByConversation(conversationId);
       }).then( res => {
