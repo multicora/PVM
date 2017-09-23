@@ -2,6 +2,7 @@
 const config = require('../config.js');
 const mailer = require('../services/mailer.js');
 const templates = require('../services/templates.js')();
+const eventHub = require('../services/eventHub.js');
 const notificationsMessageGenerator = require('../services/notificationsMessageGenerator.js')();
 
 module.exports = function (DAL) {
@@ -114,6 +115,7 @@ module.exports = function (DAL) {
       sendChatToDb(data).then(res => {
         data.id = res.insertId;
         startTimer(data);
+        eventHub.pub(`chat_${data.conversationId}`, 'new message');
       });
     },
     clearTimer: clearTimer

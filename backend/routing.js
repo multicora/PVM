@@ -33,11 +33,11 @@ module.exports.init = function (server, DAL) {
   require('./routing/users.js')(server, DAL);
   require('./routing/roles.js')(server, DAL);
   require('./routing/conversations.js')(server, DAL);
-  require('./routing/socket.js')(server, DAL);
   require('./routing/feedbacks.js')(server, DAL);
   require('./routing/files.js')(server, DAL);
   require('./routing/notifications.js')(server, DAL);
   require('./routing/events.js')(server, DAL);
   require('./routing/settings.js')(server, DAL);
   require('./routing/dashboard.js')(server, DAL);
+  require('./routing/chat.js')(server, DAL);
 };

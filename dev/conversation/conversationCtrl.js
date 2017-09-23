@@ -13,10 +13,9 @@
     'conversationsService',
     'profileService',
     'libraryService',
-    'chat',
-    'pubSub',
     'storage',
-    'utils'
+    'utils',
+    'eventHub'
   ];
   function ctrl(
     $routeParams,
@@ -27,16 +26,15 @@
     conversationsService,
     profileService,
     libraryService,
-    chat,
-    pubSub,
     storage,
-    utils
+    utils,
+    eventHub
   ) {
+    // TODO: add users avatars
     var vm = this;
-    var sendObj;
     var usersPhotos = {};
-    var audio = utils.createAudio('/files/audio/filling-your-inbox.mp3');
-    var chatInstance;
+    // var audio = utils.createAudio('/files/audio/filling-your-inbox.mp3');
+    var conversationId = $routeParams.id;
     vm.sendMessage = null;
     vm.conversation = null;
     vm.media = null;
@@ -50,17 +48,14 @@
     getProfile();
     getConversation();
 
-    pubSub.on('incomeMessage', function(data) {
-      data.className = 'income';
-      data.photo = usersPhotos[data.authorId];
-      vm.chatList.push(data);
-      audio.play();
-      reloadTemplate();
-      scrollBottom();
-    });
-
-    chat.connect().then(function (res) {
-      chatInstance = res;
+    eventHub.sub('chat_' + conversationId, function (/* message */) {
+      getConversation();
+      // data.className = 'income';
+      // data.photo = usersPhotos[data.authorId];
+      // vm.chatList.push(data);
+      // audio.play();
+      // reloadTemplate();
+      // scrollBottom();
     });
 
     $scope.$on('vjsVideoReady', function (e, data) {
@@ -118,8 +113,20 @@
       getConversation();
     };
 
+    vm.sendMessage = function(message) {
+      if (vm.user) {
+        conversationsService.sendMessage(
+          vm.conversation.id,
+          {
+            message: message,
+            authorId: vm.user.id,
+          }
+        );
+      }
+    };
+
     function getConversation() {
-      conversationsService.get($routeParams.id).then(function (res) {
+      conversationsService.get(conversationId).then(function (res) {
         vm.conversation = res.data;
         if (vm.user && vm.conversation.author === vm.user.id) {
           vm.showUserHeader = false;
@@ -144,7 +151,7 @@
           }
         }
 
-        return conversationsService.getChat($routeParams.id);
+        return conversationsService.getChat(conversationId);
       }).then(function(res) {
         vm.chatList = res.data;
         var incomeChats = [];
@@ -172,20 +179,6 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
-        vm.sendMessage = function(message) {
-          sendObj = {
-            'message': message,
-            'authorId': vm.user.id,
-            'conversationId': vm.conversation.id
-          };
-
-          chatInstance.send(sendObj, function() {
-            sendObj.photo = vm.user.photo;
-            vm.chatList.push(sendObj);
-            reloadTemplate();
-            scrollBottom();
-          });
-        };
       }).catch(function () {
         vm.user = null;
         vm.sendMessage = function(data) {
@@ -195,13 +188,13 @@
       });
     }
 
-    function scrollBottom() {
-      var bodyElement = $document.find('body')[0];
-      bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
-    }
+    // function scrollBottom() {
+    //   var bodyElement = $document.find('body')[0];
+    //   bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
+    // }
 
-    function reloadTemplate() {
-      $rootScope.$apply();
-    }
+    // function reloadTemplate() {
+    //   $rootScope.$apply();
+    // }
   }
 })(angular);

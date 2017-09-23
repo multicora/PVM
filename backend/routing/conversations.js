@@ -448,6 +448,7 @@ module.exports = function (server, DAL) {
           user = res.user;
 
           if (res.result) {
+            // TypeError: TypeError: Cannot read property 'id' of undefined: Cannot read property 'id' of undefined at DAL.conversations.getById.then.then.res (/app/backend/routing/conversations.js:449:70)
             return DAL.events.get(DAL.events.types.VIDEO_PAUSED, user.id, conversation.id).then(res => {
               let result = null;
 
@@ -823,65 +824,6 @@ module.exports = function (server, DAL) {
         }).then( res => {
           reply(res);
         }, err => {
-          reply(Boom.badImplementation(err, err));
-        });
-      }
-    }
-  });
-
-  /**
-   * @api {get} /api/chat Request chat
-   * @apiName GetChat
-   * @apiGroup Chat
-   *
-   * @apiParam {string}   id                              Conversation id.
-   *
-   * @apiSuccess {Object[]} chat                          List of chat messages.
-   * @apiSuccess {String}   chat.id                       Chat id.
-   * @apiSuccess {String}   chat.authorId                 Author id.
-   * @apiSuccess {String}   chat.conversationId           Conversation Id.
-   * @apiSuccess {String}   chat.date                     Date.
-   * @apiSuccess {String}   chat.message                  Message.
-   * @apiSuccess {String}   chat.photo                    Author photo.
-   *
-   *
-   * @apiSuccessExample Success-Response:
-   *     HTTP/1.1 200 OK
-   * {[
-   *   id: 1,
-   *   authorId: 4,
-   *   conversationId: 20,
-   *   date: '0000-00-00 00:00:00',
-   *   message: 'text',
-   *   photo: <Buffer 64 61 74 61 3a 69 6d 61 67 65 2f 6a 70 65 67 3b 62 61 73 65 36 34 2c 2f 39 6a 2f 34 51 41 59 52 58 68 70 5a 67 41 41 53 55 6b 71 41 41 67 41 41 41 41 ... >
-   * ]}
-   */
-  server.route({
-    method: 'GET',
-    path: '/api/chat/{id}',
-    config: {
-      auth: 'simple',
-      handler: function (request, reply) {
-        var chats;
-        DAL.chat.getByConversationId(request.params.id).then( res => {
-          // TODO: 'res' is not a chats it is a messeges
-          chats = res;
-          var promises = [];
-
-          chats.map(function(chat) {
-            promises.push( DAL.users.getUserById(chat.authorId) );
-          });
-
-          return Promise.all(promises);
-        }).then(res => {
-
-          for (var i = 0; i < chats.length; i++) {
-            // TODO: we do not need thoto for all messages
-            chats[i].photo = res[i].photo ? res[i].photo.toString() : null;
-          }
-
-          reply(chats);
-        }).catch( err => {
           reply(Boom.badImplementation(err, err));
         });
       }

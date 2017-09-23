@@ -72,7 +72,8 @@
     "hapi": "^15.2.0",
     "hapi-auth-header": "^2.2.0",
     "hapi-route-acl": "^1.0.3",
-    "inert": "^4.0.2",
+    "hapi-swagger": "^7.7.1",
+    "inert": "^4.2.1",
     "is-ci": "^1.0.10",
     "lodash": "^4.16.4",
     "merge": "^1.2.0",
@@ -80,10 +81,12 @@
     "node-uuid": "^1.4.7",
     "password-hash": "^1.2.2",
     "promise": "^7.1.1",
+    "pubnub": "^4.15.1",
     "rand-token": "^0.3.0",
     "rollbar": "^2.1.0",
     "socket.io": "^1.7.3",
     "sparkpost": "^2.1.2",
-    "squel": "^5.10.0"
+    "squel": "^5.10.0",
+    "vision": "^4.1.1"
   }
 }

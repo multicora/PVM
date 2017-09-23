@@ -27,7 +27,7 @@
     };
 
     this.getChat = function (id) {
-      return $http.get('/api/chat/' + id);
+      return $http.get('/api/v2/chat/' + id);
     };
 
     this.videoWatched = function (data) {
@@ -48,6 +48,10 @@
 
     this.getChatForDashboard = function () {
       return $http.get('/api/chat-for-dashboard');
+    };
+
+    this.sendMessage = function (conversationId, data) {
+      return $http.post('/api/v2/chat/' + conversationId, data);
     };
   }
 })(angular);

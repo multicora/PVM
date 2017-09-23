@@ -7,14 +7,12 @@
   interseptor.$inject = [
     '$location',
     '$q',
-    'loadingService',
     'storage',
     'routingCheckingService'
     ];
   function interseptor(
     $location,
     $q,
-    loadingService,
     storage,
     routingCheckingService
   ) {
@@ -22,16 +20,13 @@
 
     return {
       request: function(request) {
-        loadingService.showSpinner();
         request.headers.Authorization = tokenName + ' ' + storage.get(tokenName);
         return request;
       },
       response: function(response) {
-        loadingService.hideSpinner();
         return response;
       },
       responseError: function(response) {
-        loadingService.hideSpinner();
         if (response.status === 401) {
           var url = $location.url();
           if (!routingCheckingService.checkRouting(url)) {
