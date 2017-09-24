@@ -4,10 +4,23 @@
 
   app.service('profileService', service);
 
-  service.$inject = ['$http'];
-  function service($http) {
+  service.$inject = [
+    '$http',
+    '$q',
+    'storage',
+    'TOKEN_NAME'
+  ];
+  function service(
+    $http,
+    $q,
+    storage,
+    TOKEN_NAME
+  ) {
     this.getProfile = function () {
-      return $http.get('/api/profile');
+      if (storage.get(TOKEN_NAME)) {
+        return $http.get('/api/profile');
+      }
+      return $q.reject();
     };
 
     this.getProfilePhoto = function (id) {

@@ -22,7 +22,9 @@
     vm.user = null;
     vm.company = null;
 
-    getProfile();
+    getProfile().then(function () {
+      return getCompany(vm.user.company);
+    });
 
     vm.save = function() {
       vm.company.name = vm.company.name || '';
@@ -101,15 +103,18 @@
     };
 
     function getProfile() {
-      profileService.getProfile().then(function(res) {
+      return profileService.getProfile().then(function(res) {
         vm.user = res.data;
-      }).then(function() {
-        return profileService.getCompany(vm.user.company);
-      }).then(function(res) {
-        vm.company = res.data;
-        vm.company.name = vm.company.name || '';
       }).catch(function () {
         vm.user = null;
+      });
+    };
+
+    function getCompany(id) {
+      return profileService.getCompany(id).then(function(res) {
+        vm.company = res.data || {};
+        vm.company.name = vm.company.name || '';
+      }).catch(function () {
         vm.company = null;
       });
     };

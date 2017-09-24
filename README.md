@@ -6,12 +6,12 @@ Develop status:
 #Start dev:
   npm i
   bower i
-  gulp dev
+  yarn dev
 
 #Build:
   npm i
   bower i
-  gulp build
+  yarn build
 
 ## Deploy to GCP
 * Install `gcloud`

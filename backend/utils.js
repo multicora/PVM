@@ -12,6 +12,5 @@ module.exports = {
     let serverUrl = server.info.protocol + '://' + request.info.host;
 
     return serverUrl;
-  }
-
+  },
 };

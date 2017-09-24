@@ -6,38 +6,39 @@
 
   ctrl.$inject = [
     '$routeParams',
-    '$location',
     '$rootScope',
+    '$location',
     '$document',
+    '$timeout',
     '$scope',
+    '$q',
     'conversationsService',
     'profileService',
     'libraryService',
-    'chat',
-    'pubSub',
     'storage',
-    'utils'
+    'utils',
+    'eventHub'
   ];
   function ctrl(
     $routeParams,
-    $location,
     $rootScope,
+    $location,
     $document,
+    $timeout,
     $scope,
+    $q,
     conversationsService,
     profileService,
     libraryService,
-    chat,
-    pubSub,
     storage,
-    utils
+    utils,
+    eventHub
   ) {
+    // TODO: add users avatars
     var vm = this;
-    var sendObj;
     var usersPhotos = {};
     var audio = utils.createAudio('/files/audio/filling-your-inbox.mp3');
-    var chatInstance;
-    vm.sendMessage = null;
+    var conversationId = $routeParams.id;
     vm.conversation = null;
     vm.media = null;
     vm.user = null;
@@ -46,21 +47,22 @@
     vm.messageClassName = 'income';
     vm.showLoginPopup = false;
     vm.videoWatched = false;
+    vm.conversationIsNotFound = false;
 
     getProfile();
     getConversation();
 
-    pubSub.on('incomeMessage', function(data) {
-      data.className = 'income';
-      data.photo = usersPhotos[data.authorId];
-      vm.chatList.push(data);
-      audio.play();
-      reloadTemplate();
-      scrollBottom();
-    });
+    eventHub.sub('chat_' + conversationId, function (/* message */) {
+      getChat(conversationId).then(function () {
+        var lastMessage = vm.messages[vm.messages.length - 1];
 
-    chat.connect().then(function (res) {
-      chatInstance = res;
+        if (lastMessage.authorId !== vm.user.id) {
+          audio.play();
+        }
+        scrollBottom();
+      }).then(function () {
+        return loadPhotos();
+      });
     });
 
     $scope.$on('vjsVideoReady', function (e, data) {
@@ -118,8 +120,26 @@
       getConversation();
     };
 
+    vm.sendMessage = function(message) {
+      if (vm.user) {
+        var messageData = {
+          message: message,
+          authorId: vm.user.id,
+        };
+        conversationsService.sendMessage(
+          vm.conversation.id,
+          messageData
+        );
+        vm.messages.push(messageData);
+        scrollBottom();
+      } else {
+        vm.showLoginPopup = true;
+        storage.set('message', message);
+      }
+    };
+
     function getConversation() {
-      conversationsService.get($routeParams.id).then(function (res) {
+      return conversationsService.get(conversationId).then(function (res) {
         vm.conversation = res.data;
         if (vm.user && vm.conversation.author === vm.user.id) {
           vm.showUserHeader = false;
@@ -132,39 +152,32 @@
             type: 'video/mp4'
           }]
         };
-
       }).then(function() {
-        return libraryService.getEvents([vm.conversation.id]);
+        if (vm.user) {
+          return libraryService.getEvents([vm.conversation.id]);
+        }
+        return null;
       }).then(function(res) {
-
-        for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i].type === 'VIDEO_IS_WATCHED') {
-            vm.videoWatched = true;
-            break;
+        if (res) {
+          for (var i = 0; i < res.data.length; i++) {
+            if (res.data[i].type === 'VIDEO_IS_WATCHED') {
+              vm.videoWatched = true;
+              break;
+            }
           }
         }
 
-        return conversationsService.getChat($routeParams.id);
-      }).then(function(res) {
-        vm.chatList = res.data;
-        var incomeChats = [];
-
-        vm.chatList.map(function(chat) {
-          if (chat.authorId !== vm.user.id) {
-            chat.className = 'income';
-            incomeChats.push(chat);
-          }
-
-          if (chat.photo) {
-            usersPhotos[chat.authorId] = chat.photo;
-          } else {
-            usersPhotos[chat.authorId] = undefined;
-          }
-        });
-
+        return getChat(conversationId);
+      }).then(function() {
         vm.savedMessage = storage.get('message') || null;
         if (vm.savedMessage) {
           storage.clear('message');
+        }
+      }).then(function () {
+        return loadPhotos();
+      }).catch(function (err) {
+        if (err.status === 404) {
+          vm.conversationIsNotFound = true;
         }
       });
     }
@@ -172,36 +185,62 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
-        vm.sendMessage = function(message) {
-          sendObj = {
-            'message': message,
-            'authorId': vm.user.id,
-            'conversationId': vm.conversation.id
-          };
-
-          chatInstance.send(sendObj, function() {
-            sendObj.photo = vm.user.photo;
-            vm.chatList.push(sendObj);
-            reloadTemplate();
-            scrollBottom();
-          });
-        };
       }).catch(function () {
         vm.user = null;
-        vm.sendMessage = function(data) {
-          vm.showLoginPopup = true;
-          storage.set('message', data);
-        };
       });
     }
 
     function scrollBottom() {
-      var bodyElement = $document.find('body')[0];
-      bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
+      $timeout(function () {
+        var bodyElement = $document.find('body')[0];
+        bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
+      }, 0);
     }
 
-    function reloadTemplate() {
-      $rootScope.$apply();
+    function getChat(conversationId) {
+      return conversationsService.getChat(conversationId).then(function(res) {
+        vm.messages = res.data;
+        var incomeChats = [];
+
+        vm.messages.map(function(message) {
+          if (message.authorId !== vm.user.id) {
+            message.className = 'income';
+            incomeChats.push(message);
+          }
+        });
+      });
+    }
+
+    function loadPhotos() {
+      var needToLoad = vm.messages.filter(function (message) {
+        return !usersPhotos.hasOwnProperty(message.authorId);
+      }).map(function (message) {
+        return message.authorId;
+      }).filter(function (value, index, self) {
+        return self.indexOf(value) === index;
+      });
+
+      setPhotos();
+
+      return $q.all(
+        needToLoad.map(function (userId) {
+          return profileService.getProfilePhoto(userId);
+        })
+      ).then(function (res) {
+        needToLoad.forEach(function (userId, index) {
+          usersPhotos[userId] = res[index].data;
+        });
+
+        setPhotos();
+      });
+    }
+
+    function setPhotos() {
+      vm.messages.forEach(function(message) {
+        if (!message.photo) {
+          message.photo = usersPhotos[message.authorId];
+        }
+      });
     }
   }
 })(angular);

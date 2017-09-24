@@ -31,7 +31,13 @@
     p.title(ng-if="!vm.conversation.email || vm.conversation.email === null || vm.conversation.email === undefined") Public conversation
     p.title(ng-if="vm.conversation.email && vm.conversation.email != null && vm.conversation.email != undefined") to:&nbsp
       span.email {{vm.conversation.email}}
-  .content
+
+  //- 404
+  .content(ng-if="vm.conversationIsNotFound")
+    .not-found Conversation is not found
+
+  //- Content
+  .content(ng-if="!vm.conversationIsNotFound")
     //- TITLE
     .title-container
       p.title
@@ -69,7 +75,7 @@
                   i.material-icons.file-icon insert_drive_file
                   p.file-name.ellipsis {{item.name}}
 
-        chat-list(list="vm.chatList")
+        chat-box(list="vm.messages")
       chat-reply-box(
         message="vm.savedMessage"
         send-message="vm.sendMessage($data)")

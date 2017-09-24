@@ -38,7 +38,6 @@ module.exports = (connection) => {
         ].join('');
 
         connection.query(request, (err, response) => {
-          console.log(response, err);
           err ? reject(err) : resolve(response[0]);
         });
       });

@@ -1,7 +1,7 @@
 (function (angular) {
   'use strict';
-  angular.module('app').component('chatList', {
-    templateUrl: 'components/chatList/tpl.html',
+  angular.module('app').component('chatBox', {
+    templateUrl: 'components/chatBox/tpl.html',
     controller: ctrl,
     controllerAs: 'vm',
     transclude: true,

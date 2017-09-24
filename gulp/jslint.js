@@ -157,6 +157,7 @@ module.exports = function() {
           'videojs',
           'inject',
           'module',
+          'PubNub',
           '_',
           'ga',
           'io'

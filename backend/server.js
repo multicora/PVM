@@ -4,17 +4,28 @@
 const Hapi = require('hapi');
 const _ = require('lodash');
 const Promise = require('promise');
-const connectDB = require('./dataConnection.js');
 const fs = require('fs');
+const HapiSwagger = require('hapi-swagger');
+const Inert = require('inert');
+const Vision = require('vision');
 
 // Internal
+const Pack = require('../package');
+const connectDB = require('./dataConnection.js');
 const config = require('./config.js');
 const migrations = require('./migrations/migrations');
 const constants = require('./constants');
 
 function logError(error) {
-  console.log(' ======================= uncaughtException:');
-  console.log(error.stack);
+  const sqlConnectionError = 'ECONNREFUSED 127.0.0.1:3306';
+
+  if (error.message.indexOf(sqlConnectionError) >= 0) {
+    console.error('\n=================================');
+    console.error('Could not connect to the database');
+    console.error('=================================\n');
+  }
+  console.error(' ======================= uncaughtException:');
+  console.error(error.stack);
 }
 
 module.exports = function () {
@@ -29,11 +40,10 @@ module.exports = function () {
   promise.then(
     (tls) => {
       startServer(tls);
-    },
-    (err) => {
-      console.log(err);
     }
-  );
+  ).catch(err => {
+    console.error(err);
+  });
 };
 
 function startServer(tls) {
@@ -72,6 +82,8 @@ function startServer(tls) {
       _.bind(registerRouting, null, server, DAL)
     ).then(
       _.bind(registerExternalLogging, null, server, config)
+    ).then(
+      () => registerDocumentation(server)
     ).then(
       _.bind(run, null, server)
     ).then(
@@ -202,17 +214,19 @@ function registerAuth(server, DAL) {
 }
 
 function registerExternalLogging(server, config) {
-  var Rollbar = require('rollbar');
-  var rollbar = new Rollbar(config.logging.key);
+  if (process.env.ENVIRONMENT !== constants.ENVIRONMENTS.DEVELOPMENT) {
+    var Rollbar = require('rollbar');
+    var rollbar = new Rollbar(config.logging.key);
 
-  server.on('request-error', function(request, error) {
-    // Note: before Hapi v8.0.0, this should be 'internalError' instead of 'request-error'
-    if (error instanceof Error) {
-      rollbar.error(error, request, cb);
-    } else {
-      rollbar.error('Error: ' + error, request, cb);
-    }
-  });
+    server.on('request-error', function(request, error) {
+      // Note: before Hapi v8.0.0, this should be 'internalError' instead of 'request-error'
+      if (error instanceof Error) {
+        rollbar.error(error, request, cb);
+      } else {
+        rollbar.error('Error: ' + error, request, cb);
+      }
+    });
+  }
 
   function cb(rollbarErr) {
     if (rollbarErr) {
@@ -228,4 +242,28 @@ function registerRequestsInterseptor(server, DAL) {
     }
     return reply.continue();
   });
+}
+
+function registerDocumentation(server) {
+  const options = {
+    info: {
+      title: 'bizkonect API Documentation',
+      version: Pack.version,
+    }
+  };
+
+  return new Promise((resolve, reject) => {
+    server.register(
+      [
+        Inert,
+        Vision,
+        {
+          register: HapiSwagger,
+          options: options
+        }
+      ],
+      (err) => err ? reject(err) : resolve()
+    );
+  });
+
 }
