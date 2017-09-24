@@ -1,6 +1,9 @@
 .files-content
   .upload-container
-    label.pointer(for='upload-file')
+    .button-container
+      .upload-icon
+      p.text Select files to upload, or drag and drop files
+    label.upload-input.pointer(for="upload-file")
       div(
         file-uploader
         url="/file"
@@ -8,9 +11,6 @@
         upload-end="vm.onUploadEnd()"
         upload-start=""
         on-error="")
-      .button-container
-        .upload-icon
-        p.text Select files to upload, or drag and drop files
   .files-container(ng-if="vm.list.length")
     .file-container
       .file.default
@@ -33,4 +33,3 @@
             ng-if="vm.showDeleteButton"
             ng-click="vm.onDelete({$data: item.id, $event: $event})")
             i.material-icons delete
-
