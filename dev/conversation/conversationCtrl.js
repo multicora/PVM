@@ -6,9 +6,10 @@
 
   ctrl.$inject = [
     '$routeParams',
-    '$location',
     '$rootScope',
+    '$location',
     '$document',
+    '$timeout',
     '$scope',
     '$q',
     'conversationsService',
@@ -20,9 +21,10 @@
   ];
   function ctrl(
     $routeParams,
-    $location,
     $rootScope,
+    $location,
     $document,
+    $timeout,
     $scope,
     $q,
     conversationsService,
@@ -57,14 +59,10 @@
         if (lastMessage.authorId !== vm.user.id) {
           audio.play();
         }
-
+        scrollBottom();
       }).then(function () {
         return loadPhotos();
       });
-
-      // data.photo = usersPhotos[data.authorId];
-      // reloadTemplate();
-      // scrollBottom();
     });
 
     $scope.$on('vjsVideoReady', function (e, data) {
@@ -133,6 +131,7 @@
           messageData
         );
         vm.messages.push(messageData);
+        scrollBottom();
       } else {
         vm.showLoginPopup = true;
         storage.set('message', message);
@@ -191,14 +190,12 @@
       });
     }
 
-    // function scrollBottom() {
-    //   var bodyElement = $document.find('body')[0];
-    //   bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
-    // }
-
-    // function reloadTemplate() {
-    //   $rootScope.$apply();
-    // }
+    function scrollBottom() {
+      $timeout(function () {
+        var bodyElement = $document.find('body')[0];
+        bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
+      }, 0);
+    }
 
     function getChat(conversationId) {
       return conversationsService.getChat(conversationId).then(function(res) {
