@@ -18,13 +18,13 @@
               .profile-photo(
                 ng-if="vm.user.photo && vm.user.photo != 'null'"
                 ng-style="{backgroundImage: 'url('+ vm.user.photo + ')' }")
-            input.hidden(
+            input.upload-input.pointer(
               type="file"
               id="photo"
               onchange="angular.element(this).scope().convertToBase64Photo()")
       p.errorMessage(ng-if="vm.photoError"
         ng-bind="vm.photoError")
-    
+
     .content
       md-input-container
         label First name
@@ -64,7 +64,7 @@
             p.logo-label(ng-if="vm.company.logo && vm.company.logo != null") Company logo
             .upload-logo
               span.logo-placeholder(ng-if="!vm.company.logo || vm.company.logo === null") Company logo
-              input.hidden(
+              input.upload-input.pointer(
                 type="file"
                 id="logo"
                 onchange="angular.element(this).scope().convertToBase64Logo()")

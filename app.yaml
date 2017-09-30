@@ -2,3 +2,5 @@ env: flex
 runtime: nodejs
 beta_settings:
   cloud_sql_instances: bktest-175420:us-central1:bkbase
+automatic_scaling:
+  min_num_instances: 1

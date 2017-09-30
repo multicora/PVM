@@ -190,4 +190,13 @@
     font-size: 16px;
     color: rgba(0, 0, 0, 0.54);
   }
+
+  .upload-input {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    left: 0;
+  }
 }
