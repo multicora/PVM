@@ -46,7 +46,10 @@ let config = {
     enterpriseId: '5924343'
   },
   google: {
-    APIkey: ''
+    APIkey: '',
+    projectId: '',
+    storageVideoBucketName: '',
+    storageFilesBucketName: '',
   },
   mail: {
     defaultSubject: 'Bizkonect',
@@ -55,12 +58,6 @@ let config = {
   },
   notification: {
     time: 5 // Should be in minutes
-  },
-  storage: {
-    accountId: '',
-    applicationKey: '',
-    videoBucketId: '',
-    fileBucketId: ''
   },
   suport: {
     email: ''
@@ -89,6 +86,9 @@ function validate(conf) {
   validateProperty(conf.mail.defaultFrom, '"config.mail.defaultFrom" key should be exist and not empty');
   validateProperty(conf.pubnub.publishKey, '"conf.pubnub.publishKey" key should be exist and not empty');
   validateProperty(conf.pubnub.subscribeKey, '"config.pubnub.subscribeKey" key should be exist and not empty');
+  validateProperty(conf.google.projectId, '"config.google.projectId" key should be exist and not empty');
+  validateProperty(conf.google.storageVideoBucketName, '"config.google.storageVideoBucketName" key should be exist and not empty');
+  validateProperty(conf.google.storageFilesBucketName, '"config.google.storageFilesBucketName" key should be exist and not empty');
 }
 
 function showError(msg) {

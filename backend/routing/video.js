@@ -46,8 +46,13 @@ module.exports = function (server, DAL) {
             name = request.payload.file.hapi.filename;
           }
 
-          storageCtrl.addVideo(request.payload.file._data, name,
-              user.id, user.firstName + user.secondName).then( res => {
+          storageCtrl.addVideo(
+            request.payload.file._data,
+            name,
+            user.id,
+            user.firstName + user.secondName,
+            request.payload.file.hapi.headers['content-type']
+          ).then( res => {
             reply({id: res.insertId});
           }).catch( err => {
             console.error(err);
@@ -89,13 +94,13 @@ module.exports = function (server, DAL) {
     path: '/api/videos/{id}',
     config: {
       handler: function (request, reply) {
-        storageCtrl.getVideo(request.params.id).then(
-          function (buffer) {
+        storageCtrl.getVideoUrl(request.params.id).then(
+          function (url) {
             reply({
               type: 'video',
               id: request.params.id,
               attributes: {
-                url: buffer
+                url: url
               }
             });
           },
@@ -126,7 +131,7 @@ module.exports = function (server, DAL) {
               id: video.v_id,
               attributes: video
             });
-            promises.push(storageCtrl.getVideo(video.v_id));
+            promises.push(storageCtrl.getVideoUrl(video.v_id));
           });
 
           return Promise.all(promises);

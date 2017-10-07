@@ -50,7 +50,8 @@ module.exports = function (server, DAL) {
             request.payload.file._data,
             name,
             user.id,
-            user.firstName + user.secondName
+            user.firstName + user.secondName,
+            request.payload.file.hapi.headers['content-type']
           ).then( () => {
             reply();
           }).catch( err => {

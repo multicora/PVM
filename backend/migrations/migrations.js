@@ -74,6 +74,12 @@ module.exports = function (DAL, cb) {
       require('./scripts/v065.js')(),
       require('./scripts/v066.js')(),
       require('./scripts/v067.js')(),
+      require('./scripts/v068.js')(),
+      require('./scripts/v069.js')(),
+      require('./scripts/v070.js')(),
+      require('./scripts/v071.js')(),
+      require('./scripts/v072.js')(),
+      require('./scripts/v073.js')(),
     ],
     done: cb
   };

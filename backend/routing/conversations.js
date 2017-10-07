@@ -545,9 +545,9 @@ module.exports = function (server, DAL) {
           } else {
             data.logo = null;
           }
-          return storageCtrl.getVideo(data.videoId);
-        }).then( buffer => {
-          data.videoUrl = buffer;
+          return storageCtrl.getVideoUrl(data.videoId);
+        }).then( url => {
+          data.videoUrl = url;
 
           return DAL.files.getFilesByConversation(request.params.id);
         }).then(res => {

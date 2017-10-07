@@ -1,50 +1,62 @@
 'use strict';
 const uuid = require('node-uuid');
+
+const config = require('../config');
+
 const separator = '_';
 
 module.exports = function(DAL){
-  const b2 = require('../services/backblaze.js');
-
   return {
-    addVideo: (fileBuffer, name, authorId, authorName) => {
-      return b2().then( storage => {
-        const id = uuid.v1();
-        const newName = id + separator + name;
+    addVideo: (fileBuffer, name, authorId, authorName, mimetype) => {
+      const fileStorage = require('../services/fileStorage.js');
 
-        console.log('Start uploading to storage');
-        return storage.addVideo(fileBuffer, newName, authorId, authorName).then((fileInfo) => {
-          console.log('Finish uploading');
-          return DAL.videos.add(name, authorId, newName, fileInfo.data.fileId);
-        });
+      const id = uuid.v1();
+      const newName = id + separator + name;
+
+      return fileStorage.upload({
+        name: newName,
+        mimetype,
+        buffer: fileBuffer,
+        bucketName: config.google.storageVideoBucketName,
+      }).then(() => {
+        return DAL.videos.add(name, authorId, newName, newName);
       });
     },
 
-    addFile: (fileBuffer, name, authorId, authorName) => {
-      return b2().then( storage => {
-        const id = uuid.v1();
-        const newName = id + separator + name;
+    addFile: (fileBuffer, name, authorId, authorName, mimetype) => {
+      const fileStorage = require('../services/fileStorage.js');
+      const id = uuid.v1();
+      const newName = id + separator + name;
 
-        console.log('Start uploading to storage');
-        return storage.addFile(fileBuffer, newName, authorId, authorName).then((fileInfo) => {
-          console.log('Finish uploading');
-          return DAL.files.add(name, authorId, newName, fileInfo.data.fileId, fileInfo.data.contentLength);
-        });
+      return fileStorage.upload({
+        name: newName,
+        mimetype,
+        buffer: fileBuffer,
+        bucketName: config.google.storageFilesBucketName,
+      }).then(() => {
+        return DAL.files.add(name, authorId, newName, newName);
       });
     },
 
-    getVideo: (id) => {
-      return b2().then( storage => {
-        return DAL.videos.get(id).then(function (res) {
-          return storage.getDownloadUrl(res.external_file_id);
-        });
+    getVideoUrl: (id) => {
+      const fileStorage = require('../services/fileStorage.js');
+
+      return DAL.videos.get(id).then(function (res) {
+        return fileStorage.getPublicUrl(
+          config.google.storageVideoBucketName,
+          res.external_file_id
+        );
       });
     },
 
     getFile: (id) => {
-      return b2().then( storage => {
-        return DAL.files.getById(id).then(function (res) {
-          return storage.getDownloadUrl(res.external_file_id);
-        });
+      const fileStorage = require('../services/fileStorage.js');
+
+      return DAL.files.getById(id).then(function (res) {
+        return fileStorage.getPublicUrl(
+          config.google.storageFilesBucketName,
+          res.external_file_id
+        );
       });
     },
   };

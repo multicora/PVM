@@ -36,8 +36,8 @@ module.exports = function(DAL) {
 
         return conversation;
       }).then(() => {
-        // Get video information
-        return storageCtrl.getVideo(conversation.videoId);
+        // Get video url
+        return storageCtrl.getVideoUrl(conversation.videoId);
       }).then((url) => {
         conversation.url = url;
 
