@@ -166,7 +166,7 @@
         vm.showSendPopup = false;
         $mdToast.show(
           $mdToast.simple()
-            .textContent('Sended successfully!')
+            .textContent('Sent successfully!')
             .position('bottom center')
             .hideDelay(3000)
         );
