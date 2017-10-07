@@ -55,8 +55,7 @@ module.exports = function (server, DAL) {
           ).then( res => {
             reply({id: res.insertId});
           }).catch( err => {
-            console.error(err);
-            reply(err);
+            reply(Boom.badImplementation(err, err));
           });
         }
       }

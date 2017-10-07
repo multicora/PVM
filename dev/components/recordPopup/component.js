@@ -13,13 +13,15 @@
     '$location',
     '$mdToast',
     'uploadService',
-    'uploadRecordPopupService'
+    'uploadRecordPopupService',
+    'loadingService'
   ];
   function ctrl(
     $location,
     $mdToast,
     uploadService,
-    uploadRecordPopupService
+    uploadRecordPopupService,
+    loadingService
   ) {
     var vm = this;
 
@@ -32,6 +34,7 @@
     };
 
     vm.saveRecordClick = function (name) {
+      loadingService.showSpinner();
       uploadService.sendVideo(
         name,
         vm.recordedData.video)
@@ -39,6 +42,7 @@
         vm.closeRecordPopup();
         vm.getVideos();
         vm.videoName = null;
+        loadingService.hideSpinner();
         $mdToast.show(
           $mdToast.simple()
             .textContent('Video saved successfully!')
@@ -46,6 +50,7 @@
             .hideDelay(3000)
         );
       }).catch(function (err) {
+        loadingService.hideSpinner();
         // TODO: add error style
         $mdToast.show(
           $mdToast.simple()
@@ -57,12 +62,15 @@
     };
 
     vm.sendRecordClick = function (name) {
+      loadingService.showSpinner();
       uploadService.sendVideo(
         name,
         vm.recordedData.video)
       .then(function (res) {
+        loadingService.hideSpinner();
         $location.url('template/?video=' + res.data.id);
       }, function(err) {
+        loadingService.hideSpinner();
         $mdToast.show(
           $mdToast.simple()
             .textContent(err.data.error)

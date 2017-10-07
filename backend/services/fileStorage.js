@@ -34,7 +34,7 @@ function sendUploadToGCS ({ name, mimetype, buffer, bucketName }) {
     });
 
     stream.on('error', (err) => {
-      reject(err);
+      reject(new Error(err.message));
     });
 
     stream.on('finish', () => {
