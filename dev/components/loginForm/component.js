@@ -15,16 +15,19 @@
     '$mdDialog',
     'authService',
     'storage',
-    'translations'
+    'translations',
+    'loadingService'
   ];
   function ctrl(
     $location,
     $mdDialog,
     authService,
     storage,
-    translations
+    translations,
+    loadingService
   ) {
     var vm = this;
+    var isFetching = false;
     var tokenName = 'x-biz-token';
     var EMAIL_IS_NOT_CONFIRMED = 'EMAIL_IS_NOT_CONFIRMED';
     var unconfirmedEmailPopup = $mdDialog.confirm({
@@ -35,19 +38,30 @@
     });
 
     vm.authenticate = function(login, password) {
-      authService.login(login, password).then(function (res) {
-        storage.set(tokenName, res.data.token);
-        vm.onSuccessLogin();
-      }, function(err) {
-        if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
-          $mdDialog
-            .show( unconfirmedEmailPopup ).then(function() {
-              authService.resendConfirmMail(login);
-            });
-        } else {
-          vm.errorLogin = translations.txt(err.data.message);
-        }
-      });
+      isFetching = true;
+      loadingService.showSpinner();
+
+      if (!isFetching) {
+        authService.login(login, password).then(function (res) {
+          isFetching = false;
+          loadingService.hideSpinner();
+
+          storage.set(tokenName, res.data.token);
+          vm.onSuccessLogin();
+        }, function(err) {
+          isFetching = false;
+          loadingService.hideSpinner();
+
+          if (err.data.message === EMAIL_IS_NOT_CONFIRMED) {
+            $mdDialog
+              .show( unconfirmedEmailPopup ).then(function() {
+                authService.resendConfirmMail(login);
+              });
+          } else {
+            vm.errorLogin = translations.txt(err.data.message);
+          }
+        });
+      }
     };
 
     vm.register = function(email, password, confirmPassword) {
