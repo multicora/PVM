@@ -33,3 +33,4 @@ testem.log
 /package-lock.json
 /cloud_sql_proxy.exe
 /backend/prodConfig.js
+/BKTest-163ad7524446.json
