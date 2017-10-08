@@ -10,7 +10,7 @@
   "scripts": {
     "bower": "bower i --allow-root",
     "precommit": "cross-env ENVIRONMENT=DEVELOPMENT gulp belint && cross-env ENVIRONMENT=DEVELOPMENT gulp felint && cross-env ENVIRONMENT=DEVELOPMENT gulp testOnce",
-    "dev": "cross-env ENVIRONMENT=DEVELOPMENT GOOGLE_APPLICATION_CREDENTIALS=../BKTest-163ad7524446.json gulp dev",
+    "dev": "cross-env ENVIRONMENT=DEVELOPMENT GOOGLE_APPLICATION_CREDENTIALS=./BKTest-163ad7524446.json gulp dev",
     "start": "node backend/index.js",
     "test": "gulp testOnce",
     "server": "cross-env ENVIRONMENT=DEVELOPMENT gulp backend",
