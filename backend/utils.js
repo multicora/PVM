@@ -2,14 +2,17 @@
 
 const RandToken = require('rand-token');
 
+const config = require('./config.js');
+
 module.exports = {
   newToken: function() {
     return RandToken.generate(16);
   },
 
   getServerUrl: function (request) {
-    let server = request.server;
-    let serverUrl = server.info.protocol + '://' + request.info.host;
+    const server = request.server;
+    const protocol = config.forseHttpsForTheMail ? 'https' : server.info.protocol;
+    const serverUrl = protocol + '://' + request.info.host;
 
     return serverUrl;
   },
