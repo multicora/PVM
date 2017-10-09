@@ -5,13 +5,19 @@ const config = require('../config');
 
 const separator = '_';
 
+function removeForbidenSymbols(str) {
+  const forbidenSymbolsRegExp = /[%\^!*'();:@&=+$,\/?#\[\]~><\s`\\|_]/g;
+
+  return str.replace(forbidenSymbolsRegExp, '');
+}
+
 module.exports = function(DAL){
   return {
     addVideo: (fileBuffer, name, authorId, authorName, mimetype) => {
       const fileStorage = require('../services/fileStorage.js');
 
       const id = uuid.v1();
-      const newName = id + separator + name;
+      const newName = id + separator + removeForbidenSymbols(name);
 
       return fileStorage.upload({
         name: newName,
@@ -26,7 +32,7 @@ module.exports = function(DAL){
     addFile: (fileBuffer, name, authorId, authorName, mimetype) => {
       const fileStorage = require('../services/fileStorage.js');
       const id = uuid.v1();
-      const newName = id + separator + name;
+      const newName = id + separator + removeForbidenSymbols(name);
 
       return fileStorage.upload({
         name: newName,
