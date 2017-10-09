@@ -2,12 +2,14 @@
 
   //HEADER
   header {
+    display: flex;
     width: 100%;
     background-color:  #fff;
     box-shadow: 1px 3px 5px 0 rgba(112,157,228,.25);
 
     .logoContainer {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       width: 50%;
       text-align: left;
       box-sizing: border-box;
@@ -57,12 +59,11 @@
     }
 
     .socialContainer {
-      display: inline-block;
+      float: right;
       width: 49%;
       text-align: right;
 
       .social {
-        display: inline-block;
         margin-right: 20px;
         vertical-align: middle;
         line-height: 64px;
@@ -89,14 +90,18 @@
         margin-right: 10px;
         vertical-align: middle;
         line-height: 64px;
+        max-width: 100%;
 
         .phone,
         .email {
+          max-width: 100%;
           vertical-align: middle;
           text-align: left;
           line-height: 32px;
 
           a {
+            display: inline-block;
+            max-width: 100%;
             text-decoration: none;
           }
 
@@ -140,16 +145,17 @@
   }
 
   .default-header {
-    padding-top: 16px;
+    padding: 16px 0;
 
     .back {
+      float: left;
       margin-left: 20px;
       color: #709de4;
     }
 
     .title {
-      display: inline-block;
       margin-left: 20px;
+      margin-top: 8px;
       font-size: 16px;
 
       .email {

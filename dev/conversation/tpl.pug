@@ -1,5 +1,5 @@
 .watchVideoContainer(ng-click="vm.contentClick()")
-  header.user-header(ng-if="vm.showUserHeader")
+  header.user-header.clearfix(ng-if="vm.showUserHeader")
     .logoContainer
       .logo
         //- DEFAULT LOGO
@@ -18,18 +18,22 @@
     .socialContainer
       .contacts
         .phone
-          a(ng-href="tel: {{vm.conversation.authorPhone}}")
+          a.ellipsis(ng-href="tel: {{vm.conversation.authorPhone}}")
             img(src='/files/images/phone.png', alt='phone')
-            span.ellipsis {{vm.conversation.authorPhone}}
+            span(title="{{vm.conversation.authorPhone}}") {{vm.conversation.authorPhone}}
         .email
-          a(ng-href="mailto: {{vm.conversation.authorEmail}}")
+          a.ellipsis(ng-href="mailto: {{vm.conversation.authorEmail}}")
             img(src='/files/images/email.png', alt='email')
-            span.ellipsis {{vm.conversation.authorEmail}}
-  header.default-header(ng-if="!vm.showUserHeader")
+            span(title="{{vm.conversation.authorEmail}}") {{vm.conversation.authorEmail}}
+  header.default-header.clearfix(ng-if="!vm.showUserHeader")
     md-button.md-primary.md-icon-button.md-ink-ripple.back(ng-click="vm.back($event)")
       i.material-icons arrow_back
-    p.title(ng-if="!vm.conversation.email || vm.conversation.email === null || vm.conversation.email === undefined") Public conversation
-    p.title(ng-if="vm.conversation.email && vm.conversation.email != null && vm.conversation.email != undefined") to:&nbsp
+    .title(ng-if="!vm.conversation.email || vm.conversation.email === null || vm.conversation.email === undefined") Public conversation
+    .title.ellipsis(
+      ng-if="vm.conversation.email && vm.conversation.email != null && vm.conversation.email != undefined"
+      title="{{vm.conversation.email}}"
+    )
+      | to:&nbsp;
       span.email {{vm.conversation.email}}
 
   //- 404

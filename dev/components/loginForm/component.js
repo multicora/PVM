@@ -38,10 +38,10 @@
     });
 
     vm.authenticate = function(login, password) {
-      isFetching = true;
-      loadingService.showSpinner();
-
       if (!isFetching) {
+        isFetching = true;
+        loadingService.showSpinner();
+
         authService.login(login, password).then(function (res) {
           isFetching = false;
           loadingService.hideSpinner();

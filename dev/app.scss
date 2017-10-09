@@ -199,3 +199,9 @@ input {
   background-color: #f44336;
   color: #fff;
 }
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
