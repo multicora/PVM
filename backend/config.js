@@ -27,6 +27,7 @@ const DB = {
 
 let config = {
   debugMode: false,
+  forseHttpsForTheMail: true,
   db: {
     type: DB.TYPES.MySQL,
     database: 'pvmdb',
