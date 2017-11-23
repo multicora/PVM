@@ -1,7 +1,6 @@
 .auth {
   background-color: $auth-background-color;
   text-align: center;
-  font-family: 'Roboto';
 
   .auth-container {
     display: inline-block;
@@ -36,8 +35,8 @@
       font-size: 32px;
       text-align: center;
       @media (min-width: 450px) {
-      font-weight: 100;
-      font-size: 48px;
+        font-weight: 100;
+        font-size: 48px;
       }
     }
 
