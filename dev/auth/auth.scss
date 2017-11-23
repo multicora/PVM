@@ -18,7 +18,7 @@
 
     .title {
       color: $font-color-titles;
-      font-family: 'Roboto Thin';
+      font-weight: 100;
       font-size: 48px;
       text-align: center;
     }
@@ -31,9 +31,13 @@
 
     .title {
       color: $font-color-titles;
-      font-family: 'Roboto Thin';
-      font-size: 48px;
+      font-weight: 400;
+      font-size: 32px;
       text-align: center;
+      @media (min-width: 450px) {
+        font-weight: 100;
+        font-size: 48px;
+      }
     }
 
     .form {
