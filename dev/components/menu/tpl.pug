@@ -1,18 +1,18 @@
 .app-menu(ng-class="vm.className")
   .menu-button(
     ng-click="vm.redirect('/dashboard')"
-    ng-class="{active: vm.url.includes('/dashboard')}")
+    ng-class="{active: vm.url.indexOf('/dashboard') !== -1 }")
     i.material-icons dashboard
     span Dashbord
   .menu-button(
     ng-click="vm.redirect('/conversations')"
-    ng-class="{active: vm.url.includes('/conversations')}")
+    ng-class="{active: vm.url.indexOf('/conversations') !== -1 }")
     i.material-icons message
     span Conversations
     .unread-message(ng-if="vm.unreadMessage") {{ vm.unreadMessage }}
   .menu-button(
     ng-click="vm.redirect('/library')"
-    ng-class="{active: vm.url.includes('/library')}")
+    ng-class="{active: vm.url.indexOf('/library') !== -1 }")
     i.material-icons video_library
     span Library
   .menu-button
@@ -20,7 +20,7 @@
     span Contacts
   .menu-button(
     ng-click="vm.redirect('/profile')"
-    ng-class="{active: vm.url.includes('/profile')}")
+    ng-class="{active: vm.url.indexOf('/profile') !== -1 }")
     i.material-icons account_box
     span My profile
   .menu-button(ng-click="vm.invalidateSession()")
