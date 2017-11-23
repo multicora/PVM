@@ -1,6 +1,7 @@
 .auth {
   background-color: $auth-background-color;
   text-align: center;
+  font-family: 'Roboto';
 
   .auth-container {
     display: inline-block;
@@ -18,7 +19,7 @@
 
     .title {
       color: $font-color-titles;
-      font-family: 'Roboto Thin';
+      font-weight: 100;
       font-size: 48px;
       text-align: center;
     }
