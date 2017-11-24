@@ -37,7 +37,7 @@
 
         vm.notifications = res.data;
 
-        if (vm.notifications !== []){
+        if (vm.notifications.length){
 
           vm.notifications.map( function (notification) {
             return notificationsService.messageGenerator(notification);
