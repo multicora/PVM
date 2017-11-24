@@ -34,11 +34,11 @@
 
     function getNotifications () {
       notificationsService.getNotifications().then( function(res) {
-        
+
         vm.notifications = res.data;
-        
+
         if (vm.notifications !== []){
-          
+
           vm.notifications.map( function (notification) {
             return notificationsService.messageGenerator(notification);
           });
