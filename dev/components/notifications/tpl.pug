@@ -5,6 +5,10 @@
       ng-click="$mdMenu.open()"
       data-badge="{{vm.notifications.length}}")
     md-menu-content.notification-menu-content
+      md-menu-item(ng-if="!vm.notifications.length")
+        .no-notifications
+          i.material-icons done_all
+          span &nbsp; All caught up!
       md-menu-item.notification-item(
         ng-repeat="item in vm.notifications"
         md-prevent-menu-close="md-prevent-menu-close"
