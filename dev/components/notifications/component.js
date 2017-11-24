@@ -34,8 +34,8 @@
 
     function getNotifications () {
       notificationsService.getNotifications().then( function(res) {
-
         vm.notifications = res.data;
+
         vm.notifications.map( function (notification) {
           return notificationsService.messageGenerator(notification);
         });
