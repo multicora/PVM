@@ -213,3 +213,12 @@ md-menu-item.notification-item:hover {
 .logout-list-item {
   border-top: 1px solid rgba(0, 0, 0, .14);
 }
+
+.no-notifications {
+  font-size: 14px;
+  color: rgba(0,0,0,.38);
+  line-height: 48px;
+  i, span {
+    vertical-align: middle;
+  }
+}
