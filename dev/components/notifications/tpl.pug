@@ -5,7 +5,7 @@
       ng-click="$mdMenu.open()"
       data-badge="{{vm.notifications.length}}")
     md-menu-content.notification-menu-content
-      md-menu-item(ng-if="vm.notifications !== []")
+      md-menu-item(ng-if="!vm.notifications.length")
         .no-notifications
           i.material-icons done_all
           span &nbsp; All caught up!
