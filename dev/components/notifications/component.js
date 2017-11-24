@@ -34,9 +34,11 @@
 
     function getNotifications () {
       notificationsService.getNotifications().then( function(res) {
-        if (res.data !== []){
-          vm.notifications = res.data;
-
+        
+        vm.notifications = res.data;
+        
+        if (vm.notifications !== []){
+          
           vm.notifications.map( function (notification) {
             return notificationsService.messageGenerator(notification);
           });
