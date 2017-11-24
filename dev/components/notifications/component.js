@@ -36,15 +36,17 @@
 
     function getNotifications () {
       notificationsService.getNotifications().then( function(res) {
-        vm.notifications = res.data;
+        if (res.data !== []){
+          vm.notifications = res.data;
 
-        vm.notifications.map( function (notification) {
-          return notificationsService.messageGenerator(notification);
-        });
+          vm.notifications.map( function (notification) {
+            return notificationsService.messageGenerator(notification);
+          });
 
-        vm.notifications.sort( function(a, b) {
-          return a.date < b.date ? 1 : -1;
-        });
+          vm.notifications.sort( function(a, b) {
+            return a.date < b.date ? 1 : -1;
+          });
+        }
       }).catch(function (err) {
         $mdToast.show(
           $mdToast.simple()
