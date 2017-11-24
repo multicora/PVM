@@ -10,13 +10,11 @@
 
   ctrl.$inject = [
     '$location',
-    '$mdSidenav',
     '$mdToast',
     'notificationsService'
   ];
   function ctrl(
     $location,
-    $mdSidenav,
     $mdToast,
     notificationsService
   ) {
