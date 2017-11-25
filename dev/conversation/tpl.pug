@@ -43,9 +43,9 @@
   //- Content
   .content(ng-if="!vm.conversationIsNotFound")
     //- TITLE
-    .title-container
+    .title-container(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != undefined")
       p.title
-        span(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != undefined") {{vm.conversation.title}}
+        span {{vm.conversation.title}}
     .video
       .videoHeader.showHeader(ng-class="vm.headerClass")
         .photo(
