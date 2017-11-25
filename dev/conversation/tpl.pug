@@ -43,7 +43,7 @@
   //- Content
   .content(ng-if="!vm.conversationIsNotFound")
     //- TITLE
-    .title-container(ng-if="vm.conversation.title && vm.conversation.title != null && vm.conversation.title != undefined")
+    .title-container(ng-if="vm.conversation.title")
       p.title
         span {{vm.conversation.title}}
     .video
