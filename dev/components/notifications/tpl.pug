@@ -1,6 +1,7 @@
 .notification-container
   md-menu(md-position-mode="target-right target")
-    i.fa.fa-bell-o.notifications.mdl-badge.mdl-badge--overlap(
+    i.fa.fa-bell-o.notifications.mdl-badge--overlap(
+      ng-class="{'mdl-badge':vm.notifications.length}"
       aria-hidden="true"
       ng-click="$mdMenu.open()"
       data-badge="{{vm.notifications.length}}")
