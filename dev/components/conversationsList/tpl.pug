@@ -10,7 +10,7 @@
             span(ng-if="!vm.toUser && (!item.email || item.email === null || item.email === undefined)") Public
             span(ng-if="vm.toUser") from: {{item.author}}
           .message
-            .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
+            .bubble(ng-if="vm.unreadMessage && item.message")
 
             .subject.ellipsis(ng-if="(vm.toUser && vm.events[item.id].CONVERSATION_IS_VIEWED) || !vm.toUser") {{item.title || 'Untitled'}}
             .subject.ellipsis-font(ng-if="vm.toUser && !vm.events[item.id].CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}

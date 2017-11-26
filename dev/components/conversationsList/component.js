@@ -15,9 +15,15 @@
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = ['notificationsService'];
+  function ctrl(notificationsService) {
     var vm = this;
+
+    vm.unreadMessage = null;
+
+    notificationsService.getUnreadMessage().then(function(res) {
+      vm.unreadMessage = res.data.length;
+    });
 
     vm.expand = function(event, item) {
       event.stopPropagation();
