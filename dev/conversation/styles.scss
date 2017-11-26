@@ -204,7 +204,6 @@
     }
 
     .photo {
-      display: inline-block;
       margin-left: 10px;
       width: 40px;
       height: 40px;
@@ -214,33 +213,32 @@
     }
 
     .videoHeader {
-      padding-top: 10px;
       width: 100%;
       height: 64px;
       background-color: rgba(255, 255, 255, 0.9);
       position: absolute;
       top: 0;
       z-index: 9;
+      display: flex;
+      align-items: center;
 
       .text {
-        display: inline-block;
+        max-height: 64px;
         margin-left: 10px;
       }
 
       .user-name,
       .user-role {
-        margin-bottom: 0;
-        height: 20px;
+        margin: 0;
         color:  rgba(0, 0, 0, 0.87);
       }
 
       .user-name {
-        font-size: 20px;
-        margin-bottom: 10px;
+        font-size: 16px;
       }
 
       .user-role {
-        font-size: 16px
+        color: rgba(0,0,0,.54)
       }
 
     }

@@ -53,11 +53,11 @@
           ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
         //- USER NAME
         .text
-          p.user-name
-            span(ng-if="vm.conversation.name && vm.conversation.name != null") {{vm.conversation.name}}
+          p.user-name(ng-if="vm.conversation.name")
+            span {{vm.conversation.name}}
           //- USER ROLE
-          p.user-role
-            span(ng-if="vm.conversation.company_role && vm.conversation.company_role != null") {{vm.conversation.company_role}}
+          p.user-role(ng-if="vm.conversation.company_role")
+            span {{vm.conversation.company_role}}
       .videoContent(ng-click="vm.videoContentClick($event)")
         video.video-js.vjs-default-skin(
           vjs-video
