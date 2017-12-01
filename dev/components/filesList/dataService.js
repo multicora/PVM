@@ -24,6 +24,7 @@
         // TODO: add .catch() part
         libraryService.getFiles().then(function (res) {
           res.data.map(function(file) {
+            file.attributes.size = file.attributes.size || 0;
             if (file.attributes.size >= vm.byteInKilobyte ) {
               if (file.attributes.size >= vm.byteInMegabayte ) {
                 file.attributes.size /= vm.byteInMegabayte;
