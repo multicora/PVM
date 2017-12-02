@@ -19,10 +19,12 @@
   function ctrl(notificationsService) {
     var vm = this;
 
-    vm.unreadMessage = null;
+    vm.unreadMessagesByConversationId = {};
 
     notificationsService.getUnreadMessage().then(function(res) {
-      vm.unreadMessage = res.data.length;
+      res.data.forEach(function (item) {
+        vm.unreadMessagesByConversationId[item.conversationId] = item;
+      });
     });
 
     vm.expand = function(event, item) {
