@@ -10,7 +10,7 @@
             span(ng-if="!vm.toUser && (!item.email || item.email === null || item.email === undefined)") Public
             span(ng-if="vm.toUser") from: {{item.author}}
           .message
-            .bubble(ng-if="vm.toUser && !item.CONVERSATION_IS_VIEWED")
+            .bubble(ng-if="vm.unreadMessagesByConversationId[item.id]")
 
             .subject.ellipsis(ng-if="(vm.toUser && vm.events[item.id].CONVERSATION_IS_VIEWED) || !vm.toUser") {{item.title || 'Untitled'}}
             .subject.ellipsis-font(ng-if="vm.toUser && !vm.events[item.id].CONVERSATION_IS_VIEWED") {{item.title || 'Untitled'}}
@@ -43,7 +43,7 @@
                 .icon-container
                   i.material-icons drafts
                   .result
-                    .times(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED.length > 1 && vm.events[item.id].CONVERSATION_IS_VIEWED.length < 9" 
+                    .times(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED.length > 1 && vm.events[item.id].CONVERSATION_IS_VIEWED.length < 9"
                       ng-bind="vm.events[item.id].CONVERSATION_IS_VIEWED.length")
                     .times(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED.length > 9") 9+
                     i.material-icons(ng-if="vm.events[item.id].CONVERSATION_IS_VIEWED.length === 1")
@@ -65,7 +65,7 @@
                   i.material-icons remove_red_eye
                 span.explain(ng-if="item.explainShow") User didn't watch the video yet
               .icon.green.done(ng-if="vm.events[item.id].VIDEO_IS_WATCHED")
-                .icon-container  
+                .icon-container
                   i.material-icons remove_red_eye
                   .result
                     i.material-icons

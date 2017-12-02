@@ -15,9 +15,17 @@
     }
   });
 
-  ctrl.$inject = [];
-  function ctrl() {
+  ctrl.$inject = ['notificationsService'];
+  function ctrl(notificationsService) {
     var vm = this;
+
+    vm.unreadMessagesByConversationId = {};
+
+    notificationsService.getUnreadMessage().then(function(res) {
+      res.data.forEach(function (item) {
+        vm.unreadMessagesByConversationId[item.conversationId] = item;
+      });
+    });
 
     vm.expand = function(event, item) {
       event.stopPropagation();
