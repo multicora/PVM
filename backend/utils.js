@@ -6,7 +6,8 @@ const config = require('./config.js');
 
 module.exports = {
   newToken: function() {
-    return RandToken.generate(16);
+    const charLength = 16;
+    return RandToken.generate(charLength);
   },
 
   getServerUrl: function (request) {
