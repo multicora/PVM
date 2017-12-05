@@ -300,6 +300,7 @@ module.exports = (connection) => {
           .set('email', data.email)
           .set('firstName', data.name)
           .set('company', data.company)
+          .set('confirmed', true)
           .toString();
 
         connection.query(request, (err, response) => {
