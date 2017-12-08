@@ -23,7 +23,8 @@
     "angular-mocks": "^1.6.4",
     "ng-rollbar": "^1.9.2",
     "ngstorage": "^0.3.11",
-    "ngclipboard": "^1.1.1"
+    "ngclipboard": "^1.1.1",
+    "ogvjs-1.5.1": "https://github.com/brion/ogv.js/releases/download/1.5.1/ogvjs-1.5.1.zip"
   },
   "overrides": {
     "components-font-awesome": {
