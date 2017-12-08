@@ -1,6 +1,6 @@
 env: flex
 runtime: nodejs
 beta_settings:
-  cloud_sql_instances: bzkdev1:europe-west1:bzkdev1db
+  cloud_sql_instances: bzkdev2:us-central1:bzkdev2db
 automatic_scaling:
   min_num_instances: 1
