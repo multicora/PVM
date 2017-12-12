@@ -70,6 +70,11 @@ gulp.task('app-js', function () {
     .pipe( connect.reload() );
 });
 
+gulp.task('ogvjs', function() {
+  return gulp.src(path.ogvjs + '*.*')
+    .pipe( gulp.dest(path.dest + '/ogvjs') );
+})
+
 //  compile lib.js file from bower_components (default readable, --prod to minify)
 gulp.task('lib-js', function () {
   var filter = gulpfilter(['**/**.js']);
@@ -168,7 +173,7 @@ gulp.task('apidoc', function () {
 
 // --------------------------------------------------
 
-var buildTasks = ['assets', 'compile-pug', 'app-js', 'lib-js', 'app-css', 'lib-css', 'copy-lib-fonts', 'apidoc'];
+var buildTasks = ['assets', 'compile-pug', 'app-js', 'lib-js', 'ogvjs', 'app-css', 'lib-css', 'copy-lib-fonts', 'apidoc'];
 
 gulp.task('build', function() {
   return sequence(['clean'], ['install'], buildTasks, function () {

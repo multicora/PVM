@@ -81,6 +81,7 @@ module.exports = function() {
   config.path.css = config.path.dev + '/**/*.scss';
   config.path.js = config.path.dev + '/**/!(*spec).js';
   config.path.assets = config.path.dev + '/files/**/*';
+  config.path.ogvjs = 'bower_components/ogvjs-1.5.1/';
 
   return config;
 };
