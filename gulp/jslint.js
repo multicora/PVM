@@ -158,6 +158,7 @@ module.exports = function() {
           'inject',
           'module',
           'PubNub',
+          'OGVPlayer',
           '_',
           'ga',
           'io'
