@@ -27,6 +27,7 @@
           record: {
             audio: true,
             video: true,
+            videoMimeType: 'video/webm;codecs=vp8',
             maxLength: 60,
             debug: true
           }
