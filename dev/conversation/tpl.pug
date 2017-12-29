@@ -58,13 +58,22 @@
           //- USER ROLE
           p.user-role(ng-if="vm.conversation.company_role")
             span {{vm.conversation.company_role}}
-      .videoContent(ng-click="vm.videoContentClick($event)")
-        video.video-js.vjs-default-skin(
-          vjs-video
-          controls
-          preload="auto"
-          vjs-media="vm.media")
+      
+      .videoContent#videoHolder(ng-click="vm.videoContentClick($event)")
+        
+        //- ogvjs.ogvjs1.video-js(src="{{vm.media.sources[0].src}}")
+          
+        //- video.video-js(controls src="{{vm.conversation.url}}")
+        //- video.video-js.vjs-default-skin(
+        //-   vjs-video
+        //-   controls
+        //-   preload="auto"
+        //-   vjs-media="vm.media")
+      
       .videoFooter
+        button(ng-click="vm.player.play()") Play
+        button(ng-click="vm.player.pause()") Pause
+        button(ng-click="vm.player.stop()") Stop
         .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")
             .photo(ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
