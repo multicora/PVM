@@ -10,11 +10,11 @@
   "scripts": {
     "bower": "bower i --allow-root",
     "precommit": "cross-env ENVIRONMENT=DEVELOPMENT gulp belint && cross-env ENVIRONMENT=DEVELOPMENT gulp felint && cross-env ENVIRONMENT=DEVELOPMENT gulp testOnce",
-    "dev": "cross-env ENVIRONMENT=DEVELOPMENT GOOGLE_APPLICATION_CREDENTIALS=./BKTest-163ad7524446.json gulp dev",
+    "dev": "cross-env ENVIRONMENT=DEVELOPMENT GOOGLE_APPLICATION_CREDENTIALS=./bzkdev2-45550f4d3b90.json gulp dev",
     "start": "node backend/index.js",
     "test": "gulp testOnce",
     "server": "cross-env ENVIRONMENT=DEVELOPMENT gulp backend",
-    "sqlProxy": "cross-env GOOGLE_APPLICATION_CREDENTIALS=./gcp_service_account.json cloud_sql_proxy.exe -instances=\"bktest-175420:us-central1:bkbase\"=tcp:3306",
+    "sqlProxy": "cross-env GOOGLE_APPLICATION_CREDENTIALS=./gcp_service_account.json cloud_sql_proxy.exe -instances=\"bzkdev2:us-central1:bzkdev2db\"=tcp:3306",
     "deploy": "gcloud app deploy"
   },
   "repository": {
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/multicora/PVM#readme",
   "devDependencies": {
-    "bower": "^1.8.0",
+    "bower": "^1.8.2",
     "connect-modrewrite": "^0.9.0",
     "eslint": "^3.19.0",
     "eslint-config-angular": "^0.5.0",
