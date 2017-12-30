@@ -69,11 +69,11 @@
         //-   controls
         //-   preload="auto"
         //-   vjs-media="vm.media")
-      
+        .video-controls
+          button(ng-click="vm.player.play()") &#9654;
+          button.pause(ng-click="vm.player.pause()") ||
+          button.stop(ng-click="vm.player.stop()") &#9632;
       .videoFooter
-        button(ng-click="vm.player.play()") Play
-        button(ng-click="vm.player.pause()") Pause
-        button(ng-click="vm.player.stop()") Stop
         .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")
             .photo(ng-style="{backgroundImage: 'url('+ vm.conversation.authorPhoto + ')' }")
