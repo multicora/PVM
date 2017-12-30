@@ -60,19 +60,22 @@
             span {{vm.conversation.company_role}}
       
       .videoContent#videoHolder(ng-click="vm.videoContentClick($event)")
-        
-        //- ogvjs.ogvjs1.video-js(src="{{vm.media.sources[0].src}}")
-          
-        //- video.video-js(controls src="{{vm.conversation.url}}")
-        //- video.video-js.vjs-default-skin(
-        //-   vjs-video
-        //-   controls
-        //-   preload="auto"
-        //-   vjs-media="vm.media")
-        .video-controls
-          button(ng-click="vm.player.play()") &#9654;
-          button.pause(ng-click="vm.player.pause()") ||
-          button.stop(ng-click="vm.player.stop()") &#9632;
+        video.video-js.vjs-default-skin(
+          ng-if="vm.conversation.url.indexOf('webm') == -1"
+          vjs-video
+          controls
+          preload="auto"  
+          vjs-media="vm.media")
+        .video-controls(
+          ng-if="vm.conversation.url.indexOf('webm') !== -1"
+          )
+          button(ng-click="vm.player.play()")
+            i.material-icons play_arrow
+          button.pause(ng-click="vm.player.pause()")
+            i.material-icons pause
+          button.stop(ng-click="vm.player.stop()")
+            i.material-icons stop
+            
       .videoFooter
         .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")

@@ -150,18 +150,21 @@
         vm.media = {
           sources: [{
             src: vm.conversation.url,
-            type: 'video/webm'
+            type: vm.conversation.url.indexOf('webm') !== -1 ?
+              'video/webm' : vm.conversation.url.indexOf('mp4') !==
+              -1 ? 'video/mp4' : 'video/quicktime'
           }]
         };
 
-
         // OGVJS player
+
         vm.player = new OGVPlayer();
         vm.player.classList.add('video-js');
         vm.player.src = vm.conversation.url;
         var videoHolder = document.getElementById('videoHolder');
-        videoHolder.append(vm.player);
-
+        if (vm.conversation.url.indexOf('webm') !== -1) {
+          videoHolder.append(vm.player);
+        }
 
       }).then(function() {
         if (vm.user) {
