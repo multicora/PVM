@@ -147,12 +147,22 @@
           vm.showUserFooter = false;
           vm.messageClassName = '';
         }
+
+        vm.videoType = function() {
+          return
+          if (vm.conversation.url.indexOf('webm') !== -1) {
+            'video/webm';
+          } else if (vm.conversation.url.indexOf('mp4') !== -1) {
+            'video/mp4';
+          } else {
+            'video/quicktime';
+          }
+        }
+
         vm.media = {
           sources: [{
             src: vm.conversation.url,
-            type: vm.conversation.url.indexOf('webm') !== -1 ?
-              'video/webm' : vm.conversation.url.indexOf('mp4') !==
-              -1 ? 'video/mp4' : 'video/quicktime'
+            type: vm.videoType
           }]
         };
 
