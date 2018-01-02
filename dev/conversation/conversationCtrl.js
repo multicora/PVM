@@ -154,7 +154,6 @@
             vm.conversation.url.indexOf('webm') !== -1 ? 'video/webm' :
             vm.conversation.url.indexOf('mp4') !== -1 ? 'video/mp4' :
             'video/quicktime';
-          console.log(type)
           return type;
 
         };
