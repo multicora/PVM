@@ -149,20 +149,20 @@
         }
 
         vm.videoType = function() {
-          return
-          if (vm.conversation.url.indexOf('webm') !== -1) {
-            'video/webm';
-          } else if (vm.conversation.url.indexOf('mp4') !== -1) {
-            'video/mp4';
-          } else {
+
+          var type =
+            vm.conversation.url.indexOf('webm') !== -1 ? 'video/webm' :
+            vm.conversation.url.indexOf('mp4') !== -1 ? 'video/mp4' :
             'video/quicktime';
-          }
-        }
+          console.log(type)
+          return type;
+
+        };
 
         vm.media = {
           sources: [{
             src: vm.conversation.url,
-            type: vm.videoType
+            type: vm.videoType()
           }]
         };
 
