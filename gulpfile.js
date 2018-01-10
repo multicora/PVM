@@ -33,85 +33,87 @@ require('./gulp/jslint.js')();
 
 gulp.task('compile-pug', function() {
   return gulp.src(path.pug)
-    .pipe( plumber() )
-    .pipe( pug() )
+    .pipe(plumber())
+    .pipe(pug())
     .on('error', log)
-    .pipe( gulp.dest(path.dest) )
-    .pipe( connect.reload() )
+    .pipe(gulp.dest(path.dest))
+    .pipe(connect.reload())
 });
 
 //  compile app.css file (default readable, --prod to minify)
-gulp.task('app-css', function () {
+gulp.task('app-css', function() {
   return gulp.src(path.css)
-    .pipe( order(config.scssOrder) )
+    .pipe(order(config.scssOrder))
     .pipe(sourcemaps.init())
-    .pipe( concat('app.css') )
-    .pipe( plumber() )
-    .pipe( sass() )
-    .pipe( autoprefixer(config.autoprefixer) )
-    .pipe( minCss() )
+    .pipe(concat('app.css'))
+    .pipe(plumber())
+    .pipe(sass())
+    .pipe(autoprefixer(config.autoprefixer))
+    .pipe(minCss())
     .pipe(sourcemaps.write())
-    .on('error', log )
-    .pipe( gulp.dest(path.dest) )
-    .pipe( connect.reload() );
+    .on('error', log)
+    .pipe(gulp.dest(path.dest))
+    .pipe(connect.reload());
 });
 
 //  compile app.js file (default readable, --prod to minify)
-gulp.task('app-js', function () {
+gulp.task('app-js', function() {
   return gulp.src(path.js)
-    .pipe( plumber() )
-    .pipe( order(config.jsOrder) )
+    .pipe(plumber())
+    .pipe(order(config.jsOrder))
     .pipe(sourcemaps.init())
-    .pipe( concat('app.js') )
+    .pipe(concat('app.js'))
     // .pipe( minJs() )
     .pipe(sourcemaps.write())
-    .on( 'error', log )
-    .pipe( gulp.dest(path.dest) )
-    .pipe( connect.reload() );
+    .on('error', log)
+    .pipe(gulp.dest(path.dest))
+    .pipe(connect.reload());
 });
 
 gulp.task('ogvjs', function() {
   return gulp.src(path.ogvjs + '*.*')
-    .pipe( gulp.dest(path.dest + '/ogvjs') );
+    .pipe(gulp.dest(path.dest + '/ogvjs'));
 })
 
 //  compile lib.js file from bower_components (default readable, --prod to minify)
-gulp.task('lib-js', function () {
+gulp.task('lib-js', function() {
   var filter = gulpfilter(['**/**.js']);
 
   return gulp.src(bowerFiles())
     .pipe(filter)
-    .pipe( plumber() )
-    .pipe( concat('libs.js') )
-    .on('error', log )
-    .pipe( gulp.dest(path.dest) );
+    .pipe(plumber())
+    .pipe(concat('libs.js'))
+    .on('error', log)
+    .pipe(gulp.dest(path.dest));
 });
 
 //  compile lib.css file from bower_components (default min)
-gulp.task('lib-css', function () {
+gulp.task('lib-css', function() {
   var filter = gulpfilter(['**/**.css']);
 
   return gulp.src(bowerFiles())
     .pipe(filter)
-    .pipe( plumber() )
-    .pipe( concat('libs.css') )
-    .on('error', log )
-    .pipe( gulp.dest(path.dest) );
+    .pipe(plumber())
+    .pipe(concat('libs.css'))
+    .on('error', log)
+    .pipe(gulp.dest(path.dest));
 });
 
-gulp.task('copy-lib-fonts' , function () {
-  var filterFonts = gulpfilter(['**/**.otf', '**/**.eot', '**/**.svg', '**/**.ttf', '**/**.woff', '**/**.woff2']);
+gulp.task('copy-lib-fonts', function() {
+  var filterFonts = gulpfilter(['**/**.otf', '**/**.eot', '**/**.svg',
+    '**/**.ttf', '**/**.woff', '**/**.woff2'
+  ]);
   // var filterFonts = gulpfilter(['**/**.svg']);
 
-  gulp.src( bowerFiles() )
+  gulp.src(bowerFiles())
     .pipe(filterFonts)
-    .pipe( gulp.dest(path.dest + '/fonts') )
+    .pipe(gulp.dest(path.dest + '/fonts'))
 });
 
 //  copy font files, image files, etc.
-gulp.task('assets', function () {
+gulp.task('assets', function() {
   return gulp.src(path.assets)
-    .pipe( gulp.dest(path.dest + '/files') );
+    .pipe(gulp.dest(path.dest + '/files'));
 });
 
 // Dev tasks
@@ -144,17 +146,23 @@ gulp.task('watch', function() {
 
 gulp.task('openUrl', function() {
   return gulp.src(__filename)
-    .pipe( openUrl({uri: 'http://localhost:9000/'}) );
+    .pipe(openUrl({
+      uri: 'http://localhost:9000/'
+    }));
 });
 
 gulp.task('clean', function() {
-  return gulp.src(path.dest, {read: false})
+  return gulp.src(path.dest, {
+      read: false
+    })
     .pipe(clean());
 });
 
 gulp.task('install', function() {
   return gulp.src(['./bower.json', './package.json'])
-    .pipe(install({allowRoot: true}));
+    .pipe(install({
+      allowRoot: true
+    }));
 });
 
 gulp.task('backend', function() {
@@ -165,7 +173,7 @@ gulp.task('backend', function() {
   });
 });
 
-gulp.task('apidoc', function () {
+gulp.task('apidoc', function() {
   return gulp.src(path.be + '/routing')
     .pipe(apidoc())
     .pipe(gulp.dest('documentation'));
@@ -173,23 +181,28 @@ gulp.task('apidoc', function () {
 
 // --------------------------------------------------
 
-var buildTasks = ['assets', 'compile-pug', 'app-js', 'lib-js', 'ogvjs', 'app-css', 'lib-css', 'copy-lib-fonts', 'apidoc'];
+var buildTasks = ['assets', 'compile-pug', 'app-js', 'lib-js', 'ogvjs',
+  'app-css', 'lib-css', 'copy-lib-fonts', 'apidoc'
+];
 
 gulp.task('build', function() {
-  return sequence(['clean'], ['install'], buildTasks, function () {
-      return log(' -| Builded');
-    }
-  );
+  return sequence(['clean'], ['install'], buildTasks, function() {
+    return log(' -| Builded');
+  });
 });
 
 gulp.task('dev', function() {
-  return sequence(['clean'], ['belint'], buildTasks, ['backend', 'server'], ['watch'], 'openUrl', function() {
+  return sequence(['clean'], ['belint'], buildTasks, ['backend', 'server'], [
+    'watch'
+  ], 'openUrl', function() {
     return log(' -| Runned');
   });
 });
 
 gulp.task('dev2', function() {
-  return sequence(['clean'], ['belint'], buildTasks, ['server'], ['watch'], 'openUrl', function() {
-    return log(' -| Runned');
-  });
+  return sequence(['clean'], ['belint'], buildTasks, ['server'], ['watch'],
+    'openUrl',
+    function() {
+      return log(' -| Runned');
+    });
 });
