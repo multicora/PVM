@@ -61,14 +61,13 @@
       
       .videoContent#videoHolder(ng-click="vm.videoContentClick($event)")
         video.video-js.vjs-default-skin(
-          ng-if="vm.conversation.url.indexOf('webm') == -1"
+          ng-if="(vm.webm && vm.google) || vm.mp4"
           vjs-video
           controls
           preload="auto"  
           vjs-media="vm.media")
         .video-controls(
-          ng-if="vm.conversation.url.indexOf('webm') !== -1"
-          )
+          ng-if="vm.conversation.url.indexOf('webm') !== -1 && navigator.vendor.toLowerCase().indexOf('apple') !== -1")
           button(ng-click="vm.player.play()")
             i.material-icons play_arrow
           button.pause(ng-click="vm.player.pause()")

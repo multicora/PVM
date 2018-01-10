@@ -165,14 +165,28 @@
           }]
         };
 
+        vm.webm = vm.conversation.url.indexOf('webm') !== -1;
+        vm.mp4 = vm.conversation.url.indexOf('mp4') !== -1;
+        vm.google = navigator.vendor.toLowerCase().indexOf('google') !==
+          -1;
         // OGVJS player
-
+        OGVLoader.base = './ogvjs';
         vm.player = new OGVPlayer();
         vm.player.classList.add('video-js');
         vm.player.src = vm.conversation.url;
+
         var videoHolder = document.getElementById('videoHolder');
-        if (vm.conversation.url.indexOf('webm') !== -1) {
+
+        if (vm.conversation.url.indexOf('webm') !== -1 && navigator.vendor
+          .toLowerCase().indexOf('apple') !== -1) {
+
           videoHolder.append(vm.player);
+          vm.player.play();
+
+          setTimeout(function() {
+            vm.player.pause();
+          }, 600);
+
         }
 
       }).then(function() {
