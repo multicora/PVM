@@ -67,7 +67,7 @@
           preload="auto"  
           vjs-media="vm.media")
         .video-controls(
-          ng-if="vm.conversation.url.indexOf('webm') !== -1 && navigator.vendor.toLowerCase().indexOf('apple') !== -1")
+          ng-if="vm.webm && vm.apple")
           button(ng-click="vm.player.play()")
             i.material-icons play_arrow
           button.pause(ng-click="vm.player.pause()")

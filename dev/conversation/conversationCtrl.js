@@ -169,6 +169,8 @@
         vm.mp4 = vm.conversation.url.indexOf('mp4') !== -1;
         vm.google = navigator.vendor.toLowerCase().indexOf('google') !==
           -1;
+        vm.apple = navigator.vendor
+          .toLowerCase().indexOf('apple') !== -1;
         // OGVJS player
         OGVLoader.base = './ogvjs';
         vm.player = new OGVPlayer();
@@ -177,8 +179,7 @@
 
         var videoHolder = document.getElementById('videoHolder');
 
-        if (vm.conversation.url.indexOf('webm') !== -1 && navigator.vendor
-          .toLowerCase().indexOf('apple') !== -1) {
+        if (vm.webm && vm.apple) {
 
           videoHolder.append(vm.player);
           vm.player.play();
