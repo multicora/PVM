@@ -23,7 +23,8 @@
     "angular-mocks": "^1.6.4",
     "ng-rollbar": "^1.9.2",
     "ngstorage": "^0.3.11",
-    "ngclipboard": "^1.1.1"
+    "ngclipboard": "^1.1.1",
+    "ogvjs-1.5.2": "https://github.com/brion/ogv.js/releases/download/1.5.2/ogvjs-1.5.2.zip"
   },
   "overrides": {
     "components-font-awesome": {
@@ -41,6 +42,11 @@
       "main": [
         "src/js/videojs.record.js",
         "src/css/videojs.record.css"
+      ]
+    },
+    "ogvjs-1.5.2": {
+      "main": [
+        "ogv.js"
       ]
     }
   },

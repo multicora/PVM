@@ -1,4 +1,4 @@
-(function (angular) {
+(function(angular) {
   'use strict';
   var app = angular.module('app');
 
@@ -19,6 +19,7 @@
     'utils',
     'eventHub'
   ];
+
   function ctrl(
     $routeParams,
     $rootScope,
@@ -52,20 +53,20 @@
     getProfile();
     getConversation();
 
-    eventHub.sub('chat_' + conversationId, function (/* message */) {
-      getChat(conversationId).then(function () {
+    eventHub.sub('chat_' + conversationId, function( /* message */ ) {
+      getChat(conversationId).then(function() {
         var lastMessage = vm.messages[vm.messages.length - 1];
 
         if (lastMessage.authorId !== vm.user.id) {
           audio.play();
         }
         scrollBottom();
-      }).then(function () {
+      }).then(function() {
         return loadPhotos();
       });
     });
 
-    $scope.$on('vjsVideoReady', function (e, data) {
+    $scope.$on('vjsVideoReady', function(e, data) {
       data.player.one('ended', function() {
         conversationsService.videoWatched({
           conversationId: vm.conversation.id,
@@ -89,32 +90,32 @@
       }
     });
 
-    vm.back = function (event) {
+    vm.back = function(event) {
       event.stopPropagation();
       $location.path('conversations');
     };
 
-    vm.contentClick = function () {
+    vm.contentClick = function() {
       vm.headerClass = 'showHeader';
     };
 
-    vm.onFileClick = function (fileId) {
+    vm.onFileClick = function(fileId) {
       conversationsService.fileDownloaded({
         conversationId: vm.conversation.id,
         fileId: fileId
       });
     };
 
-    vm.videoContentClick = function (event) {
+    vm.videoContentClick = function(event) {
       event.stopPropagation();
       vm.headerClass = 'hideHeader';
     };
 
-    vm.closeLoginPopup = function () {
+    vm.closeLoginPopup = function() {
       vm.showLoginPopup = false;
     };
 
-    vm.onSuccessLogin = function () {
+    vm.onSuccessLogin = function() {
       vm.closeLoginPopup();
       getProfile();
       getConversation();
@@ -139,19 +140,56 @@
     };
 
     function getConversation() {
-      return conversationsService.get(conversationId).then(function (res) {
+      return conversationsService.get(conversationId).then(function(res) {
         vm.conversation = res.data;
         if (vm.user && vm.conversation.author === vm.user.id) {
           vm.showUserHeader = false;
           vm.showUserFooter = false;
           vm.messageClassName = '';
         }
+
+        vm.videoType = function() {
+
+          var type =
+            vm.conversation.url.indexOf('webm') !== -1 ? 'video/webm' :
+            vm.conversation.url.indexOf('mp4') !== -1 ? 'video/mp4' :
+            'video/quicktime';
+          return type;
+
+        };
+
         vm.media = {
           sources: [{
             src: vm.conversation.url,
-            type: 'video/mp4'
+            type: vm.videoType()
           }]
         };
+
+        vm.webm = vm.conversation.url.indexOf('webm') !== -1;
+        vm.mp4 = vm.conversation.url.indexOf('mp4') !== -1;
+        vm.google = navigator.vendor.toLowerCase().indexOf('google') !==
+          -1;
+        vm.apple = navigator.vendor
+          .toLowerCase().indexOf('apple') !== -1;
+        // OGVJS player
+        OGVLoader.base = './ogvjs';
+        vm.player = new OGVPlayer();
+        vm.player.classList.add('video-js');
+        vm.player.src = vm.conversation.url;
+
+        var videoHolder = document.getElementById('videoHolder');
+
+        if (vm.webm && vm.apple) {
+
+          videoHolder.append(vm.player);
+          vm.player.play();
+
+          setTimeout(function() {
+            vm.player.pause();
+          }, 600);
+
+        }
+
       }).then(function() {
         if (vm.user) {
           return libraryService.getEvents([vm.conversation.id]);
@@ -173,9 +211,9 @@
         if (vm.savedMessage) {
           storage.clear('message');
         }
-      }).then(function () {
+      }).then(function() {
         return loadPhotos();
-      }).catch(function (err) {
+      }).catch(function(err) {
         if (err.status === 404) {
           vm.conversationIsNotFound = true;
         }
@@ -185,13 +223,13 @@
     function getProfile() {
       profileService.getProfile().then(function(res) {
         vm.user = res.data;
-      }).catch(function () {
+      }).catch(function() {
         vm.user = null;
       });
     }
 
     function scrollBottom() {
-      $timeout(function () {
+      $timeout(function() {
         var bodyElement = $document.find('body')[0];
         bodyElement.scrollTop = bodyElement.scrollHeight - bodyElement.clientHeight;
       }, 0);
@@ -212,22 +250,22 @@
     }
 
     function loadPhotos() {
-      var needToLoad = vm.messages.filter(function (message) {
+      var needToLoad = vm.messages.filter(function(message) {
         return !usersPhotos.hasOwnProperty(message.authorId);
-      }).map(function (message) {
+      }).map(function(message) {
         return message.authorId;
-      }).filter(function (value, index, self) {
+      }).filter(function(value, index, self) {
         return self.indexOf(value) === index;
       });
 
       setPhotos();
 
       return $q.all(
-        needToLoad.map(function (userId) {
+        needToLoad.map(function(userId) {
           return profileService.getProfilePhoto(userId);
         })
-      ).then(function (res) {
-        needToLoad.forEach(function (userId, index) {
+      ).then(function(res) {
+        needToLoad.forEach(function(userId, index) {
           usersPhotos[userId] = res[index].data;
         });
 

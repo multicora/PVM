@@ -40,27 +40,43 @@ var backendRules = {
   "no-trailing-spaces": 2,
   "no-undef": 2,
   "no-undef-init": 2,
-  "no-unused-expressions": [2, {"allowTernary": true}],
+  "no-unused-expressions": [2, {
+    "allowTernary": true
+  }],
   "no-unused-vars": 2,
-  "no-use-before-define": [2, { "functions": false, "variables": true }],
+  "no-use-before-define": [2, {
+    "functions": false,
+    "variables": true
+  }],
   "no-with": 2,
   "camelcase": 2,
   "comma-spacing": 2,
   "consistent-return": 2,
   "curly": [2, "all"],
-  "dot-notation": [2, { "allowKeywords": true }],
+  "dot-notation": [2, {
+    "allowKeywords": true
+  }],
   "eol-last": 2,
   "no-extra-parens": [2, "functions"],
   "eqeqeq": 2,
-  "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
+  "key-spacing": [2, {
+    "beforeColon": false,
+    "afterColon": true
+  }],
   "new-cap": 2,
   "new-parens": 2,
   "quotes": [2, "single"],
   "semi": 2,
-  "semi-spacing": [2, {"before": false, "after": true}],
+  "semi-spacing": [2, {
+    "before": false,
+    "after": true
+  }],
   "space-infix-ops": 2,
   "keyword-spacing": 2,
-  "space-unary-ops": [2, { "words": true, "nonwords": false }],
+  "space-unary-ops": [2, {
+    "words": true,
+    "nonwords": false
+  }],
   "strict": 2,
   "radix": 2,
   "yoda": [2, "never"]
@@ -100,35 +116,53 @@ var frontendRules = {
   "no-trailing-spaces": 2,
   "no-undef": 2,
   "no-undef-init": 2,
-  "no-unused-expressions": [2, {"allowTernary": true}],
+  "no-unused-expressions": [2, {
+    "allowTernary": true
+  }],
   "no-unused-vars": 2,
-  "no-use-before-define": [2, { "functions": false, "variables": true }],
+  "no-use-before-define": [2, {
+    "functions": false,
+    "variables": true
+  }],
   "no-with": 2,
   "camelcase": 2,
   "comma-spacing": 2,
   "consistent-return": 2,
   "curly": [2, "all"],
-  "dot-notation": [2, { "allowKeywords": true }],
+  "dot-notation": [2, {
+    "allowKeywords": true
+  }],
   "eol-last": 2,
   "no-extra-parens": [2, "functions"],
   "eqeqeq": 2,
-  "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
+  "key-spacing": [2, {
+    "beforeColon": false,
+    "afterColon": true
+  }],
   "new-cap": 2,
   "new-parens": 2,
   "quotes": [2, "single"],
   "semi": 2,
-  "semi-spacing": [2, {"before": false, "after": true}],
+  "semi-spacing": [2, {
+    "before": false,
+    "after": true
+  }],
   "space-infix-ops": 2,
   "keyword-spacing": 2,
-  "space-unary-ops": [2, { "words": true, "nonwords": false }],
+  "space-unary-ops": [2, {
+    "words": true,
+    "nonwords": false
+  }],
   "strict": 2,
   "radix": 2,
   "yoda": [2, "never"]
 };
 
 module.exports = function() {
-  gulp.task('belint', function () {
-    return gulp.src([path.be + '/**/*.js', '!' + path.be + '/public/**/*.js'])
+  gulp.task('belint', function() {
+    return gulp.src([path.be + '/**/*.js', '!' + path.be +
+        '/public/**/*.js'
+      ])
       .pipe(eslint({
         envs: [
           'node',
@@ -143,7 +177,7 @@ module.exports = function() {
       .pipe(eslint.failAfterError());
   });
 
-  gulp.task('felint', function () {
+  gulp.task('felint', function() {
     return gulp.src([path.dev + '/**/*.js'])
       .pipe(eslint({
         envs: [
@@ -158,11 +192,12 @@ module.exports = function() {
           'inject',
           'module',
           'PubNub',
+          'OGVLoader',
+          'OGVPlayer',
           '_',
           'ga',
           'io'
         ],
-        // extends: "eslint:recommended",
         extends: 'eslint:recommended',
         useEslintrc: false
       }))

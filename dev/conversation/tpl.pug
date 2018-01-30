@@ -58,12 +58,23 @@
           //- USER ROLE
           p.user-role(ng-if="vm.conversation.company_role")
             span {{vm.conversation.company_role}}
-      .videoContent(ng-click="vm.videoContentClick($event)")
+      
+      .videoContent#videoHolder(ng-click="vm.videoContentClick($event)")
         video.video-js.vjs-default-skin(
+          ng-if="(vm.webm && vm.google) || vm.mp4"
           vjs-video
           controls
-          preload="auto"
+          preload="auto"  
           vjs-media="vm.media")
+        .video-controls(
+          ng-if="vm.webm && vm.apple")
+          button(ng-click="vm.player.play()")
+            i.material-icons play_arrow
+          button.pause(ng-click="vm.player.pause()")
+            i.material-icons pause
+          button.stop(ng-click="vm.player.stop()")
+            i.material-icons stop
+            
       .videoFooter
         .chat-container(ng-if="vm.conversation.message")
           .message-container(ng-class="vm.messageClassName")
